@@ -1,0 +1,4 @@
+com\unah\hermes\provider\FirestoreRoutes.class
+com\unah\hermes\tests\FirestoreTestController.class
+com\unah\hermes\provider\FirebaseConnector.class
+com\unah\hermes\MainApp.class
