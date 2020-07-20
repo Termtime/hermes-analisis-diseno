@@ -15,12 +15,6 @@
     </properties>
 
     <dependencies>
-        <!-- <dependency>
-            <groupId>com.google.firebase</groupId>
-            <artifactId>firebase-admin</artifactId>
-            <version>5.5.0</version>
-        </dependency> -->
-        
         <!-- https://mvnrepository.com/artifact/com.google.firebase/firebase-admin -->
         <dependency>
             <groupId>com.google.firebase</groupId>
@@ -34,6 +28,13 @@
             <artifactId>google-cloud-firestore</artifactId>
             <version>1.35.1</version>
         </dependency> -->
+
+        <!-- https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple -->
+        <dependency>
+            <groupId>com.googlecode.json-simple</groupId>
+            <artifactId>json-simple</artifactId>
+            <version>1.1.1</version>
+        </dependency>
 
 
     </dependencies>
