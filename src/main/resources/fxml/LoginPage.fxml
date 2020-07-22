@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="468.0" prefWidth="413.0" style="-fx-background-color: #222;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="com.unah.hermes.LoginPageController">
+   <children>
+      <AnchorPane layoutX="31.0" layoutY="120.0" style="-fx-background-color: #333;" AnchorPane.leftAnchor="31.0" AnchorPane.rightAnchor="31.0">
+         <children>
+            <AnchorPane layoutX="34.0" layoutY="59.0" AnchorPane.leftAnchor="34.0" AnchorPane.rightAnchor="34.0">
+               <children>
+                  <Button fx:id="loginBtn" layoutX="23.0" layoutY="192.0" mnemonicParsing="false" onAction="#loginBtnClick" prefHeight="45.0" prefWidth="240.0" text="Iniciar Sesion" AnchorPane.leftAnchor="23.0" AnchorPane.rightAnchor="23.0" />
+                  <PasswordField id="passTxt" fx:id="passTxt" layoutY="124.0" prefHeight="25.0" prefWidth="285.0" promptText="contraseña" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                  <Label prefHeight="27.0" prefWidth="63.0" text="Correo:" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutY="91.0" prefHeight="17.0" prefWidth="98.0" text="Contraseña:" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <TextField id="correoTxt" fx:id="correoTxt" layoutY="34.0" prefHeight="25.0" prefWidth="285.0" promptText="correo@correo.com" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+               </children>
+            </AnchorPane>
+            <Label layoutX="94.0" layoutY="13.0" text="Inicio de Sesión" textFill="WHITE">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Separator layoutX="15.0" layoutY="48.0" prefHeight="2.0" prefWidth="317.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" />
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </AnchorPane>
+      <Label id="titleLabel" accessibleRoleDescription="\\@" layoutX="91.0" layoutY="14.0" prefHeight="70.0" prefWidth="240.0" text="H.E.R.M.E.S" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font size="48.0" />
+         </font>
+      </Label>
+      <Label layoutX="27.0" layoutY="76.0" prefHeight="17.0" prefWidth="361.0" text="Herramienta de Elaboración de Requisas por Medios Electronicos Sistematizados" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="27.0" AnchorPane.rightAnchor="27.0">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
