@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" minHeight="720.0" minWidth="1280.0" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unah.hermes.MainPageController">
+   <children>
+      <MenuBar prefHeight="25.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <menus>
+          <Menu id="Archivo" mnemonicParsing="false" text="Archivo">
+            <items>
+              <MenuItem fx:id="menuBtnCerrar" mnemonicParsing="false" onAction="#menuBtnCerrarClick" text="Close" />
+                  <MenuItem fx:id="menuBtnImprimir" mnemonicParsing="false" onAction="#menuBtnImprimirClick" text="Imprimir" />
+                  <MenuItem fx:id="menuBtnImprimirMensual" mnemonicParsing="false" onAction="#menuBtnImprimirMensualClick" text="Imprimir reporte mensual" />
+            </items>
+          </Menu>
+          <Menu id="Editar" mnemonicParsing="false" text="Editar">
+            <items>
+              <MenuItem fx:id="menuBtnEntregarReq" mnemonicParsing="false" onAction="#menuBtnEntregarReqClick" text="Entregar Requisicion" />
+                  <MenuItem fx:id="menuBtnDenegReq" mnemonicParsing="false" onAction="#menuBtnDenegReqClick" text="Denegar Requisicion" />
+                  <MenuItem fx:id="menuBtnOcultarReq" mnemonicParsing="false" onAction="#menuBtnOcultarReqClick" text="Ocultar Requisicion" />
+            </items>
+          </Menu>
+          <Menu id="Utilidad" mnemonicParsing="false" text="Utilidad">
+            <items>
+              <MenuItem fx:id="menuBtnMantUsuarios" mnemonicParsing="false" onAction="#menuBtnMantUsuariosClick" text="Mantenimiento de Usuarios" />
+                  <MenuItem fx:id="menuBtnMantProductos" mnemonicParsing="false" onAction="#menuBtnMantProductosClick" text="Mantenimiento de Productos" />
+                  <MenuItem fx:id="menuBtnMantAreas" mnemonicParsing="false" onAction="#menuBtnMantAreasClick" text="Mantenimiento de Áreas" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <TabPane layoutY="25.0" prefHeight="720.0" prefWidth="1280.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
+        <tabs>
+          <Tab text="Requisiciones Pendientes">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <AnchorPane layoutX="56.0" layoutY="92.0" prefHeight="558.0" prefWidth="250.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="56.0" AnchorPane.topAnchor="92.0">
+                           <children>
+                              <ListView fx:id="listaRQP" layoutY="34.0" prefHeight="526.0" prefWidth="250.0" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="34.0" />
+                              <Pane layoutX="6.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <Label layoutY="5.0" text="Seleccionar todos">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <CheckBox fx:id="chkAllSelected" layoutX="117.0" layoutY="7.0" mnemonicParsing="false" />
+                                    <MenuButton fx:id="menuAccionesRQP" layoutX="151.0" mnemonicParsing="false" text="Acciones...">
+                                      <items>
+                                        <MenuItem mnemonicParsing="false" text="Denegar" />
+                                      </items>
+                                    </MenuButton>
+                                 </children>
+                              </Pane>
+                           </children>
+                        </AnchorPane>
+                        <Label layoutX="14.0" layoutY="43.0" text="Requisiciones Pendientes">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                        </Label>
+                        <AnchorPane layoutX="348.0" layoutY="105.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="348.0" AnchorPane.rightAnchor="192.0" AnchorPane.topAnchor="105.0">
+                           <children>
+                              <TableView layoutY="52.0" prefHeight="495.0" prefWidth="740.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="52.0">
+                                <columns>
+                                  <TableColumn prefWidth="351.0" text="Producto" />
+                                  <TableColumn prefWidth="106.0" text="Cantidad" />
+                                    <TableColumn prefWidth="282.0" text="Unidad" />
+                                </columns>
+                              </TableView>
+                              <AnchorPane layoutX="51.0" AnchorPane.leftAnchor="51.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <Label text="#Req" />
+                                    <Label layoutY="25.0" text="Estado:" />
+                                    <Label fx:id="lblEstado" layoutX="47.0" layoutY="25.0" text="Label" />
+                                    <Label fx:id="lblReqID" layoutX="47.0" text="Label" />
+                                    <Label layoutX="206.0" text="Fecha:" />
+                                    <Label layoutX="206.0" layoutY="25.0" text="Hora:" />
+                                    <Label layoutX="380.0" text="Area:" />
+                                    <Label layoutX="380.0" layoutY="25.0" text="Solicitante:" />
+                                    <Label fx:id="lblFecha" layoutX="249.0" text="Label" />
+                                    <Label fx:id="lblHora" layoutX="249.0" layoutY="25.0" text="Label" />
+                                    <Label fx:id="lblSolicitante" layoutX="456.0" layoutY="25.0" text="Label" />
+                                    <Label fx:id="lblArea" layoutX="456.0" text="Label" />
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </AnchorPane>
+                        <Label layoutX="576.0" layoutY="39.0" text="Vista Previa de la requisicion" AnchorPane.leftAnchor="576.0" AnchorPane.rightAnchor="252.0" AnchorPane.topAnchor="39.0">
+                           <font>
+                              <Font size="36.0" />
+                           </font>
+                        </Label>
+                        <AnchorPane layoutX="1097.0" layoutY="155.0" prefHeight="496.0" prefWidth="169.0" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="156.0">
+                           <children>
+                              <Button fx:id="btnEntregar" layoutX="19.0" layoutY="31.0" mnemonicParsing="false" onAction="#btnEntregarClick" prefHeight="37.0" prefWidth="131.0" text="Entregar" />
+                              <Button fx:id="btnDenegar" layoutX="19.0" layoutY="80.0" mnemonicParsing="false" onAction="#btnDenegarClick" prefHeight="37.0" prefWidth="131.0" text="Denegar" />
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Requisiciones Entregadas">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <AnchorPane layoutX="56.0" layoutY="92.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="56.0" AnchorPane.topAnchor="92.0">
+                           <children>
+                              <ListView fx:id="listaRQE" layoutY="34.0" prefHeight="526.0" prefWidth="250.0" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="34.0" />
+                              <AnchorPane layoutX="6.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <Label layoutY="5.0" text="Seleccionar todos">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <CheckBox fx:id="chkAllSelectedRQE" layoutX="117.0" layoutY="7.0" mnemonicParsing="false" />
+                                    <MenuButton fx:id="menuAccionesRQE" layoutX="151.0" mnemonicParsing="false" text="Acciones...">
+                                       <items>
+                                          <MenuItem mnemonicParsing="false" text="Ocultar" />
+                                       </items>
+                                    </MenuButton>
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </AnchorPane>
+                        <Label layoutX="14.0" layoutY="43.0" text="Requisiciones Entregadas">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                        </Label>
+                        <AnchorPane layoutX="348.0" layoutY="105.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="345.0" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="105.0">
+                           <children>
+                              <TableView layoutY="52.0" prefHeight="495.0" prefWidth="913.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="52.0">
+                                 <columns>
+                                    <TableColumn prefWidth="249.0" text="Producto" />
+                                    <TableColumn minWidth="0.0" prefWidth="37.0" text="Cant." />
+                                    <TableColumn prefWidth="223.0" text="Unidad" />
+                                    <TableColumn prefWidth="91.0" text="Cant. Entregada" />
+                                    <TableColumn prefWidth="95.0" text="Cant. Pendiente" />
+                                    <TableColumn prefWidth="217.0" text="Comentario" />
+                                 </columns>
+                              </TableView>
+                              <AnchorPane layoutX="51.0" AnchorPane.leftAnchor="51.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <Label text="#Req" />
+                                    <Label layoutY="25.0" text="Estado:" />
+                                    <Label fx:id="lblEstado1" layoutX="47.0" layoutY="25.0" text="Label" />
+                                    <Label fx:id="lblReqID1" layoutX="47.0" text="Label" />
+                                    <Label layoutX="206.0" text="Fecha:" />
+                                    <Label layoutX="206.0" layoutY="25.0" text="Hora:" />
+                                    <Label layoutX="380.0" text="Area:" />
+                                    <Label layoutX="380.0" layoutY="25.0" text="Solicitante:" />
+                                    <Label fx:id="lblFecha1" layoutX="249.0" text="Label" />
+                                    <Label fx:id="lblHora1" layoutX="249.0" layoutY="25.0" text="Label" />
+                                    <Label fx:id="lblSolicitante1" layoutX="456.0" layoutY="25.0" text="Label" />
+                                    <Label fx:id="lblArea1" layoutX="456.0" text="Label" />
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </AnchorPane>
+                        <Label layoutX="576.0" layoutY="39.0" text="Vista Previa de la requisicion">
+                           <font>
+                              <Font size="36.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+               </content>
+          </Tab>
+            <Tab text="Registro de Requisiciones">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+               </content>
+            </Tab>
+            <Tab text="Requisiciones Denegadas">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <AnchorPane layoutX="56.0" layoutY="92.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="56.0" AnchorPane.topAnchor="92.0">
+                           <children>
+                              <ListView fx:id="listaRQD" layoutY="34.0" prefHeight="526.0" prefWidth="250.0" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="34.0" />
+                              <AnchorPane layoutX="6.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <Label layoutY="5.0" text="Seleccionar todos">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <CheckBox fx:id="chkAllSelected2" layoutX="117.0" layoutY="7.0" mnemonicParsing="false" />
+                                    <MenuButton fx:id="menuAccionesRQP2" layoutX="151.0" mnemonicParsing="false" text="Acciones...">
+                                       <items>
+                                          <MenuItem mnemonicParsing="false" text="Ocultar" />
+                                       </items>
+                                    </MenuButton>
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </AnchorPane>
+                        <Label layoutX="14.0" layoutY="43.0" text="Requisiciones Denegadas">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                        </Label>
+                        <AnchorPane layoutX="348.0" layoutY="105.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="345.0" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="105.0">
+                           <children>
+                              <TableView layoutY="52.0" prefHeight="495.0" prefWidth="910.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="52.0">
+                                 <columns>
+                                    <TableColumn prefWidth="424.0" text="Producto" />
+                                    <TableColumn prefWidth="151.0" text="Cantidad" />
+                                    <TableColumn prefWidth="334.0" text="Unidad" />
+                                 </columns>
+                              </TableView>
+                              <AnchorPane layoutX="51.0" AnchorPane.leftAnchor="51.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <Label text="#Req" />
+                                    <Label layoutY="25.0" text="Estado:" />
+                                    <Label fx:id="lblEstado2" layoutX="47.0" layoutY="25.0" text="Label" />
+                                    <Label fx:id="lblReqID2" layoutX="47.0" text="Label" />
+                                    <Label layoutX="206.0" text="Fecha:" />
+                                    <Label layoutX="206.0" layoutY="25.0" text="Hora:" />
+                                    <Label layoutX="380.0" text="Area:" />
+                                    <Label layoutX="380.0" layoutY="25.0" text="Solicitante:" />
+                                    <Label fx:id="lblFecha2" layoutX="249.0" text="Label" />
+                                    <Label fx:id="lblHora2" layoutX="249.0" layoutY="25.0" text="Label" />
+                                    <Label fx:id="lblSolicitante2" layoutX="456.0" layoutY="25.0" text="Label" />
+                                    <Label fx:id="lblArea2" layoutX="456.0" text="Label" />
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </AnchorPane>
+                        <Label layoutX="576.0" layoutY="39.0" text="Vista Previa de la requisicion">
+                           <font>
+                              <Font size="36.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>
