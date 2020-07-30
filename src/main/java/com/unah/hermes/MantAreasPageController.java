@@ -12,6 +12,7 @@ public class MantAreasPageController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        //Prueba
     }    
     
 }
