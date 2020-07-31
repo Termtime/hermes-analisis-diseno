@@ -29,7 +29,7 @@
       <Label alignment="BASELINE_CENTER" layoutX="189.0" layoutY="123.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="32.0" prefWidth="228.0" text="para ver sus usuarios..." />
       <AnchorPane layoutX="24.0" layoutY="267.0" prefHeight="200.0" prefWidth="200.0">
          <children>
-            <Button id="btnCreaArea" layoutX="54.0" layoutY="41.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="95.0" style="-fx-background-color: black;" text="Crear Área" />
+            <Button id="btnCreaArea" layoutX="54.0" layoutY="41.0" mnemonicParsing="false" onAction="#btnCrearAreaClick" prefHeight="32.0" prefWidth="95.0" style="-fx-background-color: black;" text="Crear Área" />
             <Button id="btnEliminaArea" layoutX="52.0" layoutY="125.0" mnemonicParsing="false" style="-fx-background-color: black;" text="Eliminar Área" />
          </children>
       </AnchorPane>
