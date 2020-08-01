@@ -21,6 +21,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -38,6 +39,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.Node;
 import javafx.stage.Window;
+import javafx.stage.WindowEvent;
 import javafx.stage.Modality;
 
 public class MainPageController implements Initializable {
@@ -174,11 +176,77 @@ public class MainPageController implements Initializable {
 
     @FXML
     private AnchorPane mainPage;
-
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //crear los listeners para los datos de firebase
         //TODO requisiciones denegadas, requisiciones entregadas
+
+        mainPage.sceneProperty().addListener(new ChangeListener<Scene>() {
+            @Override
+            public void changed(ObservableValue<? extends Scene> observable, Scene oldValue, Scene newValue) {
+              newValue.windowProperty().addListener(new ChangeListener<Window>() {
+                @Override
+                public void changed(ObservableValue<? extends Window> observable, Window oldValue, Window newValue) {
+                    final Window parent = newValue;
+                    newValue.addEventHandler(WindowEvent.WINDOW_SHOWN, new EventHandler<WindowEvent>() {
+                    @Override
+                    public void handle(WindowEvent event) {
+                        iniciarEstructuraTablas();
+                        
+                        ((Stage) parent).maximizedProperty().addListener(new ChangeListener<Boolean>(){
+                            @Override
+                            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue){
+                                System.out.println(newValue);
+                                System.out.println(oldValue);
+                                double widthP = tablaP.getWidth();
+                                double widthD = tablaD.getWidth();
+                                double widthE = tablaE.getWidth();
+                                if(newValue){
+                                    System.out.println("hola he sido maximizado");
+                                    tablaP.setPrefWidth(widthP+1);
+                                    tablaD.setPrefWidth(widthD+1);
+                                    tablaE.setPrefWidth(widthE+1);
+                                }else{
+                                    System.out.println("hola he sido minimizado");
+                                    tablaP.setPrefWidth(widthP-1);
+                                    tablaD.setPrefWidth(widthD-1);
+                                    tablaE.setPrefWidth(widthE-1);
+                                }
+                            }
+                        });
+                    }
+                  });
+                }
+              });
+            }
+        });
+
+        mainPage.widthProperty().addListener(new ChangeListener<Number>(){
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                recalcularColumnWidth();
+            }
+        });
+        tablaP.widthProperty().addListener(new ChangeListener<Number>(){
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                recalcularColumnWidth();
+            }
+        });
+
+        tablaD.widthProperty().addListener(new ChangeListener<Number>(){
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                recalcularColumnWidth();
+            }
+        });
+
+        tablaE.widthProperty().addListener(new ChangeListener<Number>(){
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                recalcularColumnWidth();
+            }
+        });
         db = FirebaseConnector.getInstance();
         db.iniciarListenerRequisiciones();
         listaRQE.setItems(RequisicionesEntregadas);
@@ -186,7 +254,7 @@ public class MainPageController implements Initializable {
         listaRQD.setItems(RequisicionesDenegadas);
         
         
-        iniciarEstructuraTablas();
+        
         //agregar el listener de cambio para cuando se cambie la seleccion
         listaRQP.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Requisicion>(){
             @Override
@@ -237,6 +305,27 @@ public class MainPageController implements Initializable {
         });    
     }
 
+    private void recalcularColumnWidth(){
+        ObservableList columnasP = tablaP.getColumns();
+        
+        ((TableColumn)( columnasP.get(0) )).setPrefWidth(tablaP.getWidth()*0.55);
+        ((TableColumn)( columnasP.get(1) )).setPrefWidth(tablaP.getWidth()*0.35);
+        ((TableColumn)( columnasP.get(2) )).setPrefWidth(tablaP.getWidth()*0.1);
+        
+        ObservableList columnasD = tablaD.getColumns();
+        ((TableColumn)( columnasD.get(0) )).setPrefWidth(tablaD.getWidth()*0.55);
+        ((TableColumn)( columnasD.get(1) )).setPrefWidth(tablaD.getWidth()*0.35);
+        ((TableColumn)( columnasD.get(2) )).setPrefWidth(tablaD.getWidth()*0.1);
+        
+        ObservableList columnasE = tablaE.getColumns();
+        ((TableColumn)( columnasE.get(0) )).setPrefWidth(tablaE.getWidth()*0.35);
+        ((TableColumn)( columnasE.get(1) )).setPrefWidth(tablaE.getWidth()*0.15);
+        ((TableColumn)( columnasE.get(2) )).setPrefWidth(tablaE.getWidth()*0.105);
+        ((TableColumn)( columnasE.get(3) )).setPrefWidth(tablaE.getWidth()*0.105);
+        ((TableColumn)( columnasE.get(4) )).setPrefWidth(tablaE.getWidth()*0.105);
+        ((TableColumn)( columnasE.get(5) )).setPrefWidth(tablaE.getWidth()*0.185);
+
+    }
     private void iniciarEstructuraTablas(){
 
         //Tabla de Requisiciones pendientes
@@ -244,40 +333,43 @@ public class MainPageController implements Initializable {
         tablaP.getColumns().clear();
         TableColumn columnaProductoP = new TableColumn<>("Producto");
         columnaProductoP.setCellValueFactory(new PropertyValueFactory<>("producto"));
+        columnaProductoP.setPrefWidth(tablaP.getWidth()*0.55);
 
         TableColumn columnaUnidadP = new TableColumn<>("Unidad");
         columnaUnidadP.setCellValueFactory(new PropertyValueFactory<>("unidad"));
+        columnaUnidadP.setPrefWidth(tablaP.getWidth()*0.35);
 
         TableColumn columnaCantidadPedidaP = new TableColumn<>("Cantidad");
         columnaCantidadPedidaP.setCellValueFactory(new PropertyValueFactory<>("cantidadPedida"));
         tablaP.getColumns().addAll(columnaProductoP, columnaUnidadP, columnaCantidadPedidaP);
+        columnaCantidadPedidaP.setPrefWidth(tablaP.getWidth()*0.10);
 
         //Tabla de Requisiciones entregadas
         tablaE.getItems().clear();
         tablaE.getColumns().clear();
         TableColumn columnaProductoE = new TableColumn<>("Producto");
         columnaProductoE.setCellValueFactory(new PropertyValueFactory<>("producto"));
-        // columnaProductoE.setPrefWidth(tablaE.getWidth()*0.35);
+        columnaProductoE.setPrefWidth(tablaE.getWidth()*0.35);
 
         TableColumn columnaUnidadE = new TableColumn<>("Unidad");
         columnaUnidadE.setCellValueFactory(new PropertyValueFactory<>("unidad"));
-        // columnaUnidadE.setPrefWidth(tablaE.getWidth()*0.15);
+        columnaUnidadE.setPrefWidth(tablaE.getWidth()*0.15);
 
         TableColumn columnaCantidadPedidaE = new TableColumn<>("Cant. Pedida");
         columnaCantidadPedidaE.setCellValueFactory(new PropertyValueFactory<>("cantidadPedida"));
-        // columnaCantidadPedidaE.setPrefWidth(tablaE.getWidth()*0.105);
+        columnaCantidadPedidaE.setPrefWidth(tablaE.getWidth()*0.105);
 
         TableColumn columnaCantidadEntregadaE = new TableColumn<>("Cant. Entregada");
         columnaCantidadEntregadaE.setCellValueFactory(new PropertyValueFactory<>("cantidadEntregada"));
-        // columnaCantidadEntregadaE.setPrefWidth(tablaE.getWidth()*0.105);
+        columnaCantidadEntregadaE.setPrefWidth(tablaE.getWidth()*0.105);
 
         TableColumn columnaCantidadPendienteE = new TableColumn<>("Cant. Pendiente");
         columnaCantidadPendienteE.setCellValueFactory(new PropertyValueFactory<>("cantidadPendiente"));
-        // columnaCantidadPendienteE.setPrefWidth(tablaE.getWidth()*0.105);
+        columnaCantidadPendienteE.setPrefWidth(tablaE.getWidth()*0.105);
 
         TableColumn columnaComentariosE = new TableColumn<>("Comentarios");
         columnaComentariosE.setCellValueFactory(new PropertyValueFactory<>("comentario"));
-        // columnaComentariosE.setPrefWidth(tablaE.getWidth()*0.18);
+        columnaComentariosE.setPrefWidth(tablaE.getWidth()*0.18);
 
         tablaE.getColumns().addAll(columnaProductoE, columnaUnidadE, columnaCantidadPedidaE, columnaCantidadEntregadaE, columnaCantidadPendienteE, columnaComentariosE);
 
@@ -286,13 +378,16 @@ public class MainPageController implements Initializable {
         tablaD.getColumns().clear();
         TableColumn columnaProductoD = new TableColumn<>("Producto");
         columnaProductoD.setCellValueFactory(new PropertyValueFactory<>("producto"));
+        columnaProductoD.setPrefWidth(tablaD.getWidth()*0.55);
 
         TableColumn columnaUnidadD = new TableColumn<>("Unidad");
         columnaUnidadD.setCellValueFactory(new PropertyValueFactory<>("unidad"));
+        columnaUnidadD.setPrefWidth(tablaD.getWidth()*0.35);
 
         TableColumn columnaCantidadPedidaD = new TableColumn<>("Cantidad");
         columnaCantidadPedidaD.setCellValueFactory(new PropertyValueFactory<>("cantidadPedida"));
         tablaD.getColumns().addAll(columnaProductoD, columnaUnidadD, columnaCantidadPedidaD);
+        columnaCantidadPedidaD.setPrefWidth(tablaD.getWidth()*0.10);
     }
 
     private void popularTablaRequisicionesPDConProductos(TableView<RequisicionRow> tabla, ObservableList<Producto> productos) {
