@@ -11,7 +11,7 @@ import javafx.collections.ObservableList;
 public class RequisicionFactory {
     public static List<RequisicionMock> load(){
         List<RequisicionMock> data = new ArrayList<>();
-        ObservableList prods = FXCollections.observableArrayList();
+        List<ProductoMock> prods = new ArrayList<>();
 
         prods.add(new ProductoMock("2", "Mantequilla", "Libra", 1, 1, 0, "Mas azucar"));
         prods.add(new ProductoMock("3", "Pescado", "Libra", 10, 2, 0, "Mucho pescado"));
