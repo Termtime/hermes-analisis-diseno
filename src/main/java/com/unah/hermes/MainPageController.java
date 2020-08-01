@@ -186,7 +186,7 @@ public class MainPageController implements Initializable {
         listaRQD.setItems(RequisicionesDenegadas);
         
         
-        
+        iniciarEstructuraTablas();
         //agregar el listener de cambio para cuando se cambie la seleccion
         listaRQP.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Requisicion>(){
             @Override
