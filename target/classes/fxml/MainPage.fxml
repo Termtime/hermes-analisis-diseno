@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" minHeight="720.0" minWidth="1280.0" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unah.hermes.MainPageController">
+<AnchorPane id="AnchorPane" fx:id="mainPage" minHeight="720.0" minWidth="1280.0" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unah.hermes.MainPageController">
    <children>
       <MenuBar prefHeight="25.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <menus>
@@ -76,29 +76,29 @@
                         </Label>
                         <AnchorPane layoutX="348.0" layoutY="105.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="348.0" AnchorPane.rightAnchor="192.0" AnchorPane.topAnchor="105.0">
                            <children>
-                              <TableView layoutY="52.0" prefHeight="495.0" prefWidth="740.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="52.0">
+                              <AnchorPane layoutX="51.0" AnchorPane.leftAnchor="51.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <Label text="#Req" />
+                                    <Label layoutY="25.0" text="Estado:" />
+                                    <Label fx:id="lblEstadoP" layoutX="47.0" layoutY="25.0" text="Label" />
+                                    <Label fx:id="lblReqIDP" layoutX="47.0" text="Label" />
+                                    <Label layoutX="206.0" text="Fecha:" />
+                                    <Label layoutX="206.0" layoutY="25.0" text="Hora:" />
+                                    <Label layoutX="380.0" text="Area:" />
+                                    <Label layoutX="380.0" layoutY="25.0" text="Solicitante:" />
+                                    <Label fx:id="lblFechaP" layoutX="249.0" text="Label" />
+                                    <Label fx:id="lblHoraP" layoutX="249.0" layoutY="25.0" text="Label" />
+                                    <Label fx:id="lblSolicitanteP" layoutX="456.0" layoutY="25.0" text="Label" />
+                                    <Label fx:id="lblAreaP" layoutX="456.0" text="Label" />
+                                 </children>
+                              </AnchorPane>
+                              <TableView fx:id="tablaP" layoutY="52.0" prefHeight="495.0" prefWidth="740.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="52.0">
                                 <columns>
                                   <TableColumn prefWidth="351.0" text="Producto" />
                                   <TableColumn prefWidth="106.0" text="Cantidad" />
                                     <TableColumn prefWidth="282.0" text="Unidad" />
                                 </columns>
                               </TableView>
-                              <AnchorPane layoutX="51.0" AnchorPane.leftAnchor="51.0" AnchorPane.topAnchor="0.0">
-                                 <children>
-                                    <Label text="#Req" />
-                                    <Label layoutY="25.0" text="Estado:" />
-                                    <Label fx:id="lblEstado" layoutX="47.0" layoutY="25.0" text="Label" />
-                                    <Label fx:id="lblReqID" layoutX="47.0" text="Label" />
-                                    <Label layoutX="206.0" text="Fecha:" />
-                                    <Label layoutX="206.0" layoutY="25.0" text="Hora:" />
-                                    <Label layoutX="380.0" text="Area:" />
-                                    <Label layoutX="380.0" layoutY="25.0" text="Solicitante:" />
-                                    <Label fx:id="lblFecha" layoutX="249.0" text="Label" />
-                                    <Label fx:id="lblHora" layoutX="249.0" layoutY="25.0" text="Label" />
-                                    <Label fx:id="lblSolicitante" layoutX="456.0" layoutY="25.0" text="Label" />
-                                    <Label fx:id="lblArea" layoutX="456.0" text="Label" />
-                                 </children>
-                              </AnchorPane>
                            </children>
                         </AnchorPane>
                         <Label layoutX="576.0" layoutY="39.0" text="Vista Previa de la requisicion" AnchorPane.leftAnchor="576.0" AnchorPane.rightAnchor="252.0" AnchorPane.topAnchor="39.0">
@@ -133,7 +133,8 @@
                                     <CheckBox fx:id="chkAllSelectedRQE" layoutX="117.0" layoutY="7.0" mnemonicParsing="false" />
                                     <MenuButton fx:id="menuAccionesRQE" layoutX="151.0" mnemonicParsing="false" text="Acciones...">
                                        <items>
-                                          <MenuItem mnemonicParsing="false" text="Ocultar" />
+                                          <MenuItem mnemonicParsing="false" onAction="#ocultarRequisicionesSeleccionadas" text="Ocultar" />
+                                          <MenuItem mnemonicParsing="false" onAction="#imprimirReqSeleccionada" text="Imprimir" />
                                        </items>
                                     </MenuButton>
                                  </children>
@@ -147,7 +148,7 @@
                         </Label>
                         <AnchorPane layoutX="348.0" layoutY="105.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="345.0" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="105.0">
                            <children>
-                              <TableView layoutY="52.0" prefHeight="495.0" prefWidth="913.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="52.0">
+                              <TableView fx:id="tablaE" layoutY="52.0" prefHeight="495.0" prefWidth="913.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="52.0">
                                  <columns>
                                     <TableColumn prefWidth="249.0" text="Producto" />
                                     <TableColumn minWidth="0.0" prefWidth="37.0" text="Cant." />
@@ -161,16 +162,16 @@
                                  <children>
                                     <Label text="#Req" />
                                     <Label layoutY="25.0" text="Estado:" />
-                                    <Label fx:id="lblEstado1" layoutX="47.0" layoutY="25.0" text="Label" />
-                                    <Label fx:id="lblReqID1" layoutX="47.0" text="Label" />
+                                    <Label fx:id="lblEstadoE" layoutX="47.0" layoutY="25.0" text="Label" />
+                                    <Label fx:id="lblReqIDE" layoutX="47.0" text="Label" />
                                     <Label layoutX="206.0" text="Fecha:" />
                                     <Label layoutX="206.0" layoutY="25.0" text="Hora:" />
                                     <Label layoutX="380.0" text="Area:" />
                                     <Label layoutX="380.0" layoutY="25.0" text="Solicitante:" />
-                                    <Label fx:id="lblFecha1" layoutX="249.0" text="Label" />
-                                    <Label fx:id="lblHora1" layoutX="249.0" layoutY="25.0" text="Label" />
-                                    <Label fx:id="lblSolicitante1" layoutX="456.0" layoutY="25.0" text="Label" />
-                                    <Label fx:id="lblArea1" layoutX="456.0" text="Label" />
+                                    <Label fx:id="lblFechaE" layoutX="249.0" text="Label" />
+                                    <Label fx:id="lblHoraE" layoutX="249.0" layoutY="25.0" text="Label" />
+                                    <Label fx:id="lblSolicitanteE" layoutX="456.0" layoutY="25.0" text="Label" />
+                                    <Label fx:id="lblAreaE" layoutX="456.0" text="Label" />
                                  </children>
                               </AnchorPane>
                            </children>
@@ -184,11 +185,6 @@
                   </AnchorPane>
                </content>
           </Tab>
-            <Tab text="Registro de Requisiciones">
-               <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-               </content>
-            </Tab>
             <Tab text="Requisiciones Denegadas">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
@@ -220,7 +216,7 @@
                         </Label>
                         <AnchorPane layoutX="348.0" layoutY="105.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="345.0" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="105.0">
                            <children>
-                              <TableView layoutY="52.0" prefHeight="495.0" prefWidth="910.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="52.0">
+                              <TableView fx:id="tablaD" layoutY="52.0" prefHeight="495.0" prefWidth="910.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="52.0">
                                  <columns>
                                     <TableColumn prefWidth="424.0" text="Producto" />
                                     <TableColumn prefWidth="151.0" text="Cantidad" />
@@ -231,16 +227,16 @@
                                  <children>
                                     <Label text="#Req" />
                                     <Label layoutY="25.0" text="Estado:" />
-                                    <Label fx:id="lblEstado2" layoutX="47.0" layoutY="25.0" text="Label" />
-                                    <Label fx:id="lblReqID2" layoutX="47.0" text="Label" />
+                                    <Label fx:id="lblEstadoD" layoutX="47.0" layoutY="25.0" text="Label" />
+                                    <Label fx:id="lblReqIDD" layoutX="47.0" text="Label" />
                                     <Label layoutX="206.0" text="Fecha:" />
                                     <Label layoutX="206.0" layoutY="25.0" text="Hora:" />
                                     <Label layoutX="380.0" text="Area:" />
                                     <Label layoutX="380.0" layoutY="25.0" text="Solicitante:" />
-                                    <Label fx:id="lblFecha2" layoutX="249.0" text="Label" />
-                                    <Label fx:id="lblHora2" layoutX="249.0" layoutY="25.0" text="Label" />
-                                    <Label fx:id="lblSolicitante2" layoutX="456.0" layoutY="25.0" text="Label" />
-                                    <Label fx:id="lblArea2" layoutX="456.0" text="Label" />
+                                    <Label fx:id="lblFechaD" layoutX="249.0" text="Label" />
+                                    <Label fx:id="lblHoraD" layoutX="249.0" layoutY="25.0" text="Label" />
+                                    <Label fx:id="lblSolicitanteD" layoutX="456.0" layoutY="25.0" text="Label" />
+                                    <Label fx:id="lblAreaD" layoutX="456.0" text="Label" />
                                  </children>
                               </AnchorPane>
                            </children>
@@ -252,6 +248,11 @@
                         </Label>
                      </children>
                   </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Registro de Requisiciones">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                </content>
             </Tab>
         </tabs>
