@@ -15,7 +15,7 @@ public class RequisicionMock {
     public Boolean estaAutorizado;
     public String nombreDisplay;
     public String solicitante;
-    public ObservableList<ProductoMock> productos = FXCollections.observableArrayList();
+    public ArrayList<ProductoMock> productos = new ArrayList<>();
     public Date fecha;
     public String fechaString;
     public String hora;
@@ -60,14 +60,9 @@ public class RequisicionMock {
         }
     }
 
-    public RequisicionMock(String reqID, String nombreDisplay, String estado, String area, String autorizador, Boolean estaAutorizado, String solicitante, Date fecha, ObservableList prods)
+    public RequisicionMock(String reqID, String nombreDisplay, String estado, String area, String autorizador, Boolean estaAutorizado, String solicitante, Date fecha, ArrayList<ProductoMock> prods)
     {
         try{
-            List<Map<String,Object>> productosLista = (List<Map<String,Object>>) prods;
-            System.out.println("ESTOS VIENE ORIGINAL:");
-            System.out.println(prods);
-            System.out.println("Esto lo coniverto:");
-            System.out.println(productosLista);
             this.reqID = reqID;
             this.nombreDisplay = nombreDisplay;
             this.estado = estado;
@@ -120,7 +115,7 @@ public class RequisicionMock {
         this.nombreDisplay = nombreDisplay;
     }
 
-    public void setProductos(ObservableList<ProductoMock> productos) {
+    public void setProductos(ArrayList<ProductoMock> productos) {
         this.productos = productos;
     }
 
@@ -157,7 +152,7 @@ public class RequisicionMock {
     public String getNombreDisplay() {
         return nombreDisplay;
     }
-    public ObservableList<ProductoMock> getProductos() {
+    public ArrayList<ProductoMock> getProductos() {
         return productos;
     }
     public String getReqID() {
