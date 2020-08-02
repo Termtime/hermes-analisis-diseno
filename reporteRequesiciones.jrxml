@@ -86,11 +86,11 @@
 					<text><![CDATA[H.E.R.M.E.S]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="0" y="60" width="530" height="20" forecolor="#FFFFFF" uuid="39f9641d-813f-47d8-afbe-547618c84241"/>
+					<reportElement x="11" y="60" width="390" height="20" forecolor="#FFFFFF" uuid="39f9641d-813f-47d8-afbe-547618c84241"/>
 					<textElement textAlignment="Left">
-						<font size="14" isBold="false"/>
+						<font size="10" isBold="false"/>
 					</textElement>
-					<text><![CDATA[Herramienta de Elaboración de Requisas ....]]></text>
+					<text><![CDATA[Herramienta de Elaboración de Requisas por Medios Electrónicos Sistematizados]]></text>
 				</staticText>
 			</frame>
 		</band>
@@ -162,7 +162,7 @@
 						<jr:tableHeader style="Table_TH" height="30" rowSpan="1">
 							<staticText>
 								<reportElement x="0" y="0" width="100" height="30" uuid="f0ff3e28-17fc-4a61-9033-e3d8d7f464c4"/>
-								<textElement textAlignment="Center">
+								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font isBold="true"/>
 								</textElement>
 								<text><![CDATA[Producto]]></text>
@@ -171,6 +171,7 @@
 						<jr:detailCell style="Table_TD" height="30">
 							<staticText>
 								<reportElement x="0" y="0" width="100" height="30" uuid="2909875e-90c7-4668-b1c5-f2033046d97c"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
 								<text><![CDATA[Aceituna Verde Rellena]]></text>
 							</staticText>
 						</jr:detailCell>
@@ -180,7 +181,7 @@
 						<jr:tableHeader style="Table_TH" height="30" rowSpan="1">
 							<staticText>
 								<reportElement x="0" y="0" width="100" height="30" uuid="2fa7a466-b51e-46bf-881f-e51ebd92377c"/>
-								<textElement textAlignment="Center">
+								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font isBold="true"/>
 								</textElement>
 								<text><![CDATA[Unidad]]></text>
@@ -189,6 +190,7 @@
 						<jr:detailCell style="Table_TD" height="30">
 							<staticText>
 								<reportElement x="0" y="0" width="100" height="30" uuid="444850cf-12ea-4839-85a6-8d332d445565"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
 								<text><![CDATA[1 Galón (8 lbs)]]></text>
 							</staticText>
 						</jr:detailCell>
@@ -198,7 +200,7 @@
 						<jr:tableHeader style="Table_TH" height="30" rowSpan="1">
 							<staticText>
 								<reportElement x="0" y="0" width="100" height="30" uuid="302eba91-aef3-4042-9a98-991039f980ab"/>
-								<textElement textAlignment="Center">
+								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font isBold="true"/>
 								</textElement>
 								<text><![CDATA[Cantidad Pedida]]></text>
@@ -207,6 +209,7 @@
 						<jr:detailCell style="Table_TD" height="30">
 							<staticText>
 								<reportElement x="0" y="0" width="100" height="30" uuid="7d8d7861-f01c-45b2-852c-c06ba3f48f80"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
 								<text><![CDATA[2]]></text>
 							</staticText>
 						</jr:detailCell>
@@ -216,7 +219,7 @@
 						<jr:tableHeader style="Table_TH" height="30" rowSpan="1">
 							<staticText>
 								<reportElement x="0" y="0" width="100" height="30" uuid="95f5e76e-9592-429c-8931-ccde569624ea"/>
-								<textElement textAlignment="Center">
+								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font isBold="true"/>
 								</textElement>
 								<text><![CDATA[Cantidad Entregada]]></text>
@@ -225,6 +228,7 @@
 						<jr:detailCell style="Table_TD" height="30">
 							<staticText>
 								<reportElement x="0" y="0" width="100" height="30" uuid="c3764db7-4adf-4609-8dfa-0401308fa854"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
 								<text><![CDATA[1]]></text>
 							</staticText>
 						</jr:detailCell>
@@ -290,7 +294,7 @@
 						<jr:tableHeader style="Table_TH" height="30" rowSpan="1">
 							<staticText>
 								<reportElement x="0" y="0" width="100" height="30" uuid="8d527d01-76fe-4bbf-87af-fe35b5675a67"/>
-								<textElement textAlignment="Center">
+								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font isBold="true"/>
 								</textElement>
 								<text><![CDATA[Producto]]></text>
@@ -299,6 +303,7 @@
 						<jr:detailCell style="Table_TD" height="30">
 							<staticText>
 								<reportElement x="0" y="0" width="100" height="30" uuid="1b56bfff-1af1-4ffb-8542-cc36e1a616aa"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
 								<text><![CDATA[Tomate Pera]]></text>
 							</staticText>
 						</jr:detailCell>
@@ -308,7 +313,7 @@
 						<jr:tableHeader style="Table_TH" height="30" rowSpan="1">
 							<staticText>
 								<reportElement x="0" y="0" width="100" height="30" uuid="32f7d1c8-d09b-4cf1-b345-2c4400e44d5c"/>
-								<textElement textAlignment="Center">
+								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font isBold="true"/>
 								</textElement>
 								<text><![CDATA[Unidad]]></text>
@@ -317,6 +322,7 @@
 						<jr:detailCell style="Table_TD" height="30">
 							<staticText>
 								<reportElement x="0" y="0" width="100" height="30" uuid="d0cb6543-f0d4-4d39-8039-a297f60d24cf"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
 								<text><![CDATA[Libra]]></text>
 							</staticText>
 						</jr:detailCell>
@@ -326,7 +332,7 @@
 						<jr:tableHeader style="Table_TH" height="30" rowSpan="1">
 							<staticText>
 								<reportElement x="0" y="0" width="100" height="30" uuid="4a1a67bd-fd2b-4dfe-92a0-5a7a659186b0"/>
-								<textElement textAlignment="Center">
+								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font isBold="true"/>
 								</textElement>
 								<text><![CDATA[Cantidad Pedida]]></text>
@@ -335,6 +341,7 @@
 						<jr:detailCell style="Table_TD" height="30">
 							<staticText>
 								<reportElement x="0" y="0" width="100" height="30" uuid="e0af5703-77db-4299-a287-60b333432e8c"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
 								<text><![CDATA[4]]></text>
 							</staticText>
 						</jr:detailCell>
@@ -344,7 +351,7 @@
 						<jr:tableHeader style="Table_TH" height="30" rowSpan="1">
 							<staticText>
 								<reportElement x="0" y="0" width="100" height="30" uuid="f5018c33-c5d6-4300-a7e2-eec9c2ac41f6"/>
-								<textElement textAlignment="Center">
+								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font isBold="true"/>
 								</textElement>
 								<text><![CDATA[Cantidad Entregada]]></text>
@@ -353,6 +360,7 @@
 						<jr:detailCell style="Table_TD" height="30">
 							<staticText>
 								<reportElement x="0" y="0" width="100" height="30" uuid="b437e1c0-0b8c-4b02-82a9-226b8969deeb"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
 								<text><![CDATA[3]]></text>
 							</staticText>
 						</jr:detailCell>
