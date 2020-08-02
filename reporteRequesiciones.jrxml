@@ -86,7 +86,7 @@
 					<text><![CDATA[H.E.R.M.E.S]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="11" y="60" width="390" height="20" forecolor="#FFFFFF" uuid="39f9641d-813f-47d8-afbe-547618c84241"/>
+					<reportElement x="23" y="60" width="390" height="20" forecolor="#FFFFFF" uuid="39f9641d-813f-47d8-afbe-547618c84241"/>
 					<textElement textAlignment="Left">
 						<font size="10" isBold="false"/>
 					</textElement>
