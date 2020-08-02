@@ -99,18 +99,10 @@
 		<band height="13"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="56">
+		<band height="61">
 			<line>
 				<reportElement x="-20" y="20" width="595" height="1" forecolor="#666666" uuid="f3bf8a53-4779-4372-a5e1-afa315db54f8"/>
 			</line>
-			<textField>
-				<reportElement x="70" y="0" width="80" height="20" uuid="119d3d7c-e22d-423f-9cc1-3551f9a908dc"/>
-				<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="70" y="20" width="80" height="24" uuid="da4812b8-5e1d-4c5a-88b2-67f711f092d2"/>
-				<textFieldExpression><![CDATA[$F{solicitante}]]></textFieldExpression>
-			</textField>
 			<staticText>
 				<reportElement x="7" y="0" width="53" height="30" uuid="f4e4a1ae-a74e-43f6-9589-24a132e7dd49"/>
 				<text><![CDATA[Fecha]]></text>
@@ -119,10 +111,18 @@
 				<reportElement x="7" y="20" width="53" height="30" uuid="fdef3044-7188-4a80-90bc-9df1cf41ee56"/>
 				<text><![CDATA[Solicitante]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="93" y="5" width="100" height="30" uuid="a259e13f-3573-4229-b6b2-16e9eb920e52"/>
+				<text><![CDATA[01/08/2020]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="93" y="26" width="100" height="30" uuid="41c7910a-879b-497e-9c73-eff2a55a603c"/>
+				<text><![CDATA[Andrea Archila]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="352">
+		<band height="400">
 			<line>
 				<reportElement positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1" uuid="c6a0f432-1536-43f4-8e10-ecf2333243b8"/>
 			</line>
@@ -130,44 +130,24 @@
 				<reportElement x="7" y="0" width="100" height="30" uuid="ff8d43fc-586d-41b8-8a56-4aeb54cd7f60"/>
 				<text><![CDATA[Requisición]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="70" y="0" width="100" height="30" uuid="59baa075-d48f-4360-ae2b-24d3c29c0dad"/>
-				<textFieldExpression><![CDATA[$F{reqID}]]></textFieldExpression>
-			</textField>
 			<staticText>
 				<reportElement x="10" y="24" width="53" height="30" uuid="19601392-fef9-4d10-a1eb-ed9530224cb6"/>
 				<text><![CDATA[Fecha]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="70" y="24" width="100" height="30" uuid="72986172-12f4-4037-a1bf-7e41caa21e05"/>
-				<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
-			</textField>
 			<staticText>
 				<reportElement x="160" y="24" width="53" height="30" uuid="4265842c-8bc9-4c6d-9e25-aa3db1e3b973"/>
 				<text><![CDATA[Hora]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="220" y="24" width="100" height="30" uuid="3a2fe580-07b8-48b6-b3ca-a2259599f040"/>
-				<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
-			</textField>
 			<staticText>
 				<reportElement x="10" y="50" width="53" height="30" uuid="81ff1bba-ad53-4f6b-881e-d67106fbb5d7"/>
 				<text><![CDATA[Área]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="70" y="50" width="100" height="30" uuid="048d032f-24b7-40d0-94c1-4241fe43d954"/>
-				<textFieldExpression><![CDATA[$F{area}]]></textFieldExpression>
-			</textField>
 			<staticText>
 				<reportElement x="160" y="50" width="53" height="30" uuid="6ba8e922-a456-4304-9fda-8f59173e1bbf"/>
 				<text><![CDATA[Solicitante]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="220" y="50" width="100" height="30" uuid="c969e049-2593-47b0-afcc-ffbceffe7c09"/>
-				<textFieldExpression><![CDATA[$F{solicitante}]]></textFieldExpression>
-			</textField>
 			<componentElement>
-				<reportElement x="0" y="100" width="555" height="200" uuid="315e8b96-f379-44d6-8085-008a62fc037a">
+				<reportElement x="0" y="100" width="555" height="90" uuid="315e8b96-f379-44d6-8085-008a62fc037a">
 					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
 					<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
 					<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
@@ -182,14 +162,17 @@
 						<jr:tableHeader style="Table_TH" height="30" rowSpan="1">
 							<staticText>
 								<reportElement x="0" y="0" width="100" height="30" uuid="f0ff3e28-17fc-4a61-9033-e3d8d7f464c4"/>
-								<text><![CDATA[Prueba]]></text>
+								<textElement textAlignment="Center">
+									<font isBold="true"/>
+								</textElement>
+								<text><![CDATA[Producto]]></text>
 							</staticText>
 						</jr:tableHeader>
 						<jr:detailCell style="Table_TD" height="30">
-							<textField>
-								<reportElement x="0" y="0" width="100" height="30" uuid="183a3837-557a-4e39-9ff4-087a2da136e9"/>
-								<textFieldExpression><![CDATA[$F{productos}]]></textFieldExpression>
-							</textField>
+							<staticText>
+								<reportElement x="0" y="0" width="100" height="30" uuid="2909875e-90c7-4668-b1c5-f2033046d97c"/>
+								<text><![CDATA[Aceituna Verde Rellena]]></text>
+							</staticText>
 						</jr:detailCell>
 					</jr:column>
 					<jr:column width="100" uuid="0cbd538b-a06b-49ef-bffe-b3d6cd13b462">
@@ -197,18 +180,205 @@
 						<jr:tableHeader style="Table_TH" height="30" rowSpan="1">
 							<staticText>
 								<reportElement x="0" y="0" width="100" height="30" uuid="2fa7a466-b51e-46bf-881f-e51ebd92377c"/>
-								<text><![CDATA[Prueba 2]]></text>
+								<textElement textAlignment="Center">
+									<font isBold="true"/>
+								</textElement>
+								<text><![CDATA[Unidad]]></text>
 							</staticText>
 						</jr:tableHeader>
 						<jr:detailCell style="Table_TD" height="30">
-							<textField>
-								<reportElement x="0" y="0" width="100" height="30" uuid="d408c517-4721-41c0-9dac-436d1ca79569"/>
-								<textFieldExpression><![CDATA[$F{productos}.get($F{productos}.indexOf( Object ))]]></textFieldExpression>
-							</textField>
+							<staticText>
+								<reportElement x="0" y="0" width="100" height="30" uuid="444850cf-12ea-4839-85a6-8d332d445565"/>
+								<text><![CDATA[1 Galón (8 lbs)]]></text>
+							</staticText>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="100" uuid="4c7e46dd-03bc-4bca-bf03-fce95ee63f91">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+						<jr:tableHeader style="Table_TH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="100" height="30" uuid="302eba91-aef3-4042-9a98-991039f980ab"/>
+								<textElement textAlignment="Center">
+									<font isBold="true"/>
+								</textElement>
+								<text><![CDATA[Cantidad Pedida]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="100" height="30" uuid="7d8d7861-f01c-45b2-852c-c06ba3f48f80"/>
+								<text><![CDATA[2]]></text>
+							</staticText>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="100" uuid="b0e175b1-8d45-4de3-8ed8-ffd2252023d0">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
+						<jr:tableHeader style="Table_TH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="100" height="30" uuid="95f5e76e-9592-429c-8931-ccde569624ea"/>
+								<textElement textAlignment="Center">
+									<font isBold="true"/>
+								</textElement>
+								<text><![CDATA[Cantidad Entregada]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="100" height="30" uuid="c3764db7-4adf-4609-8dfa-0401308fa854"/>
+								<text><![CDATA[1]]></text>
+							</staticText>
 						</jr:detailCell>
 					</jr:column>
 				</jr:table>
 			</componentElement>
+			<staticText>
+				<reportElement x="93" y="0" width="100" height="30" uuid="aedb4f59-8c77-44c8-8bbb-22499ed9efff"/>
+				<text><![CDATA[#1]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="63" y="20" width="100" height="30" uuid="d85127b7-1d0a-4103-a974-dfd65095131e"/>
+				<text><![CDATA[30/07/2020]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="67" y="50" width="100" height="30" uuid="cc07a900-1aad-4589-aad4-6c7a8f6fd570"/>
+				<text><![CDATA[Bar]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="213" y="20" width="100" height="30" uuid="057a636f-7c32-4eb8-bf5d-e2726915ad33"/>
+				<text><![CDATA[09:25:02]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="213" y="50" width="100" height="30" uuid="c9910d7f-a478-4279-8431-fde746326859"/>
+				<text><![CDATA[Andrea Archila]]></text>
+			</staticText>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="3" y="229" width="555" height="1" uuid="a60daa8c-37df-4f4a-b256-a1448c6eeae0"/>
+			</line>
+			<staticText>
+				<reportElement x="10" y="210" width="100" height="30" uuid="a58cd1b0-623b-4cf2-bf2b-f8ae02bb627a"/>
+				<text><![CDATA[Requisición]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="234" width="53" height="30" uuid="824a749f-f53b-425b-8a57-f49a2e955f33"/>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="163" y="234" width="53" height="30" uuid="74f518bf-cbcb-41c0-9e5f-30b4cfbb4d16"/>
+				<text><![CDATA[Hora]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="260" width="53" height="30" uuid="c09accd1-1cf6-4ee1-adbd-7ecd6de03904"/>
+				<text><![CDATA[Área]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="163" y="260" width="53" height="30" uuid="1ce2e7f5-fdc4-40f1-b4d6-2257d882989d"/>
+				<text><![CDATA[Solicitante]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement x="3" y="310" width="555" height="90" uuid="9b80bca4-9c98-4592-89ea-acc7bab2f912">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+					<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
+					<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
+					<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="Productos" uuid="7177273a-71f5-41c8-9123-d9fdb9dc4eb8">
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="100" uuid="545749ff-3661-4383-8a63-00db8018c00f">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+						<jr:tableHeader style="Table_TH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="100" height="30" uuid="8d527d01-76fe-4bbf-87af-fe35b5675a67"/>
+								<textElement textAlignment="Center">
+									<font isBold="true"/>
+								</textElement>
+								<text><![CDATA[Producto]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="100" height="30" uuid="1b56bfff-1af1-4ffb-8542-cc36e1a616aa"/>
+								<text><![CDATA[Tomate Pera]]></text>
+							</staticText>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="100" uuid="3be6b41e-de3a-47fa-9029-c02dff48eabc">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+						<jr:tableHeader style="Table_TH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="100" height="30" uuid="32f7d1c8-d09b-4cf1-b345-2c4400e44d5c"/>
+								<textElement textAlignment="Center">
+									<font isBold="true"/>
+								</textElement>
+								<text><![CDATA[Unidad]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="100" height="30" uuid="d0cb6543-f0d4-4d39-8039-a297f60d24cf"/>
+								<text><![CDATA[Libra]]></text>
+							</staticText>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="100" uuid="6d1c1a9c-9387-457a-9f42-78bb165bb88f">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+						<jr:tableHeader style="Table_TH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="100" height="30" uuid="4a1a67bd-fd2b-4dfe-92a0-5a7a659186b0"/>
+								<textElement textAlignment="Center">
+									<font isBold="true"/>
+								</textElement>
+								<text><![CDATA[Cantidad Pedida]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="100" height="30" uuid="e0af5703-77db-4299-a287-60b333432e8c"/>
+								<text><![CDATA[4]]></text>
+							</staticText>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="100" uuid="622c8759-5763-4a52-9a7e-ab6ce994618c">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
+						<jr:tableHeader style="Table_TH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="100" height="30" uuid="f5018c33-c5d6-4300-a7e2-eec9c2ac41f6"/>
+								<textElement textAlignment="Center">
+									<font isBold="true"/>
+								</textElement>
+								<text><![CDATA[Cantidad Entregada]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="100" height="30" uuid="b437e1c0-0b8c-4b02-82a9-226b8969deeb"/>
+								<text><![CDATA[3]]></text>
+							</staticText>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<staticText>
+				<reportElement x="100" y="210" width="100" height="30" uuid="bca49401-cbf7-4a82-9175-b5a02be57607"/>
+				<text><![CDATA[#2]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="66" y="230" width="100" height="30" uuid="61bb55c6-67f5-4bc6-aefd-1f5ea314f0ce"/>
+				<text><![CDATA[05/07/2020]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="70" y="260" width="100" height="30" uuid="568aef07-76b3-4d72-8e4b-dbfa7f2de5fb"/>
+				<text><![CDATA[Cocina]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="216" y="230" width="100" height="30" uuid="2810cdb9-9316-4974-b508-d3bfb25d3caf"/>
+				<text><![CDATA[11:17:25]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="216" y="260" width="100" height="30" uuid="b51e24b9-0954-43d5-a04a-9004185063ff"/>
+				<text><![CDATA[Andrea Archila]]></text>
+			</staticText>
 		</band>
 	</detail>
 	<columnFooter>
