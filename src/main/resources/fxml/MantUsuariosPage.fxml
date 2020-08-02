@@ -1,8 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="com.unah.hermes.MantUsuariosPageController">
-    
+<AnchorPane id="AnchorPane" minHeight="720.0" minWidth="1280.0" prefHeight="720.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unah.hermes.MantProductosPageController">
+   <children>
+      <Label layoutX="245.0" layoutY="11.0" text="MANTENIMIENTO DE USUARIOS" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="36.0" />
+         </font>
+      </Label>
+      <Label layoutX="106.0" layoutY="101.0" text=" Nombre: ">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+      <TextField layoutX="170.0" layoutY="96.0" prefHeight="30.0" prefWidth="547.0" />
+      <TableView layoutX="106.0" layoutY="164.0" prefHeight="437.0" prefWidth="850.0">
+        <columns>
+          <TableColumn prefWidth="150" text="Codigo" />
+          <TableColumn prefWidth="200" text="Nombre" />
+          <TableColumn prefWidth="200" text="Nivel de acceso" />
+          <TableColumn prefWidth="150" text="Area" />
+          <TableColumn prefWidth="150" text="Grupo" />          
+        </columns>
+      </TableView>
+      <Button layoutX="1064.0" layoutY="189.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="170.0" text="Agregar Usuario">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Button layoutX="1064.0" layoutY="240.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="170.0" text="Modificar Usuario">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Button layoutX="1064.0" layoutY="291.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="170.0" text="Eliminar Usuario">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Button layoutX="1064.0" layoutY="452.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="170.0" text="Permisos">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Separator layoutX="1067.0" layoutY="333.0" prefHeight="120.0" prefWidth="166.0" />
+   </children>
 </AnchorPane>

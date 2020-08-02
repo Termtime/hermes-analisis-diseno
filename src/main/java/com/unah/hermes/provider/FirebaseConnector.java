@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,15 +15,20 @@ import java.util.Scanner;
 
 import com.google.api.core.ApiFuture;
 import com.google.auth.oauth2.GoogleCredentials;
+import com.google.cloud.firestore.CollectionReference;
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.Firestore;
+import com.google.cloud.firestore.FirestoreException;
 import com.google.cloud.firestore.Query;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
 import com.google.cloud.firestore.WriteResult;
 import com.google.firebase.cloud.FirestoreClient;
+import com.google.cloud.firestore.EventListener;
 import com.google.gson.Gson;
+import com.unah.hermes.MainPageController;
+import com.unah.hermes.objects.Requisicion;
 import com.unah.hermes.utils.ParameterStringBuilder;
 import com.google.gson.reflect.TypeToken;
 
@@ -201,6 +207,53 @@ public class FirebaseConnector{
         }
     }
 
+    public void iniciarListenerRequisiciones(){
+        try{
+            CollectionReference docRef = db.collection("Requisiciones");
+            docRef.addSnapshotListener(new EventListener<QuerySnapshot>(){
+                @Override
+                public void onEvent( QuerySnapshot snapshots, FirestoreException e) {
+                    if (e != null) {
+                        System.err.println("Listen failed:" + e);
+                        return;
+                    }
+
+                    MainPageController.RequisicionesDenegadas.clear();
+                    MainPageController.RequisicionesEntregadas.clear();
+                    MainPageController.RequisicionesPendientes.clear();
+
+                    for (DocumentSnapshot doc : snapshots) {
+                        System.out.println(doc);
+                        Requisicion tmp;
+                        if(doc.exists()){
+
+                            tmp = new Requisicion(doc.getId(), doc.getString("nombreDisplay"), doc.getString("estado"),
+                            doc.getString("area"), doc.getString("autorizador"), doc.getBoolean("autorizacion"), doc.getString("solicitante"), doc.getDate("fecha"), doc.get("productos"));
+
+                            System.out.println(tmp.estado);
+                            System.out.println(doc.getData());
+                            if (tmp.estado.equals("Entregada")) {
+                                MainPageController.RequisicionesEntregadas.add(tmp);
+                                System.out.println(MainPageController.RequisicionesEntregadas);
+                            }
+                            else if (tmp.estado.equals("Denegada")) {
+                                MainPageController.RequisicionesDenegadas.add(tmp);
+                                System.out.println(MainPageController.RequisicionesDenegadas);
+                            }
+                            else if (tmp.estado.equals("Pendiente")) {
+                                MainPageController.RequisicionesPendientes.add(tmp);
+                                System.out.println(MainPageController.RequisicionesPendientes);
+                            }else{
+                                System.out.println("Estado desconocido");
+                            }
+                        }
+                    }
+                }
+            });    
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    };
     //AUTH METHODS
  
     public boolean loginWithEmailPassword(final String email, final String password)
