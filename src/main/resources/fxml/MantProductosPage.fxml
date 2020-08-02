@@ -29,9 +29,9 @@
          </font></Label>
       <TableView layoutX="46.0" layoutY="165.0" prefHeight="529.0" prefWidth="768.0" AnchorPane.bottomAnchor="74.0" AnchorPane.leftAnchor="46.0" AnchorPane.rightAnchor="210.0" AnchorPane.topAnchor="165.0">
         <columns>
-          <TableColumn prefWidth="33%" resizable="false" text="Producto" />
-          <TableColumn prefWidth="33%" resizable="false" text="Categoria" />
-          <TableColumn prefWidth="33%" resizable="false" text="Unidad" />
+          <TableColumn prefWidth="50" resizable="false" text="Producto" />
+          <TableColumn prefWidth="50" resizable="false" text="Categoria" />
+          <TableColumn prefWidth="50" resizable="false" text="Unidad" />
         </columns>
       </TableView>
       <Button layoutX="835.0" layoutY="210.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="170.0" text="Agregar Producto" AnchorPane.rightAnchor="19.0">
