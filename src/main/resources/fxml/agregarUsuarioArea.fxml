@@ -3,6 +3,7 @@
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -11,7 +12,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="482.0" prefWidth="446.0" styleClass="window-background-level3" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label alignment="CENTER" layoutX="76.0" layoutY="35.0" prefHeight="39.0" prefWidth="310.0" text="Agregar Usuario al Área" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="35.0">
+      <Label alignment="CENTER" layoutX="76.0" layoutY="35.0" prefHeight="39.0" prefWidth="310.0" text="Agregar Usuario al Área" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="30.0">
          <font>
             <Font size="27.0" />
          </font>
@@ -21,17 +22,17 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button id="btnCancelar" layoutX="302.0" layoutY="290.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="83.0" style="-fx-background-color: #D9406F;" stylesheets="@../styles/Styles.css" text="Cancelar" textFill="WHITE">
+      <Button id="btnCancelar" layoutX="302.0" layoutY="290.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="83.0" styleClass="btnCancelar" stylesheets="@../styles/Styles.css" text="Cancelar" textFill="WHITE">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <TableView id="tblUsuarios" layoutX="52.0" layoutY="152.0" prefHeight="275.0" prefWidth="200.0" stylesheets="@../styles/Styles.css" AnchorPane.bottomAnchor="55.0" AnchorPane.leftAnchor="52.0" AnchorPane.topAnchor="152.0">
+      <TableView id="tblUsuarios" layoutX="52.0" layoutY="163.0" prefHeight="275.0" prefWidth="200.0" stylesheets="@../styles/Styles.css" AnchorPane.bottomAnchor="44.0" AnchorPane.leftAnchor="52.0" AnchorPane.topAnchor="163.0">
         <columns>
           <TableColumn maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="212.19998168945312" resizable="false" styleClass="column-header-text-color" text="Usuarios" />
         </columns>
       </TableView>
-      <AnchorPane layoutX="52.0" layoutY="113.0" prefHeight="26.0" prefWidth="200.0" AnchorPane.leftAnchor="52.0" AnchorPane.rightAnchor="194.0" AnchorPane.topAnchor="113.0">
+      <AnchorPane layoutX="52.0" layoutY="124.0" prefHeight="26.0" prefWidth="200.0" AnchorPane.leftAnchor="52.0" AnchorPane.rightAnchor="194.0" AnchorPane.topAnchor="124.0">
          <children>
             <TextField layoutX="51.0" />
             <Label layoutY="4.0" text="Buscar:">
@@ -41,5 +42,6 @@
             </Label>
          </children>
       </AnchorPane>
+      <Separator layoutX="48.0" layoutY="83.0" prefHeight="2.0" prefWidth="350.0" AnchorPane.leftAnchor="48.0" AnchorPane.rightAnchor="48.0" AnchorPane.topAnchor="83.0" />
    </children>
 </AnchorPane>

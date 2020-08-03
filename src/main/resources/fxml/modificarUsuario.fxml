@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
@@ -10,7 +13,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="600.0" styleClass="window-background-level3" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label alignment="CENTER" layoutX="183.0" layoutY="33.0" prefHeight="39.0" prefWidth="234.0" text="Modificar Usuario" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="183.0" AnchorPane.rightAnchor="183.0" AnchorPane.topAnchor="30.0">
+      <Label alignment="CENTER" layoutX="183.0" layoutY="33.0" prefHeight="39.0" prefWidth="234.0" text="Modificar Usuario" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="183.0" AnchorPane.rightAnchor="183.0" AnchorPane.topAnchor="40.0">
          <font>
             <Font size="27.0" />
          </font>
@@ -64,9 +67,18 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <ComboBox layoutY="23.0" prefHeight="30.0" prefWidth="360.0" promptText="Escoja un nivel de acceso" />
+            <ComboBox layoutY="23.0" prefHeight="30.0" prefWidth="360.0" promptText="Escoja un nivel de acceso" style="-fx-background-color: #ffffff;" />
          </children>
       </Pane>
+      <Button id="btnAgregar" layoutX="173.0" layoutY="571.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="86.0" text="Modificar">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Button id="btnCancelar" layoutX="340.0" layoutY="571.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="86.0" styleClass="btnCancelar" text="Cancelar">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Separator layoutX="100.0" layoutY="92.0" prefHeight="2.0" prefWidth="400.0" AnchorPane.topAnchor="92.0" />
       <Pane layoutX="120.0" layoutY="410.0">
          <children>
             <Label text="Contraseña:">
@@ -74,28 +86,18 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <TextField id="txtAreaNueva" layoutY="23.0" prefHeight="26.0" prefWidth="360.0">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </TextField>
+            <PasswordField layoutX="-2.0" layoutY="23.0" prefHeight="30.0" prefWidth="360.0" />
          </children>
       </Pane>
-      <Pane layoutX="120.0" layoutY="474.0">
+      <Pane layoutX="120.0" layoutY="473.0">
          <children>
             <Label text="Confirme Contraseña:">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <TextField id="txtAreaNueva" layoutY="23.0" prefHeight="26.0" prefWidth="360.0">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </TextField>
+            <PasswordField layoutX="-2.0" layoutY="23.0" prefHeight="30.0" prefWidth="360.0" />
          </children>
       </Pane>
-      <Button id="btnAgregar" layoutX="173.0" layoutY="571.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="86.0" text="Modificar" />
-      <Button id="btnCancelar" layoutX="340.0" layoutY="571.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="86.0" style="-fx-background-color: #D9406F;" text="Cancelar" />
    </children>
 </AnchorPane>
