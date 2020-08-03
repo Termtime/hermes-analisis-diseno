@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="472.0" prefWidth="914.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unah.hermes.MantProductosPageController">
+   <children>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="55.0" layoutY="24.0" prefHeight="53.0" prefWidth="810.0" text="AGREGAR NUEVA CATEGORIA" textAlignment="CENTER" AnchorPane.leftAnchor="52.0" AnchorPane.rightAnchor="49.10546875">
+         <font>
+            <Font name="System Bold" size="36.0" />
+         </font>
+      </Label>
+      <Label layoutX="46.0" layoutY="124.0" text="Filtro por Nombre: " AnchorPane.leftAnchor="46.0" AnchorPane.rightAnchor="859.0">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+      <Button layoutX="266.0" layoutY="358.0" mnemonicParsing="false" prefWidth="161.0" text="AGREGAR">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Button layoutX="514.0" layoutY="360.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="161.0" text="CANCELAR">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Label layoutX="282.0" layoutY="199.0" text="NOMBRE:">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <TextField layoutX="353.0" layoutY="192.0" prefHeight="35.0" prefWidth="282.0" />
+   </children>
+</AnchorPane>
