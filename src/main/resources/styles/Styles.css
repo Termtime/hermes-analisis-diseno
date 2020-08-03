@@ -1,3 +1,32 @@
 .button {
-    -fx-font-weight: bold;
+  -fx-font-weight: bold;
+  -fx-text-fill: #e9e9e9;
+  -fx-background-color: #38a4be;
+  -fx-font-size: 14;
+}
+
+.button:hover {
+  -fx-background-color: #308ca3;
+}
+
+.label {
+  -fx-text-fill: #e9e9e9;
+}
+
+.table-view .column-header {
+  /* -fx-text-fill: #e9e9e9; */
+  -fx-background-color: #308ca3;
+}
+
+/* COLOR DE FONDO DEPENDIENDO DEL NIVEL DE LA PANTALLA */
+.window-background-level1 {
+  -fx-background-color: #121212;
+}
+
+.window-background-level2 {
+  -fx-background-color: #303030;
+}
+
+.window-background-level3 {
+  -fx-background-color: #444444;
 }

@@ -9,14 +9,16 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="468.0" prefWidth="413.0" style="-fx-background-color: #222;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="com.unah.hermes.LoginPageController">
+<AnchorPane id="AnchorPane" prefHeight="468.0" prefWidth="413.0" styleClass="window-background-level1" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unah.hermes.LoginPageController">
    <children>
-      <AnchorPane layoutX="31.0" layoutY="120.0" style="-fx-background-color: #333;" AnchorPane.leftAnchor="31.0" AnchorPane.rightAnchor="31.0">
+      <AnchorPane layoutX="31.0" layoutY="120.0" styleClass="window-background-level2" AnchorPane.leftAnchor="31.0" AnchorPane.rightAnchor="31.0">
          <children>
             <AnchorPane layoutX="34.0" layoutY="59.0" AnchorPane.leftAnchor="34.0" AnchorPane.rightAnchor="34.0">
                <children>
-                  <Button fx:id="loginBtn" layoutX="23.0" layoutY="192.0" mnemonicParsing="false" onAction="#loginBtnClick" prefHeight="45.0" prefWidth="240.0" text="Iniciar Sesion" AnchorPane.leftAnchor="23.0" AnchorPane.rightAnchor="23.0" />
+                  <Button fx:id="loginBtn" layoutX="23.0" layoutY="192.0" mnemonicParsing="false" onAction="#loginBtnClick" prefHeight="45.0" prefWidth="240.0" text="Iniciar Sesión" AnchorPane.leftAnchor="23.0" AnchorPane.rightAnchor="23.0">
+                     <font>
+                        <Font size="14.0" />
+                     </font></Button>
                   <PasswordField id="passTxt" fx:id="passTxt" layoutY="124.0" prefHeight="25.0" prefWidth="285.0" promptText="contraseña" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                   <Label prefHeight="27.0" prefWidth="63.0" text="Correo:" textFill="WHITE">
                      <font>

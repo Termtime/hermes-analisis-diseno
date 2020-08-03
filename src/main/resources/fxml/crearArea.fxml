@@ -6,17 +6,24 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="600.0" styleClass="window-background-level3" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label layoutX="221.0" layoutY="23.0" text="Agregar Área">
+      <Label layoutX="221.0" layoutY="29.0" text="Agregar Área" textFill="WHITE" AnchorPane.topAnchor="29.0">
          <font>
             <Font size="27.0" />
          </font>
       </Label>
-      <Label layoutX="68.0" layoutY="117.0" text="Nombre" />
-      <TextField id="txtAreaNueva" layoutX="147.0" layoutY="113.0" prefHeight="26.0" prefWidth="360.0" />
-      <Button id="btnAgregar" layoutX="229.0" layoutY="193.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="76.0" style="-fx-background-color: black;" text="Agregar" />
-      <Button id="btnCancelar" layoutX="333.0" layoutY="193.0" mnemonicParsing="false" style="-fx-background-color: black;" text="Cancelar" />
+      <Label layoutX="120.0" layoutY="87.0" text="Nombre:">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <TextField id="txtAreaNueva" layoutX="120.0" layoutY="110.0" prefHeight="26.0" prefWidth="360.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </TextField>
+      <Button id="btnAgregar" layoutX="179.0" layoutY="176.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="86.0" text="Agregar" />
+      <Button id="btnCancelar" layoutX="335.0" layoutY="176.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="86.0" text="Cancelar" />
    </children>
 </AnchorPane>
