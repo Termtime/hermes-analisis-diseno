@@ -8,32 +8,56 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="574.0" prefWidth="772.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unah.hermes.EntregaReqPageController">
+<AnchorPane id="AnchorPane" prefHeight="574.0" prefWidth="850.0" styleClass="window-background-level3" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unah.hermes.EntregaReqPageController">
    <children>
       <Accordion layoutX="214.0" layoutY="125.0" />
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="189.0" layoutY="14.0" prefHeight="47.0" prefWidth="281.0" text="VISTA PREVIA DE REQUISICION" textAlignment="CENTER">
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="232.0" layoutY="36.0" prefHeight="47.0" prefWidth="398.0" text="Vista Previa de Requisición" textAlignment="CENTER" AnchorPane.topAnchor="30.0">
          <font>
-            <Font size="15.0" />
+            <Font size="27.0" />
          </font></Label>
-      <Label layoutX="21.0" layoutY="69.0" text="Fecha:" />
-      <Label layoutX="284.0" layoutY="69.0" text="Area:" />
-      <Label layoutX="25.0" layoutY="109.0" text="Hora:" />
-      <Label layoutX="255.0" layoutY="109.0" text="Solicitante:" />
-      <TableView id="table_entrega" layoutX="6.0" layoutY="174.0" prefHeight="346.0" prefWidth="622.0">
+      <Label layoutX="57.0" layoutY="105.0" text="Fecha:">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Label>
+      <Label layoutX="325.0" layoutY="105.0" text="Area:">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Label>
+      <Label layoutX="57.0" layoutY="155.0" text="Hora:">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Label>
+      <Label layoutX="327.0" layoutY="155.0" text="Solicitante:">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></Label>
+      <TableView id="table_entrega" layoutX="16.0" layoutY="211.0" prefHeight="346.0" prefWidth="622.0">
         <columns>
-            <TableColumn prefWidth="126.0" text="Cantidad de Pedido" />
           <TableColumn prefWidth="93.0" text="Producto" />
-            <TableColumn prefWidth="64.0" text="Unidad" />
-          <TableColumn prefWidth="95.0" text="Cant. Entregada" />
-            <TableColumn prefWidth="107.0" text=" Cant. pendiente" />
-            <TableColumn prefWidth="136.0" text="Comentario" />
+            <TableColumn prefWidth="103.19998168945312" text="Cant. Pedida" />
+            <TableColumn prefWidth="93.59996032714844" text="Unidad" />
+            <TableColumn prefWidth="109.60003662109375" text=" Cant. Pendiente" />
+          <TableColumn prefWidth="112.0" text="Cant. Entregada" />
+            <TableColumn prefWidth="110.39996337890625" text="Comentario" />
         </columns>
       </TableView>
-      <Button id="button_terminar" layoutX="638.0" layoutY="174.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="127.0" text="Terminar Entrega" />
-      <Button id="button_cancelar" layoutX="638.0" layoutY="226.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="127.0" text="Cancelar" />
-      <Label id="fecha" layoutX="67.0" layoutY="69.0" prefHeight="17.0" prefWidth="51.0" text="Label" />
-      <Label id="hora" layoutX="67.0" layoutY="109.0" text="Label" />
-      <Label id="area" layoutX="330.0" layoutY="69.0" text="Label" />
-      <Label id="solicitante" layoutX="330.0" layoutY="109.0" text="Label" />
+      <Button id="button_terminar" layoutX="666.0" layoutY="331.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="147.0" text="Terminar Entrega" />
+      <Button id="button_cancelar" layoutX="666.0" layoutY="407.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="147.0" style="-fx-background-color: #D9406F;" text="Cancelar" />
+      <Label id="fecha" layoutX="57.0" layoutY="125.0" prefHeight="20.0" prefWidth="100.0" style="-fx-background-color: #303030;" text="##/##/####">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+      <Label id="hora" layoutX="57.0" layoutY="175.0" prefHeight="20.0" prefWidth="100.0" style="-fx-background-color: #303030;" text="##:##:##">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+      <Label id="area" layoutX="325.0" layoutY="125.0" prefHeight="20.0" prefWidth="100.0" style="-fx-background-color: #303030;" text="Cocina">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+      <Label id="solicitante" layoutX="326.0" layoutY="175.0" prefWidth="100.0" style="-fx-background-color: #303030;" text="Andrea Archila">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
    </children>
 </AnchorPane>
