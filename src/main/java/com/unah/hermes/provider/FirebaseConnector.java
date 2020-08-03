@@ -20,6 +20,7 @@ import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.FirestoreException;
+import com.google.cloud.firestore.ListenerRegistration;
 import com.google.cloud.firestore.Query;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
@@ -76,18 +77,24 @@ public class FirebaseConnector{
             app = FirebaseApp.initializeApp(options);
             db = FirestoreClient.getFirestore(app);
             auth = FirebaseAuth.getInstance(app);
-
             System.out.println("FINISHED");
             System.out.println(db);
-
         } catch(final Exception e){
             System.out.println(e);
         }
     }
 
+    /**
+        * Permite crear un documento en la base de datos
+        * @param databaseCollectionPath Es la ruta de la coleccion de la base de datos en la cual crear el documento
+        * @param data Es un mapa de datos, Ej; {reqID: '1', area : 'cocina'}
+        * 
+        * @return Booleano que indica si el documento fue creado exitosamente
+    */
     //FIRESTORE METHODS
     public boolean createDocument(final String databaseCollectionPath, final Map<String, Object> data)
     {
+        
         try{
             final ApiFuture<DocumentReference> query = db.collection(databaseCollectionPath).add(data);
             //execute query
@@ -101,6 +108,58 @@ public class FirebaseConnector{
         }
     }
 
+    /**
+      Elimina un documento de la base de datos
+      * @param databaseCollectionPath Es la ruta de la coleccion de la base de datos en la cual eliminar el documento
+      * @param documentID Es el ID del documento a eliminar
+      * 
+      * @return Booleano que indica si el documento fue eliminado exitosamente
+     */
+    public boolean deleteDocument(final String databaseCollectionPath, final String documentID) 
+    {
+        try{
+            final ApiFuture<WriteResult> query = db.collection(databaseCollectionPath).document(documentID).delete();
+            // query.get() blocks on response
+            //execute query
+            query.get();
+            return true;
+        }catch(final Exception e)
+        {
+            System.out.println(e);
+            //query did not execute correctly
+            return false;
+        }
+    }
+
+    /**
+        * Actualiza un documento con nuevos datos
+        * @param databaseCollectionPath Es la ruta de la coleccion de la base de datos en la cual actualizar el documento
+        * @param documentID Es el ID del documento a actualizar
+        * @param newData son los nuevos datos a ingresar o actualizar, si se envia un dato que no existe, se agrega, si se envia uno que ya existe, se actualiza
+        * 
+        * @return Booleano que indica si el documento fue actualizado exitosamente
+    */
+    public boolean updateDocument(final String databaseCollectionPath, final String documentID, final Map<String, Object> newData)
+    {
+        try{
+            final ApiFuture<WriteResult> query = db.collection(databaseCollectionPath).document(documentID).update(newData);
+            //execute query
+            query.get();
+            return true;
+        }catch(final Exception e)
+        {
+            System.out.println(e);
+            //query did not execute correctly
+            return false;
+        }
+    }
+
+    /**
+        * Obtiene todos los documentos dentro de una coleccion
+        * @param databaseCollectionPath Es la ruta de la coleccion de la base de datos de la cual se desea obtener documentos
+        * 
+        * @return Una lista de QueryDocumentSnapshot sin procesar si se realiza correctamente, sino un Null
+    */
     public List<QueryDocumentSnapshot> getAllDocumentsFrom(final String databaseCollectionPath) 
     {
         try{
@@ -117,6 +176,13 @@ public class FirebaseConnector{
         }
     }
 
+    /**
+        * Obtiene un solo documento
+        * @param databaseCollectionPath Es la ruta de la coleccion de la base de datos de la cual se desea obtener documentos
+        * @param documentID Es el ID del documento a obtener
+        * 
+        * @return Un DocumentSnapshot si se obtuvo correctamente, sino un Null
+    */
     public DocumentSnapshot getDocumentFrom(final String databaseCollectionPath, final String documentID)
     {
         try{
@@ -132,6 +198,17 @@ public class FirebaseConnector{
         }
     }
 
+    /**
+        * Realiza un query Where en la base de datos
+        * Por ejemplo si se desea encontrar los productos que tienen por unidad la Libra:
+        * queryWhereOperation("/Productos", "unidad", "=", "Libra")
+        * @param databaseCollectionPath Es la ruta de la coleccion de la base de datos de la cual se desea obtener documentos
+        * @param field Campo de algun objeto en la coleccion
+        * @param operation Es un string de operacion, solamente: {@code "<", ">", "=", "<=", ">="}
+        * @param value Es el valor a comparar
+        * 
+        * @return Un DocumentSnapshot si se obtuvo correctamente, sino un Null
+    */
     public List<QueryDocumentSnapshot> queryWhereOperation(final String databaseCollectionPath, final String field, final String operation,  final Object value) 
     {
 
@@ -176,41 +253,14 @@ public class FirebaseConnector{
         }
     }
 
-    public boolean deleteDocument(final String databaseCollectionPath, final String documentID) 
-    {
-        try{
-            final ApiFuture<WriteResult> query = db.collection(databaseCollectionPath).document(documentID).delete();
-            // query.get() blocks on response
-            //execute query
-            query.get();
-            return true;
-        }catch(final Exception e)
-        {
-            System.out.println(e);
-            //query did not execute correctly
-            return false;
-        }
-    }
-
-    public boolean updateDocument(final String databaseCollectionPath, final String documentID, final Map<String, Object> newData)
-    {
-        try{
-            final ApiFuture<WriteResult> query = db.collection(databaseCollectionPath).document(documentID).update(newData);
-            //execute query
-            query.get();
-            return true;
-        }catch(final Exception e)
-        {
-            System.out.println(e);
-            //query did not execute correctly
-            return false;
-        }
-    }
-
-    public void iniciarListenerRequisiciones(){
+    /**
+     * Inicia un Listener de requisiciones
+     * @return Una funcion para desuscribir el snapshot listener, es importante llamar esta funcion cuando se destruya la ventana
+     */
+    public ListenerRegistration iniciarListenerRequisiciones(){
         try{
             CollectionReference docRef = db.collection("Requisiciones");
-            docRef.addSnapshotListener(new EventListener<QuerySnapshot>(){
+            ListenerRegistration unsubListener = docRef.addSnapshotListener(new EventListener<QuerySnapshot>(){
                 @Override
                 public void onEvent( QuerySnapshot snapshots, FirestoreException e) {
                     if (e != null) {
@@ -249,9 +299,11 @@ public class FirebaseConnector{
                         }
                     }
                 }
-            });    
+            });
+            return unsubListener;    
         }catch(Exception e){
             e.printStackTrace();
+            return null;
         }
     };
     //AUTH METHODS

@@ -11,7 +11,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <mainClass>com.unah.hermes.MainApp</mainClass>
+        <mainClass>com.unah.hermes.GUIStarter</mainClass>
     </properties>
 
     <dependencies>
@@ -189,7 +189,7 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.4</version>
                 <configuration>
-                    <mainClass>GUIStarter</mainClass>
+                    <mainClass>com.unah.hermes.GUIStarter</mainClass>
                 </configuration>
             </plugin>
         </plugins>

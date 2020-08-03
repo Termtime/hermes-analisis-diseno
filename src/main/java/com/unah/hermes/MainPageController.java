@@ -6,15 +6,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.function.Function;
 
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
+import com.google.cloud.firestore.EventListener;
 import com.google.cloud.firestore.FirestoreException;
+import com.google.cloud.firestore.ListenerRegistration;
 import com.unah.hermes.objects.Producto;
 import com.unah.hermes.objects.Requisicion;
 import com.unah.hermes.objects.RequisicionEntregadaRow;
 import com.unah.hermes.objects.RequisicionRow;
 import com.unah.hermes.provider.FirebaseConnector;
+import com.unah.hermes.utils.EventListeners;
+import com.unah.hermes.utils.Navigation;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -43,81 +48,6 @@ import javafx.stage.WindowEvent;
 import javafx.stage.Modality;
 
 public class MainPageController implements Initializable {
-    
-    @FXML public void menuBtnCerrarClick(ActionEvent event){
-
-    }
-    @FXML public void menuBtnImprimirClick(ActionEvent event){
-        
-    }
-    @FXML public void menuBtnImprimirMensualClick(ActionEvent event){
-        
-    }
-    @FXML public void menuBtnEntregarReqClick(ActionEvent event){
-        
-    }
-    @FXML public void menuBtnDenegReqClick(ActionEvent event){
-        
-    }
-    @FXML public void menuBtnOcultarReqClick(ActionEvent event){
-        
-    }
-    @FXML public void menuBtnMantUsuariosClick(ActionEvent event){
-        pushRoute("MantUsuariosPage", event, false, true);
-    }
-    @FXML public void menuBtnMantProductosClick(ActionEvent event){
-        pushRoute("MantProductosPage", event, false, true);
-    }
-    @FXML public void menuBtnMantAreasClick(ActionEvent event){
-        pushRoute("MantAreasPage", event, false, true);
-    }
-
-    @FXML public void btnEntregarClick(ActionEvent event){
-
-    }
-    @FXML public void btnDenegarClick(ActionEvent event){
-
-    }
-    FirebaseConnector db;
-
-    
-    public void pushRoute(String pageName, ActionEvent event, Boolean hide, Boolean modal)
-    {
-        Parent root;
-        Window parentStage;
-        try{
-            parentStage = ((Node)(event.getSource())).getScene().getWindow();
-        }catch(Exception e)
-        {
-            try{
-                //intentar obtener el parent de un MenuItem
-                parentStage = ((MenuItem)event.getTarget()).getParentPopup().getOwnerWindow();
-            }catch(Exception ex){
-                //fallar suavemente
-                ex.printStackTrace();
-                parentStage = null;
-            }
-        }
-        try {
-            root = FXMLLoader.load(getClass().getResource("/fxml/" + pageName + ".fxml"));
-            Stage stage = new Stage();
-            stage.setTitle("My New Stage Title");
-            stage.setScene(new Scene(root));
-            if(modal) {
-                stage.initOwner(parentStage);
-                stage.initModality(Modality.APPLICATION_MODAL); 
-                stage.showAndWait();
-            } else {
-                stage.show();    
-            }
-            // Hide this current window (if this is what you want)
-            if(hide) parentStage.hide();
-            
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
     //listViews
     @FXML ListView<Requisicion> listaRQP;
     @FXML ListView<Requisicion> listaRQE;
@@ -157,14 +87,43 @@ public class MainPageController implements Initializable {
     @FXML TableView<RequisicionRow> tablaP;
     @FXML TableView<RequisicionRow> tablaD;
     @FXML TableView<RequisicionEntregadaRow> tablaE;
-    Requisicion tablaPSelectedItem;
-    Requisicion tablaDSelectedItem;
-    Requisicion tablaESelectedItem;
-    public static ObservableList<Requisicion> RequisicionesPendientes = FXCollections.observableArrayList();
-    public static ObservableList<Requisicion> RequisicionesEntregadas = FXCollections.observableArrayList();
-    public static ObservableList<Requisicion> RequisicionesDenegadas = FXCollections.observableArrayList();
-    ObservableList<Producto> empty = FXCollections.observableArrayList();
+    
+    @FXML public void menuBtnCerrarClick(ActionEvent event){
 
+    }
+    @FXML public void menuBtnImprimirClick(ActionEvent event){
+        
+    }
+    @FXML public void menuBtnImprimirMensualClick(ActionEvent event){
+        
+    }
+    @FXML public void menuBtnEntregarReqClick(ActionEvent event){
+        
+    }
+    @FXML public void menuBtnDenegReqClick(ActionEvent event){
+        
+    }
+    @FXML public void menuBtnOcultarReqClick(ActionEvent event){
+        
+    }
+    @FXML public void menuBtnMantUsuariosClick(ActionEvent event){
+        Navigation.pushRoute("MantUsuariosPage", event, false, true);
+    }
+    @FXML public void menuBtnMantProductosClick(ActionEvent event){
+        Navigation.pushRoute("MantProductosPage", event, false, true);
+    }
+    @FXML public void menuBtnMantAreasClick(ActionEvent event){
+        Navigation.pushRoute("MantAreasPage", event, false, true);
+    }
+
+    @FXML public void btnEntregarClick(ActionEvent event){
+
+    }
+    @FXML public void btnDenegarClick(ActionEvent event){
+
+    }
+
+    
     @FXML
     private void ocultarRequisicionesSeleccionadas(ActionEvent event) {
         
@@ -176,57 +135,46 @@ public class MainPageController implements Initializable {
 
     @FXML
     private AnchorPane mainPage;
+
+    ListenerRegistration requisicionesListener;
+    FirebaseConnector db;
+    Requisicion tablaPSelectedItem;
+    Requisicion tablaDSelectedItem;
+    Requisicion tablaESelectedItem;
+    public static ObservableList<Requisicion> RequisicionesPendientes = FXCollections.observableArrayList();
+    public static ObservableList<Requisicion> RequisicionesEntregadas = FXCollections.observableArrayList();
+    public static ObservableList<Requisicion> RequisicionesDenegadas = FXCollections.observableArrayList();
+    ObservableList<Producto> empty = FXCollections.observableArrayList();
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //crear los listeners para los datos de firebase
         //TODO requisiciones denegadas, requisiciones entregadas
-
-        mainPage.sceneProperty().addListener(new ChangeListener<Scene>() {
+        
+        EventListeners.onWindowOpened(mainPage, new Function<Window,Void>(){
             @Override
-            public void changed(ObservableValue<? extends Scene> observable, Scene oldValue, Scene newValue) {
-              newValue.windowProperty().addListener(new ChangeListener<Window>() {
-                @Override
-                public void changed(ObservableValue<? extends Window> observable, Window oldValue, Window newValue) {
-                    final Window parent = newValue;
-                    newValue.addEventHandler(WindowEvent.WINDOW_SHOWN, new EventHandler<WindowEvent>() {
-                    @Override
-                    public void handle(WindowEvent event) {
-                        iniciarEstructuraTablas();
-                        
-                        ((Stage) parent).maximizedProperty().addListener(new ChangeListener<Boolean>(){
-                            @Override
-                            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue){
-                                System.out.println(newValue);
-                                System.out.println(oldValue);
-                                double widthP = tablaP.getWidth();
-                                double widthD = tablaD.getWidth();
-                                double widthE = tablaE.getWidth();
-                                if(newValue){
-                                    System.out.println("hola he sido maximizado");
-                                    tablaP.setPrefWidth(widthP+1);
-                                    tablaD.setPrefWidth(widthD+1);
-                                    tablaE.setPrefWidth(widthE+1);
-                                }else{
-                                    System.out.println("hola he sido minimizado");
-                                    tablaP.setPrefWidth(widthP-1);
-                                    tablaD.setPrefWidth(widthD-1);
-                                    tablaE.setPrefWidth(widthE-1);
-                                }
-                            }
-                        });
-                    }
-                  });
-                }
-              });
+            public Void apply(Window parent) {
+                iniciarEstructuraTablas();
+                return null;
             }
         });
 
+        EventListeners.onWindowClosing(mainPage, new Function<Window,Void>(){
+
+			@Override
+			public Void apply(Window t) {
+				requisicionesListener.remove();
+				return null;
+			}
+            
+        })
         mainPage.widthProperty().addListener(new ChangeListener<Number>(){
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 recalcularColumnWidth();
             }
         });
+
         tablaP.widthProperty().addListener(new ChangeListener<Number>(){
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
@@ -247,8 +195,9 @@ public class MainPageController implements Initializable {
                 recalcularColumnWidth();
             }
         });
+        
         db = FirebaseConnector.getInstance();
-        db.iniciarListenerRequisiciones();
+        requisicionesListener = db.iniciarListenerRequisiciones();
         listaRQE.setItems(RequisicionesEntregadas);
         listaRQP.setItems(RequisicionesPendientes);
         listaRQD.setItems(RequisicionesDenegadas);
