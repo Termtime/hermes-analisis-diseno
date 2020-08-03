@@ -1,37 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="472.0" prefWidth="914.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unah.hermes.MantProductosPageController">
+<AnchorPane id="AnchorPane" prefHeight="250.0" prefWidth="600.0" styleClass="window-background-level3" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unah.hermes.MantProductosPageController">
    <children>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="55.0" layoutY="24.0" prefHeight="53.0" prefWidth="810.0" text="AGREGAR NUEVA CATEGORIA" textAlignment="CENTER" AnchorPane.leftAnchor="52.0" AnchorPane.rightAnchor="49.10546875">
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="159.0" layoutY="25.0" prefHeight="54.0" prefWidth="283.0" text="Agregar Categoría" textAlignment="CENTER" AnchorPane.topAnchor="20.0">
          <font>
-            <Font name="System Bold" size="36.0" />
+            <Font size="27.0" />
          </font>
       </Label>
-      <Label layoutX="46.0" layoutY="124.0" text="Filtro por Nombre: " AnchorPane.leftAnchor="46.0" AnchorPane.rightAnchor="859.0">
-         <font>
-            <Font size="14.0" />
-         </font></Label>
-      <Button layoutX="266.0" layoutY="358.0" mnemonicParsing="false" prefWidth="161.0" text="AGREGAR">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Button>
-      <Button layoutX="514.0" layoutY="360.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="161.0" text="CANCELAR">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Button>
-      <Label layoutX="282.0" layoutY="199.0" text="NOMBRE:">
+      <Label layoutX="120.0" layoutY="92.0" text="Nombre:" AnchorPane.topAnchor="92.0">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField layoutX="353.0" layoutY="192.0" prefHeight="35.0" prefWidth="282.0" />
+      <TextField layoutX="120.0" layoutY="115.0" prefHeight="26.0" prefWidth="360.0" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="120.0" AnchorPane.topAnchor="115.0">
+         <font>
+            <Font size="14.0" />
+         </font></TextField>
+      <Button id="btnAgregar" layoutX="178.99999999999997" layoutY="181.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="86.0" text="Agregar" AnchorPane.bottomAnchor="37.0" AnchorPane.rightAnchor="334.6">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Button id="btnCancelar" layoutX="335.0" layoutY="181.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="86.0" styleClass="btnCancelar" text="Cancelar" AnchorPane.bottomAnchor="37.0" AnchorPane.leftAnchor="335.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Separator layoutX="101.0" layoutY="77.0" prefHeight="2.0" prefWidth="400.0" AnchorPane.topAnchor="74.0" />
    </children>
 </AnchorPane>

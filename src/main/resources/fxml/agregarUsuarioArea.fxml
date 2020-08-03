@@ -1,28 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="460.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="482.0" prefWidth="446.0" styleClass="window-background-level3" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label layoutX="175.0" layoutY="23.0" text="Agregar Usuario al Área">
+      <Label alignment="CENTER" layoutX="76.0" layoutY="35.0" prefHeight="39.0" prefWidth="310.0" text="Agregar Usuario al Área" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="30.0">
          <font>
             <Font size="27.0" />
          </font>
       </Label>
-      <Label layoutX="226.0" layoutY="80.0" text="Seleccionar todos" />
-      <Button id="btnAgregar" layoutX="241.0" layoutY="400.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="76.0" style="-fx-background-color: black;" text="Agregar" />
-      <Button id="btnCancelar" layoutX="345.0" layoutY="400.0" mnemonicParsing="false" style="-fx-background-color: black;" text="Cancelar" />
-      <CheckBox id="chkTodos" layoutX="345.0" layoutY="76.0" mnemonicParsing="false" />
-      <TableView id="tblUsuarios" layoutX="217.0" layoutY="102.0" prefHeight="273.0" prefWidth="200.0">
+      <Button id="btnAgregar" layoutX="302.0" layoutY="209.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="83.0" stylesheets="@../styles/Styles.css" text="Agregar" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button id="btnCancelar" layoutX="302.0" layoutY="290.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="83.0" styleClass="btnCancelar" stylesheets="@../styles/Styles.css" text="Cancelar" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <TableView id="tblUsuarios" layoutX="52.0" layoutY="163.0" prefHeight="275.0" prefWidth="200.0" stylesheets="@../styles/Styles.css" AnchorPane.bottomAnchor="44.0" AnchorPane.leftAnchor="52.0" AnchorPane.topAnchor="163.0">
         <columns>
-          <TableColumn prefWidth="199.0" text="Usuario" />
+          <TableColumn maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="212.19998168945312" resizable="false" styleClass="column-header-text-color" text="Usuarios" />
         </columns>
       </TableView>
+      <AnchorPane layoutX="52.0" layoutY="124.0" prefHeight="26.0" prefWidth="200.0" AnchorPane.leftAnchor="52.0" AnchorPane.rightAnchor="194.0" AnchorPane.topAnchor="124.0">
+         <children>
+            <TextField layoutX="51.0" />
+            <Label layoutY="4.0" text="Buscar:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <Separator layoutX="48.0" layoutY="83.0" prefHeight="2.0" prefWidth="350.0" AnchorPane.leftAnchor="48.0" AnchorPane.rightAnchor="48.0" AnchorPane.topAnchor="83.0" />
    </children>
 </AnchorPane>

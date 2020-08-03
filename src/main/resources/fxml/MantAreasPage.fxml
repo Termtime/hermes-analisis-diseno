@@ -8,36 +8,30 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unah.hermes.MantAreasPageController">
+<AnchorPane id="AnchorPane" prefHeight="668.0" prefWidth="1024.0" styleClass="window-background-level2" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unah.hermes.MantAreasPageController">
    <children>
-      <Label alignment="BASELINE_CENTER" layoutX="184.0" layoutY="105.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="32.0" prefWidth="228.0" text="Pulse un área " />
-      <TableView id="tblArea" layoutX="217.0" layoutY="159.0" prefHeight="465.0" prefWidth="221.0">
+      <TableView id="tblArea" layoutX="215.0" layoutY="147.0" prefHeight="465.0" prefWidth="250.0">
         <columns>
-          <TableColumn id="tblArea" prefWidth="197.0" text="Área" />
+          <TableColumn id="tblArea" prefWidth="249.59998168945313" text="Área" />
         </columns>
       </TableView>
-      <Separator layoutX="497.0" layoutY="137.0" orientation="VERTICAL" prefHeight="528.0" prefWidth="29.0" style="-fx-background-color: white;" />
-      <TableView id="tblUsuario" layoutX="585.0" layoutY="163.0" prefHeight="465.0" prefWidth="221.0">
+      <TableView id="tblUsuario" layoutX="566.0" layoutY="147.0" prefHeight="465.0" prefWidth="250.0">
         <columns>
-          <TableColumn id="tblUsuario" prefWidth="199.0" text="Usuario" />
+          <TableColumn id="tblUsuario" prefWidth="249.60001220703126" text="Usuario" />
         </columns>
       </TableView>
-      <Label alignment="BASELINE_CENTER" layoutX="400.0" layoutY="49.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="39.0" prefWidth="315.0" text="Mantenimiento de Áreas">
+      <Label alignment="BASELINE_CENTER" layoutX="371.0" layoutY="45.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="39.0" prefWidth="344.0" text="Mantenimiento de Áreas" AnchorPane.leftAnchor="350.0" AnchorPane.rightAnchor="350.0" AnchorPane.topAnchor="30.0">
          <font>
             <Font size="27.0" />
          </font></Label>
-      <Label alignment="BASELINE_CENTER" layoutX="189.0" layoutY="123.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="32.0" prefWidth="228.0" text="para ver sus usuarios..." />
-      <AnchorPane layoutX="24.0" layoutY="267.0" prefHeight="200.0" prefWidth="200.0">
-         <children>
-            <Button id="btnCreaArea" layoutX="54.0" layoutY="41.0" mnemonicParsing="false" onAction="#btnCrearAreaClick" prefHeight="32.0" prefWidth="95.0" style="-fx-background-color: black;" text="Crear Área" />
-            <Button id="btnEliminaArea" layoutX="52.0" layoutY="125.0" mnemonicParsing="false" style="-fx-background-color: black;" text="Eliminar Área" />
-         </children>
-      </AnchorPane>
-      <AnchorPane layoutX="822.0" layoutY="261.0" prefHeight="200.0" prefWidth="200.0">
-         <children>
-            <Button id="btnAgregaUsuario" layoutX="25.0" layoutY="35.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="157.0" style="-fx-background-color: black;" text="Agregar Usuario al Área" />
-            <Button id="btnEliminaUsuario" layoutX="23.0" layoutY="120.0" mnemonicParsing="false" style="-fx-background-color: black;" text="Eliminar Usuario del Área" />
-         </children>
-      </AnchorPane>
+      <Label alignment="CENTER" layoutX="226.0" layoutY="118.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="30.0" prefWidth="228.0" text="Pulse un área para ver sus usuarios...">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+      <Separator layoutX="512.0" layoutY="157.0" orientation="VERTICAL" prefHeight="450.0" />
+      <Button id="btnAgregaUsuario" layoutX="839.0" layoutY="317.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="158.0" style="-fx-background-coor: black;" text="Agregar Usuario al Área" />
+      <Button id="btnEliminaUsuario" layoutX="823.0" layoutY="404.0" mnemonicParsing="false" text="Eliminar Usuario del Área" />
+      <Button id="btnCreaArea" layoutX="87.0" layoutY="108.0" mnemonicParsing="false" onAction="#btnCrearAreaClick" prefHeight="32.0" prefWidth="95.0" text="Crear Área" />
+      <Button id="btnEliminaArea" layoutX="85.0" layoutY="192.0" mnemonicParsing="false" style="-fx-backgroundcolor: black;" text="Eliminar Área" />
    </children>
 </AnchorPane>
