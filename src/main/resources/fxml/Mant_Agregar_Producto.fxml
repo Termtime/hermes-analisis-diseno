@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="window-background-level3" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unah.hermes.MantProductosPageController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="window-background-level3" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unah.hermes.MantProductModalAgregarProducto">
    <children>
       <Pane layoutX="38.0" layoutY="284.0">
          <children>
@@ -45,7 +45,7 @@
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <Button id="btnCancelar" layoutX="457.0" layoutY="258.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="86.0" styleClass="btnCancelar" text="Cancelar" AnchorPane.bottomAnchor="110.0">
+      <Button id="btnCancelar" fx:id="btnCancelar" layoutX="457.0" layoutY="258.0" mnemonicParsing="false" onAction="#btnCancelarClick" prefHeight="32.0" prefWidth="86.0" styleClass="btnCancelar" text="Cancelar" AnchorPane.bottomAnchor="110.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
