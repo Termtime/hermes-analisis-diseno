@@ -9,18 +9,18 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="MantUsuario" minHeight="720.0" minWidth="1280.0" prefHeight="720.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unah.hermes.MantUsuariosPageController">
+<AnchorPane id="AnchorPane" fx:id="MantUsuario" minHeight="720.0" minWidth="1280.0" prefHeight="720.0" prefWidth="1024.0" styleClass="window-background-level2" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unah.hermes.MantUsuariosPageController">
    <children>
       <Label layoutX="245.0" layoutY="11.0" text="MANTENIMIENTO DE USUARIOS" textAlignment="CENTER">
          <font>
             <Font name="System Bold" size="36.0" />
          </font>
       </Label>
-      <Label layoutX="106.0" layoutY="101.0" text=" Nombre: ">
+      <Label layoutX="46.0" layoutY="101.0" text="Filtro por Nombre: ">
          <font>
             <Font size="14.0" />
          </font></Label>
-      <TextField layoutX="170.0" layoutY="96.0" prefHeight="30.0" prefWidth="547.0" />
+      <TextField fx:id="txtFiltro" layoutX="170.0" layoutY="96.0" prefHeight="30.0" prefWidth="547.0" />
       <TableView fx:id="tablaUsuarios" layoutX="106.0" layoutY="164.0" prefHeight="437.0" prefWidth="850.0">
         <columns>
           <TableColumn prefWidth="150" text="Codigo" />
@@ -35,17 +35,17 @@
             <Font size="14.0" />
          </font>
       </Button>
-      <Button fx:id="btnModificar" layoutX="1064.0" layoutY="240.0" mnemonicParsing="false" onAction="#btnModificarUsuarioClick" prefHeight="40.0" prefWidth="170.0" text="Modificar Usuario">
+      <Button fx:id="btnModificar" layoutX="1064.0" layoutY="250.0" mnemonicParsing="false" onAction="#btnModificarUsuarioClick" prefHeight="40.0" prefWidth="170.0" text="Modificar Usuario">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <Button layoutX="1064.0" layoutY="291.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="170.0" text="Eliminar Usuario">
+      <Button fx:id="btnEliminarUsuario" layoutX="1064.0" layoutY="311.0" mnemonicParsing="false" onAction="#btnEliminarUsuarioClick" prefHeight="40.0" prefWidth="170.0" text="Eliminar Usuario">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <Button layoutX="1064.0" layoutY="452.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="170.0" text="Permisos">
+      <Button fx:id="btnPermisos" layoutX="1064.0" layoutY="432.0" mnemonicParsing="false" onAction="#btnPermisosClick" prefHeight="40.0" prefWidth="170.0" text="Permisos">
          <font>
             <Font size="14.0" />
          </font>

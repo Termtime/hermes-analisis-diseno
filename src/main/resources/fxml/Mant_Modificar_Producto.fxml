@@ -14,7 +14,7 @@
    <children>
       <Pane layoutX="38.0" layoutY="284.0">
          <children>
-            <ComboBox layoutY="24.0" prefHeight="30.0" prefWidth="360.0" promptText="Abarrotes" style="-fx-background-color: #ffffff;" />
+            <ComboBox fx:id="comboCategoria" layoutY="24.0" onAction="#comboCategoriaClick" prefHeight="30.0" prefWidth="360.0" promptText="Abarrotes" style="-fx-background-color: #ffffff;" />
             <Label layoutX="1.0" text="Categoría:">
                <font>
                   <Font size="14.0" />
@@ -34,18 +34,18 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <TextField id="txtAreaNueva" layoutY="23.0" prefHeight="26.0" prefWidth="360.0" text="Mantequila">
+            <TextField id="txtAreaNueva" fx:id="txtNombreProducto" layoutY="23.0" onInputMethodTextChanged="#txtNombreProductoInput" prefHeight="26.0" prefWidth="360.0" text="Mantequila">
                <font>
                   <Font size="14.0" />
                </font>
             </TextField>
          </children>
       </Pane>
-      <Button id="btnAgregar" layoutX="457.0" layoutY="184.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="86.0" text="Agregar" AnchorPane.bottomAnchor="184.0">
+      <Button id="btnAgregar" fx:id="btnAgregar" layoutX="457.0" layoutY="184.0" mnemonicParsing="false" onAction="#btnAgregarClick" prefHeight="32.0" prefWidth="86.0" text="Agregar" AnchorPane.bottomAnchor="184.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <Button id="btnCancelar" layoutX="456.0" layoutY="268.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="86.0" styleClass="btnCancelar" text="Cancelar" AnchorPane.bottomAnchor="100.0">
+      <Button id="btnCancelar" fx:id="btnCancelar" layoutX="456.0" layoutY="268.0" mnemonicParsing="false" onAction="#btnCancelarClick" prefHeight="32.0" prefWidth="86.0" styleClass="btnCancelar" text="Cancelar" AnchorPane.bottomAnchor="100.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
@@ -56,7 +56,7 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <TextField id="txtAreaNueva" layoutY="23.0" prefHeight="26.0" prefWidth="360.0" text="Libra">
+            <TextField id="txtAreaNueva" fx:id="txtUnidad" layoutY="23.0" onInputMethodTextChanged="#txtUnidadInput" prefHeight="26.0" prefWidth="360.0" text="Libra">
                <font>
                   <Font size="14.0" />
                </font>

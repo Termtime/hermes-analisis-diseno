@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="600.0" styleClass="window-background-level3" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unah.hermes.MantUsuariosModalAgregar">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="600.0" styleClass="window-background-level3" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unah.hermes.MantUsuariosModalAgregar">
    <children>
       <Label alignment="CENTER" layoutX="183.0" layoutY="33.0" prefHeight="39.0" prefWidth="234.0" text="Agregar Usuario" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="183.0" AnchorPane.rightAnchor="183.0" AnchorPane.topAnchor="40.0">
          <font>
@@ -25,7 +25,7 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <TextField id="txtAreaNueva" layoutY="23.0" prefHeight="26.0" prefWidth="360.0">
+            <TextField id="txtAreaNueva" fx:id="txtUsuario" layoutY="23.0" onInputMethodTextChanged="#txtUsuarioInput" prefHeight="26.0" prefWidth="360.0">
                <font>
                   <Font size="14.0" />
                </font>
@@ -47,7 +47,7 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <TextField id="txtAreaNueva" layoutY="23.0" prefHeight="26.0" prefWidth="360.0">
+            <TextField id="txtAreaNueva" fx:id="txtNombre" layoutY="23.0" onInputMethodTextChanged="#txtNombreInput" prefHeight="26.0" prefWidth="360.0">
                <font>
                   <Font size="14.0" />
                </font>
@@ -61,7 +61,7 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <TextField id="txtAreaNueva" layoutY="23.0" prefHeight="26.0" prefWidth="360.0">
+            <TextField id="txtAreaNueva" fx:id="txtCorreo" layoutY="23.0" onInputMethodTextChanged="#txtCorreoInput" prefHeight="26.0" prefWidth="360.0">
                <font>
                   <Font size="14.0" />
                </font>
@@ -75,7 +75,7 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <ComboBox layoutY="23.0" prefHeight="30.0" prefWidth="360.0" promptText="Escoja un nivel de acceso" style="-fx-background-color: #ffffff;" />
+            <ComboBox fx:id="comboNivelAcceso" layoutY="23.0" onAction="#comboNivelAccesoClck" prefHeight="30.0" prefWidth="360.0" promptText="Escoja un nivel de acceso" />
          </children>
       </Pane>
       <Pane layoutX="120.0" layoutY="410.0">
@@ -85,7 +85,7 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <PasswordField layoutX="-2.0" layoutY="23.0" prefHeight="30.0" prefWidth="360.0" />
+            <PasswordField fx:id="txtContrasena" layoutX="-2.0" layoutY="23.0" onInputMethodTextChanged="#txtContrasenaInput" prefHeight="30.0" prefWidth="360.0" />
          </children>
       </Pane>
       <Pane layoutX="120.0" layoutY="473.0">
@@ -95,7 +95,7 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <PasswordField layoutX="-2.0" layoutY="23.0" prefHeight="30.0" prefWidth="360.0" />
+            <PasswordField fx:id="txtConfirmeContrasena" layoutX="-2.0" layoutY="23.0" onInputMethodTextChanged="#txtConfirmeContrasenaInput" prefHeight="30.0" prefWidth="360.0" />
          </children>
       </Pane>
       <Separator layoutX="100.0" layoutY="92.0" prefHeight="2.0" prefWidth="400.0" AnchorPane.topAnchor="92.0" />
