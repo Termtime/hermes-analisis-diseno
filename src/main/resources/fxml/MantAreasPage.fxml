@@ -10,12 +10,12 @@
 
 <AnchorPane id="AnchorPane" prefHeight="668.0" prefWidth="1024.0" styleClass="window-background-level2" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unah.hermes.MantAreasPageController">
    <children>
-      <TableView id="tblArea" layoutX="215.0" layoutY="147.0" prefHeight="465.0" prefWidth="250.0">
+      <TableView id="tblArea" fx:id="tablaArea" layoutX="215.0" layoutY="147.0" prefHeight="465.0" prefWidth="250.0">
         <columns>
           <TableColumn id="tblArea" prefWidth="249.59998168945313" text="Área" />
         </columns>
       </TableView>
-      <TableView id="tblUsuario" layoutX="566.0" layoutY="147.0" prefHeight="465.0" prefWidth="250.0">
+      <TableView id="tblUsuario" fx:id="tablaUsuario" layoutX="566.0" layoutY="147.0" prefHeight="465.0" prefWidth="250.0">
         <columns>
           <TableColumn id="tblUsuario" prefWidth="249.60001220703126" text="Usuario" />
         </columns>
@@ -29,9 +29,9 @@
             <Font size="14.0" />
          </font></Label>
       <Separator layoutX="512.0" layoutY="157.0" orientation="VERTICAL" prefHeight="450.0" />
-      <Button id="btnAgregaUsuario" layoutX="839.0" layoutY="317.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="158.0" style="-fx-background-coor: black;" text="Agregar Usuario al Área" />
-      <Button id="btnEliminaUsuario" layoutX="823.0" layoutY="404.0" mnemonicParsing="false" text="Eliminar Usuario del Área" />
-      <Button id="btnCreaArea" layoutX="87.0" layoutY="108.0" mnemonicParsing="false" onAction="#btnCrearAreaClick" prefHeight="32.0" prefWidth="95.0" text="Crear Área" />
-      <Button id="btnEliminaArea" layoutX="85.0" layoutY="192.0" mnemonicParsing="false" style="-fx-backgroundcolor: black;" text="Eliminar Área" />
+      <Button id="btnAgregaUsuario" fx:id="btnAgregarUsuarioArea" layoutX="839.0" layoutY="317.0" mnemonicParsing="false" onAction="#btnAgregarUsuarioAreaClick" prefHeight="32.0" prefWidth="158.0" style="-fx-background-coor: black;" text="Agregar Usuario al Área" />
+      <Button id="btnCreaArea" fx:id="btnCrearArea" layoutX="87.0" layoutY="108.0" mnemonicParsing="false" onAction="#btnCrearAreaClick" prefHeight="32.0" prefWidth="95.0" text="Crear Área" />
+      <Button id="btnEliminaUsuario" fx:id="btnEliminarUsuarioArea" layoutX="823.0" layoutY="404.0" mnemonicParsing="false" onAction="#btnEliminarUsuarioAreaClick" text="Eliminar Usuario del Área" />
+      <Button id="btnEliminaArea" fx:id="btnEliminarArea" layoutX="85.0" layoutY="192.0" mnemonicParsing="false" onAction="#btnEliminarAreaClick" style="-fx-backgroundcolor: black;" text="Eliminar Área" />
    </children>
 </AnchorPane>
