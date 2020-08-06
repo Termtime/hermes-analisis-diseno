@@ -13,7 +13,7 @@
 <AnchorPane id="AnchorPane" prefHeight="574.0" prefWidth="850.0" styleClass="window-background-level3" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unah.hermes.EntregaReqPageController">
    <children>
       <Accordion layoutX="214.0" layoutY="125.0" />
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="232.0" layoutY="28.0" prefHeight="47.0" prefWidth="398.0" text="Vista Previa de Requisición" textAlignment="CENTER" AnchorPane.leftAnchor="220.0" AnchorPane.rightAnchor="220.0" AnchorPane.topAnchor="30.0">
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="267.0" layoutY="28.0" prefHeight="47.0" prefWidth="319.0" text="Vista Previa de Requisición" textAlignment="CENTER" AnchorPane.leftAnchor="267.0" AnchorPane.rightAnchor="264.0" AnchorPane.topAnchor="30.0">
          <font>
             <Font size="27.0" />
          </font></Label>
@@ -33,37 +33,37 @@
          <font>
             <Font name="System Bold" size="14.0" />
          </font></Label>
-      <TableView id="table_entrega" fx:id="tablaVistaPrevia" layoutX="16.0" layoutY="211.0" prefHeight="346.0" prefWidth="622.0">
+      <TableView id="table_entrega" fx:id="tablaVistaPrevia" layoutX="16.0" layoutY="211.0" prefHeight="346.0" prefWidth="622.0" style="-fx-background-color: #4B4B4B;" AnchorPane.bottomAnchor="16.600000000000023" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="211.60000000000002" AnchorPane.topAnchor="211.0">
         <columns>
           <TableColumn prefWidth="93.0" text="Producto" />
             <TableColumn prefWidth="103.19998168945312" text="Cant. Pedida" />
-            <TableColumn prefWidth="93.59996032714844" text="Unidad" />
-            <TableColumn prefWidth="109.60003662109375" text=" Cant. Pendiente" />
+            <TableColumn prefWidth="79.19999694824219" text="Unidad" />
+            <TableColumn prefWidth="124.79998779296875" text=" Cant. Pendiente" />
           <TableColumn prefWidth="112.0" text="Cant. Entregada" />
             <TableColumn prefWidth="110.39996337890625" text="Comentario" />
         </columns>
       </TableView>
-      <Button id="button_terminar" fx:id="btnTerminarEntrega" layoutX="666.0" layoutY="331.0" mnemonicParsing="false" onAction="#btnTerminarEntregaClick" prefHeight="32.0" prefWidth="147.0" text="Terminar Entrega">
+      <Button id="button_terminar" fx:id="btnTerminarEntrega" layoutX="666.0" layoutY="331.0" mnemonicParsing="false" onAction="#btnTerminarEntregaClick" prefHeight="32.0" prefWidth="147.0" text="Terminar Entrega" AnchorPane.rightAnchor="36.80000000000001" AnchorPane.topAnchor="331.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <Button id="button_cancelar" fx:id="btnCancelar" layoutX="666.0" layoutY="407.0" mnemonicParsing="false" onAction="#btnCancelarClick" prefHeight="32.0" prefWidth="147.0" styleClass="btnCancelar" text="Cancelar">
+      <Button id="button_cancelar" fx:id="btnCancelar" layoutX="666.0" layoutY="407.0" mnemonicParsing="false" onAction="#btnCancelarClick" prefHeight="32.0" prefWidth="147.0" styleClass="btnCancelar" text="Cancelar" AnchorPane.rightAnchor="36.80000000000001" AnchorPane.topAnchor="407.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <Label id="fecha" fx:id="labelFecha" layoutX="57.0" layoutY="125.0" prefHeight="20.0" prefWidth="100.0" style="-fx-background-color: #303030;" text="##/##/####">
+      <Label id="fecha" fx:id="labelFecha" layoutX="57.0" layoutY="125.0" prefHeight="20.0" prefWidth="100.0" style="-fx-background-color: #303030;" text="##/##/####" textAlignment="CENTER">
          <font>
             <Font size="14.0" />
          </font></Label>
-      <Label id="hora" fx:id="labelHora" layoutX="57.0" layoutY="175.0" prefHeight="20.0" prefWidth="100.0" style="-fx-background-color: #303030;" text="##:##:##">
+      <Label id="hora" fx:id="labelHora" layoutX="57.0" layoutY="175.0" prefHeight="20.0" prefWidth="100.0" style="-fx-background-color: #303030;" text="##:##:##" textAlignment="CENTER">
          <font>
             <Font size="14.0" />
          </font></Label>
-      <Label id="area" fx:id="labelArea" layoutX="325.0" layoutY="125.0" prefHeight="20.0" prefWidth="100.0" style="-fx-background-color: #303030;" text="Cocina">
+      <Label id="area" fx:id="labelArea" layoutX="325.0" layoutY="125.0" prefHeight="20.0" prefWidth="100.0" style="-fx-background-color: #303030;" text="Cocina" textAlignment="CENTER">
          <font>
             <Font size="14.0" />
          </font></Label>
-      <Label id="solicitante" fx:id="labelSolicitante" layoutX="326.0" layoutY="175.0" prefWidth="100.0" style="-fx-background-color: #303030;" text="Andrea Archila">
+      <Label id="solicitante" fx:id="labelSolicitante" layoutX="326.0" layoutY="175.0" prefWidth="100.0" style="-fx-background-color: #303030;" text="Andrea Archila" textAlignment="CENTER">
          <font>
             <Font size="14.0" />
          </font></Label>

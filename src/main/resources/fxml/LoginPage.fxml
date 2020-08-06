@@ -37,7 +37,7 @@
                   <TextField id="correoTxt" fx:id="correoTxt" layoutY="34.0" prefHeight="25.0" prefWidth="285.0" promptText="correo@correo.com" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                </children>
             </AnchorPane>
-            <Label layoutX="94.0" layoutY="13.0" text="Inicio de Sesión" textFill="WHITE">
+            <Label layoutX="75.0" layoutY="14.0" prefHeight="35.0" prefWidth="195.0" text="Inicio de Sesión" textFill="WHITE" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="75.0">
                <font>
                   <Font size="24.0" />
                </font>
@@ -48,7 +48,7 @@
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </padding>
       </AnchorPane>
-      <Label id="titleLabel" accessibleRoleDescription="\\@" layoutX="91.0" layoutY="14.0" prefHeight="70.0" prefWidth="240.0" text="H.E.R.M.E.S" textAlignment="CENTER" textFill="WHITE">
+      <Label id="titleLabel" accessibleRoleDescription="\\@" layoutX="91.0" layoutY="14.0" prefHeight="70.0" prefWidth="240.0" text="H.E.R.M.E.S" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="91.0" AnchorPane.rightAnchor="82.0" AnchorPane.topAnchor="14.0">
          <font>
             <Font size="48.0" />
          </font>
