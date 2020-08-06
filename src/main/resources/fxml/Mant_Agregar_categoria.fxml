@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="250.0" prefWidth="600.0" styleClass="window-background-level3" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unah.hermes.MantProductosPageController">
+<AnchorPane id="AnchorPane" prefHeight="250.0" prefWidth="600.0" styleClass="window-background-level3" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unah.hermes.MantProductModalAgregarCategoria">
    <children>
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="191.0" layoutY="14.0" prefHeight="54.0" prefWidth="220.0" text="Agregar Categoría" textAlignment="CENTER" AnchorPane.topAnchor="20.0">
          <font>
