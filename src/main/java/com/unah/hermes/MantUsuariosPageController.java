@@ -61,7 +61,7 @@ public class MantUsuariosPageController implements Initializable {
     // @FXML public AnchorPane MantUsuario;
 
     // ListenerRegistration requisicionesListener;
-    // FirebaseConnector db;
+    // FirebaseConnector db; corregir errores
     // MantUsuarios tablaUsuariosSelectedItem;
     // public static ObservableList<MantUsuarios> usuariosPermisos =
     // FXCollections.observableArrayList();
