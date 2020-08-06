@@ -44,49 +44,25 @@ import javafx.stage.Modality;
 public class MantUsuariosPageController implements Initializable {
 
     @FXML
-    ListView<MantUsuarios> listaMU;
-    @FXML
     TableView<MantUsuarios> tablaUsuarios;
 
     @FXML
     private void btnAgregarUsuarioClick(ActionEvent event) {
         Navigation.pushRoute("agregarUsuario", event, false, true);
     }
-
     @FXML
     private void btnModificarUsuarioClick(ActionEvent event) {
         Navigation.pushRoute("modificarUsuario", event, false, true);
     }
+    @FXML
+    private void btnEliminarUsuarioClick(ActionEvent event){
 
-    // @FXML public AnchorPane MantUsuario;
+    }
 
-    // ListenerRegistration requisicionesListener;
-    // FirebaseConnector db; corregir errores
-    // MantUsuarios tablaUsuariosSelectedItem;
-    // public static ObservableList<MantUsuarios> usuariosPermisos =
-    // FXCollections.observableArrayList();
+    @FXML
+    private void btnPermisosClick(ActionEvent event){
 
-    // db = FirebaseConnector.getInstance();
-    // requisicionesListener = db.iniciarListenerRequisiciones();
-    // listaMU.setItems(usuariosPermisos);
-
-    // //agregar el listener de cambio para cuando se cambie la seleccion
-    // listaMU.getSelectionModel().selectedItemProperty().addListener(new
-    // ChangeListener<Requisicion>(){
-    // @Override
-    // public void changed(ObservableValue<? extends Requisicion> observable,
-    // Requisicion oldValue, Requisicion newValue) {
-    // tablaUsuariosSelectedItem = newValue;
-    // System.out.println(newValue);
-    // popularTablaRequisicionesPDConProductos(tablaP, newValue.productos);
-    // lblReqIDP.setText(newValue.reqID);
-    // lblEstadoP.setText(newValue.estado);
-    // lblFechaP.setText(newValue.fechaString);
-    // lblHoraP.setText(newValue.hora);
-    // lblAreaP.setText(newValue.area);
-    // lblSolicitanteP.setText(newValue.solicitante);
-    // }
-    // });
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
