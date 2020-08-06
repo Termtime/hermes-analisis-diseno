@@ -38,7 +38,8 @@ import javafx.scene.Node;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 import javafx.stage.Modality;
-public class MantProductModalAgregarProducto implements Initializable {
+
+public class MantProductModalModificarCategoria implements Initializable{
     @FXML private javafx.scene.control.Button btnCancelar;
 
     @FXML private void btnCancelarClick(ActionEvent event) {
@@ -48,13 +49,10 @@ public class MantProductModalAgregarProducto implements Initializable {
        stage.close();
 
     }
-    @FXML private void txtUnidadInput(ActionEvent event) {
-        
-    }
     @FXML private void comboCategoriaClick(ActionEvent event) {
         
     }
-    @FXML private void txtNombreProductoInput(ActionEvent event) {
+    @FXML private void txtNuevoNombreInput(ActionEvent event) {
         
     }
     @FXML private void btnAgregarClick(ActionEvent event) {
