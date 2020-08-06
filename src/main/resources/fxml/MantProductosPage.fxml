@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.String?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
@@ -11,61 +12,62 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="MantenimientoProductos" prefHeight="700.0" prefWidth="1024.0" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unah.hermes.MantProductosPageController">
+<AnchorPane id="AnchorPane" fx:id="MantenimientoProductos" prefHeight="637.0" prefWidth="922.0" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unah.hermes.MantProductosPageController">
    <children>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="-1.0" layoutY="24.0" prefHeight="53.0" prefWidth="1029.0" text="MANTENIMIENTO DE PRODUCTOS" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="287.0" layoutY="28.0" prefHeight="54.0" prefWidth="349.0" text="Mantenimiento de Productos" textAlignment="CENTER" AnchorPane.leftAnchor="287.0" AnchorPane.rightAnchor="286.0" AnchorPane.topAnchor="30.0">
          <font>
-            <Font name="System Bold" size="36.0" />
+            <Font size="27.0" />
          </font>
       </Label>
-      <Label layoutX="46.0" layoutY="124.0" text="Filtro por Nombre: " AnchorPane.leftAnchor="46.0" AnchorPane.rightAnchor="859.0">
+      <Label layoutX="32.0" layoutY="137.0" prefHeight="20.0" prefWidth="123.0" text="Filtro por Nombre: " AnchorPane.leftAnchor="32.0">
          <font>
             <Font size="14.0" />
          </font></Label>
-      <TextField fx:id="txtFiltro" layoutX="170.0" layoutY="122.0" onInputMethodTextChanged="#txtFiltroInput" prefHeight="30.0" prefWidth="429.0" AnchorPane.leftAnchor="170.0" AnchorPane.rightAnchor="425.0" />
-      <ComboBox fx:id="comboCategoria" layoutX="615.0" layoutY="123.0" onAction="#comboCategoriaClick" prefHeight="30.0" prefWidth="199.0" promptText="Select" AnchorPane.rightAnchor="210.0" />
-      <Label layoutX="616.0" layoutY="88.0" text="Categoria: " AnchorPane.rightAnchor="341.0">
+      <TextField fx:id="txtFiltro" layoutX="27.0" layoutY="160.0" onInputMethodTextChanged="#txtFiltroInput" prefHeight="30.0" prefWidth="462.0" AnchorPane.leftAnchor="27.0" AnchorPane.rightAnchor="433.0" />
+      <ComboBox fx:id="comboCategoria" layoutX="499.00000000000006" layoutY="159.0" onAction="#comboCategoriaClick" prefHeight="30.0" prefWidth="199.0" promptText="Select" AnchorPane.rightAnchor="223.79999999999995" />
+      <Label layoutX="500.00000000000006" layoutY="137.0" text="Categoria: " AnchorPane.rightAnchor="354.79999999999995">
          <font>
             <Font size="14.0" />
          </font></Label>
-      <TableView fx:id="tablaProductos" layoutX="46.0" layoutY="165.0" prefHeight="529.0" prefWidth="768.0" AnchorPane.bottomAnchor="74.0" AnchorPane.leftAnchor="46.0" AnchorPane.rightAnchor="210.0" AnchorPane.topAnchor="165.0">
+      <TableView fx:id="tablaProductos" layoutX="23.0" layoutY="194.0" prefHeight="390.0" prefWidth="680.0" AnchorPane.bottomAnchor="23.600000000000023" AnchorPane.leftAnchor="23.0" AnchorPane.rightAnchor="219.0" AnchorPane.topAnchor="194.0">
         <columns>
-          <TableColumn prefWidth="50" resizable="false" text="Producto" />
-          <TableColumn prefWidth="50" resizable="false" text="Categoria" />
-          <TableColumn prefWidth="50" resizable="false" text="Unidad" />
+          <TableColumn prefWidth="351.20000076293945" resizable="false" text="Producto" />
+          <TableColumn minWidth="0.0" prefWidth="163.20001220703125" resizable="false" text="Categoria" />
+          <TableColumn minWidth="0.0" prefWidth="165.5999755859375" resizable="false" text="Unidad" />
         </columns>
       </TableView>
-      <Button fx:id="btnAgregarProducto" layoutX="835.0" layoutY="210.0" mnemonicParsing="false" onAction="#btnAgregarProductoClick" prefHeight="40.0" prefWidth="170.0" text="Agregar Producto" AnchorPane.rightAnchor="19.0">
-         <font>
-            <Font size="14.0" />
-         </font>
+      <Button fx:id="btnAgregarProducto" layoutX="734.0" layoutY="247.0" mnemonicParsing="false" onAction="#btnAgregarProductoClick" prefHeight="32.0" prefWidth="152.0" text="Agregar Producto" AnchorPane.rightAnchor="36.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </Button>
-      <Button fx:id="btnModificarProducto" layoutX="834.6" layoutY="271.0" mnemonicParsing="false" onAction="#btnModificarProductoClick" prefHeight="40.0" prefWidth="170.0" text="Modificar Producto" AnchorPane.rightAnchor="19.0">
-         <font>
-            <Font size="14.0" />
-         </font>
+      <Button fx:id="btnModificarProducto" layoutX="734.0" layoutY="299.0" mnemonicParsing="false" onAction="#btnModificarProductoClick" prefHeight="32.0" prefWidth="152.0" text="Modificar Producto" AnchorPane.rightAnchor="36.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </Button>
-      <Button fx:id="btnEliminarProducto" layoutX="834.6" layoutY="332.0" mnemonicParsing="false" onAction="#btnEliminarProductoClick" prefHeight="40.0" prefWidth="170.0" text="Eliminar Producto" AnchorPane.rightAnchor="19.0">
-         <font>
-            <Font size="14.0" />
-         </font>
+      <Button fx:id="btnEliminarProducto" layoutX="734.0" layoutY="351.0" mnemonicParsing="false" onAction="#btnEliminarProductoClick" prefHeight="32.0" prefWidth="152.0" styleClass="btnCancelar" text="Eliminar Producto" AnchorPane.rightAnchor="36.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </Button>
-      <Button fx:id="btnAgregarCategoria" layoutX="834.6" layoutY="453.0" mnemonicParsing="false" onAction="#btnAgregarCategoriaClick" prefHeight="40.0" prefWidth="170.0" text="Agregar Categoria" AnchorPane.rightAnchor="19.0">
-         <font>
-            <Font size="14.0" />
-         </font>
+      <Button fx:id="btnAgregarCategoria" layoutX="734.0" layoutY="425.0" mnemonicParsing="false" onAction="#btnAgregarCategoriaClick" prefHeight="32.0" prefWidth="152.0" text="Agregar Categoria" AnchorPane.rightAnchor="36.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </Button>
-      <Button fx:id="btnModificarCategoria" layoutX="834.6" layoutY="515.0" mnemonicParsing="false" onAction="#btnModificarCategoriaClick" prefHeight="40.0" prefWidth="170.0" text="Modificar Categoria" AnchorPane.rightAnchor="19.0">
-         <font>
-            <Font size="14.0" />
-         </font>
+      <Button fx:id="btnModificarCategoria" layoutX="734.0" layoutY="476.0" mnemonicParsing="false" onAction="#btnModificarCategoriaClick" prefHeight="32.0" prefWidth="152.0" text="Modificar Categoria" AnchorPane.rightAnchor="36.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </Button>
-      <Button fx:id="btnEliminarCategoria" layoutX="835.0" layoutY="576.0" mnemonicParsing="false" onAction="#btnEliminarCategoriaClick" prefHeight="40.0" prefWidth="170.0" text="Eliminar Categoria" AnchorPane.rightAnchor="19.0">
-         <font>
-            <Font size="14.0" />
-         </font>
+      <Button fx:id="btnEliminarCategoria" layoutX="734.0" layoutY="528.0" mnemonicParsing="false" onAction="#btnEliminarCategoriaClick" prefHeight="32.0" prefWidth="152.0" styleClass="btnCancelar" text="Eliminar Categoria" AnchorPane.rightAnchor="36.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </Button>
-      <Separator layoutX="838.0" layoutY="354.0" prefHeight="120.0" prefWidth="166.0" AnchorPane.rightAnchor="20.0" />
+      <Separator layoutX="743.0" layoutY="402.0" prefHeight="0.0" prefWidth="134.0" AnchorPane.rightAnchor="44.60000000000002" />
+      <Separator layoutX="48.0" layoutY="92.0" prefHeight="3.0" prefWidth="826.0" AnchorPane.topAnchor="93.0" />
    </children>
    <styleClass>
       <String fx:value="window-background-level2" />

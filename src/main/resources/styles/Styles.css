@@ -23,32 +23,60 @@
 
 .label {
   -fx-text-fill: #e9e9e9;
-  -fx-alignment: center;
+  /* -fx-alignment: center; */
+  -fx-alignment: CENTER_LEFT;
 }
 
 .table-view {
   -fx-control-inner-background: #303030;
   -fx-table-cell-border-color: transparent;
+  -fx-border-color: #222222;
+  -fx-focus-color: transparent;
+  -fx-faint-focus-color: transparent;
+
+  -fx-background-radius: 30;
 }
 
 .table-view .column-header {
   -fx-background-color: #308ca3;
   -fx-font-size: 14;
+  -fx-padding: 0 0 0 10;
+}
+
+.table-view .column-header-background {
+  -fx-background-color: #308ca3;
+  -fx-background-radius: 30 30 0 0;
+  -fx-background-insets: 0 0 0 0;
+}
+
+.table-view .column-header,
+.table-view .filler {
+  -fx-size: 50;
+  /* -fx-border-width: 0 0 50 0; */
+  -fx-background-color: transparent;
 }
 
 .table-cell {
-  -fx-background-color: #303030;
+  /* -fx-background-color: #303030; */
   -fx-text-fill: #e9e9e9;
   -fx-font-size: 14;
+  -fx-padding: 7 0 7 10; /*arriba derecha abajo izquierda*/
 }
 
 .table-view:focused .table-row-cell:filled:focused:selected {
-  -fx-table-cell-border-color: transparent; /***********************************************/
+  -fx-table-cell-border-color: transparent;
 }
 
 .table-row-cell:filled:focused:selected {
-  /* -fx-control-inner-background: #303030; */
   -fx-table-cell-border-color: transparent;
+}
+
+.table-row-cell:odd {
+  -fx-background-color: #2e2e2e;
+}
+
+.table-row-cell:even {
+  -fx-background-color: #292828;
 }
 
 .menu-button.dropdown {
@@ -73,8 +101,8 @@
 }
 
 .tab-pane *.tab-header-background {
-  -fx-background-color: #114b5a;
-  /* #444444 */
+  -fx-background-color: #444444;
+  /* #114b5a */
 }
 
 .tab-label {
@@ -89,13 +117,13 @@
 }
 
 .tab:selected {
-  -fx-background-color: #121212;
-  -fx-focus-color: #121212;
+  -fx-background-color: #222222;
+  -fx-focus-color: #222222;
 }
 
 /* COLOR DE FONDO DEPENDIENDO DEL NIVEL DE LA PANTALLA */
 .window-background-level1 {
-  -fx-background-color: #121212;
+  -fx-background-color: #222222;
 }
 
 .window-background-level2 {

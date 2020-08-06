@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.String?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
@@ -16,6 +17,7 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
@@ -131,13 +133,20 @@
                                        </font></Label>
                                  </children>
                               </AnchorPane>
-                              <TableView fx:id="tablaP" layoutY="87.0" prefHeight="460.0" prefWidth="740.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="52.0">
-                                <columns>
-                                  <TableColumn prefWidth="351.0" text="Producto" />
-                                  <TableColumn prefWidth="106.0" text="Cantidad" />
-                                    <TableColumn prefWidth="282.0" text="Unidad" />
-                                </columns>
-                              </TableView>
+                              <BorderPane layoutY="52.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="52.0">
+                                 <center>
+                                    <TableView fx:id="tablaP" prefHeight="460.0" prefWidth="740.0">
+                                      <columns>
+                                        <TableColumn id="ProductoLista" prefWidth="351.0" text="Producto" />
+                                        <TableColumn prefWidth="106.0" text="Cantidad" />
+                                          <TableColumn prefWidth="282.0" text="Unidad" />
+                                      </columns>
+                                    </TableView>
+                                 </center>
+                                 <padding>
+                                    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                 </padding>
+                              </BorderPane>
                            </children>
                         </AnchorPane>
                         <Label layoutX="472.0" layoutY="26.0" text="Vista Previa de la requisicion" AnchorPane.leftAnchor="472.0" AnchorPane.rightAnchor="356.0" AnchorPane.topAnchor="26.0">
@@ -147,11 +156,11 @@
                         </Label>
                         <AnchorPane layoutX="1097.0" layoutY="155.0" prefHeight="496.0" prefWidth="169.0" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="156.0">
                            <children>
-                              <Button fx:id="btnEntregar" layoutX="23.0" layoutY="183.0" mnemonicParsing="false" onAction="#btnEntregarClick" prefHeight="37.0" prefWidth="131.0" text="Entregar">
+                              <Button fx:id="btnEntregar" layoutX="18.0" layoutY="187.0" mnemonicParsing="false" onAction="#btnEntregarClick" prefHeight="37.0" prefWidth="131.0" text="Entregar">
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor></Button>
-                              <Button fx:id="btnDenegar" layoutX="24.0" layoutY="266.0" mnemonicParsing="false" onAction="#btnDenegarClick" prefHeight="37.0" prefWidth="131.0" styleClass="btnCancelar" text="Denegar">
+                              <Button fx:id="btnDenegar" layoutX="19.0" layoutY="270.0" mnemonicParsing="false" onAction="#btnDenegarClick" prefHeight="37.0" prefWidth="131.0" styleClass="btnCancelar" text="Denegar">
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor></Button>
