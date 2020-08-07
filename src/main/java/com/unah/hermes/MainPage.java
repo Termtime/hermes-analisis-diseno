@@ -30,13 +30,16 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.fxml.FXMLLoader;
@@ -118,7 +121,12 @@ public class MainPage implements Initializable {
     }
 
     @FXML public void btnEntregarClick(ActionEvent event){
-
+        if(tablaPSelectedItem != null)
+            Navigation.pushRouteWithParameter("EntregaReqPage", event, false, true, EntregaReqPage.class, tablaPSelectedItem );
+        else{
+            Alert alert = new Alert(AlertType.ERROR,"Debe seleccionar una requisicion pendiente antes", ButtonType.OK);
+            alert.showAndWait();
+        }
     }
     @FXML public void btnDenegarClick(ActionEvent event){
 
@@ -139,9 +147,9 @@ public class MainPage implements Initializable {
 
     ListenerRegistration requisicionesListener;
     FirebaseConnector db;
-    Requisicion tablaPSelectedItem;
-    Requisicion tablaDSelectedItem;
-    Requisicion tablaESelectedItem;
+    Requisicion tablaPSelectedItem = null;
+    Requisicion tablaDSelectedItem = null;
+    Requisicion tablaESelectedItem = null;
     public static ObservableList<Requisicion> RequisicionesPendientes = FXCollections.observableArrayList();
     public static ObservableList<Requisicion> RequisicionesEntregadas = FXCollections.observableArrayList();
     public static ObservableList<Requisicion> RequisicionesDenegadas = FXCollections.observableArrayList();
