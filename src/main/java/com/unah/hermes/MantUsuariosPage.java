@@ -76,7 +76,7 @@ public class MantUsuariosPage implements Initializable {
 
     @FXML
     private void btnModificarUsuarioClick(ActionEvent event) {
-        Navigation.pushRoute("mantUsuariosModalModificarUsuario", event, false, true);
+        Navigation.pushRoute("MantUsuariosModalModificarUsuario", event, false, true);
     }
 
     @FXML
