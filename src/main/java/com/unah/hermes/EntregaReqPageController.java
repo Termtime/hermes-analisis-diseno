@@ -9,6 +9,8 @@ import javafx.scene.control.Label;
 
 public class EntregaReqPageController implements Initializable {
     
+    public void initData(Object data){
+    }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO

@@ -61,6 +61,10 @@ public class MantProductModalModificarProducto implements Initializable {
     @FXML private void btnAgregarClick(ActionEvent event) {
         
     }
+
+    public void initData(Object data){
+    }
+    
     @Override
     public void initialize(URL url,  ResourceBundle rb) {
         // 
