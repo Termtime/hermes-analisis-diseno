@@ -33,14 +33,14 @@
          <font>
             <Font name="System Bold" size="14.0" />
          </font></Label>
-      <TableView id="table_entrega" fx:id="tablaVistaPrevia" layoutX="16.0" layoutY="211.0" prefHeight="346.0" prefWidth="622.0" style="-fx-background-color: #4B4B4B;" AnchorPane.bottomAnchor="16.600000000000023" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="211.60000000000002" AnchorPane.topAnchor="211.0">
+      <TableView fx:id="tablaVistaPrevia" layoutX="16.0" layoutY="209.0" prefHeight="346.0" prefWidth="622.0" style="-fx-background-color: #424242;" AnchorPane.bottomAnchor="18.600000000000023" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="211.60000000000002" AnchorPane.topAnchor="209.0">
         <columns>
           <TableColumn prefWidth="93.0" text="Producto" />
             <TableColumn prefWidth="103.19998168945312" text="Cant. Pedida" />
             <TableColumn prefWidth="79.19999694824219" text="Unidad" />
             <TableColumn prefWidth="124.79998779296875" text=" Cant. Pendiente" />
           <TableColumn prefWidth="112.0" text="Cant. Entregada" />
-            <TableColumn prefWidth="110.39996337890625" text="Comentario" />
+            <TableColumn prefWidth="106.39996337890625" text="Comentario" />
         </columns>
       </TableView>
       <Button id="button_terminar" fx:id="btnTerminarEntrega" layoutX="666.0" layoutY="331.0" mnemonicParsing="false" onAction="#btnTerminarEntregaClick" prefHeight="32.0" prefWidth="147.0" text="Terminar Entrega" AnchorPane.rightAnchor="36.80000000000001" AnchorPane.topAnchor="331.0">
