@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="543.0" prefWidth="916.0" styleClass="window-background-level2" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unah.hermes.MantAreasPage">
+<AnchorPane id="AnchorPane" fx:id="MantenimientoAreas" prefHeight="543.0" prefWidth="916.0" styleClass="window-background-level2" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unah.hermes.MantAreasPage">
    <children>
       <TableView fx:id="tablaArea" layoutX="164.0" layoutY="124.0" prefHeight="390.0" prefWidth="250.0" style="-fx-background-color: #444444;" AnchorPane.bottomAnchor="28.600000000000023" AnchorPane.leftAnchor="164.0" AnchorPane.topAnchor="124.0">
         <columns>
