@@ -43,7 +43,6 @@ import javafx.stage.Modality;
 
 public class MantUsuariosModalAgregar implements Initializable {
 
-
     
     @FXML private void btnAgregarClick(ActionEvent event) {
         
@@ -60,9 +59,6 @@ public class MantUsuariosModalAgregar implements Initializable {
        stage.close();
 
     }
-
-    
-   
 
     @Override
     public void initialize(URL url,  ResourceBundle rb) {

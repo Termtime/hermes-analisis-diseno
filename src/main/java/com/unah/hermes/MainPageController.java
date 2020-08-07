@@ -13,10 +13,12 @@ import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.EventListener;
 import com.google.cloud.firestore.FirestoreException;
 import com.google.cloud.firestore.ListenerRegistration;
+import com.unah.hermes.objects.MantUsuarios;
 import com.unah.hermes.objects.Producto;
 import com.unah.hermes.objects.Requisicion;
 import com.unah.hermes.objects.RequisicionEntregadaRow;
 import com.unah.hermes.objects.RequisicionRow;
+import com.unah.hermes.objects.User;
 import com.unah.hermes.provider.FirebaseConnector;
 import com.unah.hermes.utils.EventListeners;
 import com.unah.hermes.utils.Navigation;
@@ -146,6 +148,9 @@ public class MainPageController implements Initializable {
     public static ObservableList<Requisicion> RequisicionesDenegadas = FXCollections.observableArrayList();
     ObservableList<Producto> empty = FXCollections.observableArrayList();
 
+    public void initData(Object obj){
+
+    }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //crear los listeners para los datos de firebase

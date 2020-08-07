@@ -2,6 +2,12 @@ package com.unah.hermes.utils;
 
 import java.io.IOException;
 
+import com.unah.hermes.EntregaReqPageController;
+import com.unah.hermes.MainPageController;
+import com.unah.hermes.MantProductModalModificarProducto;
+import com.unah.hermes.MantUsuariosModalAgregar;
+import com.unah.hermes.MantUsuariosPageController;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -21,6 +27,7 @@ public class Navigation {
      * @param event Es el evento que ocurre (click u otras cosas)
      * @param hide booleano para indicar si la pagina anterior debe ocultarse
      * @param modal boolean para indicar si la nueva pagina es modal
+     * @param data datos que se quieran pasar y recibir en la otra pantalla
      */
     public static void pushRoute(String pageName, ActionEvent event, Boolean hide, Boolean modal)
     {
@@ -40,9 +47,10 @@ public class Navigation {
             }
         }
         try {
-            root = FXMLLoader.load(Navigation.class.getResource("/fxml/" + pageName + ".fxml"));
+            FXMLLoader loader = new FXMLLoader(Navigation.class.getResource("/fxml/" + pageName + ".fxml"));
+            root = loader.load();
             Stage stage = new Stage();
-            stage.setTitle("My New Stage Title");
+            // stage.setTitle("My New Stage Title");
             stage.setScene(new Scene(root));
             if(modal) {
                 stage.initOwner(parentStage);
@@ -54,6 +62,7 @@ public class Navigation {
             // Ocultar la pagina anterior si es lo que se especifica
             if(hide) parentStage.hide();
             
+            // return controller;
         }
         catch (IOException e) {
             e.printStackTrace();
@@ -87,6 +96,73 @@ public class Navigation {
             // Ocultar la pagina anterior si es lo que se especifica
             if(hide) parentStage.hide();
             
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Abre una nueva ventana enviando parametros
+     * Por lo general se usa dentro de los handler de eventos de los clicks, ya que son los que tienen
+     * ActionEvents, se le debe enviar el tipo de controlador que es
+     * @param pageName Nombre (de archivo.fxml) de la pagina a abrir
+     * @param event Es el evento que ocurre (click u otras cosas)
+     * @param hide booleano para indicar si la pagina anterior debe ocultarse
+     * @param modal boolean para indicar si la nueva pagina es modal
+     * @param tipoControlador es el tipo de controlador que se abrirá, ejemplo de como deben enviar el parametro: 'MainPageController.class'
+     * @param data datos que se quieran pasar y recibir en la otra pantalla, deben ser enviados como un Object
+     */
+    public static void pushRouteWithParameter(String pageName, ActionEvent event, Boolean hide, Boolean modal, Class<?> tipoControlador, Object data)
+    {
+        Parent root;
+        Window parentStage;
+        try{
+            parentStage = ((Node)(event.getSource())).getScene().getWindow();
+        }catch(Exception e)
+        {
+            try{
+                //intentar obtener el parent de un MenuItem
+                parentStage = ((MenuItem)event.getTarget()).getParentPopup().getOwnerWindow();
+            }catch(Exception ex){
+                //fallar suavemente
+                ex.printStackTrace();
+                parentStage = null;
+            }
+        }
+        try {
+            FXMLLoader loader = new FXMLLoader(Navigation.class.getResource("/fxml/" + pageName + ".fxml"));
+            root = loader.load();
+            Stage stage = new Stage();
+            //encontrar el tipo de controlador
+            if(tipoControlador == MainPageController.class){
+                MainPageController controller = loader.getController();
+                controller.initData(data);
+            }
+            else if(tipoControlador == MantProductModalModificarProducto.class){
+                MantProductModalModificarProducto controller = loader.getController();
+                controller.initData(data);
+            }
+            else if(tipoControlador == MantUsuariosModalAgregar.class){
+                MantUsuariosModalAgregar controller = loader.getController();
+                // controller.initData(data);
+            }
+            else if(tipoControlador == EntregaReqPageController.class){
+                EntregaReqPageController controller = loader.getController();
+                controller.initData(data);
+            }
+            stage.setScene(new Scene(root));
+            if(modal) {
+                stage.initOwner(parentStage);
+                stage.initModality(Modality.APPLICATION_MODAL); 
+                stage.showAndWait();
+            } else {
+                stage.show();    
+            }
+            // Ocultar la pagina anterior si es lo que se especifica
+            if(hide) parentStage.hide();
+            
+            // return controller;
         }
         catch (IOException e) {
             e.printStackTrace();
