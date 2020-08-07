@@ -24,34 +24,46 @@
 .label {
   -fx-text-fill: #e9e9e9;
   /* -fx-alignment: center; */
-  -fx-alignment: CENTER_LEFT;
+  -fx-alignment: center;
 }
 
+/************************************ TABLAS ************************************/
 .table-view {
-  -fx-control-inner-background: #303030;
+  -fx-background-color: #303030;
+  -fx-control-inner-background: transparent;
   -fx-table-cell-border-color: transparent;
-  -fx-border-color: #222222;
+  -fx-border-color: transparent;
   -fx-focus-color: transparent;
   -fx-faint-focus-color: transparent;
+  -fx-background-radius: 10;
 
-  -fx-background-radius: 30;
+  -fx-effect: dropshadow(
+    two-pass-box,
+    #1d1d1dc4,
+    20,
+    0,
+    10,
+    10
+  ); /*spread, sepa, derecha, abajo*/
 }
 
 .table-view .column-header {
-  -fx-background-color: #308ca3;
+  /* -fx-background-color: #388396; */
   -fx-font-size: 14;
-  -fx-padding: 0 0 0 10;
+  /* -fx-padding: 0 0 0 15; */
 }
 
 .table-view .column-header-background {
-  -fx-background-color: #308ca3;
-  -fx-background-radius: 30 30 0 0;
-  -fx-background-insets: 0 0 0 0;
+  -fx-background-color: #308ca3c4;
+  -fx-background-radius: 10 10 0 0;
+  -fx-background-insets: 0 0 10 0;
+  -fx-padding: 0 0 10 0;
+  -fx-effect: dropshadow(two-pass-box, #2a616ec4, 15, 0, 0.1, 3);
 }
 
 .table-view .column-header,
 .table-view .filler {
-  -fx-size: 50;
+  -fx-size: 40;
   /* -fx-border-width: 0 0 50 0; */
   -fx-background-color: transparent;
 }
@@ -65,20 +77,73 @@
 
 .table-view:focused .table-row-cell:filled:focused:selected {
   -fx-table-cell-border-color: transparent;
+  -fx-background-color: #114b5a;
 }
 
 .table-row-cell:filled:focused:selected {
   -fx-table-cell-border-color: transparent;
+  -fx-background-color: #303030;
 }
 
-.table-row-cell:odd {
+.table-view .table-row-cell:hover {
+  -fx-background-color: #3d3d3d;
+}
+
+/* .table-view .table-row-cell:odd {
   -fx-background-color: #2e2e2e;
+  -fx-background-radius: 20 20 20 20;
 }
 
-.table-row-cell:even {
+.table-view .table-row-cell:even {
   -fx-background-color: #292828;
+  -fx-background-radius: 20 20 20 20;
+} */
+
+/************************************ TABLAS NIVEL 2 ************************************/
+#tablaProductos,
+#tablaArea,
+#tablaUsuario,
+#tablaUsuarios {
+  -fx-effect: dropshadow(two-pass-box, #2c2c2c, 20, 0, 12, 12); /*2c2c2c*/
 }
 
+.table-view:focused .table-row-cell:filled:focused:selected {
+  -fx-table-cell-border-color: transparent;
+  -fx-background-color: #114b5a; /* CAMBIAR COLOR */
+}
+
+.table-row-cell:filled:focused:selected {
+  -fx-table-cell-border-color: transparent;
+  -fx-background-color: #303030; /* CAMBIAR COLOR */
+}
+
+.table-view .table-row-cell:hover {
+  -fx-background-color: #3d3d3d; /* CAMBIAR COLOR */
+}
+
+/************************************ TABLAS NIVEL 3 ************************************/
+#tablaVistaPrevia,
+#tablaUsuariosArea {
+  -fx-effect: dropshadow(two-pass-box, #383838, 20, 0, 12, 12);
+}
+
+.table-view:focused .table-row-cell:filled:focused:selected {
+  -fx-table-cell-border-color: transparent;
+  -fx-background-color: #114b5a; /* CAMBIAR COLOR */
+}
+
+.table-row-cell:filled:focused:selected {
+  -fx-table-cell-border-color: transparent;
+  -fx-background-color: #303030; /* CAMBIAR COLOR */
+}
+
+.table-view .table-row-cell:hover {
+  -fx-background-color: #3d3d3d; /* CAMBIAR COLOR */
+}
+
+/************************************ FIN TABLAS ************************************/
+
+/************************************ MENU ************************************/
 .menu-button.dropdown {
   -fx-background-color: #303030;
 }
@@ -88,20 +153,22 @@
 }
 
 .level1 .menu-item:hover {
-  -fx-background-color: #444444;
+  -fx-background-color: #3d3d3d;
 }
 
 .menu:hover {
-  -fx-background-color: #444444;
+  -fx-background-color: #3d3d3d;
 }
 
 .menu:showing {
   -fx-background-color: #114b5a;
-  /* #444444 */
+  /* #3d3d3d */
 }
+/************************************ FIN MENU ************************************/
 
+/************************************ TABS ************************************/
 .tab-pane *.tab-header-background {
-  -fx-background-color: #444444;
+  -fx-background-color: #3d3d3d;
   /* #114b5a */
 }
 
@@ -120,6 +187,7 @@
   -fx-background-color: #222222;
   -fx-focus-color: #222222;
 }
+/************************************ FIN TABS ************************************/
 
 /* COLOR DE FONDO DEPENDIENDO DEL NIVEL DE LA PANTALLA */
 .window-background-level1 {
@@ -131,5 +199,5 @@
 }
 
 .window-background-level3 {
-  -fx-background-color: #444444;
+  -fx-background-color: #3d3d3d;
 }

@@ -135,11 +135,11 @@
                               </AnchorPane>
                               <BorderPane layoutY="52.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="52.0">
                                  <center>
-                                    <TableView fx:id="tablaP" prefHeight="460.0" prefWidth="740.0">
+                                    <TableView fx:id="tablaP" prefHeight="439.0" prefWidth="726.0">
                                       <columns>
                                         <TableColumn id="ProductoLista" prefWidth="351.0" text="Producto" />
-                                        <TableColumn prefWidth="106.0" text="Cantidad" />
-                                          <TableColumn prefWidth="282.0" text="Unidad" />
+                                        <TableColumn prefWidth="159.99993896484375" text="Unidad" />
+                                          <TableColumn prefWidth="183.19989013671875" text="Cantidad" />
                                       </columns>
                                     </TableView>
                                  </center>
