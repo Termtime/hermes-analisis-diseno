@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="MantenimientoProductos" prefHeight="637.0" prefWidth="922.0" styleClass="window-background-level2" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unah.hermes.MantProductosPageController">
+<AnchorPane id="AnchorPane" fx:id="MantenimientoProductos" prefHeight="637.0" prefWidth="922.0" styleClass="window-background-level2" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unah.hermes.MantProductosPage">
    <children>
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="287.0" layoutY="28.0" prefHeight="54.0" prefWidth="349.0" text="Mantenimiento de Productos" textAlignment="CENTER" AnchorPane.leftAnchor="287.0" AnchorPane.rightAnchor="286.0" AnchorPane.topAnchor="30.0">
          <font>

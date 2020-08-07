@@ -1,5 +1,4 @@
 package com.unah.hermes;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -40,29 +39,27 @@ import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 import javafx.stage.Modality;
 
-
-public class MantUsuariosModalAgregar implements Initializable {
-
-    
-    @FXML private void btnAgregarClick(ActionEvent event) {
-        
-        Navigation.pushRoute("MantUsuariosPage", event, false, true);
-
-        }
-
+public class MantProductosModalModificarCategoria implements Initializable{
     @FXML private javafx.scene.control.Button btnCancelar;
 
     @FXML private void btnCancelarClick(ActionEvent event) {
-        
+
        Stage stage = (Stage) btnCancelar.getScene().getWindow();
-       
+
        stage.close();
 
     }
-
+    @FXML private void comboCategoriaClick(ActionEvent event) {
+        
+    }
+    @FXML private void txtNuevoNombreInput(ActionEvent event) {
+        
+    }
+    @FXML private void btnModificarClick(ActionEvent event) {
+        
+    }
     @Override
     public void initialize(URL url,  ResourceBundle rb) {
         // 
-    }    
-    
+    }
 }

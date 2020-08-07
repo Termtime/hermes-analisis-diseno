@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="600.0" styleClass="window-background-level3" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unah.hermes.MantUsuariosModalAgregar">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="600.0" styleClass="window-background-level3" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unah.hermes.MantUsuariosModalAgregarUsuario">
    <children>
       <Label alignment="CENTER" layoutX="201.0" layoutY="38.0" prefHeight="39.0" prefWidth="198.0" text="Agregar Usuario" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="201.0" AnchorPane.rightAnchor="201.0" AnchorPane.topAnchor="40.0">
          <font>
@@ -75,7 +75,7 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <ComboBox fx:id="comboNivelAcceso" layoutY="23.0" onAction="#comboNivelAccesoClck" prefHeight="30.0" prefWidth="360.0" promptText="Escoja un nivel de acceso" />
+            <ComboBox fx:id="comboNivelAcceso" layoutY="23.0" onAction="#comboNivelAccesoClick" prefHeight="30.0" prefWidth="360.0" promptText="Escoja un nivel de acceso" />
          </children>
       </Pane>
       <Pane layoutX="120.0" layoutY="410.0">

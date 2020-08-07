@@ -69,23 +69,23 @@ import com.unah.hermes.utils.Navigation;
 
 
 
-public class MantProductosPageController implements Initializable {
+public class MantProductosPage implements Initializable {
     @FXML TableView<MantenimientoProducto> tablaProductos;
     @FXML AnchorPane MantenimientoProductos;
     @FXML private void btnAgregarProductoClick(ActionEvent event) {
-        Navigation.pushRoute("Mant_Agregar_Producto", event, false, true);
+        Navigation.pushRoute("MantProductosModalAgregarProducto", event, false, true);
     }
     @FXML private void btnModificarProductoClick(ActionEvent event) {
-        Navigation.pushRoute("Mant_Modificar_Producto", event, false, true);
+        Navigation.pushRoute("MantProductosModalModificarProducto", event, false, true);
     }
     @FXML private void btnEliminarProductoClick(ActionEvent event) {
         
     }
     @FXML private void btnAgregarCategoriaClick(ActionEvent event) {
-        Navigation.pushRoute("Mant_Agregar_Categoria", event, false, true);
+        Navigation.pushRoute("MantProductosModalAgregarCategoria", event, false, true);
     }
     @FXML private void btnModificarCategoriaClick(ActionEvent event) {
-        Navigation.pushRoute("Mant_Modificar_Categoria", event, false, true);
+        Navigation.pushRoute("MantProductosModalModificarCategoria", event, false, true);
     }
     @FXML private void btnEliminarCategoriaClick(ActionEvent event) {
         

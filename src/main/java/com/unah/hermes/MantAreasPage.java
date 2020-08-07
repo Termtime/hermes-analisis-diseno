@@ -17,7 +17,7 @@ import javafx.scene.Node;
 import javafx.stage.Window;
 import javafx.stage.Modality;
 
-public class MantAreasPageController implements Initializable {
+public class MantAreasPage implements Initializable {
 
         @FXML
         private void btnCrearAreaClick(ActionEvent event) {

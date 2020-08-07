@@ -2,11 +2,13 @@ package com.unah.hermes.utils;
 
 import java.io.IOException;
 
-import com.unah.hermes.EntregaReqPageController;
-import com.unah.hermes.MainPageController;
-import com.unah.hermes.MantProductModalModificarProducto;
-import com.unah.hermes.MantUsuariosModalAgregar;
-import com.unah.hermes.MantUsuariosPageController;
+import com.unah.hermes.EntregaReqPage;
+import com.unah.hermes.MainPage;
+import com.unah.hermes.MantAreasModalAgregarUsuarioArea;
+import com.unah.hermes.MantProductosModalModificarProducto;
+import com.unah.hermes.MantUsuariosModalAgregarUsuario;
+import com.unah.hermes.MantUsuariosModalModificarUsuario;
+import com.unah.hermes.MantUsuariosPage;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -135,21 +137,24 @@ public class Navigation {
             root = loader.load();
             Stage stage = new Stage();
             //encontrar el tipo de controlador
-            if(tipoControlador == MainPageController.class){
-                MainPageController controller = loader.getController();
+            if(tipoControlador == MainPage.class){
+                MainPage controller = loader.getController();
                 controller.initData(data);
             }
-            else if(tipoControlador == MantProductModalModificarProducto.class){
-                MantProductModalModificarProducto controller = loader.getController();
+            else if(tipoControlador == MantProductosModalModificarProducto.class){
+                MantProductosModalModificarProducto controller = loader.getController();
                 controller.initData(data);
             }
-            // else if(tipoControlador == MantUsuariosModalEditar.class){
-            //     MantUsuariosModalEditar controller = loader.getController();
-            //     // controller.initData(data);
-                    //JONATHAN
-            // }
-            else if(tipoControlador == EntregaReqPageController.class){
-                EntregaReqPageController controller = loader.getController();
+            else if(tipoControlador == MantUsuariosModalModificarUsuario.class){
+                MantUsuariosModalModificarUsuario controller = loader.getController();
+                controller.initData(data);
+            }
+            else if(tipoControlador == MantAreasModalAgregarUsuarioArea.class){
+                MantAreasModalAgregarUsuarioArea controller = loader.getController();
+                controller.initData(data);
+            }
+            else if(tipoControlador == EntregaReqPage.class){
+                EntregaReqPage controller = loader.getController();
                 controller.initData(data);
             }
             stage.setScene(new Scene(root));

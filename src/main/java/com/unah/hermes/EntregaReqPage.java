@@ -7,7 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 
-public class EntregaReqPageController implements Initializable {
+public class EntregaReqPage implements Initializable {
     
     public void initData(Object data){
     }

@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="MantUsuario" minHeight="608.0" minWidth="1079.0" prefHeight="637.0" prefWidth="1079.0" styleClass="window-background-level2" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unah.hermes.MantUsuariosPageController">
+<AnchorPane id="AnchorPane" fx:id="MantUsuario" minHeight="608.0" minWidth="1079.0" prefHeight="637.0" prefWidth="1079.0" styleClass="window-background-level2" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unah.hermes.MantUsuariosPage">
    <children>
       <Label layoutX="375.0" layoutY="30.0" text="Mantenimiento de Usuarios" textAlignment="CENTER" AnchorPane.leftAnchor="375.0" AnchorPane.rightAnchor="374.4" AnchorPane.topAnchor="30.0">
          <font>

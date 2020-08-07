@@ -64,19 +64,19 @@ import javafx.stage.Modality;
 
 import javafx.fxml.Initializable;
 
-public class MantUsuariosPageController implements Initializable {
+public class MantUsuariosPage implements Initializable {
 
     @FXML
     TableView<User> tablaUsuarios;
 
     @FXML
     private void btnAgregarUsuarioClick(ActionEvent event) {
-        Navigation.pushRoute("agregarUsuario", event, false, true);
+        Navigation.pushRoute("MantUsuariosModalAgregarUsuario", event, false, true);
     }
 
     @FXML
     private void btnModificarUsuarioClick(ActionEvent event) {
-        Navigation.pushRoute("modificarUsuario", event, false, true);
+        Navigation.pushRoute("mantUsuariosModalModificarUsuario", event, false, true);
     }
 
     @FXML

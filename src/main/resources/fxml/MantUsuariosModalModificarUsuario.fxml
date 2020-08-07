@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="600.0" styleClass="window-background-level3" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="600.0" styleClass="window-background-level3" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unah.hermes.MantUsuariosModalModificarUsuario">
    <children>
       <Label alignment="CENTER" layoutX="194.0" layoutY="40.0" prefHeight="39.0" prefWidth="212.0" text="Modificar Usuario" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="194.0" AnchorPane.rightAnchor="194.0" AnchorPane.topAnchor="40.0">
          <font>
@@ -39,7 +39,7 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <TextField id="txtAreaNueva" fx:id="txtNombre" layoutY="23.0" onInputMethodTextChanged="#txtNombreClick" prefHeight="26.0" prefWidth="360.0">
+            <TextField id="txtAreaNueva" fx:id="txtNombre" layoutY="23.0" onInputMethodTextChanged="#txtNombreInput" prefHeight="26.0" prefWidth="360.0">
                <font>
                   <Font size="14.0" />
                </font>

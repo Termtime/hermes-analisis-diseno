@@ -28,7 +28,7 @@ import com.google.cloud.firestore.WriteResult;
 import com.google.firebase.cloud.FirestoreClient;
 import com.google.cloud.firestore.EventListener;
 import com.google.gson.Gson;
-import com.unah.hermes.MainPageController;
+import com.unah.hermes.MainPage;
 import com.unah.hermes.objects.Requisicion;
 import com.unah.hermes.utils.ParameterStringBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -268,9 +268,9 @@ public class FirebaseConnector{
                         return;
                     }
 
-                    MainPageController.RequisicionesDenegadas.clear();
-                    MainPageController.RequisicionesEntregadas.clear();
-                    MainPageController.RequisicionesPendientes.clear();
+                    MainPage.RequisicionesDenegadas.clear();
+                    MainPage.RequisicionesEntregadas.clear();
+                    MainPage.RequisicionesPendientes.clear();
 
                     for (DocumentSnapshot doc : snapshots) {
                         System.out.println(doc);
@@ -283,16 +283,16 @@ public class FirebaseConnector{
                             System.out.println(tmp.estado);
                             System.out.println(doc.getData());
                             if (tmp.estado.equals("Entregada")) {
-                                MainPageController.RequisicionesEntregadas.add(tmp);
-                                System.out.println(MainPageController.RequisicionesEntregadas);
+                                MainPage.RequisicionesEntregadas.add(tmp);
+                                System.out.println(MainPage.RequisicionesEntregadas);
                             }
                             else if (tmp.estado.equals("Denegada")) {
-                                MainPageController.RequisicionesDenegadas.add(tmp);
-                                System.out.println(MainPageController.RequisicionesDenegadas);
+                                MainPage.RequisicionesDenegadas.add(tmp);
+                                System.out.println(MainPage.RequisicionesDenegadas);
                             }
                             else if (tmp.estado.equals("Pendiente")) {
-                                MainPageController.RequisicionesPendientes.add(tmp);
-                                System.out.println(MainPageController.RequisicionesPendientes);
+                                MainPage.RequisicionesPendientes.add(tmp);
+                                System.out.println(MainPage.RequisicionesPendientes);
                             }else{
                                 System.out.println("Estado desconocido");
                             }

@@ -48,7 +48,7 @@ import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 import javafx.stage.Modality;
 
-public class MainPageController implements Initializable {
+public class MainPage implements Initializable {
     //listViews
     @FXML ListView<Requisicion> listaRQP;
     @FXML ListView<Requisicion> listaRQE;
