@@ -143,10 +143,11 @@ public class Navigation {
                 MantProductModalModificarProducto controller = loader.getController();
                 controller.initData(data);
             }
-            else if(tipoControlador == MantUsuariosModalAgregar.class){
-                MantUsuariosModalAgregar controller = loader.getController();
-                // controller.initData(data);
-            }
+            // else if(tipoControlador == MantUsuariosModalEditar.class){
+            //     MantUsuariosModalEditar controller = loader.getController();
+            //     // controller.initData(data);
+                    //JONATHAN
+            // }
             else if(tipoControlador == EntregaReqPageController.class){
                 EntregaReqPageController controller = loader.getController();
                 controller.initData(data);
