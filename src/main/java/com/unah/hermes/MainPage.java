@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.function.Function;
 
@@ -19,8 +20,11 @@ import com.unah.hermes.objects.RequisicionEntregadaRow;
 import com.unah.hermes.objects.RequisicionRow;
 import com.unah.hermes.objects.User;
 import com.unah.hermes.provider.FirebaseConnector;
+import com.unah.hermes.provider.FirestoreRoutes;
 import com.unah.hermes.utils.EventListeners;
 import com.unah.hermes.utils.Navigation;
+
+import org.apache.commons.lang3.ArrayUtils;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -93,7 +97,8 @@ public class MainPage implements Initializable {
     @FXML TableView<RequisicionEntregadaRow> tablaE;
     
     @FXML public void menuBtnCerrarClick(ActionEvent event){
-
+        Stage stage = (Stage)((Button) event.getSource()).getScene().getWindow();
+        stage.close();
     }
     @FXML public void menuBtnImprimirClick(ActionEvent event){
         
@@ -102,10 +107,23 @@ public class MainPage implements Initializable {
         
     }
     @FXML public void menuBtnEntregarReqClick(ActionEvent event){
-        
+        if(tablaPSelectedItem != null)
+            Navigation.pushRouteWithParameter("EntregaReqPage", event, false, true, EntregaReqPage.class, tablaPSelectedItem );
+        else{
+            Alert alert = new Alert(AlertType.ERROR,"Debe seleccionar una requisicion pendiente antes", ButtonType.OK);
+            alert.showAndWait();
+        }
     }
     @FXML public void menuBtnDenegReqClick(ActionEvent event){
-        
+        if(tablaPSelectedItem != null){
+            String[][] unparsedData= {{"estado","Denegada"}};
+            Map<String,Object> newData = (Map) ArrayUtils.toMap(unparsedData);  
+
+            db.updateDocument(FirestoreRoutes.REQUISICIONES, tablaPSelectedItem.reqID, newData );
+        }else{
+            Alert alert = new Alert(AlertType.ERROR,"Debe seleccionar una requisicion antes", ButtonType.OK);
+            alert.showAndWait();
+        }
     }
     @FXML public void menuBtnOcultarReqClick(ActionEvent event){
         
@@ -129,10 +147,17 @@ public class MainPage implements Initializable {
         }
     }
     @FXML public void btnDenegarClick(ActionEvent event){
+        if(tablaPSelectedItem != null){
+            String[][] unparsedData= {{"estado","Denegada"}};
+            Map<String,Object> newData = (Map) ArrayUtils.toMap(unparsedData);  
 
+            db.updateDocument(FirestoreRoutes.REQUISICIONES, tablaPSelectedItem.reqID, newData );
+        }else{
+            Alert alert = new Alert(AlertType.ERROR,"Debe seleccionar una requisicion antes", ButtonType.OK);
+            alert.showAndWait();
+        }
     }
 
-    
     @FXML
     private void ocultarRequisicionesSeleccionadas(ActionEvent event) {
         
