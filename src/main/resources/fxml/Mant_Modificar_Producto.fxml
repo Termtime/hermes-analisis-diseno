@@ -41,11 +41,11 @@
             </TextField>
          </children>
       </Pane>
-      <Button id="btnAgregar" fx:id="btnAgregar" layoutX="457.0" layoutY="184.0" mnemonicParsing="false" onAction="#btnAgregarClick" prefHeight="32.0" prefWidth="86.0" text="Agregar" AnchorPane.bottomAnchor="184.0">
+      <Button fx:id="btnModificar" layoutX="457.0" layoutY="184.0" mnemonicParsing="false" onAction="#btnModificarClick" prefHeight="32.0" prefWidth="86.0" text="Modificar" AnchorPane.bottomAnchor="184.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <Button id="btnCancelar" fx:id="btnCancelar" layoutX="456.0" layoutY="268.0" mnemonicParsing="false" onAction="#btnCancelarClick" prefHeight="32.0" prefWidth="86.0" styleClass="btnCancelar" text="Cancelar" AnchorPane.bottomAnchor="100.0">
+      <Button fx:id="btnCancelar" layoutX="456.0" layoutY="268.0" mnemonicParsing="false" onAction="#btnCancelarClick" prefHeight="32.0" prefWidth="86.0" styleClass="btnCancelar" text="Cancelar" AnchorPane.bottomAnchor="100.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>

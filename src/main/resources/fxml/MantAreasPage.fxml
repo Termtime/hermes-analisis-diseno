@@ -30,19 +30,19 @@
             <Font size="14.0" />
          </font></Label>
       <Separator layoutX="455.0" layoutY="137.0" orientation="VERTICAL" prefHeight="363.0" prefWidth="0.0" AnchorPane.bottomAnchor="42.80000000000001" AnchorPane.leftAnchor="455.0" AnchorPane.rightAnchor="454.6" AnchorPane.topAnchor="137.0" />
-      <Button id="btnAgregaUsuario" fx:id="btnAgregarUsuarioArea" layoutX="768.0" layoutY="254.0" mnemonicParsing="false" onAction="#btnAgregarUsuarioAreaClick" prefHeight="54.0" prefWidth="131.0" style="-fx-background-coor: black;" text="Agregar Usuario al Área" textAlignment="CENTER" wrapText="true" AnchorPane.rightAnchor="16.799999999999955" AnchorPane.topAnchor="254.0">
+      <Button fx:id="btnAgregarUsuarioArea" layoutX="768.0" layoutY="254.0" mnemonicParsing="false" onAction="#btnAgregarUsuarioAreaClick" prefHeight="54.0" prefWidth="131.0" style="-fx-background-coor: black;" text="Agregar Usuario al Área" textAlignment="CENTER" wrapText="true" AnchorPane.rightAnchor="16.799999999999955" AnchorPane.topAnchor="254.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <Button id="btnCreaArea" fx:id="btnCrearArea" layoutX="28.0" layoutY="265.0" mnemonicParsing="false" onAction="#btnCrearAreaClick" prefHeight="32.0" prefWidth="109.0" text="Crear Área" AnchorPane.leftAnchor="28.0" AnchorPane.topAnchor="265.0">
+      <Button fx:id="btnCrearArea" layoutX="28.0" layoutY="265.0" mnemonicParsing="false" onAction="#btnCrearAreaClick" prefHeight="32.0" prefWidth="109.0" text="Crear Área" AnchorPane.leftAnchor="28.0" AnchorPane.topAnchor="265.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <Button id="btnEliminaUsuario" fx:id="btnEliminarUsuarioArea" layoutX="768.0" layoutY="377.0" mnemonicParsing="false" onAction="#btnEliminarUsuarioAreaClick" prefHeight="54.0" prefWidth="131.0" styleClass="btnCancelar" text="Eliminar Usuario del Área" textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="111.60000000000002" AnchorPane.rightAnchor="16.799999999999955">
+      <Button fx:id="btnEliminarUsuarioArea" layoutX="768.0" layoutY="377.0" mnemonicParsing="false" onAction="#btnEliminarUsuarioAreaClick" prefHeight="54.0" prefWidth="131.0" text="Eliminar Usuario del Área" textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="111.60000000000002" AnchorPane.rightAnchor="16.799999999999955">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <Button id="btnEliminaArea" fx:id="btnEliminarArea" layoutX="27.0" layoutY="388.0" mnemonicParsing="false" onAction="#btnEliminarAreaClick" prefHeight="32.0" prefWidth="110.0" style="-fx-backgroundcolor: black;" styleClass="btnCancelar" text="Eliminar Área" AnchorPane.bottomAnchor="123.0" AnchorPane.leftAnchor="27.0">
+      <Button fx:id="btnEliminarArea" layoutX="27.0" layoutY="388.0" mnemonicParsing="false" onAction="#btnEliminarAreaClick" prefHeight="32.0" prefWidth="110.0" text="Eliminar Área" AnchorPane.bottomAnchor="123.0" AnchorPane.leftAnchor="27.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>

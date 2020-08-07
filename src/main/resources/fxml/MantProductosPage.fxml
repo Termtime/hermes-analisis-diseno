@@ -35,32 +35,32 @@
           <TableColumn minWidth="0.0" prefWidth="165.5999755859375" resizable="false" text="Unidad" />
         </columns>
       </TableView>
-      <Button fx:id="btnAgregarProducto" layoutX="734.0" layoutY="247.0" mnemonicParsing="false" onAction="#btnAgregarProductoClick" prefHeight="32.0" prefWidth="152.0" text="Agregar Producto" AnchorPane.rightAnchor="36.0">
+      <Button fx:id="btnAgregarProducto" layoutX="734.0" layoutY="217.0" mnemonicParsing="false" onAction="#btnAgregarProductoClick" prefHeight="32.0" prefWidth="152.0" text="Agregar Producto" AnchorPane.rightAnchor="36.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="btnModificarProducto" layoutX="734.0" layoutY="299.0" mnemonicParsing="false" onAction="#btnModificarProductoClick" prefHeight="32.0" prefWidth="152.0" text="Modificar Producto" AnchorPane.rightAnchor="36.0">
+      <Button fx:id="btnModificarProducto" layoutX="734.0" layoutY="279.0" mnemonicParsing="false" onAction="#btnModificarProductoClick" prefHeight="32.0" prefWidth="152.0" text="Modificar Producto" AnchorPane.rightAnchor="36.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="btnEliminarProducto" layoutX="734.0" layoutY="351.0" mnemonicParsing="false" onAction="#btnEliminarProductoClick" prefHeight="32.0" prefWidth="152.0" styleClass="btnCancelar" text="Eliminar Producto" AnchorPane.rightAnchor="36.0">
+      <Button fx:id="btnEliminarProducto" layoutX="734.0" layoutY="341.0" mnemonicParsing="false" onAction="#btnEliminarProductoClick" prefHeight="32.0" prefWidth="152.0" text="Eliminar Producto" AnchorPane.rightAnchor="36.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="btnAgregarCategoria" layoutX="734.0" layoutY="425.0" mnemonicParsing="false" onAction="#btnAgregarCategoriaClick" prefHeight="32.0" prefWidth="152.0" text="Agregar Categoria" AnchorPane.rightAnchor="36.0">
+      <Button fx:id="btnAgregarCategoria" layoutX="734.0" layoutY="435.0" mnemonicParsing="false" onAction="#btnAgregarCategoriaClick" prefHeight="32.0" prefWidth="152.0" text="Agregar Categoria" AnchorPane.rightAnchor="36.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="btnModificarCategoria" layoutX="734.0" layoutY="476.0" mnemonicParsing="false" onAction="#btnModificarCategoriaClick" prefHeight="32.0" prefWidth="152.0" text="Modificar Categoria" AnchorPane.rightAnchor="36.0">
+      <Button fx:id="btnModificarCategoria" layoutX="734.0" layoutY="496.0" mnemonicParsing="false" onAction="#btnModificarCategoriaClick" prefHeight="32.0" prefWidth="152.0" text="Modificar Categoria" AnchorPane.rightAnchor="36.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="btnEliminarCategoria" layoutX="734.0" layoutY="528.0" mnemonicParsing="false" onAction="#btnEliminarCategoriaClick" prefHeight="32.0" prefWidth="152.0" styleClass="btnCancelar" text="Eliminar Categoria" AnchorPane.rightAnchor="36.0">
+      <Button fx:id="btnEliminarCategoria" layoutX="734.0" layoutY="558.0" mnemonicParsing="false" onAction="#btnEliminarCategoriaClick" prefHeight="32.0" prefWidth="152.0" text="Eliminar Categoria" AnchorPane.rightAnchor="36.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>

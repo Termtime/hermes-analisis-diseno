@@ -17,12 +17,12 @@
             <Font size="27.0" />
          </font>
       </Label>
-      <Button id="btnAgregar" fx:id="btnAgregar" layoutX="302.0" layoutY="223.0" mnemonicParsing="false" onAction="#btnAgregarClick" prefHeight="32.0" prefWidth="83.0" stylesheets="@../styles/Styles.css" text="Agregar" textFill="WHITE">
+      <Button fx:id="btnAgregar" layoutX="302.0" layoutY="223.0" mnemonicParsing="false" onAction="#btnAgregarClick" prefHeight="32.0" prefWidth="83.0" stylesheets="@../styles/Styles.css" text="Agregar" textFill="WHITE">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button id="btnCancelar" fx:id="btnCancelar" layoutX="302.0" layoutY="304.0" mnemonicParsing="false" onAction="#btnCancelarClick" prefHeight="32.0" prefWidth="83.0" styleClass="btnCancelar" stylesheets="@../styles/Styles.css" text="Cancelar" textFill="WHITE">
+      <Button fx:id="btnCancelar" layoutX="302.0" layoutY="304.0" mnemonicParsing="false" onAction="#btnCancelarClick" prefHeight="32.0" prefWidth="83.0" styleClass="btnCancelar" stylesheets="@../styles/Styles.css" text="Cancelar" textFill="WHITE">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
