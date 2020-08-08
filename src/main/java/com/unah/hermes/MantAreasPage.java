@@ -16,7 +16,9 @@ import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.EventListener;
 import com.google.cloud.firestore.FirestoreException;
 import com.google.cloud.firestore.ListenerRegistration;
+import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.unah.hermes.provider.FirebaseConnector;
+import com.unah.hermes.provider.FirestoreRoutes;
 import com.unah.hermes.utils.EventListeners;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -64,15 +66,26 @@ import javafx.stage.WindowEvent;
 import javafx.stage.Modality;
 
 import com.unah.hermes.objects.Area;
+import com.unah.hermes.objects.User; //Consulta objeto
 import com.unah.hermes.utils.Navigation;
 
 public class MantAreasPage implements Initializable {
+        private FirebaseConnector db;
+
+        private List<QueryDocumentSnapshot> documentos;
+        private ObservableList<Area> areas;
+        // Consulta
+        @FXML
+        TableView<Area> tablaArea;
+        @FXML
+        TableView<User> tablaUsuario;
+        // Consulta
         @FXML
         AnchorPane MantenimientoAreas;
 
         @FXML
         private void btnCrearAreaClick(ActionEvent event) {
-                Navigation.pushRoute("MantAreasAgregarArea", event, false, true);
+                Navigation.pushRoute("MantAreasModalCrearArea", event, false, true);
         }
 
         @FXML
@@ -107,19 +120,16 @@ public class MantAreasPage implements Initializable {
                                 // recalcularColumnWidth();
                         }
                 });
+
+                db = FirebaseConnector.getInstance();
+                documentos = db.getAllDocumentsFrom(FirestoreRoutes.AREAS);
+                // for (QueryDocumentSnapshot doc : documentos) {
+                // Area tmp;
+                // if(doc.exists()){
+                // tmp = new Area(doc.getId(), doc.getString("Area"), doc.get("areas"));
+                // areas.add(tmp);
+                // }
+                // }
+                // tablaAreas.getItems().addAll(areas);
         }
 }
-
-// private void popularTablaMantProductos(TableView<MantenimientoProducto>
-// tabla, ObservableList<MantenimientoProducto> Mantenimiento) {
-// try{
-// tabla.getItems().clear();
-// for (MantenimientoProducto mantenimiento : Mantenimiento) {
-// MantenimientoProducto row = new
-// MantenimientoProducto(mantenimiento.producto,mantenimiento.categoria,mantenimiento.unidad);
-// tabla.getItems().add(row);
-// }
-// }catch(Exception e){
-// e.printStackTrace();
-// }
-// }
