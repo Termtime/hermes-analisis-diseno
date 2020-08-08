@@ -95,7 +95,7 @@ public class MantAreasPage implements Initializable {
 
         @FXML
         private void btnAgregarUsuarioAreaClick(ActionEvent event) {
-
+                Navigation.pushRoute("MantAreasAgregarUsuarioArea", event, false, true);
         }
 
         @FXML
@@ -121,15 +121,15 @@ public class MantAreasPage implements Initializable {
                         }
                 });
 
-                db = FirebaseConnector.getInstance();
-                documentos = db.getAllDocumentsFrom(FirestoreRoutes.AREAS);
-                // for (QueryDocumentSnapshot doc : documentos) {
-                // Area tmp;
-                // if(doc.exists()){
-                // tmp = new Area(doc.getId(), doc.getString("Area"), doc.get("areas"));
-                // areas.add(tmp);
+                // db = FirebaseConnector.getInstance();
+                // documentos = db.getAllDocumentsFrom(FirestoreRoutes.AREAS);
+                // for (QueryDocumentSnapshot doc : documentos
+                        // Area t
+                        // if (doc.exists()
+                                // tmp = new Area(doc.getId(), doc.getString("Area"
+                                // areas.add(tm
+                        // }
                 // }
-                // }
-                // tablaAreas.getItems().addAll(areas);
+                // tablaArea.getItems().addAll(areas);
         }
 }
