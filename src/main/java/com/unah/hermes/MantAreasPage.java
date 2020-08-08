@@ -72,7 +72,7 @@ public class MantAreasPage implements Initializable {
 
         @FXML
         private void btnCrearAreaClick(ActionEvent event) {
-                Navigation.pushRoute("MantAreasModalCrearArea", event, false, true);
+                Navigation.pushRoute("MantAreasAgregarArea", event, false, true);
         }
 
         @FXML
