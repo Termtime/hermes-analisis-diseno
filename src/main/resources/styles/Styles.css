@@ -95,6 +95,7 @@
 #tablaProductos,
 #tablaArea,
 #tablaUsuario,
+#tablaVistaPrevia,
 #tablaUsuarios {
   -fx-effect: dropshadow(two-pass-box, #2c2c2c, 20, 0, 12, 12); /*2c2c2c*/
 }
@@ -114,7 +115,6 @@
 }
 
 /************************************ TABLAS NIVEL 3 ************************************/
-#tablaVistaPrevia,
 #tablaUsuariosArea {
   -fx-effect: dropshadow(two-pass-box, #383838, 20, 0, 12, 12);
 }
