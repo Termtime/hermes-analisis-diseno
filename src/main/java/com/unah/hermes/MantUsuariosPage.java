@@ -9,7 +9,6 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.function.Function;
 
-
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.EventListener;
@@ -32,6 +31,7 @@ import com.unah.hermes.objects.User;
 import com.unah.hermes.utils.Navigation;
 import com.unah.hermes.utils.EventListeners;
 import com.google.cloud.firestore.EventListener;
+import com.unah.hermes.objects.Area;
 import com.unah.hermes.objects.Requisicion;
 import com.unah.hermes.provider.FirebaseConnector;
 import javafx.scene.control.Alert.AlertType;
@@ -108,19 +108,12 @@ public class MantUsuariosPage implements Initializable {
      ObservableList<User> usuarios = FXCollections.observableArrayList();
      
      
-     public void initData(Object data){
-     System.out.println("Inicialiar datos");
-     User usuarioDatos = (User) data;
-     txtFiltro.setText(usuarioDatos.nombre);     
-
-    }
+     
 
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
   
-   
-        
         EventListeners.onWindowOpened(MantUsuario, new Function<Window,Void>(){
             @Override
             public Void apply(Window parent) {
@@ -128,24 +121,50 @@ public class MantUsuariosPage implements Initializable {
                 
                 db=FirebaseConnector.getInstance();                
                 List<QueryDocumentSnapshot> documentos = db.getAllDocumentsFrom(FirestoreRoutes.USUARIOS);
+                List<QueryDocumentSnapshot> docsUsuarios = db.getAllDocumentsFrom(FirestoreRoutes.USUARIOS);
+                List<QueryDocumentSnapshot> docsAreas = db.getAllDocumentsFrom(FirestoreRoutes.AREAS);
+                List<Area> areas = new ArrayList();
 
+                for(DocumentSnapshot doc : docsAreas){
+                    Area tmp = new Area(doc.getId(), doc.getString("Area"));
+                    areas.add(tmp);
+                }
+                System.out.println(areas);
 
                 for (DocumentSnapshot doc : documentos) {
                     System.out.println(doc);
                     User tmp;
-                    if(doc.exists()){
-    
-                        tmp = new User(doc.getId(), doc.getString("Nombre"), doc.getString("nivelAcceso"),
-                        doc.getString("nivelAcceso"));
+                     if(doc.exists()){
+                    List<String> arregloIDAreas = (List<String>) doc.get("areas");
+                    System.out.println(arregloIDAreas);
+                        // // ["8DjeIqzY7Sw0PGRyZBXC","10DjwsdaGRyZBXC"]
+                    List<String> areasConNombre = new ArrayList();
+
+                      for(Area area : areas){
+                        for(String areaID : arregloIDAreas){
+                            System.out.println(area.areaID);
+                                if(areaID.equals(area.areaID.trim()))
+                                 {
+                                    System.out.println("Nombre del area agregada");
+                                    areasConNombre.add(area.nombre);
+                                    break;
+                                 }   
+                             }
+                         }
+                        // areasConNombre = ["Cocina", "Meseros"]
+                        //List<String> prueba = new ArrayList();
+                        //prueba.add("hola");
+                        //prueba.add("hola2");
+
+                        tmp = new User(doc.getId(), doc.getString("Nombre"),
+                        doc.getString("nivelAcceso"), areasConNombre);
     
                         System.out.println(tmp.nombre);
                         System.out.println(doc.getData());
                         usuarios.add(tmp);
                         System.out.println(usuarios);
                         }
-    
                     }
-
                     tablaUsuarios.getItems().addAll(usuarios);
 
                  return null;
@@ -162,6 +181,12 @@ public class MantUsuariosPage implements Initializable {
             }
         });
 
+        tablaUsuarios.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<User>(){
+            @Override
+            public void changed(ObservableValue<? extends User> observable, User oldValue, User newValue) {
+                tablaUSelectedItem = newValue;
+            }
+        });
         MantUsuario.widthProperty().addListener(new ChangeListener<Number>(){
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
@@ -208,8 +233,8 @@ public class MantUsuariosPage implements Initializable {
         columnaNivelAcceso.setCellValueFactory(new PropertyValueFactory<>("nivelAcceso"));
         columnaNivelAcceso.setPrefWidth(tablaUsuarios.getWidth()*0.20);
 
-        TableColumn columnaArea = new TableColumn<>("Area");
-        columnaArea.setCellValueFactory(new PropertyValueFactory<>("area"));
+        TableColumn columnaArea = new TableColumn<>("Areas");
+        columnaArea.setCellValueFactory(new PropertyValueFactory<>("stringDeArea"));
         columnaArea.setPrefWidth(tablaUsuarios.getWidth()*0.15);
 
         
