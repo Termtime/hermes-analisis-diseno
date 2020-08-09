@@ -32,11 +32,12 @@ public class MantUsuariosModalModificarUsuario implements Initializable {
     
     
     @FXML private javafx.scene.control.Button btnCancelar;
+  
     public void initData(Object data){
-        System.out.println("Inicialiar datos");
+        /*  System.out.println("Inicialiar datos");
         User usuarioDatos = (User) data;
         //txtFiltro.setText(usuarioDatos.nombre);     
-   
+        */
     }
     @Override
     public void initialize(URL url,  ResourceBundle rb) {
