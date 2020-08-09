@@ -428,10 +428,7 @@ public class FirebaseConnector{
         } catch (Exception e) {
             e.printStackTrace();
             return false;
-        }}
-    }
-
-
+        }
     }
 
     public Map<String, Object> getJSONfromHttpStream(HttpURLConnection con, InputStream in)
