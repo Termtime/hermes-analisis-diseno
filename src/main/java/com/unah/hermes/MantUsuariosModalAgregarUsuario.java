@@ -9,8 +9,6 @@ import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.FirestoreException;
 import com.unah.hermes.objects.Producto;
 import com.unah.hermes.objects.Requisicion;
-import com.unah.hermes.objects.RequisicionEntregadaRow;
-import com.unah.hermes.objects.RequisicionRow;
 import com.unah.hermes.provider.FirebaseConnector;
 import com.unah.hermes.utils.Navigation;
 

@@ -46,9 +46,9 @@ public class Requisicion {
                 producto.get("productoID").toString(),
                 producto.get("producto").toString(),
                 producto.get("unidad").toString(),
-                producto.containsKey("cantEntregada")? Integer.parseInt(producto.get("cantEntregada").toString()): 0,
-                producto.containsKey("cantPedida")? Integer.parseInt(producto.get("cantPedida").toString()): 0,
-                producto.containsKey("cantPendiente")? Integer.parseInt(producto.get("cantPendiente").toString()) : 0,
+                producto.containsKey("cantidadEntregada")? Integer.parseInt(producto.get("cantidadEntregada").toString()): 0,
+                producto.containsKey("cantidadPedida")? Integer.parseInt(producto.get("cantidadPedida").toString()): 0,
+                producto.containsKey("cantidadPendiente")? Integer.parseInt(producto.get("cantidadPendiente").toString()) : 0,
                 producto.containsKey("comentario")? producto.get("comentario").toString() : null
                 );
                 //agregar el producto al arreglo de productos
