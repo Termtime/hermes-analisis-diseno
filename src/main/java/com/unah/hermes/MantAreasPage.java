@@ -68,12 +68,12 @@ import javafx.stage.Modality;
 import com.unah.hermes.objects.Area;
 import com.unah.hermes.objects.User; //Consulta objeto
 import com.unah.hermes.utils.Navigation;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 
 public class MantAreasPage implements Initializable {
-        private FirebaseConnector db;
 
-        private List<QueryDocumentSnapshot> documentos;
-        private ObservableList<Area> areas;
         // Consulta
         @FXML
         TableView<Area> tablaArea;
@@ -103,12 +103,33 @@ public class MantAreasPage implements Initializable {
 
         }
 
+        FirebaseConnector db;
+        Area TablaAreaSelectedRow;
+        ObservableList<Area> Areas = FXCollections.observableArrayList();
+
         @Override
         public void initialize(URL url, ResourceBundle rb) {
                 EventListeners.onWindowOpened(MantenimientoAreas, new Function<Window, Void>() {
                         @Override
                         public Void apply(Window parent) {
-                                // iniciarEstructuraTablas();
+                                iniciarEstructuraTablas();
+                                db = FirebaseConnector.getInstance();
+
+                                List<QueryDocumentSnapshot> documentos = db.getAllDocumentsFrom(FirestoreRoutes.AREAS);
+
+                                for (DocumentSnapshot doc : documentos) {
+                                        System.out.println(doc);
+                                        Area tmp;
+
+                                        if (doc.exists()) {
+                                                tmp = new Area(doc.getString("Area"));
+                                                System.out.println(tmp.nombre);
+                                                System.out.println(doc.getData());
+                                                Areas.add(tmp);
+                                                System.out.println(Areas);
+                                        }
+                                }
+                                tablaArea.getItems().addAll(Areas);
                                 return null;
                         }
                 });
@@ -120,16 +141,14 @@ public class MantAreasPage implements Initializable {
                                 // recalcularColumnWidth();
                         }
                 });
+        }
 
-                // db = FirebaseConnector.getInstance();
-                // documentos = db.getAllDocumentsFrom(FirestoreRoutes.AREAS);
-                // for (QueryDocumentSnapshot doc : documentos
-                        // Area t
-                        // if (doc.exists()
-                                // tmp = new Area(doc.getId(), doc.getString("Area"
-                                // areas.add(tm
-                        // }
-                // }
-                // tablaArea.getItems().addAll(areas);
+        private void iniciarEstructuraTablas() {
+                tablaArea.getItems().clear();
+                tablaArea.getColumns().clear();
+                TableColumn columnArea = new TableColumn<>("Area");
+                columnArea.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+
+                tablaArea.getColumns().addAll(columnArea);
         }
 }

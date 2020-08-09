@@ -95,4 +95,5 @@ public class MantAreasModalAgregarUsuarioArea implements Initializable {
         // TODO Auto-generated method stub
 
     }
+
 }

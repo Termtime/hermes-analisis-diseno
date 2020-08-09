@@ -4,9 +4,8 @@ public class Area {
     public String areaID;
     public String nombre;
 
-    public Area(String areaID, String nombre)
-    {
-        this.areaID = areaID;
+    public Area(String nombre) {
+        // this.areaID = areaID;
         this.nombre = nombre;
     }
 }
