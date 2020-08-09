@@ -1,19 +1,26 @@
 package com.unah.hermes.objects;
+import java.util.List;
 
-public class User{
+public class User {
     public String userID;
     public String nombre;
     public String nivelAcceso;
-    public String grupo;
-    public String area;
+    public String stringDeArea;
+    public List<String> areas;
+    //public ObservableList<User> Usuarios = FXCollections.observableArrayList();
 
-    public User(String userID, String nombre, String nivelAcceso, String grupo, String area)
+    public User(String userID, String nombre, String nivelAcceso, List<String> areas)
     {
         this.userID = userID;
         this.nombre = nombre;
         this.nivelAcceso = nivelAcceso;
-        this.grupo = grupo;
-        this.area = area;
+        this.areas = areas;
+        stringDeArea = "";
+        System.out.println(areas);
+        for(String area : areas){
+            stringDeArea += area + ", ";
+        }
+        stringDeArea = stringDeArea.substring(0,stringDeArea.length()-2);
     }
 
     public String getUserID() {
@@ -22,6 +29,7 @@ public class User{
 
     public void setUserID(String userID) {
         this.userID = userID;
+
     }
 
     public String getNombre() {
@@ -30,24 +38,9 @@ public class User{
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-
-    public String getGrupo() {
-        return grupo;
-    }
-
-    public void setGrupo(String grupo) {
-        this.grupo = grupo;
-    }
-
-    public String getArea() {
-        return area;
-    }
-
-    public void setArea(String area) {
-        this.area = area;
-    }
+    } 
+    
+   
 
     public String getNivelAcceso() {
         return nivelAcceso;
@@ -55,6 +48,16 @@ public class User{
 
     public void setNivelAcceso(String nivelAcceso) {
         this.nivelAcceso = nivelAcceso;
+    }
+
+    public String getStringDeArea() {
+        
+         
+        return stringDeArea;
+    }
+
+    public void setStringDeArea(String stringDeArea) {
+        this.stringDeArea = stringDeArea;
     }
 
     
