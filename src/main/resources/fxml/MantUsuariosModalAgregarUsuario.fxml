@@ -85,6 +85,23 @@
             </Label>
             <ComboBox fx:id="comboAreaAcceso" layoutY="23.0" onAction="#comboAreaAccesoClick" prefHeight="30.0" prefWidth="360.0" promptText="Escoja el Area" style="-fx-background-color: #ffffff;" visible="false" />
             <ListView layoutY="21.0" prefHeight="87.0" prefWidth="222.0" visible="false" />
+            <ListView fx:id="listAreas" layoutY="21.0" prefHeight="87.0" prefWidth="155.0" />
+            <ListView fx:id="listAreasSeleccionadas" layoutX="205.0" layoutY="21.0" prefHeight="87.0" prefWidth="155.0" />
+            <Label layoutX="205.0" text="Area(s) Seleccionada(s):">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Button fx:id="btnAgregarArea" layoutX="165.0" layoutY="25.0" mnemonicParsing="false" onAction="#btnAgregarAreaClick" text="&gt;">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="btnQuitarArea" layoutX="165.0" layoutY="75.0" mnemonicParsing="false" onAction="#btnQuitarAreaClick" text="&lt;">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
          </children>
       </Pane>
       <Pane layoutX="120.0" layoutY="494.0">
