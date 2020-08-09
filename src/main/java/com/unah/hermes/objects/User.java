@@ -1,18 +1,19 @@
 package com.unah.hermes.objects;
+//import javafx.collections.FXCollections;
+//import javafx.collections.ObservableList;
 
 public class User{
     public String userID;
     public String nombre;
     public String nivelAcceso;
-    public String grupo;
     public String area;
+    //public ObservableList<User> Usuarios = FXCollections.observableArrayList();
 
-    public User(String userID, String nombre, String nivelAcceso, String grupo, String area)
+    public User(String userID, String nombre, String nivelAcceso, String area)
     {
         this.userID = userID;
         this.nombre = nombre;
         this.nivelAcceso = nivelAcceso;
-        this.grupo = grupo;
         this.area = area;
     }
 
@@ -33,15 +34,7 @@ public class User{
     }
 
 
-    public String getGrupo() {
-        return grupo;
-    }
-
-    public void setGrupo(String grupo) {
-        this.grupo = grupo;
-    }
-
-    public String getArea() {
+        public String getArea() {
         return area;
     }
 

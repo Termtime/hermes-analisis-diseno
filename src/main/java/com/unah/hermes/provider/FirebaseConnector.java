@@ -29,7 +29,9 @@ import com.google.firebase.cloud.FirestoreClient;
 import com.google.cloud.firestore.EventListener;
 import com.google.gson.Gson;
 import com.unah.hermes.MainPage;
+import com.unah.hermes.MantUsuariosPage;
 import com.unah.hermes.objects.Requisicion;
+import com.unah.hermes.objects.User;
 import com.unah.hermes.utils.ParameterStringBuilder;
 import com.google.gson.reflect.TypeToken;
 
@@ -175,6 +177,9 @@ public class FirebaseConnector{
             return null;
         }
     }
+
+    
+
 
     /**
         * Obtiene un solo documento
