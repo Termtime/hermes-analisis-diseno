@@ -122,7 +122,7 @@ public class MantAreasPage implements Initializable {
                                         Area tmp;
 
                                         if (doc.exists()) {
-                                                tmp = new Area(doc.getString("Area"));
+                                                tmp = new Area(doc.getId(), doc.getString("Area"));
                                                 System.out.println(tmp.nombre);
                                                 System.out.println(doc.getData());
                                                 Areas.add(tmp);
