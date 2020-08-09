@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,16 +30,20 @@ import com.google.firebase.cloud.FirestoreClient;
 import com.google.cloud.firestore.EventListener;
 import com.google.gson.Gson;
 import com.unah.hermes.MainPage;
+import com.unah.hermes.objects.Area;
 import com.unah.hermes.objects.Requisicion;
 import com.unah.hermes.utils.ParameterStringBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.UserRecord.CreateRequest;
+import com.google.firebase.auth.UserRecord.UpdateRequest;
 import com.google.firebase.FirebaseApp;
 
 public class FirebaseConnector{
@@ -357,6 +362,78 @@ public class FirebaseConnector{
         
     }
 
+    /**
+     * Crea el usuario en firebase auth y firestore
+     * @param email Correo del usuario
+     * @param password Contraseña del usuario
+     * @param nombre El nombre del usuario
+     * @param nivelAcceso El nivel de acceso del usuario
+     * @param areas Lista de Objetos tipo Area
+     * @return True si la creacion fue exitosa, sino retorna false
+     */
+    public boolean crearUsuario(String email, String password, String nombre, String nivelAcceso, List<Area> areas){
+        try {
+            //crear el usuario en firebase auth
+            CreateRequest request = new CreateRequest()
+                .setEmail(email)
+                .setPassword(password)
+                .setDisplayName(nombre);
+            auth.createUser(request);
+            //crear el usuario en firestore
+            List<String> areasID = new ArrayList<>();
+            for (Area area : areas) {
+                areasID.add(area.areaID);
+            }
+            Map<String,Object> datos = new HashMap<>();
+            datos.put("Nombre", nombre);
+            datos.put("nivelAcceso", nivelAcceso);
+            datos.put("areas", areasID);
+            //ejecutar la instruccion en firebase
+            db.collection("Usuarios").document(email).set(datos);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }}
+    
+    /**
+     * Modifica el usuario en firestore y fire
+     * @param uid El User ID de Firebase Auth, almacenado en firestore tambien
+     * @param email Correo del usuario
+     * @param password Contraseña del usuario
+     * @param nombre El nombre del usuario
+     * @param nivelAcceso El nivel de acceso del usuario
+     * @param areas Lista de Objetos tipo Area, debe ser una lista que contenga las areas actuales y las nuevas
+     * @return True si la modificacion fue exitosa, sino false
+     */
+    public boolean modificarUsuario(String uid, String email, String password, String nombre, String nivelAcceso, List<Area> areas){
+        try {
+            UpdateRequest request = new UpdateRequest(uid)
+                .setPassword(password)
+                .setDisplayName(nombre);
+            auth.updateUser(request);
+            //modificar el usuario en firestore
+            List<String> areasID = new ArrayList<>();
+            for (Area area : areas) {
+                areasID.add(area.areaID);
+            }
+
+            Map<String,Object> datos = new HashMap<>();
+            datos.put("Nombre", nombre);
+            datos.put("nivelAcceso", nivelAcceso);
+            datos.put("areas", areasID);
+            //ejecutar la instruccion en firebase
+            db.collection("Usuarios").document(email).set(datos);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }}
+    }
+
+
+    }
+
     public Map<String, Object> getJSONfromHttpStream(HttpURLConnection con, InputStream in)
     {
         try{
@@ -375,7 +452,5 @@ public class FirebaseConnector{
             System.out.println(e);
             return null;
         }
-        
-        
     }
 }
