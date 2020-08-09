@@ -41,4 +41,61 @@ public class Producto {
         this.cantPendiente = cantPendiente;
         this.comentario = comentario;
     }
+
+    public int getCantEntregada() {
+        return cantEntregada;
+    }
+
+    public int getCantPedida() {
+        return cantPedida;
+    }
+    
+    public int getCantPendiente() {
+        return cantPendiente;
+    }
+
+    public String getComentario() {
+        return comentario;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getProductoID() {
+        return productoID;
+    }
+
+    public String getUnidad() {
+        return unidad;
+    }
+
+    public void setCantEntregada(int cantEntregada) {
+        this.cantEntregada = cantEntregada;
+    }
+
+    public void setCantPedida(int cantPedida) {
+        this.cantPedida = cantPedida;
+    }
+
+    public void setCantPendiente(int cantPendiente) {
+        this.cantPendiente = cantPendiente;
+    }
+
+    public void setComentario(String comentario) {
+        this.comentario = comentario;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setProductoID(String productoID) {
+        this.productoID = productoID;
+    }
+
+    public void setUnidad(String unidad) {
+        this.unidad = unidad;
+    }
+
 }

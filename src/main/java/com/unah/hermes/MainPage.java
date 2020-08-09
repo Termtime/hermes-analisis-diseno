@@ -16,8 +16,6 @@ import com.google.cloud.firestore.FirestoreException;
 import com.google.cloud.firestore.ListenerRegistration;
 import com.unah.hermes.objects.Producto;
 import com.unah.hermes.objects.Requisicion;
-import com.unah.hermes.objects.RequisicionEntregadaRow;
-import com.unah.hermes.objects.RequisicionRow;
 import com.unah.hermes.objects.User;
 import com.unah.hermes.provider.FirebaseConnector;
 import com.unah.hermes.provider.FirestoreRoutes;
@@ -92,9 +90,9 @@ public class MainPage implements Initializable {
         @FXML Label lblSolicitanteE;
 
     //Tablas
-    @FXML TableView<RequisicionRow> tablaP;
-    @FXML TableView<RequisicionRow> tablaD;
-    @FXML TableView<RequisicionEntregadaRow> tablaE;
+    @FXML TableView<Producto> tablaP;
+    @FXML TableView<Producto> tablaD;
+    @FXML TableView<Producto> tablaE;
     
     @FXML public void menuBtnCerrarClick(ActionEvent event){
         Stage stage = (Stage)((Button) event.getSource()).getScene().getWindow();
@@ -247,6 +245,7 @@ public class MainPage implements Initializable {
             public void changed(ObservableValue<? extends Requisicion> observable, Requisicion oldValue, Requisicion newValue) {
                 tablaPSelectedItem = newValue;
                 System.out.println(newValue);
+                System.out.println(newValue.productos.get(0).cantEntregada);
                 popularTablaRequisicionesPDConProductos(tablaP, newValue.productos);
                 lblReqIDP.setText(newValue.reqID);
                 lblEstadoP.setText(newValue.estado);
@@ -294,22 +293,22 @@ public class MainPage implements Initializable {
     private void recalcularColumnWidth(){
         ObservableList columnasP = tablaP.getColumns();
         
-        ((TableColumn)( columnasP.get(0) )).setPrefWidth(tablaP.getWidth()*0.55);
+        ((TableColumn)( columnasP.get(0) )).setPrefWidth(tablaP.getWidth()*0.50);
         ((TableColumn)( columnasP.get(1) )).setPrefWidth(tablaP.getWidth()*0.35);
-        ((TableColumn)( columnasP.get(2) )).setPrefWidth(tablaP.getWidth()*0.1);
+        ((TableColumn)( columnasP.get(2) )).setPrefWidth(tablaP.getWidth()*0.13);
         
         ObservableList columnasD = tablaD.getColumns();
-        ((TableColumn)( columnasD.get(0) )).setPrefWidth(tablaD.getWidth()*0.55);
+        ((TableColumn)( columnasD.get(0) )).setPrefWidth(tablaD.getWidth()*0.50);
         ((TableColumn)( columnasD.get(1) )).setPrefWidth(tablaD.getWidth()*0.35);
         ((TableColumn)( columnasD.get(2) )).setPrefWidth(tablaD.getWidth()*0.1);
         
         ObservableList columnasE = tablaE.getColumns();
-        ((TableColumn)( columnasE.get(0) )).setPrefWidth(tablaE.getWidth()*0.35);
+        ((TableColumn)( columnasE.get(0) )).setPrefWidth(tablaE.getWidth()*0.30);
         ((TableColumn)( columnasE.get(1) )).setPrefWidth(tablaE.getWidth()*0.15);
         ((TableColumn)( columnasE.get(2) )).setPrefWidth(tablaE.getWidth()*0.105);
         ((TableColumn)( columnasE.get(3) )).setPrefWidth(tablaE.getWidth()*0.105);
         ((TableColumn)( columnasE.get(4) )).setPrefWidth(tablaE.getWidth()*0.105);
-        ((TableColumn)( columnasE.get(5) )).setPrefWidth(tablaE.getWidth()*0.185);
+        ((TableColumn)( columnasE.get(5) )).setPrefWidth(tablaE.getWidth()*0.23);
 
     }
     private void iniciarEstructuraTablas(){
@@ -318,82 +317,93 @@ public class MainPage implements Initializable {
         tablaP.getItems().clear();
         tablaP.getColumns().clear();
         TableColumn columnaProductoP = new TableColumn<>("Producto");
-        columnaProductoP.setCellValueFactory(new PropertyValueFactory<>("producto"));
-        columnaProductoP.setPrefWidth(tablaP.getWidth()*0.55);
+        columnaProductoP.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+        columnaProductoP.setPrefWidth(tablaP.getWidth()*0.50);
+        columnaProductoP.setResizable(false);
 
         TableColumn columnaUnidadP = new TableColumn<>("Unidad");
         columnaUnidadP.setCellValueFactory(new PropertyValueFactory<>("unidad"));
         columnaUnidadP.setPrefWidth(tablaP.getWidth()*0.35);
-
+        columnaUnidadP.setResizable(false);
+        
         TableColumn columnaCantidadPedidaP = new TableColumn<>("Cantidad");
-        columnaCantidadPedidaP.setCellValueFactory(new PropertyValueFactory<>("cantidadPedida"));
+        columnaCantidadPedidaP.setCellValueFactory(new PropertyValueFactory<>("cantPedida"));
         tablaP.getColumns().addAll(columnaProductoP, columnaUnidadP, columnaCantidadPedidaP);
-        columnaCantidadPedidaP.setPrefWidth(tablaP.getWidth()*0.10);
-
+        columnaCantidadPedidaP.setPrefWidth(tablaP.getWidth()*0.13);
+        columnaCantidadPedidaP.setResizable(false);
+        
         //Tabla de Requisiciones entregadas
         tablaE.getItems().clear();
         tablaE.getColumns().clear();
         TableColumn columnaProductoE = new TableColumn<>("Producto");
-        columnaProductoE.setCellValueFactory(new PropertyValueFactory<>("producto"));
-        columnaProductoE.setPrefWidth(tablaE.getWidth()*0.35);
-
+        columnaProductoE.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+        columnaProductoE.setPrefWidth(tablaE.getWidth()*0.30);
+        columnaProductoE.setResizable(false);
+        
         TableColumn columnaUnidadE = new TableColumn<>("Unidad");
         columnaUnidadE.setCellValueFactory(new PropertyValueFactory<>("unidad"));
         columnaUnidadE.setPrefWidth(tablaE.getWidth()*0.15);
-
-        TableColumn columnaCantidadPedidaE = new TableColumn<>("Cant. Pedida");
-        columnaCantidadPedidaE.setCellValueFactory(new PropertyValueFactory<>("cantidadPedida"));
+        columnaUnidadE.setResizable(false);
+        
+        TableColumn columnaCantidadPedidaE = new TableColumn<>("C. Pedida");
+        columnaCantidadPedidaE.setCellValueFactory(new PropertyValueFactory<>("cantPedida"));
         columnaCantidadPedidaE.setPrefWidth(tablaE.getWidth()*0.105);
-
-        TableColumn columnaCantidadEntregadaE = new TableColumn<>("Cant. Entregada");
-        columnaCantidadEntregadaE.setCellValueFactory(new PropertyValueFactory<>("cantidadEntregada"));
+        columnaCantidadPedidaE.setResizable(false);
+        
+        TableColumn columnaCantidadEntregadaE = new TableColumn<>("C. Entregada");
+        columnaCantidadEntregadaE.setCellValueFactory(new PropertyValueFactory<>("cantEntregada"));
         columnaCantidadEntregadaE.setPrefWidth(tablaE.getWidth()*0.105);
-
-        TableColumn columnaCantidadPendienteE = new TableColumn<>("Cant. Pendiente");
-        columnaCantidadPendienteE.setCellValueFactory(new PropertyValueFactory<>("cantidadPendiente"));
+        columnaCantidadEntregadaE.setResizable(false);
+        
+        TableColumn columnaCantidadPendienteE = new TableColumn<>("C. Pendiente");
+        columnaCantidadPendienteE.setCellValueFactory(new PropertyValueFactory<>("cantPendiente"));
         columnaCantidadPendienteE.setPrefWidth(tablaE.getWidth()*0.105);
-
+        columnaCantidadPendienteE.setResizable(false);
+        
         TableColumn columnaComentariosE = new TableColumn<>("Comentarios");
         columnaComentariosE.setCellValueFactory(new PropertyValueFactory<>("comentario"));
-        columnaComentariosE.setPrefWidth(tablaE.getWidth()*0.18);
-
+        columnaComentariosE.setPrefWidth(tablaE.getWidth()*0.23);
+        columnaComentariosE.setResizable(false);
+        
         tablaE.getColumns().addAll(columnaProductoE, columnaUnidadE, columnaCantidadPedidaE, columnaCantidadEntregadaE, columnaCantidadPendienteE, columnaComentariosE);
-
+        
         //Tabla de Requisiciones denegadas
         tablaD.getItems().clear();
         tablaD.getColumns().clear();
         TableColumn columnaProductoD = new TableColumn<>("Producto");
-        columnaProductoD.setCellValueFactory(new PropertyValueFactory<>("producto"));
-        columnaProductoD.setPrefWidth(tablaD.getWidth()*0.55);
-
+        columnaProductoD.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+        columnaProductoD.setPrefWidth(tablaD.getWidth()*0.50);
+        columnaProductoD.setResizable(false);
+        
         TableColumn columnaUnidadD = new TableColumn<>("Unidad");
         columnaUnidadD.setCellValueFactory(new PropertyValueFactory<>("unidad"));
         columnaUnidadD.setPrefWidth(tablaD.getWidth()*0.35);
-
+        columnaUnidadD.setResizable(false);
+        
         TableColumn columnaCantidadPedidaD = new TableColumn<>("Cantidad");
-        columnaCantidadPedidaD.setCellValueFactory(new PropertyValueFactory<>("cantidadPedida"));
-        tablaD.getColumns().addAll(columnaProductoD, columnaUnidadD, columnaCantidadPedidaD);
+        columnaCantidadPedidaD.setCellValueFactory(new PropertyValueFactory<>("cantPedida"));
         columnaCantidadPedidaD.setPrefWidth(tablaD.getWidth()*0.10);
+        columnaCantidadPedidaD.setResizable(false);
+
+        tablaD.getColumns().addAll(columnaProductoD, columnaUnidadD, columnaCantidadPedidaD);
     }
 
-    private void popularTablaRequisicionesPDConProductos(TableView<RequisicionRow> tabla, ObservableList<Producto> productos) {
+    private void popularTablaRequisicionesPDConProductos(TableView<Producto> tabla, ObservableList<Producto> productos) {
         try{
             tabla.getItems().clear();
             for (Producto producto : productos) {
-                RequisicionRow row = new RequisicionRow(producto.nombre, producto.unidad, producto.cantPedida);
-                tabla.getItems().add(row);
+                tabla.getItems().add(producto);
             }
         }catch(Exception e){
             e.printStackTrace();
         }
     }
 
-    private void popularTablaRequisicionesEntregadas(TableView<RequisicionEntregadaRow> tabla, ObservableList<Producto> productos) {
+    private void popularTablaRequisicionesEntregadas(TableView<Producto> tabla, ObservableList<Producto> productos) {
         try{
             // tabla.getItems().clear();
             for (Producto producto : productos) {
-                RequisicionEntregadaRow row = new RequisicionEntregadaRow(producto.nombre, producto.unidad, producto.cantPedida, producto.cantEntregada, producto.cantPendiente, producto.comentario);
-                tabla.getItems().add(row);
+                tabla.getItems().add(producto);
             }
         }catch(Exception e){
             e.printStackTrace();
