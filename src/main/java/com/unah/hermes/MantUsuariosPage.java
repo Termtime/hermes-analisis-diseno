@@ -9,7 +9,6 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.function.Function;
 
-
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.EventListener;
@@ -17,6 +16,7 @@ import com.google.cloud.firestore.FirestoreException;
 import com.google.cloud.firestore.ListenerRegistration;
 import com.google.cloud.firestore.ListenerRegistration;
 import com.unah.hermes.provider.FirebaseConnector;
+import com.unah.hermes.provider.FirestoreRoutes;
 import com.unah.hermes.utils.EventListeners;
 import com.unah.hermes.utils.Navigation;
 
@@ -31,8 +31,12 @@ import com.unah.hermes.objects.User;
 import com.unah.hermes.utils.Navigation;
 import com.unah.hermes.utils.EventListeners;
 import com.google.cloud.firestore.EventListener;
+import com.unah.hermes.objects.Area;
 import com.unah.hermes.objects.Requisicion;
 import com.unah.hermes.provider.FirebaseConnector;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -50,6 +54,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.fxml.FXMLLoader;
@@ -76,7 +81,12 @@ public class MantUsuariosPage implements Initializable {
 
     @FXML
     private void btnModificarUsuarioClick(ActionEvent event) {
-        Navigation.pushRoute("mantUsuariosModalModificarUsuario", event, false, true);
+        if(tablaUSelectedItem != null)
+            Navigation.pushRouteWithParameter("MantUsuarioPage", event, false, true, MantUsuariosModalModificarUsuario.class, tablaUSelectedItem );
+        else{
+            Alert alert = new Alert(AlertType.ERROR,"Debe seleccionar un Usuario antes", ButtonType.OK);
+            alert.showAndWait();
+        }
     }
 
     @FXML
@@ -88,69 +98,118 @@ public class MantUsuariosPage implements Initializable {
     private void btnPermisosClick(ActionEvent event) {
 
     }
+    @FXML TextField txtFiltro;
 
     @FXML
     AnchorPane MantUsuario;
 
-   // List<QueryDocumentSnapshot> db;
-    //User tablaPSelectedItem;
-    //public static ObservableList<User> Usuarios = FXCollections.observableArrayList();
+     FirebaseConnector db;
+     User tablaUSelectedItem;
+     ObservableList<User> usuarios = FXCollections.observableArrayList();
+     
+     
+     
+
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
   
-   /*
-        
         EventListeners.onWindowOpened(MantUsuario, new Function<Window,Void>(){
             @Override
             public Void apply(Window parent) {
-                iniciarEstructuraTablas();                            
+                iniciarEstructuraTablas();     
+                
+                db=FirebaseConnector.getInstance();                
+                List<QueryDocumentSnapshot> documentos = db.getAllDocumentsFrom(FirestoreRoutes.USUARIOS);
+                List<QueryDocumentSnapshot> docsUsuarios = db.getAllDocumentsFrom(FirestoreRoutes.USUARIOS);
+                List<QueryDocumentSnapshot> docsAreas = db.getAllDocumentsFrom(FirestoreRoutes.AREAS);
+                List<Area> areas = new ArrayList();
+
+                for(DocumentSnapshot doc : docsAreas){
+                    Area tmp = new Area(doc.getId(), doc.getString("Area"));
+                    areas.add(tmp);
+                }
+                System.out.println(areas);
+
+                for (DocumentSnapshot doc : documentos) {
+                    System.out.println(doc);
+                    User tmp;
+                     if(doc.exists()){
+                    List<String> arregloIDAreas = (List<String>) doc.get("areas");
+                    System.out.println(arregloIDAreas);
+                        // // ["8DjeIqzY7Sw0PGRyZBXC","10DjwsdaGRyZBXC"]
+                    List<String> areasConNombre = new ArrayList();
+
+                      for(Area area : areas){
+                        for(String areaID : arregloIDAreas){
+                            System.out.println(area.areaID);
+                                if(areaID.equals(area.areaID.trim()))
+                                 {
+                                    System.out.println("Nombre del area agregada");
+                                    areasConNombre.add(area.nombre);
+                                    break;
+                                 }   
+                             }
+                         }
+                        // areasConNombre = ["Cocina", "Meseros"]
+                        //List<String> prueba = new ArrayList();
+                        //prueba.add("hola");
+                        //prueba.add("hola2");
+
+                        tmp = new User(doc.getId(), doc.getString("Nombre"),
+                        doc.getString("nivelAcceso"), areasConNombre);
+    
+                        System.out.println(tmp.nombre);
+                        System.out.println(doc.getData());
+                        usuarios.add(tmp);
+                        System.out.println(usuarios);
+                        }
+                    }
+                    tablaUsuarios.getItems().addAll(usuarios);
+
                  return null;
             }
+
+
         });
 
         MantUsuario.widthProperty().addListener(new ChangeListener<Number>(){
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 recalcularColumnWidth();
+               
             }
         });
 
-        MantUsuario.widthProperty().addListener(new ChangeListener<Number>(){
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                recalcularColumnWidth();
-            }
-        });
-
-       // db = FirebaseConnector.getInstance().getAllDocumentsFrom("/Usuarios");
-
-        /*
-        tablaUsuarios.getItems().addListener( (ListChangeListener<? super User>) new ChangeListener<User>(){
+        tablaUsuarios.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<User>(){
             @Override
             public void changed(ObservableValue<? extends User> observable, User oldValue, User newValue) {
-                tablaPSelectedItem = newValue;
-                System.out.println(newValue);
-                popularTablaMantUsuarios(tablaUsuarios , newValue.Usuarios);
+                tablaUSelectedItem = newValue;
+            }
+        });
+        MantUsuario.widthProperty().addListener(new ChangeListener<Number>(){
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                recalcularColumnWidth();
             }
         });
 
-        */
+  
     }
     
     
        
     
-/*    
+  
     private void recalcularColumnWidth(){
                        
         ObservableList columnasUsuario = tablaUsuarios.getColumns();
 
-        ((TableColumn)( columnasUsuario.get(0) )).setPrefWidth(tablaUsuarios.getWidth()*0.15);
+        ((TableColumn)( columnasUsuario.get(0) )).setPrefWidth(tablaUsuarios.getWidth()*0.20);
         ((TableColumn)( columnasUsuario.get(1) )).setPrefWidth(tablaUsuarios.getWidth()*0.30);
         ((TableColumn)( columnasUsuario.get(2) )).setPrefWidth(tablaUsuarios.getWidth()*0.20);
-        ((TableColumn)( columnasUsuario.get(3) )).setPrefWidth(tablaUsuarios.getWidth()*0.15);
-        ((TableColumn)( columnasUsuario.get(4) )).setPrefWidth(tablaUsuarios.getWidth()*0.20);
+        ((TableColumn)( columnasUsuario.get(3) )).setPrefWidth(tablaUsuarios.getWidth()*0.20);
+        
         
     }    
 
@@ -174,19 +233,16 @@ public class MantUsuariosPage implements Initializable {
         columnaNivelAcceso.setCellValueFactory(new PropertyValueFactory<>("nivelAcceso"));
         columnaNivelAcceso.setPrefWidth(tablaUsuarios.getWidth()*0.20);
 
-        TableColumn columnaArea = new TableColumn<>("Area");
-        columnaArea.setCellValueFactory(new PropertyValueFactory<>("area"));
+        TableColumn columnaArea = new TableColumn<>("Areas");
+        columnaArea.setCellValueFactory(new PropertyValueFactory<>("stringDeArea"));
         columnaArea.setPrefWidth(tablaUsuarios.getWidth()*0.15);
 
-        TableColumn columnaGrupo = new TableColumn<>("Grupo");
-        columnaGrupo.setCellValueFactory(new PropertyValueFactory<>("grupo"));
-        columnaGrupo.setPrefWidth(tablaUsuarios.getWidth()*0.20);
-
-        tablaUsuarios.getColumns().addAll(columnaCodigo, columnaUsuario, columnaNivelAcceso, columnaArea, columnaGrupo);
+        
+        tablaUsuarios.getColumns().addAll(columnaCodigo, columnaUsuario, columnaNivelAcceso, columnaArea);
 
        
     }
-
+/*
     private void popularTablaMantUsuarios(TableView<User> tabla, ObservableList<User> Usuarios) {
         try{
             tabla.getItems().clear();
