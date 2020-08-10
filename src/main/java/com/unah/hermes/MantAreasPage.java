@@ -181,6 +181,15 @@ public class MantAreasPage implements Initializable {
                                 // recalcularColumnWidth();
                         }
                 });
+
+                tablaArea.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Area>() {
+                        @Override
+                        public void changed(ObservableValue<? extends Area> observable, Area oldValue, Area newValue) {
+                                TablaAreaSelectedRow = newValue;
+                                System.out.println(newValue);
+                                llenarTablaUsuario(newValue.areaID);
+                        }
+                });
         }
 
         private void iniciarEstructuraTablas() {
@@ -199,5 +208,19 @@ public class MantAreasPage implements Initializable {
                 columnUsuario.setCellValueFactory(new PropertyValueFactory<>("nombre"));
 
                 tablaUsuario.getColumns().addAll(columnUsuario);
+        }
+
+        private void llenarTablaUsuario(String area) {
+                UsuarioArea tmp;
+                tablaUsuario.getItems().clear();
+                for (UsuarioArea usuarios : usuariosArea) {
+                        for (int i = 0; i <= usuarios.area.size(); i++) {
+                                if (usuarios.area.get(i).equals(area)) {
+                                        tmp = new UsuarioArea(usuarios.nombre);
+                                        tablaUsuario.getItems().add(tmp);
+                                        break;
+                                }
+                        }
+                }
         }
 }

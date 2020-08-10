@@ -19,6 +19,10 @@ public class UsuarioArea {
         stringDeArea = stringDeArea.substring(0, stringDeArea.length() - 2);
     }
 
+    public UsuarioArea(String nombre) {
+        this.nombre = nombre;
+    }
+
     public String getNombre() {
         return nombre;
     }
