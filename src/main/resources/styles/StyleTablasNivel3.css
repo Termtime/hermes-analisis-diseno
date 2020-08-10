@@ -1,0 +1,96 @@
+/************************************ BOTONES ************************************/
+.button {
+  -fx-font-weight: bold;
+  -fx-text-fill: #e9e9e9;
+  -fx-background-color: #38a4be;
+  -fx-font-size: 14;
+}
+
+.button:hover {
+  -fx-background-color: #3190a6;
+}
+
+.btnCancelar {
+  -fx-background-color: #d9406f;
+}
+
+.btnCancelar:hover {
+  -fx-background-color: #be3861;
+}
+/************************************ FIN BOTONES ************************************/
+
+.combo-box {
+  -fx-background-color: white;
+}
+
+.label {
+  -fx-text-fill: #e9e9e9;
+  /* -fx-alignment: center; */
+  -fx-alignment: center;
+}
+
+.label-flechas {
+  -fx-font-size: 20;
+}
+
+/************************************ TABLAS ************************************/
+.table-view {
+  -fx-background-color: #424242;
+  -fx-control-inner-background: transparent;
+  -fx-table-cell-border-color: transparent;
+  -fx-border-color: transparent;
+  -fx-focus-color: transparent;
+  -fx-faint-focus-color: transparent;
+  -fx-background-radius: 8;
+
+  -fx-effect: dropshadow(
+    two-pass-box,
+    #383838,
+    20,
+    0,
+    10,
+    10
+  ); /*spread, sepa, derecha, abajo*/
+}
+
+.table-view .column-header {
+  -fx-font-size: 14;
+}
+
+.table-view .column-header-background {
+  -fx-background-color: #308ca3c4;
+  -fx-background-radius: 10 10 0 0;
+  -fx-background-insets: 0 0 10 0;
+  -fx-padding: 0 0 10 0;
+}
+
+.table-view .column-header,
+.table-view .filler {
+  -fx-size: 40;
+  -fx-background-color: transparent;
+}
+
+.table-cell {
+  -fx-text-fill: #e9e9e9;
+  -fx-font-size: 14;
+  -fx-padding: 7 0 7 10; /*arriba derecha abajo izquierda*/
+}
+
+.table-view:focused .table-row-cell:filled:focused:selected {
+  -fx-table-cell-border-color: transparent;
+  -fx-background-color: #114b5a; /* CAMBIAR COLOR */
+}
+
+.table-row-cell:filled:focused:selected {
+  -fx-table-cell-border-color: transparent;
+  -fx-background-color: #303030; /* CAMBIAR COLOR */
+}
+
+.table-view .table-row-cell:hover {
+  -fx-background-color: #3d3d3d; /* CAMBIAR COLOR */
+}
+
+/************************************ COLOR FONDO ************************************/
+.window-background-level3 {
+  -fx-background-color: #3d3d3d;
+}

@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="468.0" prefWidth="446.0" styleClass="window-background-level3" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller=" com.unah.hermes.MantAreasAgregarUsuarioArea">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="468.0" prefWidth="446.0" styleClass="window-background-level3" stylesheets="@../styles/StyleTablasNivel3.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller=" com.unah.hermes.MantAreasAgregarUsuarioArea">
    <children>
       <Label alignment="CENTER" layoutX="77.0" layoutY="33.0" prefHeight="39.0" prefWidth="292.0" text="Agregar Usuario al Área" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="77.0" AnchorPane.rightAnchor="77.0" AnchorPane.topAnchor="30.0">
          <font>
@@ -27,7 +27,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <TableView fx:id="tablaUsuariosArea" layoutX="52.0" layoutY="163.0" prefHeight="303.0" prefWidth="200.0" style="-fx-background-color: #424242;" styleClass="tablaNivel3" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="52.0" AnchorPane.topAnchor="163.0">
+      <TableView fx:id="tablaUsuariosArea" layoutX="52.0" layoutY="163.0" prefHeight="303.0" prefWidth="200.0" styleClass="tablaNivel3" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="52.0" AnchorPane.topAnchor="163.0">
         <columns>
           <TableColumn maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="197.59997177124023" resizable="false" styleClass="column-header-text-color" text="Usuarios" />
         </columns>

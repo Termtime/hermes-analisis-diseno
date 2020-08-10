@@ -50,9 +50,7 @@
 }
 
 .table-view .column-header {
-  /* -fx-background-color: #388396; */
   -fx-font-size: 14;
-  /* -fx-padding: 0 0 0 15; */
 }
 
 .table-view .column-header-background {
@@ -60,18 +58,15 @@
   -fx-background-radius: 10 10 0 0;
   -fx-background-insets: 0 0 10 0;
   -fx-padding: 0 0 10 0;
-  -fx-effect: dropshadow(two-pass-box, #2a616ec4, 15, 0, 0.1, 3);
 }
 
 .table-view .column-header,
 .table-view .filler {
   -fx-size: 40;
-  /* -fx-border-width: 0 0 50 0; */
   -fx-background-color: transparent;
 }
 
 .table-cell {
-  /* -fx-background-color: #303030; */
   -fx-text-fill: #e9e9e9;
   -fx-font-size: 14;
   -fx-padding: 7 0 7 10; /*arriba derecha abajo izquierda*/
@@ -90,50 +85,40 @@
 .table-view .table-row-cell:hover {
   -fx-background-color: #3d3d3d;
 }
-
-/************************************ TABLAS NIVEL 2 ************************************/
-#tablaProductos,
-#tablaArea,
-#tablaUsuario,
-#tablaVistaPrevia,
-#tablaUsuarios {
-  -fx-effect: dropshadow(two-pass-box, #2c2c2c, 20, 0, 12, 12); /*2c2c2c*/
-}
-
-.table-view:focused .table-row-cell:filled:focused:selected {
-  -fx-table-cell-border-color: transparent;
-  -fx-background-color: #114b5a; /* CAMBIAR COLOR */
-}
-
-.table-row-cell:filled:focused:selected {
-  -fx-table-cell-border-color: transparent;
-  -fx-background-color: #303030; /* CAMBIAR COLOR */
-}
-
-.table-view .table-row-cell:hover {
-  -fx-background-color: #3d3d3d; /* CAMBIAR COLOR */
-}
-
-/************************************ TABLAS NIVEL 3 ************************************/
-#tablaUsuariosArea {
-  -fx-effect: dropshadow(two-pass-box, #383838, 20, 0, 12, 12);
-}
-
-.table-view:focused .table-row-cell:filled:focused:selected {
-  -fx-table-cell-border-color: transparent;
-  -fx-background-color: #114b5a; /* CAMBIAR COLOR */
-}
-
-.table-row-cell:filled:focused:selected {
-  -fx-table-cell-border-color: transparent;
-  -fx-background-color: #303030; /* CAMBIAR COLOR */
-}
-
-.table-view .table-row-cell:hover {
-  -fx-background-color: #3d3d3d; /* CAMBIAR COLOR */
-}
-
 /************************************ FIN TABLAS ************************************/
+
+/************************************ LISTA ************************************/
+.list-view {
+  -fx-background-color: #303030;
+  -fx-control-inner-background: transparent;
+  -fx-table-cell-border-color: transparent;
+  -fx-border-color: transparent;
+  -fx-focus-color: transparent;
+  -fx-faint-focus-color: transparent;
+  -fx-text-fill: #e9e9e9;
+  -fx-font-size: 14;
+  -fx-padding: 7 0 7 0;
+}
+
+.list-view .list-cell:odd {
+  -fx-background-color: #333333;
+}
+
+.list-view:focused .list-cell:filled:focused:selected {
+  -fx-list-cell-border-color: transparent;
+  -fx-background-color: #114b5a;
+}
+
+.list-cell:filled:focused:selected {
+  -fx-table-cell-border-color: transparent;
+  -fx-background-color: #303030;
+  -fx-text-fill: #e9e9e9;
+}
+
+.list-view .list-cell:hover {
+  -fx-background-color: #3d3d3d;
+}
+/************************************ FIN LISTA ************************************/
 
 /************************************ MENU ************************************/
 .menu-button.dropdown {
@@ -184,12 +169,4 @@
 /* COLOR DE FONDO DEPENDIENDO DEL NIVEL DE LA PANTALLA */
 .window-background-level1 {
   -fx-background-color: #222222;
-}
-
-.window-background-level2 {
-  -fx-background-color: #303030;
-}
-
-.window-background-level3 {
-  -fx-background-color: #3d3d3d;
 }

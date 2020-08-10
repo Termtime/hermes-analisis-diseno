@@ -11,7 +11,8 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="MantenimientoProductos" prefHeight="637.0" prefWidth="922.0" styleClass="window-background-level2" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unah.hermes.MantProductosPage">
+
+<AnchorPane id="AnchorPane" fx:id="MantenimientoProductos" prefHeight="637.0" prefWidth="922.0" styleClass="window-background-level2" stylesheets="@../styles/StyleTablasNivel2.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unah.hermes.MantProductosPage">
    <children>
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="287.0" layoutY="28.0" prefHeight="54.0" prefWidth="349.0" text="Mantenimiento de Productos" textAlignment="CENTER" AnchorPane.leftAnchor="287.0" AnchorPane.rightAnchor="286.0" AnchorPane.topAnchor="30.0">
          <font>
@@ -21,13 +22,15 @@
       <Label layoutX="32.0" layoutY="136.0" prefHeight="20.0" prefWidth="123.0" text="Filtro por Nombre: " AnchorPane.leftAnchor="32.0">
          <font>
             <Font size="14.0" />
-         </font></Label>
+         </font>
+      </Label>
       <TextField fx:id="txtFiltro" layoutX="27.0" layoutY="159.0" onKeyTyped="#txtFiltroInput" prefHeight="30.0" prefWidth="462.0" AnchorPane.leftAnchor="27.0" AnchorPane.rightAnchor="433.0" />
       <ComboBox fx:id="comboCategoria" layoutX="499.00000000000006" layoutY="158.0" onAction="#comboCategoriaClick" prefHeight="30.0" prefWidth="199.0" promptText="Select" AnchorPane.rightAnchor="223.79999999999995" />
       <Label layoutX="500.00000000000006" layoutY="136.0" text="Categoria: " AnchorPane.rightAnchor="354.79999999999995">
          <font>
             <Font size="14.0" />
-         </font></Label>
+         </font>
+      </Label>
       <TableView fx:id="tablaProductos" layoutX="23.0" layoutY="197.0" prefHeight="390.0" prefWidth="680.0" styleClass="window-background-level3" AnchorPane.bottomAnchor="20.600000000000023" AnchorPane.leftAnchor="23.0" AnchorPane.rightAnchor="219.0" AnchorPane.topAnchor="197.0">
         <columns>
           <TableColumn prefWidth="351.20000076293945" resizable="false" text="Producto" />
