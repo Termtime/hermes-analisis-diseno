@@ -270,7 +270,7 @@ public class MainPage implements Initializable {
         });
 
         listaRQD.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Requisicion>(){
-
+            //prueba
             @Override
             public void changed(ObservableValue<? extends Requisicion> observable, Requisicion oldValue, Requisicion newValue) {
                 tablaDSelectedItem = newValue;
