@@ -35,7 +35,7 @@ public class MantUsuariosModalModificarUsuario implements Initializable {
   
     public void initData(Object data){
         /*  System.out.println("Inicialiar datos");
-        User usuarioDatos = (User) data;
+        User usuarioDatos = (User) data; cambio
         //txtFiltro.setText(usuarioDatos.nombre);     
         */
     }
