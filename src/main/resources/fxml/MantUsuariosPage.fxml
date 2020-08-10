@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="MantUsuario" minHeight="608.0" minWidth="1079.0" prefHeight="637.0" prefWidth="1079.0" styleClass="window-background-level2" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unah.hermes.MantUsuariosPage">
+<AnchorPane id="AnchorPane" fx:id="MantUsuario" minHeight="608.0" minWidth="1079.0" prefHeight="637.0" prefWidth="1079.0" styleClass="window-background-level2" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unah.hermes.MantUsuariosPage">
    <children>
       <Label layoutX="375.0" layoutY="30.0" text="Mantenimiento de Usuarios" textAlignment="CENTER" AnchorPane.leftAnchor="375.0" AnchorPane.rightAnchor="374.4" AnchorPane.topAnchor="30.0">
          <font>
@@ -22,7 +22,7 @@
          <font>
             <Font size="14.0" />
          </font></Label>
-      <TextField fx:id="txtFiltro" layoutX="153.0" layoutY="156.0" prefHeight="30.0" prefWidth="547.0" AnchorPane.leftAnchor="153.0" AnchorPane.rightAnchor="378.79999999999995" />
+      <TextField fx:id="txtFiltro" layoutX="153.0" layoutY="156.0" onKeyTyped="#txtFiltroInput" prefHeight="30.0" prefWidth="547.0" AnchorPane.leftAnchor="153.0" AnchorPane.rightAnchor="378.79999999999995" />
       <TableView fx:id="tablaUsuarios" layoutX="21.0" layoutY="194.0" prefHeight="426.0" prefWidth="850.0" AnchorPane.bottomAnchor="16.600000000000023" AnchorPane.leftAnchor="21.0" AnchorPane.rightAnchor="207.60000000000002" AnchorPane.topAnchor="194.0">
         <columns>
           <TableColumn prefWidth="95.20000839233398" text="Codigo" />

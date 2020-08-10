@@ -56,6 +56,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -98,16 +99,70 @@ public class MantUsuariosPage implements Initializable {
     private void btnPermisosClick(ActionEvent event) {
 
     }
+    
     @FXML TextField txtFiltro;
+   
+        @FXML private void txtFiltroInput(KeyEvent event){
+            
+            List<QueryDocumentSnapshot> docsAreas = db.getAllDocumentsFrom(FirestoreRoutes.AREAS);
+            List<Area> areas = new ArrayList();             
+
+            tablaUsuarios.getItems().clear();
+            usuarios.clear();
+            for(DocumentSnapshot doc : docsAreas){
+                Area tmp = new Area(doc.getId(), doc.getString("Area"));
+                areas.add(tmp);
+            }
+            
+                       for(DocumentSnapshot doc: documentos){
+                           
+                           System.out.println(doc);
+                           User tmp;
+                           if(doc.exists()){
+                            List<String> arregloIDAreas = (List<String>) doc.get("areas");
+                            List<String> areasConNombre = new ArrayList(); 
+
+                            for(Area area : areas){
+                                for(String areaID : arregloIDAreas){
+                                    System.out.println(area.areaID);
+                                        if(areaID.equals(area.areaID.trim()))
+                                         {
+                                            System.out.println("Nombre del area agregada");
+                                            areasConNombre.add(area.nombre);
+                                            break;
+                                         }   
+                                     }
+                                 }
+                               tmp = new User(doc.getId(),doc.getString("Nombre"), doc.getString("nivelAcceso"), areasConNombre);
+                               System.out.println("Funcionaaa");
+                               System.out.println(doc.getData());
+                               if(tmp.getNombre().toLowerCase().contains(txtFiltro.getText().toLowerCase()) || txtFiltro.getText().equals("")){
+                                System.out.println("Algo");
+                                usuarios.add(tmp);
+                                System.out.println(usuarios);
+    
+                               }
+                           }
+                       }
+                       tablaUsuarios.getItems().addAll(usuarios);
+                       for(DocumentSnapshot docs: documentos){
+                       System.out.println(usuarios);
+                       System.out.println("usuarios!");
+                       }
+                       
+        }
+    
+
 
     @FXML
     AnchorPane MantUsuario;
 
-     FirebaseConnector db;
+     FirebaseConnector db=FirebaseConnector.getInstance(); ;   
+
      User tablaUSelectedItem;
      ObservableList<User> usuarios = FXCollections.observableArrayList();
-     
-     
+     List<QueryDocumentSnapshot> documentos = db.getAllDocumentsFrom(FirestoreRoutes.USUARIOS);
+      
      
 
 
@@ -119,8 +174,8 @@ public class MantUsuariosPage implements Initializable {
             public Void apply(Window parent) {
                 iniciarEstructuraTablas();     
                 
-                db=FirebaseConnector.getInstance();                
-                List<QueryDocumentSnapshot> documentos = db.getAllDocumentsFrom(FirestoreRoutes.USUARIOS);
+                              
+               // List<QueryDocumentSnapshot> documentos = db.getAllDocumentsFrom(FirestoreRoutes.USUARIOS);
                 List<QueryDocumentSnapshot> docsUsuarios = db.getAllDocumentsFrom(FirestoreRoutes.USUARIOS);
                 List<QueryDocumentSnapshot> docsAreas = db.getAllDocumentsFrom(FirestoreRoutes.AREAS);
                 List<Area> areas = new ArrayList();
@@ -138,7 +193,7 @@ public class MantUsuariosPage implements Initializable {
                     List<String> arregloIDAreas = (List<String>) doc.get("areas");
                     System.out.println(arregloIDAreas);
                         // // ["8DjeIqzY7Sw0PGRyZBXC","10DjwsdaGRyZBXC"]
-                    List<String> areasConNombre = new ArrayList();
+                    List<String> areasConNombre = new ArrayList();  
 
                       for(Area area : areas){
                         for(String areaID : arregloIDAreas){
