@@ -39,6 +39,7 @@ import com.google.cloud.firestore.EventListener;
 import com.google.cloud.firestore.FirestoreException;
 import com.google.cloud.firestore.ListenerRegistration;
 import com.unah.hermes.objects.Requisicion;
+import com.unah.hermes.objects.User;
 import com.unah.hermes.provider.FirebaseConnector;
 import com.unah.hermes.utils.EventListeners;
 import javafx.beans.value.ChangeListener;
@@ -66,7 +67,6 @@ import javafx.stage.WindowEvent;
 import javafx.stage.Modality;
 
 import com.unah.hermes.objects.Area;
-import com.unah.hermes.objects.UsuarioArea;
 import com.unah.hermes.utils.Navigation;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Alert;
@@ -78,7 +78,7 @@ public class MantAreasPage implements Initializable {
         @FXML
         TableView<Area> tablaArea;
         @FXML
-        TableView<UsuarioArea> tablaUsuario;
+        TableView<User> tablaUsuario;
         // Consulta
         @FXML
         AnchorPane MantenimientoAreas;
@@ -106,7 +106,7 @@ public class MantAreasPage implements Initializable {
         FirebaseConnector db;
         Area TablaAreaSelectedRow;
         ObservableList<Area> Areas = FXCollections.observableArrayList();
-        ObservableList<UsuarioArea> usuariosArea = FXCollections.observableArrayList();
+        ObservableList<User> usuarios = FXCollections.observableArrayList();
 
         @Override
         public void initialize(URL url, ResourceBundle rb) {
@@ -134,26 +134,23 @@ public class MantAreasPage implements Initializable {
 
                                 // Usuarios inicio (Prueba)
 
-                                List<QueryDocumentSnapshot> usuarios = db.getAllDocumentsFrom(FirestoreRoutes.USUARIOS);
+                                List<QueryDocumentSnapshot> usuariosFirebase = db.getAllDocumentsFrom(FirestoreRoutes.USUARIOS);
                                 List<QueryDocumentSnapshot> docsAreas = db.getAllDocumentsFrom(FirestoreRoutes.AREAS);
-                                List<UsuarioArea> UsuariosAreas = new ArrayList();
-                                for (DocumentSnapshot doc : usuarios) {
+                                for (DocumentSnapshot doc : usuariosFirebase) {
                                         // System.out.println(doc);
-                                        UsuarioArea tmp;
+                                        User tmp;
 
                                         if (doc.exists()) {
                                                 List<String> arregloIDAreas = (List<String>) doc.get("areas");
-                                                List<String> areasConNombre = new ArrayList();
                                                 // System.out.println(arregloIDAreas);
-                                                tmp = new UsuarioArea(doc.getId(), doc.getString("Nombre"),
-                                                                arregloIDAreas);
+                                                tmp = new User(doc.getId(), doc.getString("Nombre"), doc.getString("nivelAcceso"),arregloIDAreas);
                                                 // System.out.println(tmp.nombre);
                                                 // System.out.println(doc.getData());
-                                                usuariosArea.add(tmp);
+                                                usuarios.add(tmp);
                                                 // System.out.println(usuarios);
                                         }
                                 }
-                                tablaUsuario.getItems().addAll(usuariosArea);
+                                // tablaUsuario.getItems().addAll(usuariosArea);
                                 return null;
                         }
                 });
@@ -194,16 +191,15 @@ public class MantAreasPage implements Initializable {
                 tablaUsuario.getColumns().addAll(columnUsuario);
         }
 
-        private void llenarTablaUsuario(String area) {
-                UsuarioArea tmp;
+        private void llenarTablaUsuario(String areaID) {
                 tablaUsuario.getItems().clear();
-                for (UsuarioArea usuarios : usuariosArea) {
-                        for (int i = 0; i <= usuarios.area.size(); i++) {
-                                if (usuarios.area.get(i).equals(area)) {
-                                        tmp = new UsuarioArea(usuarios.nombre);
-                                        tablaUsuario.getItems().add(tmp);
+                for (User usuario : usuarios) {
+                        for (int i = 0; i < usuario.areas.size(); i++) {
+                                if(usuario.areas.get(i).equals(areaID)){
+                                        tablaUsuario.getItems().add(usuario);
                                         break;
                                 }
+                                
                         }
                 }
         }
