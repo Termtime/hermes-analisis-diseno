@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="653.0" prefWidth="600.0" styleClass="window-background-level3" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unah.hermes.MantUsuariosModalAgregarUsuario">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="653.0" prefWidth="600.0" styleClass="window-background-level3" stylesheets="@../styles/StyleTablasNivel3.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unah.hermes.MantUsuariosModalAgregarUsuario">
    <children>
       <Label alignment="CENTER" layoutX="201.0" layoutY="38.0" prefHeight="39.0" prefWidth="198.0" text="Agregar Usuario" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="201.0" AnchorPane.rightAnchor="201.0" AnchorPane.topAnchor="40.0">
          <font>
@@ -96,11 +96,17 @@
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
+               <font>
+                  <Font size="14.0" />
+               </font>
             </Button>
             <Button fx:id="btnQuitarArea" layoutX="165.0" layoutY="75.0" mnemonicParsing="false" onAction="#btnQuitarAreaClick" text="&lt;">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
             </Button>
          </children>
       </Pane>
