@@ -66,7 +66,7 @@ import javafx.stage.WindowEvent;
 import javafx.stage.Modality;
 
 import com.unah.hermes.objects.Area;
-import com.unah.hermes.objects.User; //Consulta objeto
+import com.unah.hermes.objects.UsuarioArea;
 import com.unah.hermes.utils.Navigation;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Alert;
@@ -78,7 +78,7 @@ public class MantAreasPage implements Initializable {
         @FXML
         TableView<Area> tablaArea;
         @FXML
-        TableView<User> tablaUsuario;
+        TableView<UsuarioArea> tablaUsuario;
         // Consulta
         @FXML
         AnchorPane MantenimientoAreas;
@@ -106,6 +106,7 @@ public class MantAreasPage implements Initializable {
         FirebaseConnector db;
         Area TablaAreaSelectedRow;
         ObservableList<Area> Areas = FXCollections.observableArrayList();
+        ObservableList<UsuarioArea> usuariosArea = FXCollections.observableArrayList();
 
         @Override
         public void initialize(URL url, ResourceBundle rb) {
@@ -114,7 +115,7 @@ public class MantAreasPage implements Initializable {
                         public Void apply(Window parent) {
                                 iniciarEstructuraTablas();
                                 db = FirebaseConnector.getInstance();
-
+                                // Areas
                                 List<QueryDocumentSnapshot> documentos = db.getAllDocumentsFrom(FirestoreRoutes.AREAS);
 
                                 for (DocumentSnapshot doc : documentos) {
@@ -130,6 +131,45 @@ public class MantAreasPage implements Initializable {
                                         }
                                 }
                                 tablaArea.getItems().addAll(Areas);
+
+                                // Usuarios inicio (Prueba)
+
+                                List<QueryDocumentSnapshot> usuarios = db.getAllDocumentsFrom(FirestoreRoutes.USUARIOS);
+                                List<QueryDocumentSnapshot> docsAreas = db.getAllDocumentsFrom(FirestoreRoutes.AREAS);
+                                List<UsuarioArea> UsuariosAreas = new ArrayList();
+                                for (DocumentSnapshot doc : usuarios) {
+                                        System.out.println(doc);
+                                        UsuarioArea tmp;
+
+                                        if (doc.exists()) {
+                                                List<String> arregloIDAreas = (List<String>) doc.get("areas");
+                                                System.out.println(arregloIDAreas);
+                                                List<String> areasConNombre = new ArrayList();
+                                                // for(Area area: UsuariosAreas){
+
+                                                // for(Area area : arsea){
+                                                // for(String areaID : arregloIDAreas){
+                                                // System.out.println(area.areaID);
+                                                // if(areaID.equals(area.areaID.trim()))
+                                                // {
+                                                // System.out.println("Nombre del area agregada");
+                                                // areasConNombre.add(area.nombre);
+                                                // break;
+                                                // }
+                                                // }(List<String>) doc.get("area")
+                                                // }
+
+                                                // }
+                                                System.out.println(arregloIDAreas);
+                                                tmp = new UsuarioArea(doc.getId(), doc.getString("Nombre"),
+                                                                arregloIDAreas);
+                                                System.out.println(tmp.nombre);
+                                                System.out.println(doc.getData());
+                                                usuariosArea.add(tmp);
+                                                System.out.println(usuarios);
+                                        }
+                                }
+                                tablaUsuario.getItems().addAll(usuariosArea);
                                 return null;
                         }
                 });
@@ -150,5 +190,14 @@ public class MantAreasPage implements Initializable {
                 columnArea.setCellValueFactory(new PropertyValueFactory<>("nombre"));
 
                 tablaArea.getColumns().addAll(columnArea);
+
+                // Tabla Usuarios
+
+                tablaUsuario.getItems().clear();
+                tablaUsuario.getColumns().clear();
+                TableColumn columnUsuario = new TableColumn<>("Usuario");
+                columnUsuario.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+
+                tablaUsuario.getColumns().addAll(columnUsuario);
         }
 }
