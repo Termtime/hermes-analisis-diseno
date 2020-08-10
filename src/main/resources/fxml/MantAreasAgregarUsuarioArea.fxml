@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="468.0" prefWidth="446.0" styleClass="window-background-level3" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller=" com.unah.hermes.MantAreasAgregarUsuarioArea">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="468.0" prefWidth="446.0" styleClass="window-background-level3" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unah.hermes.MantAreasModalAgregarUsuarioArea">
    <children>
       <Label alignment="CENTER" layoutX="77.0" layoutY="33.0" prefHeight="39.0" prefWidth="292.0" text="Agregar Usuario al Área" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="77.0" AnchorPane.rightAnchor="77.0" AnchorPane.topAnchor="30.0">
          <font>
