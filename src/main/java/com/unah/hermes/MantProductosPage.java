@@ -8,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.control.TableColumn;
 
@@ -17,19 +18,25 @@ import com.google.cloud.firestore.EventListener;
 import com.google.cloud.firestore.FirestoreException;
 import com.google.cloud.firestore.ListenerRegistration;
 import com.unah.hermes.provider.FirebaseConnector;
+import com.unah.hermes.provider.FirestoreRoutes;
 import com.unah.hermes.utils.EventListeners;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.InputEvent;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
+//import sun.swing.SwingAccessor.JTextComponentAccessor;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.function.Function;
+
+import javax.swing.JTextField;
 
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
@@ -63,20 +70,32 @@ import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 import javafx.stage.Modality;
 
+import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.unah.hermes.objects.MantenimientoProducto;
+import com.unah.hermes.objects.Producto;
 import com.unah.hermes.utils.Navigation;
-
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 
 
 
 public class MantProductosPage implements Initializable {
     @FXML TableView<MantenimientoProducto> tablaProductos;
     @FXML AnchorPane MantenimientoProductos;
+    @FXML TextField txtFiltro;
     @FXML private void btnAgregarProductoClick(ActionEvent event) {
-        Navigation.pushRoute("MantProductosModalAgregarProducto", event, false, true);
+        Navigation.pushRoute("MantProductosModalAgregarCategoria", event, false, true);
     }
     @FXML private void btnModificarProductoClick(ActionEvent event) {
-        Navigation.pushRoute("MantProductosModalModificarProducto", event, false, true);
+        // if(TablaProductoSelectedItem != null)
+        //     Navigation.pushRouteWithParameter("MantProductosModalModificarProducto", event, false, true, MantProductosModalModificarProducto.class,TablaProductoSelectedItem,MantProductosPage.class);
+        // else{
+        //      Alert alert = new Alert(AlertType.ERROR,"Debe seleccionar una producto antes", ButtonType.OK);
+        //      alert.showAndWait();
+        //}
+        
+        
     }
     @FXML private void btnEliminarProductoClick(ActionEvent event) {
         
@@ -88,14 +107,39 @@ public class MantProductosPage implements Initializable {
         Navigation.pushRoute("MantProductosModalModificarCategoria", event, false, true);
     }
     @FXML private void btnEliminarCategoriaClick(ActionEvent event) {
-        
+
     }
-    @FXML private void txtFiltroInput(ActionEvent event) {
+    @FXML private void txtFiltroInput(KeyEvent event) {
+        tablaProductos.getItems().clear();
+        productos.clear();
+                db=FirebaseConnector.getInstance();
+                List<QueryDocumentSnapshot> documentos = db.getAllDocumentsFrom(FirestoreRoutes.PRODUCTOS);
+                for (DocumentSnapshot doc : documentos) {
+                    System.out.println(doc);
+                    MantenimientoProducto tmp;
+                    if(doc.exists()){
+
+                        tmp = new MantenimientoProducto( doc.getString("Producto"), doc.getString("Categoria"),doc.getString("Unidad"));
+
+                        System.out.println(tmp.producto);
+                        System.out.println(doc.getData());
+                        if(tmp.getProducto().toLowerCase().contains(txtFiltro.getText().toLowerCase()) || txtFiltro.getText().equals("")){
+                            productos.add(tmp);
+                            System.out.println(productos);
+                        }
+                    }
+                }
+
+                tablaProductos.getItems().addAll(productos);
         
     }
     @FXML private void comboCategoriaClick(ActionEvent event) {
-        
+   
     }
+
+    FirebaseConnector db;
+    MantenimientoProducto TablaProductoSelectedItem;
+    ObservableList<MantenimientoProducto> productos = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -103,7 +147,28 @@ public class MantProductosPage implements Initializable {
             @Override
             public Void apply(Window parent) {
                 iniciarEstructuraTablas();
-                return null;
+                db=FirebaseConnector.getInstance();
+
+                List<QueryDocumentSnapshot> documentos = db.getAllDocumentsFrom(FirestoreRoutes.PRODUCTOS);
+
+
+                for (DocumentSnapshot doc : documentos) {
+                    System.out.println(doc);
+                    MantenimientoProducto tmp;
+                    if(doc.exists()){
+
+                        tmp = new MantenimientoProducto( doc.getString("Producto"), doc.getString("Categoria"),doc.getString("Unidad"));
+
+                        System.out.println(tmp.producto);
+                        System.out.println(doc.getData());
+                        productos.add(tmp);
+                        System.out.println(productos);
+                        }
+                    }
+
+                    tablaProductos.getItems().addAll(productos);
+
+                 return null;
             }
         });
         MantenimientoProductos.widthProperty().addListener(new ChangeListener<Number>(){
@@ -148,15 +213,4 @@ public class MantProductosPage implements Initializable {
  
          tablaProductos.getColumns().addAll(columnaProducto, columnaCategoria, columnaUnidad);
      }
-    //  private void popularTablaMantProductos(TableView<MantenimientoProducto> tabla, ObservableList<MantenimientoProducto> Mantenimiento) {
-    //     try{
-    //         tabla.getItems().clear();
-    //         for (MantenimientoProducto mantenimiento : Mantenimiento) {
-    //             MantenimientoProducto row = new MantenimientoProducto(mantenimiento.producto,mantenimiento.categoria,mantenimiento.unidad);
-    //             tabla.getItems().add(row);
-    //         }
-    //     }catch(Exception e){
-    //         e.printStackTrace();
-    //     }
-    //}
 }

@@ -22,7 +22,7 @@
          <font>
             <Font size="14.0" />
          </font></Label>
-      <TextField fx:id="txtFiltro" layoutX="27.0" layoutY="159.0" onInputMethodTextChanged="#txtFiltroInput" prefHeight="30.0" prefWidth="462.0" AnchorPane.leftAnchor="27.0" AnchorPane.rightAnchor="433.0" />
+      <TextField fx:id="txtFiltro" layoutX="27.0" layoutY="159.0" onKeyTyped="#txtFiltroInput" prefHeight="30.0" prefWidth="462.0" AnchorPane.leftAnchor="27.0" AnchorPane.rightAnchor="433.0" />
       <ComboBox fx:id="comboCategoria" layoutX="499.00000000000006" layoutY="158.0" onAction="#comboCategoriaClick" prefHeight="30.0" prefWidth="199.0" promptText="Select" AnchorPane.rightAnchor="223.79999999999995" />
       <Label layoutX="500.00000000000006" layoutY="136.0" text="Categoria: " AnchorPane.rightAnchor="354.79999999999995">
          <font>
