@@ -6,7 +6,6 @@ import java.util.ResourceBundle;
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.FirestoreException;
-import com.unah.hermes.objects.MantenimientoProducto;
 import com.unah.hermes.objects.Producto;
 import com.unah.hermes.objects.Requisicion;
 import com.unah.hermes.provider.FirebaseConnector;
@@ -63,8 +62,8 @@ public class MantProductosModalModificarProducto implements Initializable {
     }
     @FXML TextField txtNombreProductoInput;
     public void initData(Object data){
-        MantenimientoProducto ProductoData=(MantenimientoProducto) data;
-        txtNombreProductoInput.setText(ProductoData.producto);
+        Producto ProductoData=(Producto) data;
+        txtNombreProductoInput.setText(ProductoData.nombre);
     }
     
     @Override

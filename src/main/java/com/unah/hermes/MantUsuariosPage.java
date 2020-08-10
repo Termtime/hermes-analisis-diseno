@@ -102,69 +102,31 @@ public class MantUsuariosPage implements Initializable {
     
     @FXML TextField txtFiltro;
    
-        @FXML private void txtFiltroInput(KeyEvent event){                    
-            tablaUsuarios.getItems().clear();
-            usuarios.clear();
-            for(DocumentSnapshot doc : docsAreas){
-                Area tmp = new Area(doc.getId(), doc.getString("Area"));
-                areas.add(tmp);
-            }
-            
-                       for(DocumentSnapshot doc: documentos){
-                           
-                           System.out.println(doc);
-                           User tmp;
-                           if(doc.exists()){
-                            List<String> arregloIDAreas = (List<String>) doc.get("areas");
-                            List<String> areasConNombre = new ArrayList(); 
-
-                            for(Area area : areas){
-                                for(String areaID : arregloIDAreas){
-                                    System.out.println(area.areaID);
-                                        if(areaID.equals(area.areaID.trim()))
-                                         {
-                                            System.out.println("Nombre del area agregada");
-                                            areasConNombre.add(area.nombre);
-                                            break;
-                                         }   
-                                     }
-                                 }
-                               tmp = new User(doc.getId(),doc.getString("Nombre"), doc.getString("nivelAcceso"), areasConNombre);
-                               System.out.println("Funcionaaa");
-                               System.out.println(doc.getData());
-                               if(tmp.getNombre().toLowerCase().contains(txtFiltro.getText().toLowerCase()) || txtFiltro.getText().equals("")){
-                                System.out.println("Algo");
-                                usuarios.add(tmp);
-                                System.out.println(usuarios);
-    
-                               }
-                           }
-                       }
-                       tablaUsuarios.getItems().addAll(usuarios);
-                       for(DocumentSnapshot docs: documentos){
-                       System.out.println(usuarios);
-                       System.out.println("usuarios!");
-                       }
-                       
+    @FXML private void txtFiltroInput(KeyEvent event){                    
+        tablaUsuarios.getItems().clear();
+        List<User> usuariosFiltrados = new ArrayList<User>();
+        for(User usuario: usuarios){
+            for(Area area : areas){
+                if(usuario.nombre.toLowerCase().contains(txtFiltro.getText().toLowerCase()) || txtFiltro.getText().equals("")){
+                    usuariosFiltrados.add(usuario);
+                    break;
+                }
+            }      
         }
+        tablaUsuarios.getItems().addAll(usuariosFiltrados);
+    }
     
-
-
     @FXML
     AnchorPane MantUsuario;
 
-    
     FirebaseConnector db=FirebaseConnector.getInstance(); ;   
     
     User tablaUSelectedItem;
+    List<Area> areas = new ArrayList<Area>();
     ObservableList<User> usuarios = FXCollections.observableArrayList();
     List<QueryDocumentSnapshot> documentos = db.getAllDocumentsFrom(FirestoreRoutes.USUARIOS);
     List<QueryDocumentSnapshot> docsAreas = db.getAllDocumentsFrom(FirestoreRoutes.AREAS);  
-    List<QueryDocumentSnapshot> docsUsuarios = db.getAllDocumentsFrom(FirestoreRoutes.USUARIOS); 
-    List<Area> areas = new ArrayList(); 
-      
-
-
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
   
@@ -178,45 +140,30 @@ public class MantUsuariosPage implements Initializable {
                     Area tmp = new Area(doc.getId(), doc.getString("Area"));
                     areas.add(tmp);
                 }
-                System.out.println(areas);
 
                 for (DocumentSnapshot doc : documentos) {
-                    System.out.println(doc);
                     User tmp;
                      if(doc.exists()){
                     List<String> arregloIDAreas = (List<String>) doc.get("areas");
-                    System.out.println(arregloIDAreas);
-                        // // ["8DjeIqzY7Sw0PGRyZBXC","10DjwsdaGRyZBXC"]
                     List<String> areasConNombre = new ArrayList();  
 
-                      for(Area area : areas){
-                        for(String areaID : arregloIDAreas){
-                            System.out.println(area.areaID);
+                        for(Area area : areas){
+                            for(String areaID : arregloIDAreas){
                                 if(areaID.equals(area.areaID.trim()))
-                                 {
-                                    System.out.println("Nombre del area agregada");
+                                {
                                     areasConNombre.add(area.nombre);
                                     break;
-                                 }   
-                             }
-                         }
-                        // areasConNombre = ["Cocina", "Meseros"]
-                        //List<String> prueba = new ArrayList();
-                        //prueba.add("hola");
-                        //prueba.add("hola2");
-
+                                }   
+                            }
+                        }   
                         tmp = new User(doc.getId(), doc.getString("Nombre"),
                         doc.getString("nivelAcceso"), areasConNombre);
-    
-                        System.out.println(tmp.nombre);
-                        System.out.println(doc.getData());
                         usuarios.add(tmp);
-                        System.out.println(usuarios);
-                        }
                     }
+                }
                     tablaUsuarios.getItems().addAll(usuarios);
 
-                 return null;
+                return null;
             }
 
 

@@ -9,13 +9,15 @@ public class Producto {
     public int cantPendiente = 0;
     public int cantPedida = 0;
     public String comentario = null;
+    public String categoria = null;
    
     //constructor para el mantenimiento de productos
-    public Producto(String productoID, String nombre, String unidad)
+    public Producto(String productoID, String nombre, String unidad, String categoria)
     {
         this.productoID = productoID;
         this.nombre = nombre;
         this.unidad = unidad;
+        this.categoria = categoria;
     }
 
     public Producto(Producto producto)
@@ -70,6 +72,14 @@ public class Producto {
         return unidad;
     }
 
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+    
     public void setCantEntregada(int cantEntregada) {
         this.cantEntregada = cantEntregada;
     }

@@ -244,8 +244,6 @@ public class MainPage implements Initializable {
             @Override
             public void changed(ObservableValue<? extends Requisicion> observable, Requisicion oldValue, Requisicion newValue) {
                 tablaPSelectedItem = newValue;
-                System.out.println(newValue);
-                System.out.println(newValue.productos.get(0).cantEntregada);
                 popularTablaRequisicionesPDConProductos(tablaP, newValue.productos);
                 lblReqIDP.setText(newValue.reqID);
                 lblEstadoP.setText(newValue.estado);
@@ -261,7 +259,6 @@ public class MainPage implements Initializable {
             @Override
             public void changed(ObservableValue<? extends Requisicion> observable, Requisicion oldValue, Requisicion newValue) {
                 tablaESelectedItem = newValue;
-                System.out.println(newValue);
                 popularTablaRequisicionesEntregadas(tablaE, newValue.productos);
                 lblReqIDE.setText(newValue.reqID);
                 lblEstadoE.setText(newValue.estado);
@@ -273,10 +270,9 @@ public class MainPage implements Initializable {
         });
 
         listaRQD.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Requisicion>(){
-
+            //prueba
             @Override
             public void changed(ObservableValue<? extends Requisicion> observable, Requisicion oldValue, Requisicion newValue) {
-                System.out.println(newValue);
                 tablaDSelectedItem = newValue;
                 lblReqIDD.setText(newValue.reqID);
                 popularTablaRequisicionesPDConProductos(tablaD, newValue.productos);
