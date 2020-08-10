@@ -102,11 +102,7 @@ public class MantUsuariosPage implements Initializable {
     
     @FXML TextField txtFiltro;
    
-        @FXML private void txtFiltroInput(KeyEvent event){
-            
-            List<QueryDocumentSnapshot> docsAreas = db.getAllDocumentsFrom(FirestoreRoutes.AREAS);
-            List<Area> areas = new ArrayList();             
-
+        @FXML private void txtFiltroInput(KeyEvent event){                    
             tablaUsuarios.getItems().clear();
             usuarios.clear();
             for(DocumentSnapshot doc : docsAreas){
@@ -157,13 +153,16 @@ public class MantUsuariosPage implements Initializable {
     @FXML
     AnchorPane MantUsuario;
 
-     FirebaseConnector db=FirebaseConnector.getInstance(); ;   
-
-     User tablaUSelectedItem;
-     ObservableList<User> usuarios = FXCollections.observableArrayList();
-     List<QueryDocumentSnapshot> documentos = db.getAllDocumentsFrom(FirestoreRoutes.USUARIOS);
+    
+    FirebaseConnector db=FirebaseConnector.getInstance(); ;   
+    
+    User tablaUSelectedItem;
+    ObservableList<User> usuarios = FXCollections.observableArrayList();
+    List<QueryDocumentSnapshot> documentos = db.getAllDocumentsFrom(FirestoreRoutes.USUARIOS);
+    List<QueryDocumentSnapshot> docsAreas = db.getAllDocumentsFrom(FirestoreRoutes.AREAS);  
+    List<QueryDocumentSnapshot> docsUsuarios = db.getAllDocumentsFrom(FirestoreRoutes.USUARIOS); 
+    List<Area> areas = new ArrayList(); 
       
-     
 
 
     @Override
@@ -173,13 +172,8 @@ public class MantUsuariosPage implements Initializable {
             @Override
             public Void apply(Window parent) {
                 iniciarEstructuraTablas();     
-                
-                              
-               // List<QueryDocumentSnapshot> documentos = db.getAllDocumentsFrom(FirestoreRoutes.USUARIOS);
-                List<QueryDocumentSnapshot> docsUsuarios = db.getAllDocumentsFrom(FirestoreRoutes.USUARIOS);
-                List<QueryDocumentSnapshot> docsAreas = db.getAllDocumentsFrom(FirestoreRoutes.AREAS);
-                List<Area> areas = new ArrayList();
-
+                                         
+                               
                 for(DocumentSnapshot doc : docsAreas){
                     Area tmp = new Area(doc.getId(), doc.getString("Area"));
                     areas.add(tmp);
