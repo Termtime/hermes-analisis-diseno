@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.FirestoreException;
+import com.unah.hermes.objects.MantenimientoProducto;
 import com.unah.hermes.objects.Producto;
 import com.unah.hermes.objects.Requisicion;
 import com.unah.hermes.objects.RequisicionEntregadaRow;
@@ -28,6 +29,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.fxml.FXMLLoader;
@@ -61,8 +63,10 @@ public class MantProductosModalModificarProducto implements Initializable {
     @FXML private void btnModificarClick(ActionEvent event) {
         
     }
-
+    @FXML TextField txtNombreProductoInput;
     public void initData(Object data){
+        MantenimientoProducto ProductoData=(MantenimientoProducto) data;
+        txtNombreProductoInput.setText(ProductoData.producto);
     }
     
     @Override
