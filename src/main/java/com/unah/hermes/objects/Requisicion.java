@@ -25,10 +25,6 @@ public class Requisicion {
     {
         try{
             List<Map<String,Object>> productosLista = (List<Map<String,Object>>) prods;
-            System.out.println("ESTOS VIENE ORIGINAL:");
-            System.out.println(prods);
-            System.out.println("Esto lo coniverto:");
-            System.out.println(productosLista);
             this.reqID = reqID;
             this.nombreDisplay = nombreDisplay;
             this.estado = estado;
@@ -41,7 +37,6 @@ public class Requisicion {
             this.hora = fecha.toString().substring((fecha.toString().indexOf(":")-2));
             for (Map<String,Object> producto : productosLista) {
                 //crear un nuevo producto
-                System.out.println("hay producto");
                 Producto tmp = new Producto(
                 producto.get("productoID").toString(),
                 producto.get("producto").toString(),
@@ -53,7 +48,6 @@ public class Requisicion {
                 );
                 //agregar el producto al arreglo de productos
                 productos.add(tmp);
-                System.out.println("Agregado el producto");
             }
         }catch(Exception e){
             e.printStackTrace();

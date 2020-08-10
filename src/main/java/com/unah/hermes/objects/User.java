@@ -16,7 +16,6 @@ public class User {
         this.nivelAcceso = nivelAcceso;
         this.areas = areas;
         stringDeArea = "";
-        System.out.println(areas);
         for(String area : areas){
             stringDeArea += area + ", ";
         }

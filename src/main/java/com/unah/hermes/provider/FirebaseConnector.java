@@ -82,8 +82,8 @@ public class FirebaseConnector {
             app = FirebaseApp.initializeApp(options);
             db = FirestoreClient.getFirestore(app);
             auth = FirebaseAuth.getInstance(app);
-            System.out.println("FINISHED");
-            System.out.println(db);
+            System.out.println("FINISHED LOADING");
+            // System.out.println(db);
         } catch (final Exception e) {
             System.out.println(e);
         }
@@ -287,7 +287,7 @@ public class FirebaseConnector {
                     MainPage.RequisicionesPendientes.clear();
 
                     for (DocumentSnapshot doc : snapshots) {
-                        System.out.println(doc);
+                        // System.out.println(doc);
                         Requisicion tmp;
                         if (doc.exists()) {
 
@@ -295,17 +295,17 @@ public class FirebaseConnector {
                                     doc.getString("area"), doc.getString("autorizador"), doc.getBoolean("autorizacion"),
                                     doc.getString("solicitante"), doc.getDate("fecha"), doc.get("productos"));
 
-                            System.out.println(tmp.estado);
-                            System.out.println(doc.getData());
+                            // System.out.println(tmp.estado);
+                            // System.out.println(doc.getData());
                             if (tmp.estado.equals("Entregada")) {
                                 MainPage.RequisicionesEntregadas.add(tmp);
-                                System.out.println(MainPage.RequisicionesEntregadas);
+                                // System.out.println(MainPage.RequisicionesEntregadas);
                             } else if (tmp.estado.equals("Denegada")) {
                                 MainPage.RequisicionesDenegadas.add(tmp);
-                                System.out.println(MainPage.RequisicionesDenegadas);
+                                // System.out.println(MainPage.RequisicionesDenegadas);
                             } else if (tmp.estado.equals("Pendiente")) {
                                 MainPage.RequisicionesPendientes.add(tmp);
-                                System.out.println(MainPage.RequisicionesPendientes);
+                                // System.out.println(MainPage.RequisicionesPendientes);
                             } else {
                                 System.out.println("Estado desconocido");
                             }
@@ -453,7 +453,7 @@ public class FirebaseConnector {
             String encoding = con.getContentEncoding();
             encoding = encoding == null ? "UTF-8" : encoding;
             final String body = IOUtils.toString(in, encoding);
-            System.out.println(body);
+            // System.out.println(body);
             
             final Map<String, Object> retMap = new Gson().fromJson(
                 body, new TypeToken<HashMap<String, Object>>() {}.getType()

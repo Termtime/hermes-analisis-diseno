@@ -12,7 +12,6 @@ public class UsuarioArea {
         this.usuarioID = usuarioID;
         this.nombre = nombre;
         this.area = area;
-        System.out.println(area);
         for (String areas : area) {
             stringDeArea += area + ", ";
         }

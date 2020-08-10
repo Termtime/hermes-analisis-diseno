@@ -71,7 +71,6 @@ import javafx.stage.WindowEvent;
 import javafx.stage.Modality;
 
 import com.google.cloud.firestore.QueryDocumentSnapshot;
-import com.unah.hermes.objects.MantenimientoProducto;
 import com.unah.hermes.objects.Producto;
 import com.unah.hermes.utils.Navigation;
 import javafx.scene.control.Alert.AlertType;
@@ -81,7 +80,7 @@ import javafx.scene.control.ButtonType;
 
 
 public class MantProductosPage implements Initializable {
-    @FXML TableView<MantenimientoProducto> tablaProductos;
+    @FXML TableView<Producto> tablaProductos;
     @FXML AnchorPane MantenimientoProductos;
     @FXML TextField txtFiltro;
     @FXML private void btnAgregarProductoClick(ActionEvent event) {
@@ -111,33 +110,22 @@ public class MantProductosPage implements Initializable {
     }
     @FXML private void txtFiltroInput(KeyEvent event) {
         tablaProductos.getItems().clear();
-        productos.clear();
-                for (DocumentSnapshot doc : documentos) {
-                    System.out.println(doc);
-                    MantenimientoProducto tmp;
-                    if(doc.exists()){
-
-                        tmp = new MantenimientoProducto( doc.getString("Producto"), doc.getString("Categoria"),doc.getString("Unidad"));
-
-                        System.out.println(tmp.producto);
-                        System.out.println(doc.getData());
-                        if(tmp.getProducto().toLowerCase().contains(txtFiltro.getText().toLowerCase()) || txtFiltro.getText().equals("")){
-                            productos.add(tmp);
-                            System.out.println(productos);
-                        }
-                    }
-                }
-
-                tablaProductos.getItems().addAll(productos);
+        List<Producto> productosFiltrados = new ArrayList<Producto>();
+        for(Producto producto: productos){
+            if(producto.nombre.toLowerCase().contains(txtFiltro.getText().toLowerCase()) || txtFiltro.getText().equals("")){
+                productosFiltrados.add(producto);
+            }    
+        }
+        tablaProductos.getItems().addAll(productosFiltrados);
     }
     @FXML private void comboCategoriaClick(ActionEvent event) {
    
     }
 
     FirebaseConnector db=FirebaseConnector.getInstance();
-    MantenimientoProducto TablaProductoSelectedItem;
+    Producto TablaProductoSelectedItem;
     
-    ObservableList<MantenimientoProducto> productos = FXCollections.observableArrayList();
+    ObservableList<Producto> productos = FXCollections.observableArrayList();
     List<QueryDocumentSnapshot> documentos = db.getAllDocumentsFrom(FirestoreRoutes.PRODUCTOS);
 
     @Override
@@ -148,20 +136,13 @@ public class MantProductosPage implements Initializable {
                 iniciarEstructuraTablas();
                 
                 for (DocumentSnapshot doc : documentos) {
-                    System.out.println(doc);
-                    MantenimientoProducto tmp;
+                    Producto tmp;
                     if(doc.exists()){
-
-                        tmp = new MantenimientoProducto( doc.getString("Producto"), doc.getString("Categoria"),doc.getString("Unidad"));
-
-                        System.out.println(tmp.producto);
-                        System.out.println(doc.getData());
+                        tmp = new Producto(doc.getId(), doc.getString("Producto"), doc.getString("Unidad"), doc.getString("Categoria"));
                         productos.add(tmp);
-                        System.out.println(productos);
-                        }
                     }
-
-                    tablaProductos.getItems().addAll(productos);
+                }
+                tablaProductos.getItems().addAll(productos);
 
                  return null;
             }
@@ -195,7 +176,7 @@ public class MantProductosPage implements Initializable {
          tablaProductos.getItems().clear();
          tablaProductos.getColumns().clear();
          TableColumn columnaProducto = new TableColumn<>("Producto");
-         columnaProducto.setCellValueFactory(new PropertyValueFactory<>("producto"));
+         columnaProducto.setCellValueFactory(new PropertyValueFactory<>("nombre"));
          columnaProducto.setPrefWidth(tablaProductos.getWidth()*0.38);
          columnaProducto.setResizable(false);
 
