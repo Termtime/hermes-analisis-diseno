@@ -56,8 +56,7 @@ public class MantAreasModalCrearArea implements Initializable {
     }
 
     @Override
-    public void initialize(URL arg0, ResourceBundle arg1) {
-        // TODO Auto-generated method stub
-
+    public void initialize(URL url, ResourceBundle rb) {
+        //
     }
 }
