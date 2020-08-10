@@ -2,111 +2,117 @@ package com.unah.hermes;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
 import java.util.function.Function;
 
-import com.google.cloud.firestore.DocumentReference;
-import com.google.cloud.firestore.DocumentSnapshot;
-import com.google.cloud.firestore.EventListener;
-import com.google.cloud.firestore.FirestoreException;
-import com.google.cloud.firestore.ListenerRegistration;
 import com.unah.hermes.objects.Producto;
 import com.unah.hermes.objects.Requisicion;
 import com.unah.hermes.objects.RequisicionEntregadaRow;
-import com.unah.hermes.objects.RequisicionRow;
-import com.unah.hermes.objects.User;
 import com.unah.hermes.provider.FirebaseConnector;
-import com.unah.hermes.provider.FirestoreRoutes;
 import com.unah.hermes.utils.EventListeners;
-import com.unah.hermes.utils.Navigation;
 
-import org.apache.commons.lang3.ArrayUtils;
-
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.scene.Node;
 import javafx.stage.Window;
-import javafx.stage.WindowEvent;
-import javafx.stage.Modality;
 
 public class EntregaReqPage implements Initializable {
-    @FXML private javafx.scene.control.Button btnCancelar;
-    @FXML private javafx.scene.control.Button btnTerminarEntrega;
-    @FXML ListView<Requisicion> listaRQE;
-    @FXML TableView<RequisicionEntregadaRow> tablaE;
+    @FXML public javafx.scene.control.Button btnCancelar;
+    @FXML public javafx.scene.control.Button btnTerminarEntrega;
+    @FXML TableView<RequisicionEntregadaRow> tablaVistaPrevia;
+    @FXML Label labelID;
+    @FXML Label labelHora;
+    @FXML Label labelFecha;
+    @FXML Label labelArea;
+    @FXML Label labelSolicitante;
 
-    ListenerRegistration requisicionesListener;
-    FirebaseConnector db;
-    Requisicion tablaESelectedItem = null;
 
-    @FXML public void btnTerminarEntregaClick(ActionEvent event){
-        if(tablaESelectedItem != null)
-            // Update an existing document
-                //DocumentReference docRef = db.collection("cities").document("DC");
-                
+    @FXML public void btnTerminarEntregaClick(ActionEvent event){}
 
-               
-        else{
-            Alert alert = new Alert(AlertType.ERROR,"Debe seleccionar una requisicion pendiente antes", ButtonType.OK);
-            alert.showAndWait();
-        }    
 
-    }
-
-    @FXML private void btnCancelarClick(ActionEvent event) {
+    @FXML public void btnCancelarClick(ActionEvent event) {
 
         Stage stage = (Stage) btnCancelar.getScene().getWindow();
- 
-        stage.close();
- 
-     }
 
-    
-    public void initData(Object data){
+        stage.close();
+         }
+
+    @FXML AnchorPane EntregaReqPage;
+
+       FirebaseConnector db;
+        Requisicion tablaVistaPreviaSelectedItem = null;
+        Requisicion tablaPSelectedItem;
+        ObservableList<Requisicion> RequisicionesPendientes =FXCollections.observableArrayList(); 
+        ObservableList<Producto> empty =FXCollections.observableArrayList();
+
+    public void initData(Object obj){
     }
+     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-        
+       //Este Event es que me da error, i need help :c 
+        EventListeners.onWindowOpened(EntregaReqPage, new Function<Window,Void>(){
+            @Override
+            public Void apply(Window parent) {
+               iniciarEstructuraTabla();
+              
+
+                return null;
+                
+            }
+        });
        
         
+    }
 
-
-
-
-
-    }    
+    private void recalcularColumnWidth(){
     
+        ObservableList columnas = tablaVistaPrevia.getColumns();
+        ((TableColumn)( columnas.get(0) )).setPrefWidth(tablaVistaPrevia.getWidth()*0.35);
+        ((TableColumn)( columnas.get(1) )).setPrefWidth(tablaVistaPrevia.getWidth()*0.15);
+        ((TableColumn)( columnas.get(2) )).setPrefWidth(tablaVistaPrevia.getWidth()*0.105);
+        ((TableColumn)( columnas.get(3) )).setPrefWidth(tablaVistaPrevia.getWidth()*0.105);
+        ((TableColumn)( columnas.get(4) )).setPrefWidth(tablaVistaPrevia.getWidth()*0.105);
+        ((TableColumn)( columnas.get(5) )).setPrefWidth(tablaVistaPrevia.getWidth()*0.185);
+
 }
+
+private void iniciarEstructuraTabla(){
+    tablaVistaPrevia.getItems().clear();
+    tablaVistaPrevia.getColumns().clear();
+    TableColumn columnaProducto = new TableColumn<>("Producto");
+    columnaProducto.setCellValueFactory(new PropertyValueFactory<>("producto"));
+    columnaProducto.setPrefWidth(tablaVistaPrevia.getWidth()*0.35);
+
+    TableColumn columnaUnidad = new TableColumn<>("Unidad");
+    columnaUnidad.setCellValueFactory(new PropertyValueFactory<>("unidad"));
+    columnaUnidad.setPrefWidth(tablaVistaPrevia.getWidth()*0.15);
+
+    TableColumn columnaCantidadPedida = new TableColumn<>("Cantidad Pedida");
+    columnaCantidadPedida.setCellValueFactory(new PropertyValueFactory<>("cantidadPedida"));
+    columnaCantidadPedida.setPrefWidth(tablaVistaPrevia.getWidth()*0.105);
+
+    TableColumn columnaCantidadEntregada = new TableColumn<>("Cantidad Entregada");
+    columnaCantidadEntregada.setCellValueFactory(new PropertyValueFactory<>("cantidadEntregada"));
+    columnaCantidadEntregada.setPrefWidth(tablaVistaPrevia.getWidth()*0.105);
+
+    TableColumn columnaCantidadPendiente = new TableColumn<>("Cantidad Pendiente");
+    columnaCantidadPendiente.setCellValueFactory(new PropertyValueFactory<>("cantidadPendiente"));
+    columnaCantidadPendiente.setPrefWidth(tablaVistaPrevia.getWidth()*0.105);
+
+    TableColumn columnaComentarios = new TableColumn<>("Comentarios");
+    columnaComentarios.setCellValueFactory(new PropertyValueFactory<>("comentarios"));
+    columnaComentarios.setPrefWidth(tablaVistaPrevia.getWidth()*0.18);
+    tablaVistaPrevia.getColumns().addAll(columnaProducto, columnaUnidad, columnaCantidadPedida, columnaCantidadEntregada, columnaCantidadPendiente, columnaComentarios);
+  
+}
+
+    
+}    
