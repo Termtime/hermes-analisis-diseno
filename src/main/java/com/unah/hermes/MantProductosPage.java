@@ -85,7 +85,7 @@ public class MantProductosPage implements Initializable {
     @FXML AnchorPane MantenimientoProductos;
     @FXML TextField txtFiltro;
     @FXML private void btnAgregarProductoClick(ActionEvent event) {
-        Navigation.pushRoute("MantProductosModalAgregarCategoria", event, false, true);
+        Navigation.pushRoute("MantProductosModalAgregarProducto", event, false, true);
     }
     @FXML private void btnModificarProductoClick(ActionEvent event) {
         // if(TablaProductoSelectedItem != null)
@@ -112,8 +112,6 @@ public class MantProductosPage implements Initializable {
     @FXML private void txtFiltroInput(KeyEvent event) {
         tablaProductos.getItems().clear();
         productos.clear();
-                db=FirebaseConnector.getInstance();
-                List<QueryDocumentSnapshot> documentos = db.getAllDocumentsFrom(FirestoreRoutes.PRODUCTOS);
                 for (DocumentSnapshot doc : documentos) {
                     System.out.println(doc);
                     MantenimientoProducto tmp;
@@ -131,15 +129,16 @@ public class MantProductosPage implements Initializable {
                 }
 
                 tablaProductos.getItems().addAll(productos);
-        
     }
     @FXML private void comboCategoriaClick(ActionEvent event) {
    
     }
 
-    FirebaseConnector db;
+    FirebaseConnector db=FirebaseConnector.getInstance();
     MantenimientoProducto TablaProductoSelectedItem;
+    
     ObservableList<MantenimientoProducto> productos = FXCollections.observableArrayList();
+    List<QueryDocumentSnapshot> documentos = db.getAllDocumentsFrom(FirestoreRoutes.PRODUCTOS);
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -147,11 +146,7 @@ public class MantProductosPage implements Initializable {
             @Override
             public Void apply(Window parent) {
                 iniciarEstructuraTablas();
-                db=FirebaseConnector.getInstance();
-
-                List<QueryDocumentSnapshot> documentos = db.getAllDocumentsFrom(FirestoreRoutes.PRODUCTOS);
-
-
+                
                 for (DocumentSnapshot doc : documentos) {
                     System.out.println(doc);
                     MantenimientoProducto tmp;
@@ -201,16 +196,19 @@ public class MantProductosPage implements Initializable {
          tablaProductos.getColumns().clear();
          TableColumn columnaProducto = new TableColumn<>("Producto");
          columnaProducto.setCellValueFactory(new PropertyValueFactory<>("producto"));
-         columnaProducto.setPrefWidth(tablaProductos.getWidth()*0.35);
-        
+         columnaProducto.setPrefWidth(tablaProductos.getWidth()*0.38);
+         columnaProducto.setResizable(false);
+
          TableColumn columnaCategoria = new TableColumn<>("Categoria");
          columnaCategoria.setCellValueFactory(new PropertyValueFactory<>("categoria"));
-         columnaCategoria.setPrefWidth(tablaProductos.getWidth()*0.35);
-         
+         columnaCategoria.setPrefWidth(tablaProductos.getWidth()*0.30);
+         columnaCategoria.setResizable(false);
+
          TableColumn columnaUnidad = new TableColumn<>("Unidad");
          columnaUnidad.setCellValueFactory(new PropertyValueFactory<>("unidad"));
          columnaUnidad.setPrefWidth(tablaProductos.getWidth()*0.30);
- 
+         columnaUnidad.setResizable(false);
+         
          tablaProductos.getColumns().addAll(columnaProducto, columnaCategoria, columnaUnidad);
      }
 }
