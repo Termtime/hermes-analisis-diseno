@@ -6,7 +6,11 @@ public class FirestoreRoutes{
     public static final String USUARIOS = "Usuarios";
     public static final String AREAS = "Areas";
     public static final String PRODUCTOS = "Productos";
+    public static final String CATEGORIAS = "Categorias";
 
+    public static final String categoriaPath(String categoriaID){
+        return CATEGORIAS + "/" + categoriaID;
+    }
     public static final String userPath(String userID){
         return USUARIOS + "/" + userID;
     }
