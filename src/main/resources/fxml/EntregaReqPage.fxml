@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="574.0" prefWidth="850.0" styleClass="window-background-level2" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unah.hermes.EntregaReqPage">
+<AnchorPane id="AnchorPane" fx:id="entregaReqPage" prefHeight="574.0" prefWidth="850.0" styleClass="window-background-level2" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unah.hermes.EntregaReqPage">
    <children>
       <Accordion layoutX="214.0" layoutY="125.0" />
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="267.0" layoutY="28.0" prefHeight="47.0" prefWidth="319.0" text="Vista Previa de Requisición" textAlignment="CENTER" AnchorPane.leftAnchor="267.0" AnchorPane.rightAnchor="264.0" AnchorPane.topAnchor="30.0">
