@@ -111,7 +111,7 @@ public class MantAreasPage implements Initializable {
 
         @Override
         public void initialize(URL url, ResourceBundle rb) {
-                MantenimientoAreas.setOnMouseClicked(new EventHandler<MouseEvent>(){
+                MantenimientoAreas.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
                         @Override
                         public void handle(MouseEvent event) {
@@ -142,7 +142,8 @@ public class MantAreasPage implements Initializable {
 
                                 // Usuarios inicio (Prueba)
 
-                                List<QueryDocumentSnapshot> usuariosFirebase = db.getAllDocumentsFrom(FirestoreRoutes.USUARIOS);
+                                List<QueryDocumentSnapshot> usuariosFirebase = db
+                                                .getAllDocumentsFrom(FirestoreRoutes.USUARIOS);
                                 List<QueryDocumentSnapshot> docsAreas = db.getAllDocumentsFrom(FirestoreRoutes.AREAS);
                                 for (DocumentSnapshot doc : usuariosFirebase) {
                                         // System.out.println(doc);
@@ -151,7 +152,8 @@ public class MantAreasPage implements Initializable {
                                         if (doc.exists()) {
                                                 List<String> arregloIDAreas = (List<String>) doc.get("areas");
                                                 // System.out.println(arregloIDAreas);
-                                                tmp = new User(doc.getId(), doc.getString("Nombre"), doc.getString("nivelAcceso"),arregloIDAreas);
+                                                tmp = new User(doc.getId(), doc.getString("Nombre"),
+                                                                doc.getString("nivelAcceso"), arregloIDAreas);
                                                 // System.out.println(tmp.nombre);
                                                 // System.out.println(doc.getData());
                                                 usuarios.add(tmp);
@@ -186,6 +188,7 @@ public class MantAreasPage implements Initializable {
                 tablaArea.getColumns().clear();
                 TableColumn columnArea = new TableColumn<>("Area");
                 columnArea.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+                columnArea.setPrefWidth(tablaUsuario.getWidth() * 0.98);
 
                 tablaArea.getColumns().addAll(columnArea);
 
@@ -195,7 +198,7 @@ public class MantAreasPage implements Initializable {
                 tablaUsuario.getColumns().clear();
                 TableColumn columnUsuario = new TableColumn<>("Usuario");
                 columnUsuario.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-                columnUsuario.setPrefWidth(tablaUsuario.getWidth()*0.98);
+                columnUsuario.setPrefWidth(tablaUsuario.getWidth() * 0.98);
 
                 tablaUsuario.getColumns().addAll(columnUsuario);
         }
@@ -204,11 +207,11 @@ public class MantAreasPage implements Initializable {
                 tablaUsuario.getItems().clear();
                 for (User usuario : usuarios) {
                         for (int i = 0; i < usuario.areas.size(); i++) {
-                                if(usuario.areas.get(i).equals(areaID)){
+                                if (usuario.areas.get(i).equals(areaID)) {
                                         tablaUsuario.getItems().add(usuario);
                                         break;
                                 }
-                                
+
                         }
                 }
         }
