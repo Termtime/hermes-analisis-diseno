@@ -26,6 +26,7 @@ import javafx.collections.FXCollections;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.InputEvent;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 //import sun.swing.SwingAccessor.JTextComponentAccessor;
@@ -130,6 +131,13 @@ public class MantProductosPage implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        MantenimientoProductos.setOnMouseClicked(new EventHandler<MouseEvent>(){
+
+            @Override
+            public void handle(MouseEvent event) {
+                MantenimientoProductos.requestFocus();
+            }
+        });
         EventListeners.onWindowOpened(MantenimientoProductos, new Function<Window,Void>(){
             @Override
             public Void apply(Window parent) {

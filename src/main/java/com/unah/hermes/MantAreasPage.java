@@ -24,6 +24,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 
@@ -110,6 +111,13 @@ public class MantAreasPage implements Initializable {
 
         @Override
         public void initialize(URL url, ResourceBundle rb) {
+                MantenimientoAreas.setOnMouseClicked(new EventHandler<MouseEvent>(){
+
+                        @Override
+                        public void handle(MouseEvent event) {
+                                MantenimientoAreas.requestFocus();
+                        }
+                });
                 EventListeners.onWindowOpened(MantenimientoAreas, new Function<Window, Void>() {
                         @Override
                         public Void apply(Window parent) {
@@ -187,6 +195,7 @@ public class MantAreasPage implements Initializable {
                 tablaUsuario.getColumns().clear();
                 TableColumn columnUsuario = new TableColumn<>("Usuario");
                 columnUsuario.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+                columnUsuario.setPrefWidth(tablaUsuario.getWidth()*0.98);
 
                 tablaUsuario.getColumns().addAll(columnUsuario);
         }

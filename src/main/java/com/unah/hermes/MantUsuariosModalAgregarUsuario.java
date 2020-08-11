@@ -28,6 +28,7 @@ import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -71,10 +72,17 @@ public class MantUsuariosModalAgregarUsuario implements Initializable {
        stage.close();
 
     }
-
+    @FXML AnchorPane mantUsuariosModalAgregarUsuario;
     @Override
     public void initialize(URL url,  ResourceBundle rb) {
         // 
+        mantUsuariosModalAgregarUsuario.setOnMouseClicked(new EventHandler<MouseEvent>(){
+            @Override
+            public void handle(MouseEvent event) {
+                mantUsuariosModalAgregarUsuario.requestFocus();
+
+            }
+        });
     }    
     
 }

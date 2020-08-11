@@ -57,6 +57,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -129,7 +130,13 @@ public class MantUsuariosPage implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-  
+        MantUsuario.setOnMouseClicked(new EventHandler<MouseEvent>(){
+
+            @Override
+            public void handle(MouseEvent event) {
+                MantUsuario.requestFocus();
+            }
+        });
         EventListeners.onWindowOpened(MantUsuario, new Function<Window,Void>(){
             @Override
             public Void apply(Window parent) {
