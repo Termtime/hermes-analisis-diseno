@@ -397,7 +397,7 @@ public class MainPage implements Initializable {
 
     private void popularTablaRequisicionesEntregadas(TableView<Producto> tabla, ObservableList<Producto> productos) {
         try{
-            // tabla.getItems().clear();
+            tabla.getItems().clear();
             for (Producto producto : productos) {
                 tabla.getItems().add(producto);
             }

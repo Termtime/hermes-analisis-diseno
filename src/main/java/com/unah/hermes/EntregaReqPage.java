@@ -8,8 +8,10 @@ import java.util.function.Function;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.function.Function;
 import javafx.scene.control.ListView;
@@ -18,6 +20,7 @@ import com.unah.hermes.objects.Requisicion;
 import com.unah.hermes.provider.FirebaseConnector;
 import com.unah.hermes.provider.FirestoreRoutes;
 import com.unah.hermes.utils.EditableIntegerTableCell;
+import com.unah.hermes.utils.EditableStringTableCell;
 import com.unah.hermes.utils.EventListeners;
 
 import org.apache.commons.lang3.ArrayUtils;
@@ -30,6 +33,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -59,7 +63,29 @@ public class EntregaReqPage implements Initializable {
     @FXML Label labelSolicitante;
     @FXML AnchorPane entregaReqPage; 
 
-    @FXML public void btnTerminarEntregaClick(ActionEvent event){}
+    @FXML public void btnTerminarEntregaClick(ActionEvent event){
+        ObservableList<Producto>productosEditados = tablaVistaPrevia.getItems();
+        // for (Producto producto : productosEditados) {
+        //     System.out.print(producto.nombre);
+        //     System.out.print("-");
+        //     System.out.print(producto.unidad);
+        //     System.out.print("-");
+        //     System.out.print(producto.cantPedida);
+        //     System.out.print("-");
+        //     System.out.print(producto.cantEntregada);
+        //     System.out.print("-");
+        //     System.out.print(producto.cantPendiente);
+        //     System.out.print("-");
+        //     System.out.println(producto.comentario);
+        // }
+        requisicionSeleccionada.productos = productosEditados;
+        Map<String,Object> updateData = new HashMap<String,Object>();
+        updateData.put("productos", requisicionSeleccionada.productos);
+        updateData.put("estado", "Entregada");
+        db.updateDocument(FirestoreRoutes.REQUISICIONES, requisicionSeleccionada.reqID, updateData);
+        Stage stage = (Stage) btnCancelar.getScene().getWindow();
+        stage.close();
+    }
 
     @FXML public void btnCancelarClick(ActionEvent event) {
         Stage stage = (Stage) btnCancelar.getScene().getWindow();
@@ -84,6 +110,8 @@ public class EntregaReqPage implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
+        db = FirebaseConnector.getInstance();
         entregaReqPage.setOnMouseClicked(new EventHandler<MouseEvent>(){
             @Override
             public void handle(MouseEvent event) {
@@ -113,55 +141,74 @@ public class EntregaReqPage implements Initializable {
     }
 
     private void recalcularColumnWidth(){
-        ObservableList columnas = tablaVistaPrevia.getColumns();
-        ((TableColumn)( columnas.get(0) )).setPrefWidth(tablaVistaPrevia.getWidth()*0.30);
-        ((TableColumn)( columnas.get(1) )).setPrefWidth(tablaVistaPrevia.getWidth()*0.15);
-        ((TableColumn)( columnas.get(2) )).setPrefWidth(tablaVistaPrevia.getWidth()*0.105);
-        ((TableColumn)( columnas.get(3) )).setPrefWidth(tablaVistaPrevia.getWidth()*0.105);
-        ((TableColumn)( columnas.get(4) )).setPrefWidth(tablaVistaPrevia.getWidth()*0.105);
-        ((TableColumn)( columnas.get(5) )).setPrefWidth(tablaVistaPrevia.getWidth()*0.22);
+        ObservableList<TableColumn<Producto,?>> columnas = tablaVistaPrevia.getColumns();
+        ((TableColumn<Producto,?>)( columnas.get(0) )).setPrefWidth(tablaVistaPrevia.getWidth()*0.30);
+        ((TableColumn<Producto,?>)( columnas.get(1) )).setPrefWidth(tablaVistaPrevia.getWidth()*0.15);
+        ((TableColumn<Producto,?>)( columnas.get(2) )).setPrefWidth(tablaVistaPrevia.getWidth()*0.105);
+        ((TableColumn<Producto,?>)( columnas.get(3) )).setPrefWidth(tablaVistaPrevia.getWidth()*0.105);
+        ((TableColumn<Producto,?>)( columnas.get(4) )).setPrefWidth(tablaVistaPrevia.getWidth()*0.105);
+        ((TableColumn<Producto,?>)( columnas.get(5) )).setPrefWidth(tablaVistaPrevia.getWidth()*0.22);
     }   
 
     private void iniciarEstructuraTabla(){
         tablaVistaPrevia.setEditable(true);
         tablaVistaPrevia.getItems().clear();
         tablaVistaPrevia.getColumns().clear();
-        TableColumn columnaProducto = new TableColumn<>("Producto");
+        TableColumn<Producto,String> columnaProducto = new TableColumn<>("Producto");
         columnaProducto.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         columnaProducto.setPrefWidth(tablaVistaPrevia.getWidth()*0.30);
         columnaProducto.setResizable(false);
 
-        TableColumn columnaUnidad = new TableColumn<>("Unidad");
+        TableColumn<Producto,String> columnaUnidad = new TableColumn<>("Unidad");
         columnaUnidad.setCellValueFactory(new PropertyValueFactory<>("unidad"));
         columnaUnidad.setPrefWidth(tablaVistaPrevia.getWidth()*0.15);
         columnaUnidad.setResizable(false);
 
-        TableColumn columnaCantidadPedida = new TableColumn<>("C. Pedida");
+        TableColumn<Producto,String> columnaCantidadPedida = new TableColumn<>("C. Pedida");
         columnaCantidadPedida.setCellValueFactory(new PropertyValueFactory<>("cantPedida"));
         columnaCantidadPedida.setPrefWidth(tablaVistaPrevia.getWidth()*0.105);
         columnaCantidadPedida.setResizable(false);
 
-        TableColumn columnaCantidadEntregada = new TableColumn<>("C. Entregada");
+        TableColumn<Producto,Integer> columnaCantidadEntregada = new TableColumn<>("C. Entregada");
         columnaCantidadEntregada.setEditable(true);
         columnaCantidadEntregada.setCellValueFactory(new PropertyValueFactory<>("cantEntregada"));
         columnaCantidadEntregada.setCellFactory(col -> new EditableIntegerTableCell<Producto>());
         columnaCantidadEntregada.setPrefWidth(tablaVistaPrevia.getWidth()*0.105);
         columnaCantidadEntregada.setResizable(false);
+        columnaCantidadEntregada.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Producto, Integer>>() {
+            @Override
+            public void handle(TableColumn.CellEditEvent<Producto, Integer> t) {
+                t.getRowValue().cantEntregada = t.getNewValue();
+                
+            }
+        });
 
-        TableColumn columnaCantidadPendiente = new TableColumn<>("C. Pendiente");
+        TableColumn<Producto,Integer> columnaCantidadPendiente = new TableColumn<>("C. Pendiente");
         columnaCantidadPendiente.setEditable(true);
         columnaCantidadPendiente.setCellValueFactory(new PropertyValueFactory<>("cantPendiente"));
         columnaCantidadPendiente.setCellFactory(col -> new EditableIntegerTableCell<Producto>());
         columnaCantidadPendiente.setPrefWidth(tablaVistaPrevia.getWidth()*0.105);
         columnaCantidadPendiente.setResizable(false);
+        columnaCantidadPendiente.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Producto, Integer>>() {
+            @Override
+            public void handle(TableColumn.CellEditEvent<Producto, Integer> t) {
+                t.getRowValue().cantPendiente = t.getNewValue();
+            }
+        });
         
 
-        TableColumn columnaComentarios = new TableColumn<>("Comentarios");
+        TableColumn<Producto,String> columnaComentarios = new TableColumn<>("Comentarios");
         columnaComentarios.setEditable(true);
         columnaComentarios.setCellValueFactory(new PropertyValueFactory<>("comentario"));
-        columnaComentarios.setCellFactory(TextFieldTableCell.<String>forTableColumn());
+        columnaComentarios.setCellFactory(col -> new EditableStringTableCell<Producto>());
         columnaComentarios.setPrefWidth(tablaVistaPrevia.getWidth()*0.22);
         columnaComentarios.setResizable(false);
+        columnaComentarios.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Producto, String>>() {
+            @Override
+            public void handle(TableColumn.CellEditEvent<Producto, String> t) {
+                t.getRowValue().comentario = t.getNewValue();
+            }
+        });
         
 
         tablaVistaPrevia.getColumns().addAll(columnaProducto, columnaUnidad, columnaCantidadPedida, columnaCantidadEntregada, columnaCantidadPendiente, columnaComentarios);

@@ -1,16 +1,10 @@
 package com.unah.hermes.utils;
 
 import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.function.UnaryOperator;
-
-import com.google.api.services.storage.Storage.BucketAccessControls.List;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.geometry.Pos;
 import javafx.scene.control.TableCell;
@@ -24,9 +18,9 @@ import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.input.KeyCode;
 import javafx.util.converter.NumberStringConverter;
 
-public class EditableIntegerTableCell<T> extends TableCell<T, Integer> {
+public class EditableStringTableCell<T> extends TableCell<T, String> {
     private TextField textField;
-    private ObservableList<Collection> collectionList = FXCollections.<Collection>observableArrayList();
+
     @Override
     public void startEdit() {
         if (editableProperty().get()) {
@@ -51,9 +45,8 @@ public class EditableIntegerTableCell<T> extends TableCell<T, Integer> {
         setGraphic(null);
     }
 
-    
     @Override
-    public void updateItem(Integer item, boolean empty) {
+    public void updateItem(String item, boolean empty) {
         super.updateItem(item, empty);
         if (empty) {
             setText(null);
@@ -67,24 +60,19 @@ public class EditableIntegerTableCell<T> extends TableCell<T, Integer> {
                 setText(null);
                 setGraphic(textField);
             } else {
-                setText(getItem().toString());
+                setText(getItem());
                 setGraphic(null);
             }
         }
     }
 
-    private void commitHelper( boolean losingFocus ) {
-            commitEdit(Integer.parseInt(textField.getText()));
-    } 
     private void createTextField() {
         textField = new TextField();
 
         textField.setOnAction(evt -> {
             if (textField.getText() != null && !textField.getText().isEmpty()) {
-                NumberStringConverter nsc = new NumberStringConverter();
-                Number n = nsc.fromString(textField.getText());
-                commitEdit(Integer.valueOf(n.intValue()));
-            } 
+                commitEdit(textField.getText());
+            }
         });
         textField.setMinWidth(this.getWidth() - this.getGraphicTextGap() * 2);
 
@@ -96,7 +84,7 @@ public class EditableIntegerTableCell<T> extends TableCell<T, Integer> {
                 if (change.getControlNewText().length() == 0)
                     return change;
                 try {
-                    Integer.parseInt(change.getControlNewText());
+                    change.getControlNewText().toString();
                     return change;
                 } catch (Exception e) {
                     return null;
@@ -107,37 +95,15 @@ public class EditableIntegerTableCell<T> extends TableCell<T, Integer> {
         textField.setOnKeyTyped((ke) -> {
             if (ke.getCode().equals(KeyCode.ESCAPE)) {
                 cancelEdit();
-            }else if (ke.getCode() == KeyCode.TAB) {
-                commitHelper(false);
-
-                TableColumn nextColumn = getNextColumn(!ke.isShiftDown());
-
-                TablePosition focusedCellPosition = getTableView().getFocusModel().getFocusedCell();
-                if (nextColumn != null) {
-
-                    //if( focusedCellPosition.getColumn() ){}focusedCellPosition.getTableColumn()
-                    System.out.println("Column: "+focusedCellPosition.getColumn());
-
-                    System.out.println("nextColumn.getId();: "+nextColumn.getId());
-                    getTableView().edit(getTableRow().getIndex(), nextColumn);
-                    }
-                }else{
-                    getTableView().requestFocus();
-                    getTableView().scrollTo((getTableRow().getIndex())+1);
-                    getTableView().layout();
-                    getTableView().edit((getTableRow().getIndex())+1,getTableView().getColumns().get(0) ); 
-                }
             }
-        );
+        });
         textField.focusedProperty().addListener(new ChangeListener<Boolean>() {
 
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                //focus lost
                 if(!newValue){
-                    NumberStringConverter nsc = new NumberStringConverter();
-                    Number n = nsc.fromString(textField.getText());
-                    commitEdit(Integer.valueOf(n.intValue()));
+                    commitEdit(textField.getText());
                }
 
             }
@@ -146,44 +112,21 @@ public class EditableIntegerTableCell<T> extends TableCell<T, Integer> {
         textField.setAlignment(Pos.CENTER_LEFT);
         this.setAlignment(Pos.CENTER_LEFT);
     }
-    private TableColumn<T, ?> getNextColumn(boolean forward) {
-        java.util.List<TableColumn<T, ?>> columns = new ArrayList<>();
-        for (TableColumn<T, ?> column : getTableView().getColumns()) {
-            columns.addAll((Collection<? extends TableColumn<T, ?>>) column);
-        }
-        //There is no other column that supports editing.
-        if (columns.size() < 2) {
-            return null;
-        }
-        int currentIndex = columns.indexOf(getTableColumn());
-        int nextIndex = currentIndex;
-        if (forward) {
-            nextIndex++;
-            if (nextIndex > columns.size() - 1) {
-                nextIndex = 0;
-            }
-        } else {
-            nextIndex--;
-            if (nextIndex < 0) {
-                nextIndex = columns.size() - 1;
-            }
-        }
-        return columns.get(nextIndex);
-    }
+    
     private String getString() {
         return getItem() == null ? "" : getItem().toString();
     }
     
     @Override
-    public void commitEdit(Integer item) {
+    public void commitEdit(String item) {
         if (isEditing()) {
             super.commitEdit(item);
         } else {
             final TableView<T> table = getTableView();
             if (table != null) {
-                TablePosition<T, Integer> position = new TablePosition<T, Integer>(getTableView(),
+                TablePosition<T, String> position = new TablePosition<T, String>(getTableView(),
                         getTableRow().getIndex(), getTableColumn());
-                CellEditEvent<T, Integer> editEvent = new CellEditEvent<T, Integer>(table, position,
+                CellEditEvent<T, String> editEvent = new CellEditEvent<T, String>(table, position,
                         TableColumn.editCommitEvent(), item);
                 Event.fireEvent(getTableColumn(), editEvent);
             }
