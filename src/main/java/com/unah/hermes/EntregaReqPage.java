@@ -13,7 +13,6 @@ import java.util.function.Function;
 import javafx.scene.control.ListView;
 import com.unah.hermes.objects.Producto;
 import com.unah.hermes.objects.Requisicion;
-import com.unah.hermes.objects.RequisicionEntregadaRow;
 import com.unah.hermes.provider.FirebaseConnector;
 import com.unah.hermes.provider.FirestoreRoutes;
 import com.unah.hermes.utils.EventListeners;
@@ -41,7 +40,7 @@ import javafx.scene.layout.AnchorPane;
 public class EntregaReqPage implements Initializable {
     @FXML public javafx.scene.control.Button btnCancelar;
     @FXML public javafx.scene.control.Button btnTerminarEntrega;
-    @FXML TableView<RequisicionEntregadaRow> tablaVistaPrevia;
+    @FXML TableView<Requisicion> tablaVistaPrevia;
     @FXML ListView<Requisicion> listaRQP;
     @FXML Label labelID;
     @FXML Label labelHora;
