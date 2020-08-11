@@ -42,6 +42,8 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import javafx.application.Platform;
+
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
@@ -277,40 +279,46 @@ public class FirebaseConnector {
             ListenerRegistration unsubListener = docRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
                 @Override
                 public void onEvent(QuerySnapshot snapshots, FirestoreException e) {
-                    if (e != null) {
-                        System.err.println("Listen failed:" + e);
-                        return;
-                    }
-
-                    MainPage.RequisicionesDenegadas.clear();
-                    MainPage.RequisicionesEntregadas.clear();
-                    MainPage.RequisicionesPendientes.clear();
-
-                    for (DocumentSnapshot doc : snapshots) {
-                        // System.out.println(doc);
-                        Requisicion tmp;
-                        if (doc.exists()) {
-
-                            tmp = new Requisicion(doc.getId(), doc.getString("nombreDisplay"), doc.getString("estado"),
-                                    doc.getString("area"), doc.getString("autorizador"), doc.getBoolean("autorizacion"),
-                                    doc.getString("solicitante"), doc.getDate("fecha"), doc.get("productos"));
-
-                            // System.out.println(tmp.estado);
-                            // System.out.println(doc.getData());
-                            if (tmp.estado.equals("Entregada")) {
-                                MainPage.RequisicionesEntregadas.add(tmp);
-                                // System.out.println(MainPage.RequisicionesEntregadas);
-                            } else if (tmp.estado.equals("Denegada")) {
-                                MainPage.RequisicionesDenegadas.add(tmp);
-                                // System.out.println(MainPage.RequisicionesDenegadas);
-                            } else if (tmp.estado.equals("Pendiente")) {
-                                MainPage.RequisicionesPendientes.add(tmp);
-                                // System.out.println(MainPage.RequisicionesPendientes);
-                            } else {
-                                System.out.println("Estado desconocido");
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (e != null) {
+                                System.err.println("Listen failed:" + e);
+                                return;
+                            }
+        
+                            MainPage.RequisicionesDenegadas.clear();
+                            MainPage.RequisicionesEntregadas.clear();
+                            MainPage.RequisicionesPendientes.clear();
+        
+                            for (DocumentSnapshot doc : snapshots) {
+                                // System.out.println(doc);
+                                Requisicion tmp;
+                                if (doc.exists()) {
+        
+                                    tmp = new Requisicion(doc.getId(), doc.getString("nombreDisplay"), doc.getString("estado"),
+                                            doc.getString("area"), doc.getString("autorizador"), doc.getBoolean("autorizacion"),
+                                            doc.getString("solicitante"), doc.getDate("fecha"), doc.get("productos"));
+        
+                                    // System.out.println(tmp.estado);
+                                    // System.out.println(doc.getData());
+                                    if (tmp.estado.equals("Entregada")) {
+                                        MainPage.RequisicionesEntregadas.add(tmp);
+                                        // System.out.println(MainPage.RequisicionesEntregadas);
+                                    } else if (tmp.estado.equals("Denegada")) {
+                                        MainPage.RequisicionesDenegadas.add(tmp);
+                                        // System.out.println(MainPage.RequisicionesDenegadas);
+                                    } else if (tmp.estado.equals("Pendiente")) {
+                                        MainPage.RequisicionesPendientes.add(tmp);
+                                        // System.out.println(MainPage.RequisicionesPendientes);
+                                    } else {
+                                        System.out.println("Estado desconocido");
+                                    }
+                                }
                             }
                         }
-                    }
+                    });
+                    
                 }
             });
             return unsubListener;

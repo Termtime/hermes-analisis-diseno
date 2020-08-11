@@ -22,6 +22,7 @@ import javafx.scene.control.TextFormatter;
 import javafx.scene.control.TextFormatter.Change;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.util.converter.NumberStringConverter;
 
 public class EditableIntegerTableCell<T> extends TableCell<T, Integer> {
@@ -104,31 +105,27 @@ public class EditableIntegerTableCell<T> extends TableCell<T, Integer> {
             }
         };
         textField.textFormatterProperty().set(new TextFormatter<>(digitsOnlyOperator));
-        textField.setOnKeyTyped((ke) -> {
+        textField.setOnKeyPressed((keyEvent) -> {
+            KeyEvent ke = keyEvent;
+            System.out.println("KeyEvent");
             if (ke.getCode().equals(KeyCode.ESCAPE)) {
                 cancelEdit();
-            }else if (ke.getCode() == KeyCode.TAB) {
-                commitHelper(false);
+            }else if (ke.getCode().equals(KeyCode.TAB)) {
+                commitHelper(true);
 
-                TableColumn nextColumn = getNextColumn(!ke.isShiftDown());
-
-                TablePosition focusedCellPosition = getTableView().getFocusModel().getFocusedCell();
-                if (nextColumn != null) {
-
-                    //if( focusedCellPosition.getColumn() ){}focusedCellPosition.getTableColumn()
-                    System.out.println("Column: "+focusedCellPosition.getColumn());
-
-                    System.out.println("nextColumn.getId();: "+nextColumn.getId());
-                    getTableView().edit(getTableRow().getIndex(), nextColumn);
-                    }
-                }else{
+                TableColumn<T,?> column = getTableColumn();
+                int newRow = getTableRow().getIndex()+1;
+                if (column != null) {
                     getTableView().requestFocus();
                     getTableView().scrollTo((getTableRow().getIndex())+1);
                     getTableView().layout();
-                    getTableView().edit((getTableRow().getIndex())+1,getTableView().getColumns().get(0) ); 
+                    System.out.print("Indice de fila: ");
+                    System.out.println(getTableRow().getIndex());
+                    if(ke.isShiftDown()) newRow = getTableRow().getIndex()-1;
+                    getTableView().edit(newRow, column);
                 }
             }
-        );
+        });
         textField.focusedProperty().addListener(new ChangeListener<Boolean>() {
 
             @Override
