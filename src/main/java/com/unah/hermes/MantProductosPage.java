@@ -2,6 +2,8 @@ package com.unah.hermes;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Vector;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -80,6 +82,7 @@ import com.unah.hermes.utils.Navigation;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 
 
 
@@ -87,13 +90,11 @@ public class MantProductosPage implements Initializable {
     @FXML TableView<Producto> tablaProductos;
     @FXML AnchorPane MantenimientoProductos;
     @FXML TextField txtFiltro;
+    
     @FXML private void btnAgregarProductoClick(ActionEvent event) {
         Navigation.pushRoute("MantProductosModalAgregarProducto", event, false, true);
     }
     @FXML private void btnModificarProductoClick(ActionEvent event) {
-        System.out.println(tablaProductoSelectedItem.nombre);
-       // Navigation.pushRouteWithParameter("MantProductosModalModificarProducto", event, false, true, MantProductosModalModificarProducto.class, new Producto("123","Mierda","Cagada","Hecho Mierda"));        
-        
         if(tablaProductoSelectedItem != null)
             Navigation.pushRouteWithParameter("MantProductosModalModificarProducto", event, false, true, MantProductosModalModificarProducto.class, tablaProductoSelectedItem );
         else{
@@ -108,7 +109,12 @@ public class MantProductosPage implements Initializable {
         Navigation.pushRoute("MantProductosModalAgregarCategoria", event, false, true);
     }
     @FXML private void btnModificarCategoriaClick(ActionEvent event) {
-        Navigation.pushRoute("MantProductosModalModificarCategoria", event, false, true);
+        if(tablaProductoSelectedItem != null)
+            Navigation.pushRouteWithParameter("MantProductosModalModificarCategoria", event, false, true, MantProductosModalModificarProducto.class, tablaProductoSelectedItem );
+        else{
+            Alert alert = new Alert(AlertType.ERROR,"Debe seleccionar un Usuario antes", ButtonType.OK);
+            alert.showAndWait();
+        }
     }
     @FXML private void btnEliminarCategoriaClick(ActionEvent event) {
 
@@ -124,7 +130,14 @@ public class MantProductosPage implements Initializable {
         tablaProductos.getItems().addAll(productosFiltrados);
     }
     @FXML private void comboCategoriaClick(ActionEvent event) {
-   
+        tablaProductos.getItems().clear();
+        List<Producto> categoriaFiltrados = new ArrayList<Producto>();
+        for(Producto producto: productos){
+            if(producto.categoria.toLowerCase().contains(comboCategoria.getSelectionModel().getSelectedItem().toString())){
+                categoriaFiltrados.add(producto);
+            }    
+        }
+        tablaProductos.getItems().addAll(categoriaFiltrados);
     }
 
     FirebaseConnector db=FirebaseConnector.getInstance();
@@ -132,7 +145,8 @@ public class MantProductosPage implements Initializable {
     
     ObservableList<Producto> productos = FXCollections.observableArrayList();
     List<QueryDocumentSnapshot> documentos = db.getAllDocumentsFrom(FirestoreRoutes.PRODUCTOS);
-
+    //ObservableList<Producto> categoria = FXCollections.observableArrayList();
+    //List<QueryDocumentSnapshot> categoriaDocumentos = db.getAllDocumentsFrom(FirestoreRoutes.);
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         MantenimientoProductos.setOnMouseClicked(new EventHandler<MouseEvent>(){
@@ -146,7 +160,7 @@ public class MantProductosPage implements Initializable {
             @Override
             public Void apply(Window parent) {
                 iniciarEstructuraTablas();
-                
+                llenarComboBox();
                 for (DocumentSnapshot doc : documentos) {
                     Producto tmp;
                     if(doc.exists()){
@@ -158,6 +172,7 @@ public class MantProductosPage implements Initializable {
 
                  return null;
             }
+           
         });
         MantenimientoProductos.widthProperty().addListener(new ChangeListener<Number>(){
             @Override
@@ -178,7 +193,28 @@ public class MantProductosPage implements Initializable {
                 tablaProductoSelectedItem = newValue;
             }
         });
-    }   
+    }  
+    @FXML ComboBox<String> comboCategoria= new ComboBox<>();
+    private void llenarComboBox(){
+        System.out.println("llenarcombo");
+        List<Producto> CategoriaCombo = new ArrayList<Producto>();
+        for (DocumentSnapshot doc : documentos) {
+            Producto tmp;
+            if(doc.exists()){
+                tmp = new Producto(doc.getId(), doc.getString("Producto"), doc.getString("Unidad"), doc.getString("Categoria"));
+                int cont=0;
+                for(int i=0;i<CategoriaCombo.size();i++)
+                {
+                    if(tmp.categoria.equals(CategoriaCombo.get(i).categoria))
+                    {
+                        cont++;
+                    }
+                }
+                if(cont==0)
+                    comboCategoria.getItems().add(tmp.getCategoria());
+            }
+        } 
+    }
 
     private void recalcularColumnWidth(){
                        
