@@ -2,6 +2,7 @@ package com.unah.hermes;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.function.Function;
 
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
@@ -9,6 +10,7 @@ import com.google.cloud.firestore.FirestoreException;
 import com.unah.hermes.objects.Producto;
 import com.unah.hermes.objects.Requisicion;
 import com.unah.hermes.provider.FirebaseConnector;
+import com.unah.hermes.utils.EventListeners;
 import com.unah.hermes.utils.Navigation;
 
 import javafx.beans.value.ChangeListener;
@@ -60,14 +62,17 @@ public class MantProductosModalModificarProducto implements Initializable {
     @FXML private void btnModificarClick(ActionEvent event) {
         
     }
-    @FXML TextField txtNombreProductoInput;
+    @FXML TextField txtNombreProducto;
+    @FXML TextField txtUnidad;
+    Producto productoData;
     public void initData(Object data){
-        Producto ProductoData=(Producto) data;
-        txtNombreProductoInput.setText(ProductoData.nombre);
+        productoData = (Producto) data;
+        txtNombreProducto.setText(productoData.nombre);
+        txtUnidad.setText(productoData.unidad);
     }
-    
+
     @Override
     public void initialize(URL url,  ResourceBundle rb) {
-        // 
+        
     }
 }

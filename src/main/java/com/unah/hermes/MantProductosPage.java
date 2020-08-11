@@ -74,6 +74,9 @@ import javafx.stage.Modality;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.unah.hermes.objects.Producto;
 import com.unah.hermes.utils.Navigation;
+
+//import org.graalvm.compiler.core.common.type.ArithmeticOpTable.BinaryOp.Add;
+
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -88,14 +91,15 @@ public class MantProductosPage implements Initializable {
         Navigation.pushRoute("MantProductosModalAgregarProducto", event, false, true);
     }
     @FXML private void btnModificarProductoClick(ActionEvent event) {
-        // if(TablaProductoSelectedItem != null)
-        //     Navigation.pushRouteWithParameter("MantProductosModalModificarProducto", event, false, true, MantProductosModalModificarProducto.class,TablaProductoSelectedItem,MantProductosPage.class);
-        // else{
-        //      Alert alert = new Alert(AlertType.ERROR,"Debe seleccionar una producto antes", ButtonType.OK);
-        //      alert.showAndWait();
-        //}
+        System.out.println(tablaProductoSelectedItem.nombre);
+       // Navigation.pushRouteWithParameter("MantProductosModalModificarProducto", event, false, true, MantProductosModalModificarProducto.class, new Producto("123","Mierda","Cagada","Hecho Mierda"));        
         
-        
+        if(tablaProductoSelectedItem != null)
+            Navigation.pushRouteWithParameter("MantProductosModalModificarProducto", event, false, true, MantProductosModalModificarProducto.class, tablaProductoSelectedItem );
+        else{
+            Alert alert = new Alert(AlertType.ERROR,"Debe seleccionar un Usuario antes", ButtonType.OK);
+            alert.showAndWait();
+        }
     }
     @FXML private void btnEliminarProductoClick(ActionEvent event) {
         
@@ -124,7 +128,7 @@ public class MantProductosPage implements Initializable {
     }
 
     FirebaseConnector db=FirebaseConnector.getInstance();
-    Producto TablaProductoSelectedItem;
+    Producto tablaProductoSelectedItem;
     
     ObservableList<Producto> productos = FXCollections.observableArrayList();
     List<QueryDocumentSnapshot> documentos = db.getAllDocumentsFrom(FirestoreRoutes.PRODUCTOS);
@@ -166,6 +170,12 @@ public class MantProductosPage implements Initializable {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 recalcularColumnWidth();
+            }
+        });
+        tablaProductos.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Producto>(){
+            @Override
+            public void changed(ObservableValue<? extends Producto> observable, Producto oldValue, Producto newValue) {
+                tablaProductoSelectedItem = newValue;
             }
         });
     }   
