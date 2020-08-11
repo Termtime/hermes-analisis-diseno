@@ -6,8 +6,11 @@ import java.util.ResourceBundle;
 import com.unah.hermes.utils.Navigation;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 
 public class MantUsuariosModalModificarUsuario implements Initializable {
     
@@ -39,8 +42,15 @@ public class MantUsuariosModalModificarUsuario implements Initializable {
         //txtFiltro.setText(usuarioDatos.nombre);     
         */
     }
+    @FXML AnchorPane mantUsusariosModalModificarUsuario;
     @Override
     public void initialize(URL url,  ResourceBundle rb) {
-        // 
+        mantUsusariosModalModificarUsuario.setOnMouseClicked(new EventHandler<MouseEvent>(){
+            @Override
+            public void handle(MouseEvent event) {
+                mantUsusariosModalModificarUsuario.requestFocus();
+
+            }
+        });
     }    
 }
