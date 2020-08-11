@@ -1,15 +1,24 @@
 package com.unah.hermes;
-
+import javafx.beans.value.ChangeListener;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.function.Function;
-
+import java.net.URL;
+import java.util.ResourceBundle;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
+import java.util.function.Function;
+import javafx.scene.control.ListView;
 import com.unah.hermes.objects.Producto;
 import com.unah.hermes.objects.Requisicion;
 import com.unah.hermes.objects.RequisicionEntregadaRow;
 import com.unah.hermes.provider.FirebaseConnector;
+import com.unah.hermes.provider.FirestoreRoutes;
 import com.unah.hermes.utils.EventListeners;
-
+import com.google.cloud.firestore.ListenerRegistration;
+import com.google.cloud.firestore.EventListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -18,15 +27,19 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.ListView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-
+import com.google.cloud.firestore.QueryDocumentSnapshot;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 public class EntregaReqPage implements Initializable {
     @FXML public javafx.scene.control.Button btnCancelar;
     @FXML public javafx.scene.control.Button btnTerminarEntrega;
     @FXML TableView<RequisicionEntregadaRow> tablaVistaPrevia;
+    @FXML ListView<Requisicion> listaRQP;
     @FXML Label labelID;
     @FXML Label labelHora;
     @FXML Label labelFecha;
@@ -46,30 +59,40 @@ public class EntregaReqPage implements Initializable {
 
     @FXML AnchorPane EntregaReqPage;
 
+         ListenerRegistration requisicionesListener;
        FirebaseConnector db;
         Requisicion tablaVistaPreviaSelectedItem = null;
         Requisicion tablaPSelectedItem;
-        ObservableList<Requisicion> RequisicionesPendientes =FXCollections.observableArrayList(); 
-        ObservableList<Producto> empty =FXCollections.observableArrayList();
+       
 
     public void initData(Object obj){
     }
      
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       //Este Event es que me da error, i need help :c 
+      
         EventListeners.onWindowOpened(EntregaReqPage, new Function<Window,Void>(){
             @Override
             public Void apply(Window parent) {
                iniciarEstructuraTabla();
-              
-
+               
+               
+                                                                          
                 return null;
                 
             }
+            
         });
+
+        
+      
        
         
+              
+                
+            
+        
+       
     }
 
     private void recalcularColumnWidth(){
