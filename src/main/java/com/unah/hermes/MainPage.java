@@ -320,20 +320,14 @@ public class MainPage implements Initializable {
         listaRQP.getItems().addListener(new ListChangeListener<Requisicion>() {
             @Override
             public void onChanged(ListChangeListener.Change<? extends Requisicion> change) {
-                System.out.println("My items are changing");
                 if(change.getList().size() != 0) {
                     if(tablaPSelectedItem == null) return;
                     
                     String reqID = tablaPSelectedItem.reqID;
-                    System.out.println(tablaPSelectedItem.reqID);
-                    // System.out.println("ReqID: " + reqID);
-                    // System.out.println("new size: " + newValue.size());
-                    //buscar en la nueva lista la misma requisicion
                     int index = 0;
                     for (Requisicion requisicion : change.getList()) {
                         if(requisicion.reqID.equals(reqID))
                         {
-                            System.out.println("El indice es: " + index);
                             listaRQP.getSelectionModel().select(index);
                             break;
                         }
@@ -368,6 +362,24 @@ public class MainPage implements Initializable {
                 }
             }
         });
+        listaRQE.getItems().addListener(new ListChangeListener<Requisicion>() {
+            @Override
+            public void onChanged(ListChangeListener.Change<? extends Requisicion> change) {
+                if(change.getList().size() != 0) {
+                    if(tablaPSelectedItem == null) return;
+                    
+                    String reqID = tablaPSelectedItem.reqID;
+                    int index = 0;
+                    for (Requisicion requisicion : change.getList()) {
+                        if(requisicion.reqID.equals(reqID))
+                        {
+                            listaRQE.getSelectionModel().select(index);
+                            break;
+                        }
+                        index++;
+                    }
+                }
+            }});
 
         listaRQD.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Requisicion>() {
             // prueba
@@ -396,7 +408,28 @@ public class MainPage implements Initializable {
             }
 
         });
-        
+
+        listaRQD.getItems().addListener(new ListChangeListener<Requisicion>() {
+            @Override
+            public void onChanged(ListChangeListener.Change<? extends Requisicion> change) {
+
+                if(change.getList().size() != 0) {
+                    if(tablaPSelectedItem == null) return;
+                    
+                    String reqID = tablaPSelectedItem.reqID;
+
+                    int index = 0;
+                    for (Requisicion requisicion : change.getList()) {
+                        if(requisicion.reqID.equals(reqID))
+                        {
+
+                            listaRQD.getSelectionModel().select(index);
+                            break;
+                        }
+                        index++;
+                    }
+                }
+            }});
     }
 
     private void recalcularColumnWidth(){
@@ -413,11 +446,13 @@ public class MainPage implements Initializable {
         
         ObservableList columnasE = tablaE.getColumns();
         ((TableColumn)( columnasE.get(0) )).setPrefWidth(tablaE.getWidth()*0.30);
-        ((TableColumn)( columnasE.get(1) )).setPrefWidth(tablaE.getWidth()*0.15);
+        ((TableColumn)( columnasE.get(1) )).setPrefWidth(tablaE.getWidth()*0.20);
         ((TableColumn)( columnasE.get(2) )).setPrefWidth(tablaE.getWidth()*0.105);
         ((TableColumn)( columnasE.get(3) )).setPrefWidth(tablaE.getWidth()*0.105);
-        ((TableColumn)( columnasE.get(4) )).setPrefWidth(tablaE.getWidth()*0.105);
-        ((TableColumn)( columnasE.get(5) )).setPrefWidth(tablaE.getWidth()*0.23);
+        
+        ((TableColumn)( columnasE.get(4) )).setPrefWidth(tablaE.getWidth()*0.28);
+        // ((TableColumn)( columnasE.get(4) )).setPrefWidth(tablaE.getWidth()*0.105);
+        // ((TableColumn)( columnasE.get(5) )).setPrefWidth(tablaE.getWidth()*0.23);
 
     }
     private void iniciarEstructuraTablas(){
@@ -451,7 +486,8 @@ public class MainPage implements Initializable {
         
         TableColumn columnaUnidadE = new TableColumn<>("Unidad");
         columnaUnidadE.setCellValueFactory(new PropertyValueFactory<>("unidad"));
-        columnaUnidadE.setPrefWidth(tablaE.getWidth()*0.15);
+        columnaUnidadE.setPrefWidth(tablaE.getWidth()*0.20);
+        // columnaUnidadE.setPrefWidth(tablaE.getWidth()*0.15);
         columnaUnidadE.setResizable(false);
         
         TableColumn columnaCantidadPedidaE = new TableColumn<>("C. Pedida");
@@ -464,17 +500,18 @@ public class MainPage implements Initializable {
         columnaCantidadEntregadaE.setPrefWidth(tablaE.getWidth()*0.105);
         columnaCantidadEntregadaE.setResizable(false);
         
-        TableColumn columnaCantidadPendienteE = new TableColumn<>("C. Pendiente");
-        columnaCantidadPendienteE.setCellValueFactory(new PropertyValueFactory<>("cantPendiente"));
-        columnaCantidadPendienteE.setPrefWidth(tablaE.getWidth()*0.105);
-        columnaCantidadPendienteE.setResizable(false);
+        // TableColumn columnaCantidadPendienteE = new TableColumn<>("C. Pendiente");
+        // columnaCantidadPendienteE.setCellValueFactory(new PropertyValueFactory<>("cantPendiente"));
+        // columnaCantidadPendienteE.setPrefWidth(tablaE.getWidth()*0.105);
+        // columnaCantidadPendienteE.setResizable(false);
         
         TableColumn columnaComentariosE = new TableColumn<>("Comentarios");
         columnaComentariosE.setCellValueFactory(new PropertyValueFactory<>("comentario"));
-        columnaComentariosE.setPrefWidth(tablaE.getWidth()*0.23);
+        columnaComentariosE.setPrefWidth(tablaE.getWidth()*0.28);
+        // columnaComentariosE.setPrefWidth(tablaE.getWidth()*0.22);
         columnaComentariosE.setResizable(false);
         
-        tablaE.getColumns().addAll(columnaProductoE, columnaUnidadE, columnaCantidadPedidaE, columnaCantidadEntregadaE, columnaCantidadPendienteE, columnaComentariosE);
+        tablaE.getColumns().addAll(columnaProductoE, columnaUnidadE, columnaCantidadPedidaE, columnaCantidadEntregadaE,/* columnaCantidadPendienteE,*/ columnaComentariosE);
         
         //Tabla de Requisiciones denegadas
         tablaD.getItems().clear();

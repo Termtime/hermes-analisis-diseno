@@ -143,11 +143,12 @@ public class EntregaReqPage implements Initializable {
     private void recalcularColumnWidth(){
         ObservableList<TableColumn<Producto,?>> columnas = tablaVistaPrevia.getColumns();
         ((TableColumn<Producto,?>)( columnas.get(0) )).setPrefWidth(tablaVistaPrevia.getWidth()*0.30);
-        ((TableColumn<Producto,?>)( columnas.get(1) )).setPrefWidth(tablaVistaPrevia.getWidth()*0.15);
+        ((TableColumn<Producto,?>)( columnas.get(1) )).setPrefWidth(tablaVistaPrevia.getWidth()*0.20);
         ((TableColumn<Producto,?>)( columnas.get(2) )).setPrefWidth(tablaVistaPrevia.getWidth()*0.105);
         ((TableColumn<Producto,?>)( columnas.get(3) )).setPrefWidth(tablaVistaPrevia.getWidth()*0.105);
-        ((TableColumn<Producto,?>)( columnas.get(4) )).setPrefWidth(tablaVistaPrevia.getWidth()*0.105);
-        ((TableColumn<Producto,?>)( columnas.get(5) )).setPrefWidth(tablaVistaPrevia.getWidth()*0.22);
+        ((TableColumn<Producto,?>)( columnas.get(4) )).setPrefWidth(tablaVistaPrevia.getWidth()*0.28);
+        // ((TableColumn<Producto,?>)( columnas.get(4) )).setPrefWidth(tablaVistaPrevia.getWidth()*0.105);
+        // ((TableColumn<Producto,?>)( columnas.get(5) )).setPrefWidth(tablaVistaPrevia.getWidth()*0.22);
     }   
 
     private void iniciarEstructuraTabla(){
@@ -161,7 +162,8 @@ public class EntregaReqPage implements Initializable {
 
         TableColumn<Producto,String> columnaUnidad = new TableColumn<>("Unidad");
         columnaUnidad.setCellValueFactory(new PropertyValueFactory<>("unidad"));
-        columnaUnidad.setPrefWidth(tablaVistaPrevia.getWidth()*0.15);
+        // columnaUnidad.setPrefWidth(tablaVistaPrevia.getWidth()*0.15);
+        columnaUnidad.setPrefWidth(tablaVistaPrevia.getWidth()*0.20);
         columnaUnidad.setResizable(false);
 
         TableColumn<Producto,String> columnaCantidadPedida = new TableColumn<>("C. Pedida");
@@ -183,24 +185,24 @@ public class EntregaReqPage implements Initializable {
             }
         });
 
-        TableColumn<Producto,Integer> columnaCantidadPendiente = new TableColumn<>("C. Pendiente");
-        columnaCantidadPendiente.setEditable(true);
-        columnaCantidadPendiente.setCellValueFactory(new PropertyValueFactory<>("cantPendiente"));
-        columnaCantidadPendiente.setCellFactory(col -> new EditableIntegerTableCell<Producto>());
-        columnaCantidadPendiente.setPrefWidth(tablaVistaPrevia.getWidth()*0.105);
-        columnaCantidadPendiente.setResizable(false);
-        columnaCantidadPendiente.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Producto, Integer>>() {
-            @Override
-            public void handle(TableColumn.CellEditEvent<Producto, Integer> t) {
-                t.getRowValue().cantPendiente = t.getNewValue();
-            }
-        });
+        // TableColumn<Producto,Integer> columnaCantidadPendiente = new TableColumn<>("C. Pendiente");
+        // columnaCantidadPendiente.setEditable(true);
+        // columnaCantidadPendiente.setCellValueFactory(new PropertyValueFactory<>("cantPendiente"));
+        // columnaCantidadPendiente.setCellFactory(col -> new EditableIntegerTableCell<Producto>());
+        // columnaCantidadPendiente.setPrefWidth(tablaVistaPrevia.getWidth()*0.105);
+        // columnaCantidadPendiente.setResizable(false);
+        // columnaCantidadPendiente.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Producto, Integer>>() {
+        //     @Override
+        //     public void handle(TableColumn.CellEditEvent<Producto, Integer> t) {
+        //         t.getRowValue().cantPendiente = t.getNewValue();
+        //     }
+        // });
         
-
         TableColumn<Producto,String> columnaComentarios = new TableColumn<>("Comentarios");
         columnaComentarios.setEditable(true);
         columnaComentarios.setCellValueFactory(new PropertyValueFactory<>("comentario"));
         columnaComentarios.setCellFactory(col -> new EditableStringTableCell<Producto>());
+        columnaComentarios.setPrefWidth(tablaVistaPrevia.getWidth()*0.28);
         columnaComentarios.setPrefWidth(tablaVistaPrevia.getWidth()*0.22);
         columnaComentarios.setResizable(false);
         columnaComentarios.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Producto, String>>() {
@@ -211,7 +213,7 @@ public class EntregaReqPage implements Initializable {
         });
         
 
-        tablaVistaPrevia.getColumns().addAll(columnaProducto, columnaUnidad, columnaCantidadPedida, columnaCantidadEntregada, columnaCantidadPendiente, columnaComentarios);
+        tablaVistaPrevia.getColumns().addAll(columnaProducto, columnaUnidad, columnaCantidadPedida, columnaCantidadEntregada, /*columnaCantidadPendiente,*/ columnaComentarios);
     }
 
 }    
