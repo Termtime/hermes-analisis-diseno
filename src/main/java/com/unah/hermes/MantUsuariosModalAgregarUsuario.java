@@ -28,6 +28,7 @@ import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.fxml.FXMLLoader;
@@ -43,29 +44,36 @@ import javafx.stage.Modality;
 public class MantUsuariosModalAgregarUsuario implements Initializable {
 
     
-    @FXML private void btnAgregarClick(ActionEvent event) {
+    @FXML public void btnAgregarClick(ActionEvent event) {
         
         Navigation.pushRoute("MantUsuariosPage", event, false, true);
 
     }
-    @FXML private void txtUsuarioInput(ActionEvent event) {
+    @FXML public void txtUsuarioInput(KeyEvent event) {
     }
 
-    @FXML private void txtNombreInput(ActionEvent event) {
+    @FXML public void txtNombreInput(KeyEvent event) {
     }
-    @FXML private void txtCorreoInput(ActionEvent event) {
+    @FXML public void txtContrasenaInput(KeyEvent event) {
     }
-    @FXML private void comboNivelAccesoClick(ActionEvent event) {
+    @FXML public void txtConfirmeContrasenaInput(KeyEvent event) {
     }
-    @FXML private void txtContrasenaInput(ActionEvent event) {
-    }
-    @FXML private void txtConfirmeContrasenaInput(ActionEvent event) {
-    }
-    
-    
-    @FXML private javafx.scene.control.Button btnCancelar;
 
-    @FXML private void btnCancelarClick(ActionEvent event) {
+    @FXML public void comboAreaAccesoClick(ActionEvent event) {
+    }
+    @FXML public void btnAgregarAreaClick(ActionEvent event) {
+    }
+    @FXML public void btnQuitarAreaClick(ActionEvent event) {
+    }
+    @FXML public void comboNivelAccesoClick(ActionEvent event) {
+    }
+    
+    @FXML public void txtCorreoInput(KeyEvent event) {
+    }
+   
+    @FXML public javafx.scene.control.Button btnCancelar;
+
+    @FXML public void btnCancelarClick(ActionEvent event) {
         
        Stage stage = (Stage) btnCancelar.getScene().getWindow();
        

@@ -84,7 +84,7 @@ public class MantUsuariosPage implements Initializable {
     @FXML
     private void btnModificarUsuarioClick(ActionEvent event) {
         if(tablaUSelectedItem != null)
-            Navigation.pushRouteWithParameter("MantUsuarioPage", event, false, true, MantUsuariosModalModificarUsuario.class, tablaUSelectedItem );
+            Navigation.pushRouteWithParameter("MantUsuariosModalModificarUsuario", event, false, true, MantUsuariosModalModificarUsuario.class, tablaUSelectedItem );
         else{
             Alert alert = new Alert(AlertType.ERROR,"Debe seleccionar un Usuario antes", ButtonType.OK);
             alert.showAndWait();

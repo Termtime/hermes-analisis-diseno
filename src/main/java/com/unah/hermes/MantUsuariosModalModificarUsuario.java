@@ -9,46 +9,67 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 public class MantUsuariosModalModificarUsuario implements Initializable {
     
-    @FXML private void btnModificarClick(ActionEvent event) {
-    
+    @FXML public void btnAgregarClick(ActionEvent event) {
+        
+        Navigation.pushRoute("MantUsuariosPage", event, false, true);
+
     }
-    @FXML private void txtUsuarioInput(ActionEvent event) {
+    @FXML public void txtUsuarioInput(KeyEvent event) {
     }
 
-    @FXML private void txtNombreInput(ActionEvent event) {
+    @FXML public void txtNombreInput(KeyEvent event) {
     }
-    @FXML private void txtCorreoInput(ActionEvent event) {
+    @FXML public void txtContrasenaInput(KeyEvent event) {
     }
-    @FXML private void comboNivelAccesoClick(ActionEvent event) {
+    @FXML public void txtConfirmeContrasenaInput(KeyEvent event) {
     }
-    @FXML private void txtContrasenaInput(ActionEvent event) {
+
+    @FXML public void comboAreaAccesoClick(ActionEvent event) {
     }
-    @FXML private void txtConfirmeContrasenaInput(ActionEvent event) {
+    @FXML public void btnAgregarAreaClick(ActionEvent event) {
     }
-    @FXML private void btnCancelarClick(ActionEvent event) {
+    @FXML public void btnModificarClick(ActionEvent event) {
+    }
+    @FXML public void btnQuitarAreaClick(ActionEvent event) {
+    }
+    @FXML public void comboNivelAccesoClick(ActionEvent event) {
+    }
+    
+    @FXML public void txtCorreoInput(KeyEvent event) {
+    }
+   
+
+    @FXML public void btnCancelarClick(ActionEvent event) {
+        
+       Stage stage = (Stage) btnCancelar.getScene().getWindow();
+       
+       stage.close();
+
     }
     
     
     @FXML private javafx.scene.control.Button btnCancelar;
   
     public void initData(Object data){
-        /*  System.out.println("Inicialiar datos");
+        System.out.println("Inicialiar datos");
         User usuarioDatos = (User) data; cambio
-        //txtFiltro.setText(usuarioDatos.nombre);     
+        txtFiltro.setText(usuarioDatos.nombre);     
         */
     }
-    @FXML AnchorPane mantUsusariosModalModificarUsuario;
+    @FXML AnchorPane mantUsuariosModalModificarUsuario;
     @Override
     public void initialize(URL url,  ResourceBundle rb) {
-        mantUsusariosModalModificarUsuario.setOnMouseClicked(new EventHandler<MouseEvent>(){
+        mantUsuariosModalModificarUsuario.setOnMouseClicked(new EventHandler<MouseEvent>(){
             @Override
             public void handle(MouseEvent event) {
-                mantUsusariosModalModificarUsuario.requestFocus();
+                mantUsuariosModalModificarUsuario.requestFocus();
 
             }
         });
