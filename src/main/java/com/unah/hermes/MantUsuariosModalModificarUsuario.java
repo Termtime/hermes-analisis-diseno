@@ -3,12 +3,15 @@ package com.unah.hermes;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import com.unah.hermes.objects.User;
 import com.unah.hermes.utils.Navigation;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -53,15 +56,19 @@ public class MantUsuariosModalModificarUsuario implements Initializable {
        stage.close();
 
     }
-    
-    
+    @FXML TextField txtNombre;
+    @FXML TextField txtCorreo;
+    @FXML ListView listAreasSeleccionadas;
+
     @FXML private javafx.scene.control.Button btnCancelar;
   
     public void initData(Object data){
-        System.out.println("Inicialiar datos");
-        User usuarioDatos = (User) data; cambio
-        txtFiltro.setText(usuarioDatos.nombre);     
-        */
+        //System.out.println("Inicialiar datos");
+        User usuarioDatos = (User) data; 
+        txtNombre.setText(usuarioDatos.nombre);
+        txtCorreo.setText(usuarioDatos.userID); 
+        //listAreasSeleccionadas.set
+
     }
     @FXML AnchorPane mantUsuariosModalModificarUsuario;
     @Override
