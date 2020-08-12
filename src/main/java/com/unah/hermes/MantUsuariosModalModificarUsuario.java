@@ -35,6 +35,7 @@ public class MantUsuariosModalModificarUsuario implements Initializable {
     }
 
     @FXML public void comboAreaAccesoClick(ActionEvent event) {
+        
     }
     @FXML public void btnAgregarAreaClick(ActionEvent event) {
     }
