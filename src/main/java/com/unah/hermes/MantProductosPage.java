@@ -2,6 +2,8 @@ package com.unah.hermes;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Vector;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -72,6 +74,7 @@ import javafx.stage.WindowEvent;
 import javafx.stage.Modality;
 
 import com.google.cloud.firestore.QueryDocumentSnapshot;
+import com.unah.hermes.objects.Categoria;
 import com.unah.hermes.objects.Producto;
 import com.unah.hermes.utils.Navigation;
 
@@ -80,6 +83,7 @@ import com.unah.hermes.utils.Navigation;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 
 
 
@@ -87,13 +91,11 @@ public class MantProductosPage implements Initializable {
     @FXML TableView<Producto> tablaProductos;
     @FXML AnchorPane MantenimientoProductos;
     @FXML TextField txtFiltro;
+    @FXML ComboBox<String> comboCategoria= new ComboBox<>();
     @FXML private void btnAgregarProductoClick(ActionEvent event) {
         Navigation.pushRoute("MantProductosModalAgregarProducto", event, false, true);
     }
     @FXML private void btnModificarProductoClick(ActionEvent event) {
-        System.out.println(tablaProductoSelectedItem.nombre);
-       // Navigation.pushRouteWithParameter("MantProductosModalModificarProducto", event, false, true, MantProductosModalModificarProducto.class, new Producto("123","Mierda","Cagada","Hecho Mierda"));        
-        
         if(tablaProductoSelectedItem != null)
             Navigation.pushRouteWithParameter("MantProductosModalModificarProducto", event, false, true, MantProductosModalModificarProducto.class, tablaProductoSelectedItem );
         else{
@@ -108,7 +110,7 @@ public class MantProductosPage implements Initializable {
         Navigation.pushRoute("MantProductosModalAgregarCategoria", event, false, true);
     }
     @FXML private void btnModificarCategoriaClick(ActionEvent event) {
-        Navigation.pushRoute("MantProductosModalModificarCategoria", event, false, true);
+         Navigation.pushRoute("MantProductosModalModificarCategoria", event, false, true);
     }
     @FXML private void btnEliminarCategoriaClick(ActionEvent event) {
 
@@ -124,7 +126,14 @@ public class MantProductosPage implements Initializable {
         tablaProductos.getItems().addAll(productosFiltrados);
     }
     @FXML private void comboCategoriaClick(ActionEvent event) {
-   
+        tablaProductos.getItems().clear();
+        List<Producto> categoriaFiltrados = new ArrayList<Producto>();
+        for(Producto producto: productos){
+            if(producto.categoria.toLowerCase().equals(comboCategoria.getSelectionModel().getSelectedItem().toString().toLowerCase())){
+                categoriaFiltrados.add(producto);
+            }    
+        }
+        tablaProductos.getItems().addAll(categoriaFiltrados);
     }
 
     FirebaseConnector db=FirebaseConnector.getInstance();
@@ -132,7 +141,7 @@ public class MantProductosPage implements Initializable {
     
     ObservableList<Producto> productos = FXCollections.observableArrayList();
     List<QueryDocumentSnapshot> documentos = db.getAllDocumentsFrom(FirestoreRoutes.PRODUCTOS);
-
+    List<QueryDocumentSnapshot> categoriaDocumentos = db.getAllDocumentsFrom(FirestoreRoutes.CATEGORIAS);
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         MantenimientoProductos.setOnMouseClicked(new EventHandler<MouseEvent>(){
@@ -146,7 +155,6 @@ public class MantProductosPage implements Initializable {
             @Override
             public Void apply(Window parent) {
                 iniciarEstructuraTablas();
-                
                 for (DocumentSnapshot doc : documentos) {
                     Producto tmp;
                     if(doc.exists()){
@@ -155,9 +163,17 @@ public class MantProductosPage implements Initializable {
                     }
                 }
                 tablaProductos.getItems().addAll(productos);
-
+                for(DocumentSnapshot cat: categoriaDocumentos){
+                    Categoria tmp;
+                    if(cat.exists()){
+                        tmp=new Categoria(cat.getId(),cat.getString("nombre"));
+                        System.out.println(tmp.getNombre());
+                        comboCategoria.getItems().add(tmp.getNombre());
+                    }
+                }
                  return null;
             }
+           
         });
         MantenimientoProductos.widthProperty().addListener(new ChangeListener<Number>(){
             @Override
@@ -178,7 +194,7 @@ public class MantProductosPage implements Initializable {
                 tablaProductoSelectedItem = newValue;
             }
         });
-    }   
+    }  
 
     private void recalcularColumnWidth(){
                        
