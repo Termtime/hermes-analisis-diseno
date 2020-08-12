@@ -72,6 +72,11 @@ import com.unah.hermes.utils.Navigation;
 public class MantAreasModalAgregarUsuarioArea implements Initializable {
 
     @FXML
+    TableView<User> tablaUsuariosArea;
+
+    ObservableList<User> usuarios = FXCollections.observableArrayList();
+
+    @FXML
     private void btnAgregarClick(ActionEvent event) {
 
     }
@@ -86,13 +91,57 @@ public class MantAreasModalAgregarUsuarioArea implements Initializable {
 
     }
 
+    User usuariosNoArea;
+    Area areaSelected;
+
     public void initData(Object obj) {
+        areaSelected = (Area) obj;
+        for (User usuario : usuarios) {
+            for (int i = 0; i < usuario.areas.size(); i++) {
+                if (usuario.areas.get(i).equals(areaSelected.areaID)) {
+                    break;
+                }
+                else{
+                    tablaUsuariosArea.getItems().add(usuario);
+                }
 
+            }
+        }
     }
-
+    FirebaseConnector db;
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         // TODO Auto-generated method stub
+        EventListeners.onWindowOpened(MantAreasModalAgregarUsuarioArea, new Function<Window, Void>() {
+            @Override
+            public Void apply(Window parent) {
+                    //iniciarEstructuraTablas();
+                    db = FirebaseConnector.getInstance();
+                    
+                    // Usuarios inicio (Prueba)
+                    List<QueryDocumentSnapshot> usuariosFirebase = db
+                                    .getAllDocumentsFrom(FirestoreRoutes.USUARIOS);
+                    List<QueryDocumentSnapshot> docsAreas = db.getAllDocumentsFrom(FirestoreRoutes.AREAS);
+                    for (DocumentSnapshot doc : usuariosFirebase) {
+                            User tmp;
+
+                            if (doc.exists()) {
+                                    List<String> arregloIDAreas = (List<String>) doc.get("areas");
+                                    
+                                    tmp = new User(doc.getId(), doc.getString("Nombre"),
+                                                    doc.getString("nivelAcceso"), arregloIDAreas);
+
+                                    usuarios.add(tmp);
+ 
+                            }
+                    }
+                    // tablaUsuario.getItems().addAll(usuariosArea);
+                    return null;
+            }
+    });
+
+
+
 
     }
 
