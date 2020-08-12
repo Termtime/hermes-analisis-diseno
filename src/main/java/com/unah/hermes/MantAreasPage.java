@@ -96,7 +96,14 @@ public class MantAreasPage implements Initializable {
 
         @FXML
         private void btnAgregarUsuarioAreaClick(ActionEvent event) {
-                Navigation.pushRoute("MantAreasAgregarUsuarioArea", event, false, true);
+                // Navigation.pushRoute("MantAreasAgregarUsuarioArea", event, false, true);
+                if (TablaAreaSelectedRow != null)
+                        Navigation.pushRouteWithParameter("MantAreasAgregarUsuarioArea", event, false, true,
+                                        MantAreasModalAgregarUsuarioArea.class, TablaAreaSelectedRow);
+                else {
+                        Alert alert = new Alert(AlertType.ERROR, "Debe seleccionar un Area antes", ButtonType.OK);
+                        alert.showAndWait();
+                }
         }
 
         @FXML
