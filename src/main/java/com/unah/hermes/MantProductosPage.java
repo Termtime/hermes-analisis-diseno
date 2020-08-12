@@ -74,6 +74,7 @@ import javafx.stage.WindowEvent;
 import javafx.stage.Modality;
 
 import com.google.cloud.firestore.QueryDocumentSnapshot;
+import com.unah.hermes.objects.Categoria;
 import com.unah.hermes.objects.Producto;
 import com.unah.hermes.utils.Navigation;
 
@@ -90,7 +91,7 @@ public class MantProductosPage implements Initializable {
     @FXML TableView<Producto> tablaProductos;
     @FXML AnchorPane MantenimientoProductos;
     @FXML TextField txtFiltro;
-    
+    @FXML ComboBox<String> comboCategoria= new ComboBox<>();
     @FXML private void btnAgregarProductoClick(ActionEvent event) {
         Navigation.pushRoute("MantProductosModalAgregarProducto", event, false, true);
     }
@@ -109,12 +110,7 @@ public class MantProductosPage implements Initializable {
         Navigation.pushRoute("MantProductosModalAgregarCategoria", event, false, true);
     }
     @FXML private void btnModificarCategoriaClick(ActionEvent event) {
-        if(tablaProductoSelectedItem != null)
-            Navigation.pushRouteWithParameter("MantProductosModalModificarCategoria", event, false, true, MantProductosModalModificarProducto.class, tablaProductoSelectedItem );
-        else{
-            Alert alert = new Alert(AlertType.ERROR,"Debe seleccionar un Usuario antes", ButtonType.OK);
-            alert.showAndWait();
-        }
+         Navigation.pushRoute("MantProductosModalModificarCategoria", event, false, true);
     }
     @FXML private void btnEliminarCategoriaClick(ActionEvent event) {
 
@@ -133,7 +129,7 @@ public class MantProductosPage implements Initializable {
         tablaProductos.getItems().clear();
         List<Producto> categoriaFiltrados = new ArrayList<Producto>();
         for(Producto producto: productos){
-            if(producto.categoria.toLowerCase().contains(comboCategoria.getSelectionModel().getSelectedItem().toString())){
+            if(producto.categoria.toLowerCase().equals(comboCategoria.getSelectionModel().getSelectedItem().toString().toLowerCase())){
                 categoriaFiltrados.add(producto);
             }    
         }
@@ -145,8 +141,7 @@ public class MantProductosPage implements Initializable {
     
     ObservableList<Producto> productos = FXCollections.observableArrayList();
     List<QueryDocumentSnapshot> documentos = db.getAllDocumentsFrom(FirestoreRoutes.PRODUCTOS);
-    //ObservableList<Producto> categoria = FXCollections.observableArrayList();
-    //List<QueryDocumentSnapshot> categoriaDocumentos = db.getAllDocumentsFrom(FirestoreRoutes.);
+    List<QueryDocumentSnapshot> categoriaDocumentos = db.getAllDocumentsFrom(FirestoreRoutes.CATEGORIAS);
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         MantenimientoProductos.setOnMouseClicked(new EventHandler<MouseEvent>(){
@@ -160,7 +155,6 @@ public class MantProductosPage implements Initializable {
             @Override
             public Void apply(Window parent) {
                 iniciarEstructuraTablas();
-                llenarComboBox();
                 for (DocumentSnapshot doc : documentos) {
                     Producto tmp;
                     if(doc.exists()){
@@ -169,7 +163,14 @@ public class MantProductosPage implements Initializable {
                     }
                 }
                 tablaProductos.getItems().addAll(productos);
-
+                for(DocumentSnapshot cat: categoriaDocumentos){
+                    Categoria tmp;
+                    if(cat.exists()){
+                        tmp=new Categoria(cat.getId(),cat.getString("nombre"));
+                        System.out.println(tmp.getNombre());
+                        comboCategoria.getItems().add(tmp.getNombre());
+                    }
+                }
                  return null;
             }
            
@@ -194,27 +195,6 @@ public class MantProductosPage implements Initializable {
             }
         });
     }  
-    @FXML ComboBox<String> comboCategoria= new ComboBox<>();
-    private void llenarComboBox(){
-        System.out.println("llenarcombo");
-        List<Producto> CategoriaCombo = new ArrayList<Producto>();
-        for (DocumentSnapshot doc : documentos) {
-            Producto tmp;
-            if(doc.exists()){
-                tmp = new Producto(doc.getId(), doc.getString("Producto"), doc.getString("Unidad"), doc.getString("Categoria"));
-                int cont=0;
-                for(int i=0;i<CategoriaCombo.size();i++)
-                {
-                    if(tmp.categoria.equals(CategoriaCombo.get(i).categoria))
-                    {
-                        cont++;
-                    }
-                }
-                if(cont==0)
-                    comboCategoria.getItems().add(tmp.getCategoria());
-            }
-        } 
-    }
 
     private void recalcularColumnWidth(){
                        

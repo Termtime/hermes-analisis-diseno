@@ -1,7 +1,11 @@
 package com.unah.hermes;
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
+
+import javax.swing.JOptionPane;
 
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
@@ -26,6 +30,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.fxml.FXMLLoader;
@@ -38,8 +43,9 @@ import javafx.stage.WindowEvent;
 import javafx.stage.Modality;
 
 public class MantProductosModalAgregarCategoria implements Initializable{
+    @FXML AnchorPane AgregarCategoria;
     @FXML private javafx.scene.control.Button btnCancelar;
-
+    @FXML TextField txtAgregarCategoria;
     @FXML private void btnCancelarClick(ActionEvent event) {
 
        Stage stage = (Stage) btnCancelar.getScene().getWindow();
@@ -51,11 +57,15 @@ public class MantProductosModalAgregarCategoria implements Initializable{
         
     }
     @FXML private void btnAgregarClick(ActionEvent event) {
-        
+        Map<String, Object> data= new HashMap<>();
+        data.put("nombre", txtAgregarCategoria.getText());
+        db.createDocument("Categorias", data);
+        JOptionPane.showMessageDialog(null, "Categoria Ingresada Exitosamente", "Agregar Categoria", JOptionPane.INFORMATION_MESSAGE);
+        txtAgregarCategoria.setText("");
     }
-    
+    FirebaseConnector db;
     @Override
     public void initialize(URL url,  ResourceBundle rb) {
-        // 
+        db=FirebaseConnector.getInstance();
     }
 }
