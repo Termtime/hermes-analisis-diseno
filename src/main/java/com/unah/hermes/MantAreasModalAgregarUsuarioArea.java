@@ -20,6 +20,8 @@ import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.unah.hermes.provider.FirebaseConnector;
 import com.unah.hermes.provider.FirestoreRoutes;
 import com.unah.hermes.utils.EventListeners;
+
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -74,6 +76,9 @@ public class MantAreasModalAgregarUsuarioArea implements Initializable {
     @FXML
     TableView<User> tablaUsuariosArea;
 
+    @FXML
+    AnchorPane MantAreasModalAgregarUsuarioArea;
+
     ObservableList<User> usuarios = FXCollections.observableArrayList();
 
     @FXML
@@ -94,55 +99,59 @@ public class MantAreasModalAgregarUsuarioArea implements Initializable {
     User usuariosNoArea;
     Area areaSelected;
 
-    public void initData(Object obj) {
-        areaSelected = (Area) obj;
-        for (User usuario : usuarios) {
-            for (int i = 0; i < usuario.areas.size(); i++) {
-                if (usuario.areas.get(i).equals(areaSelected.areaID)) {
-                    break;
-                }
-                else{
-                    tablaUsuariosArea.getItems().add(usuario);
-                }
-
-            }
-        }
+    public void initData(Object area) {
+        areaSelected = (Area) area;
     }
+
     FirebaseConnector db;
+
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         // TODO Auto-generated method stub
         EventListeners.onWindowOpened(MantAreasModalAgregarUsuarioArea, new Function<Window, Void>() {
             @Override
             public Void apply(Window parent) {
-                    //iniciarEstructuraTablas();
-                    db = FirebaseConnector.getInstance();
-                    
-                    // Usuarios inicio (Prueba)
-                    List<QueryDocumentSnapshot> usuariosFirebase = db
-                                    .getAllDocumentsFrom(FirestoreRoutes.USUARIOS);
-                    List<QueryDocumentSnapshot> docsAreas = db.getAllDocumentsFrom(FirestoreRoutes.AREAS);
-                    for (DocumentSnapshot doc : usuariosFirebase) {
-                            User tmp;
+                iniciarEstructuraTablas();
+                db = FirebaseConnector.getInstance();
 
-                            if (doc.exists()) {
-                                    List<String> arregloIDAreas = (List<String>) doc.get("areas");
-                                    
-                                    tmp = new User(doc.getId(), doc.getString("Nombre"),
-                                                    doc.getString("nivelAcceso"), arregloIDAreas);
+                // Usuarios inicio (Prueba)
+                List<QueryDocumentSnapshot> usuariosFirebase = db.getAllDocumentsFrom(FirestoreRoutes.USUARIOS);
+                List<QueryDocumentSnapshot> docsAreas = db.getAllDocumentsFrom(FirestoreRoutes.AREAS);
+                tablaUsuariosArea.getItems().clear();
+                for (DocumentSnapshot doc : usuariosFirebase) {
+                    User tmp;
 
-                                    usuarios.add(tmp);
- 
-                            }
+                    if (doc.exists()) {
+                        List<String> arregloIDAreas = (List<String>) doc.get("areas");
+                        if (!arregloIDAreas.contains(areaSelected.areaID)) {
+                            tmp = new User(doc.getId(), doc.getString("Nombre"), doc.getString("nivelAcceso"),
+                                    arregloIDAreas);
+                            System.out.println(tmp.nombre);
+                            usuarios.add(tmp);
+                        }
+
                     }
-                    // tablaUsuario.getItems().addAll(usuariosArea);
-                    return null;
+                }
+                tablaUsuariosArea.getItems().addAll(usuarios);
+                // Platform.runLater(new Runnable() {
+                // @Override
+                // public void run() {
+                // }
+                // });
+                return null;
             }
-    });
+        });
 
+    }
 
+    private void iniciarEstructuraTablas() {
+        tablaUsuariosArea.getItems().clear();
+        tablaUsuariosArea.getColumns().clear();
+        TableColumn columnUsuario = new TableColumn<>("Usuario");
+        columnUsuario.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+        columnUsuario.setPrefWidth(tablaUsuariosArea.getWidth() * 0.98);
 
-
+        tablaUsuariosArea.getColumns().addAll(columnUsuario);
     }
 
 }
