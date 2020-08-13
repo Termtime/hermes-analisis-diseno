@@ -76,7 +76,6 @@ public class MantProductosModalAgregarProducto implements Initializable {
         data.put("Unidad", txtUnidad.getText());
         data.put("Categoria", comboCategoria.getSelectionModel().getSelectedItem().toString());
         db.createDocument("Productos", data);
-        JOptionPane.showMessageDialog(null, "Producto Ingresada Exitosamente", "Agregar Categoria", JOptionPane.INFORMATION_MESSAGE);
         Stage stage = (Stage) btnCancelar.getScene().getWindow();
        stage.close();
     }
