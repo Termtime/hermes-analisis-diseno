@@ -93,7 +93,9 @@ public class MantUsuariosPage implements Initializable {
 
     @FXML
     private void btnEliminarUsuarioClick(ActionEvent event) {
-      //db.deleteDocument("Usuarios", tablaUSelectedItem.getUserID().toString());
+      db.deleteDocument("Usuarios", tablaUSelectedItem.getUserID().toString());
+      tablaUsuarios.getItems().clear();
+      verTabla();
         
     }
 
@@ -142,34 +144,7 @@ public class MantUsuariosPage implements Initializable {
             @Override
             public Void apply(Window parent) {
                 iniciarEstructuraTablas();     
-                                         
-                               
-                for(DocumentSnapshot doc : docsAreas){
-                    Area tmp = new Area(doc.getId(), doc.getString("Area"));
-                    areas.add(tmp);
-                }
-
-                for (DocumentSnapshot doc : documentos) {
-                    User tmp;
-                     if(doc.exists()){
-                    List<String> arregloIDAreas = (List<String>) doc.get("areas");
-                    List<String> areasConNombre = new ArrayList();  
-
-                        for(Area area : areas){
-                            for(String areaID : arregloIDAreas){
-                                if(areaID.equals(area.areaID.trim()))
-                                {
-                                    areasConNombre.add(area.nombre);
-                                    break;
-                                }   
-                            }
-                        }   
-                        tmp = new User(doc.getId(), doc.getString("Nombre"),
-                        doc.getString("nivelAcceso"), areasConNombre);
-                        usuarios.add(tmp);
-                    }
-                }
-                    tablaUsuarios.getItems().addAll(usuarios);
+                verTabla();                                 
 
                 return null;
             }
@@ -261,6 +236,36 @@ public class MantUsuariosPage implements Initializable {
         }
     }
 */
+  public void verTabla(){
+    for(DocumentSnapshot doc : docsAreas){
+        Area tmp = new Area(doc.getId(), doc.getString("Area"));
+        areas.add(tmp);
+    }
 
+    for (DocumentSnapshot doc : documentos) {
+        User tmp;
+         if(doc.exists()){
+        List<String> arregloIDAreas = (List<String>) doc.get("areas");
+        List<String> areasConNombre = new ArrayList();  
+
+            for(Area area : areas){
+                for(String areaID : arregloIDAreas){
+                    if(areaID.equals(area.areaID.trim()))
+                    {
+                        areasConNombre.add(area.nombre);
+                        break;
+                    }   
+                }
+            }   
+            tmp = new User(doc.getId(), doc.getString("Nombre"),
+            doc.getString("nivelAcceso"), areasConNombre);
+            usuarios.add(tmp);
+        }
+    }
+        tablaUsuarios.getItems().addAll(usuarios);
+
+
+
+  }
 
 }

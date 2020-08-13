@@ -2,6 +2,7 @@ package com.unah.hermes;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.unah.hermes.objects.Area;
@@ -142,18 +143,18 @@ public class MantUsuariosModalModificarUsuario implements Initializable {
         comboAreaAcceso.getItems().addAll(areas);
 
         //para la ventana de modificar, para llenar la lista de la derecha y la izquierda
-        // for (Area area : areas) {
-        //     //recibirias el usuario, tendrias un objeto -User usuario
-        //      usuario.areas List<String>
-        //      String areaID = area.areaID;
-        //      List<String> usuarioAreas = new ArrayList();
-        //      if(usuarioAreas.contains(areaID))
-        //      {
-        //          listAreasSeleccionadas.getItems().add(area);
-        //      }else{
-        //          //listaDeLaIzquierda
-        //      }
-        //  }
+        for (Area area : areas) {
+            //recibirias el usuario, tendrias un objeto -User usuario
+             //usuario.areas List<String>
+             String areaID = area.areaID;
+             List<String> usuarioAreas = new ArrayList();
+             if(usuarioAreas.contains(areaID))
+             {
+                 listAreasSeleccionadas.getItems().add(area);
+             }else{
+                 //listaDeLaIzquierda
+             }
+         }
         
         //llenado de la lista de la izquierda
         listAreas.getItems().addAll(areas);
