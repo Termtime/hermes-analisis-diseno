@@ -94,7 +94,7 @@ public class MantProductosPage implements Initializable {
     @FXML ComboBox<String> comboCategoria= new ComboBox<>();
     @FXML private void btnAgregarProductoClick(ActionEvent event) {
         Navigation.pushRoute("MantProductosModalAgregarProducto", event, false, true);
-        refresh();
+        refreshProductos();
     }
     @FXML private void btnModificarProductoClick(ActionEvent event) {
         if(tablaProductoSelectedItem != null)
@@ -114,7 +114,7 @@ public class MantProductosPage implements Initializable {
                     if(tmp.nombre.equals(tablaProductoSelectedItem.getNombre().toString()))
                     {
                         db.deleteDocument("Productos", tmp.productoID);
-                        refresh();
+                        refreshProductos();
                         break;
                     }
                 }
@@ -131,7 +131,22 @@ public class MantProductosPage implements Initializable {
          Navigation.pushRoute("MantProductosModalModificarCategoria", event, false, true);
     }
     @FXML private void btnEliminarCategoriaClick(ActionEvent event) {
-
+        for (DocumentSnapshot doc : categoriaDocumentos) {
+            Categoria tmp;
+            if(doc.exists()){
+                tmp = new Categoria(doc.getId(),doc.getString("nombre"));
+                if(tmp.Nombre!=null)
+                {
+                    if(tmp.Nombre.equals(comboCategoria.getSelectionModel().getSelectedItem().toString()))
+                    {
+                        db.deleteDocument("Categoria", tmp.CategoriaID);
+                        refreshCategorias();
+                        refreshProductos();
+                        break;
+                    }
+                }
+            }
+        }
     }
     @FXML private void txtFiltroInput(KeyEvent event) {
         tablaProductos.getItems().clear();
@@ -244,7 +259,7 @@ public class MantProductosPage implements Initializable {
          
          tablaProductos.getColumns().addAll(columnaProducto, columnaCategoria, columnaUnidad);
      }
-     private void refresh(){
+     private void refreshProductos(){
         tablaProductos.getItems().clear();
         productos.clear();
         documentos = db.getAllDocumentsFrom(FirestoreRoutes.PRODUCTOS);
@@ -256,5 +271,17 @@ public class MantProductosPage implements Initializable {
             }
         }
         tablaProductos.getItems().addAll(productos);
+    }
+    private void refreshCategorias(){
+        comboCategoria.getItems().clear();
+        categoriaDocumentos = db.getAllDocumentsFrom(FirestoreRoutes.CATEGORIAS);
+        for(DocumentSnapshot cat: categoriaDocumentos){
+            Categoria tmp;
+            if(cat.exists()){
+                tmp=new Categoria(cat.getId(),cat.getString("nombre"));
+                System.out.println(tmp.getNombre());
+                comboCategoria.getItems().add(tmp.getNombre());
+            }
+        }
     }
 }
