@@ -84,7 +84,7 @@ public class MantUsuariosPage implements Initializable {
     @FXML
     private void btnModificarUsuarioClick(ActionEvent event) {
         if(tablaUSelectedItem != null)
-            Navigation.pushRouteWithParameter("MantUsuarioPage", event, false, true, MantUsuariosModalModificarUsuario.class, tablaUSelectedItem );
+            Navigation.pushRouteWithParameter("MantUsuariosModalModificarUsuario", event, false, true, MantUsuariosModalModificarUsuario.class, tablaUSelectedItem );
         else{
             Alert alert = new Alert(AlertType.ERROR,"Debe seleccionar un Usuario antes", ButtonType.OK);
             alert.showAndWait();
@@ -93,7 +93,8 @@ public class MantUsuariosPage implements Initializable {
 
     @FXML
     private void btnEliminarUsuarioClick(ActionEvent event) {
-
+      //db.deleteDocument("Usuarios", tablaUSelectedItem.getUserID().toString());
+        
     }
 
     @FXML
@@ -101,7 +102,7 @@ public class MantUsuariosPage implements Initializable {
 
     }
     
-    @FXML TextField txtFiltro;
+    @FXML TextField txtFiltro; 
    
     @FXML private void txtFiltroInput(KeyEvent event){                    
         tablaUsuarios.getItems().clear();
@@ -172,6 +173,8 @@ public class MantUsuariosPage implements Initializable {
 
                 return null;
             }
+
+            
 
 
         });

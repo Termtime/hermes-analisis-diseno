@@ -9,9 +9,13 @@ public class Area {
         this.nombre = nombre;
     }
 
+    public Area(String nombre){
+        this.nombre=nombre;
+    }
     public String getNombre() {
         return nombre;
     }
+
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
@@ -23,5 +27,10 @@ public class Area {
 
     public void setAreaID(String areaID) {
         this.areaID = areaID;
+    }
+
+    @Override
+    public String toString(){
+        return nombre;
     }
 }
