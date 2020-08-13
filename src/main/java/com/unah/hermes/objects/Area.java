@@ -28,4 +28,9 @@ public class Area {
     public void setAreaID(String areaID) {
         this.areaID = areaID;
     }
+
+    @Override
+    public String toString(){
+        return nombre;
+    }
 }
