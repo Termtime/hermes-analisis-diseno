@@ -94,6 +94,7 @@ public class MantProductosPage implements Initializable {
     @FXML ComboBox<String> comboCategoria= new ComboBox<>();
     @FXML private void btnAgregarProductoClick(ActionEvent event) {
         Navigation.pushRoute("MantProductosModalAgregarProducto", event, false, true);
+        refresh();
     }
     @FXML private void btnModificarProductoClick(ActionEvent event) {
         if(tablaProductoSelectedItem != null)
@@ -104,8 +105,25 @@ public class MantProductosPage implements Initializable {
         }
     }
     @FXML private void btnEliminarProductoClick(ActionEvent event) {
+        for (DocumentSnapshot doc : documentos) {
+            Producto tmp;
+            if(doc.exists()){
+                tmp = new Producto(doc.getId(), doc.getString("Producto"), doc.getString("Unidad"), doc.getString("Categoria"));
+                if(tmp.nombre!=null)
+                {
+                    if(tmp.nombre.equals(tablaProductoSelectedItem.getNombre().toString()))
+                    {
+                        db.deleteDocument("Productos", tmp.productoID);
+                        refresh();
+                        break;
+                    }
+                }
+            }
+        }
         
+
     }
+    
     @FXML private void btnAgregarCategoriaClick(ActionEvent event) {
         Navigation.pushRoute("MantProductosModalAgregarCategoria", event, false, true);
     }
@@ -226,4 +244,17 @@ public class MantProductosPage implements Initializable {
          
          tablaProductos.getColumns().addAll(columnaProducto, columnaCategoria, columnaUnidad);
      }
+     private void refresh(){
+        tablaProductos.getItems().clear();
+        productos.clear();
+        documentos = db.getAllDocumentsFrom(FirestoreRoutes.PRODUCTOS);
+        for (DocumentSnapshot doc : documentos) {
+            Producto tmp;
+            if(doc.exists()){
+                tmp = new Producto(doc.getId(), doc.getString("Producto"), doc.getString("Unidad"), doc.getString("Categoria"));
+                productos.add(tmp);
+            }
+        }
+        tablaProductos.getItems().addAll(productos);
+    }
 }
