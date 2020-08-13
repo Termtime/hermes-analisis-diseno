@@ -31,8 +31,10 @@ import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.function.Function;
 
 import com.google.cloud.firestore.DocumentReference;
@@ -83,7 +85,13 @@ public class MantAreasModalAgregarUsuarioArea implements Initializable {
 
     @FXML
     private void btnAgregarClick(ActionEvent event) {
+        if (!usuarioID.isEmpty() && !areasUsuarioArray.isEmpty()) {
+            Map<String, Object> datos = new HashMap();
 
+            datos.put("areas", areasUsuarioArray);
+            db.updateDocument(FirestoreRoutes.USUARIOS, usuarioID, datos);
+
+        }
     }
 
     @FXML
@@ -98,9 +106,18 @@ public class MantAreasModalAgregarUsuarioArea implements Initializable {
 
     User usuariosNoArea;
     Area areaSelected;
+    User selectedUser;
+    String areaID;
+    String usuarioID;
+    String usuarioEmail;
+    String usuarioName;
+    String usuarioAcces;
+    List<String> areasUsuarioArray;
+    List<Area> areas;
 
     public void initData(Object area) {
         areaSelected = (Area) area;
+        areaID = areaSelected.areaID;
     }
 
     FirebaseConnector db;
@@ -139,6 +156,21 @@ public class MantAreasModalAgregarUsuarioArea implements Initializable {
                 // }
                 // });
                 return null;
+            }
+        });
+
+        tablaUsuariosArea.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<User>() {
+            @Override
+            public void changed(ObservableValue<? extends User> observable, User oldValue, User newValue) {
+                selectedUser = newValue;
+                // System.out.println(newValue);
+                // llenarTablaUsuario(newValue.areaID);
+                usuarioID = selectedUser.userID;
+                areasUsuarioArray = selectedUser.areas;
+                areasUsuarioArray.add(areaID);
+                usuarioEmail = "correo@email.com";
+                usuarioName = selectedUser.nombre;
+                usuarioAcces = selectedUser.nivelAcceso;
             }
         });
 

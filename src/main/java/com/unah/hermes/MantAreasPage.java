@@ -195,7 +195,7 @@ public class MantAreasPage implements Initializable {
                 tablaArea.getColumns().clear();
                 TableColumn columnArea = new TableColumn<>("Area");
                 columnArea.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-                columnArea.setPrefWidth(tablaUsuario.getWidth() * 0.98);
+                columnArea.setPrefWidth(tablaUsuario.getWidth() * 0.95);
 
                 tablaArea.getColumns().addAll(columnArea);
 
@@ -205,7 +205,7 @@ public class MantAreasPage implements Initializable {
                 tablaUsuario.getColumns().clear();
                 TableColumn columnUsuario = new TableColumn<>("Usuario");
                 columnUsuario.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-                columnUsuario.setPrefWidth(tablaUsuario.getWidth() * 0.98);
+                columnUsuario.setPrefWidth(tablaUsuario.getWidth() * 0.95);
 
                 tablaUsuario.getColumns().addAll(columnUsuario);
         }
