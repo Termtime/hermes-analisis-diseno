@@ -7,7 +7,11 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane id="AnchorPane" fx:id="MantUsuario" minHeight="608.0" minWidth="1079.0" prefHeight="637.0" prefWidth="1079.0" styleClass="window-background-level2" stylesheets="@../styles/StyleTablasNivel2.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unah.hermes.MantUsuariosPage">
@@ -52,5 +56,15 @@
       </Button>
       <Separator layoutX="905.0000000000001" layoutY="434.0" prefHeight="0.0" prefWidth="134.0" AnchorPane.rightAnchor="39.59999999999991" />
       <Separator layoutX="58.0" layoutY="81.0" prefHeight="3.0" prefWidth="963.0" AnchorPane.leftAnchor="58.0" AnchorPane.rightAnchor="57.799999999999955" AnchorPane.topAnchor="93.0" />
+      <Pane layoutX="915.0" layoutY="132.0" prefHeight="112.0" prefWidth="114.0">
+         <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#2c2c2c" height="112.0" stroke="BLACK" strokeType="INSIDE" width="114.0" />
+            <ImageView fx:id="imagenUsuario" fitHeight="112.0" fitWidth="165.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/usuarios.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
    </children>
 </AnchorPane>
