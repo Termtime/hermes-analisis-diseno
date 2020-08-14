@@ -8,9 +8,12 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
-
 
 <AnchorPane id="AnchorPane" fx:id="MantenimientoProductos" prefHeight="637.0" prefWidth="922.0" styleClass="window-background-level2" stylesheets="@../styles/StyleTablasNivel2.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unah.hermes.MantProductosPage">
    <children>
@@ -38,27 +41,27 @@
           <TableColumn minWidth="0.0" prefWidth="165.5999755859375" resizable="false" text="Unidad" />
         </columns>
       </TableView>
-      <Button fx:id="btnAgregarProducto" layoutX="734.0" layoutY="217.0" mnemonicParsing="false" onAction="#btnAgregarProductoClick" prefHeight="32.0" prefWidth="152.0" text="Agregar Producto" AnchorPane.rightAnchor="36.0">
+      <Button fx:id="btnAgregarProducto" layoutX="734.0" layoutY="257.0" mnemonicParsing="false" onAction="#btnAgregarProductoClick" prefHeight="32.0" prefWidth="152.0" text="Agregar Producto" AnchorPane.rightAnchor="36.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="btnModificarProducto" layoutX="734.0" layoutY="279.0" mnemonicParsing="false" onAction="#btnModificarProductoClick" prefHeight="32.0" prefWidth="152.0" text="Modificar Producto" AnchorPane.rightAnchor="36.0">
+      <Button fx:id="btnModificarProducto" layoutX="734.0" layoutY="309.0" mnemonicParsing="false" onAction="#btnModificarProductoClick" prefHeight="32.0" prefWidth="152.0" text="Modificar Producto" AnchorPane.rightAnchor="36.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="btnEliminarProducto" layoutX="734.0" layoutY="341.0" mnemonicParsing="false" onAction="#btnEliminarProductoClick" prefHeight="32.0" prefWidth="152.0" styleClass="btnCancelar" text="Eliminar Producto" AnchorPane.rightAnchor="36.0">
+      <Button fx:id="btnEliminarProducto" layoutX="734.0" layoutY="361.0" mnemonicParsing="false" onAction="#btnEliminarProductoClick" prefHeight="32.0" prefWidth="152.0" styleClass="btnCancelar" text="Eliminar Producto" AnchorPane.rightAnchor="36.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="btnAgregarCategoria" layoutX="734.0" layoutY="435.0" mnemonicParsing="false" onAction="#btnAgregarCategoriaClick" prefHeight="32.0" prefWidth="152.0" text="Agregar Categoria" AnchorPane.rightAnchor="36.0">
+      <Button fx:id="btnAgregarCategoria" layoutX="734.0" layoutY="455.0" mnemonicParsing="false" onAction="#btnAgregarCategoriaClick" prefHeight="32.0" prefWidth="152.0" text="Agregar Categoria" AnchorPane.rightAnchor="36.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="btnModificarCategoria" layoutX="734.0" layoutY="496.0" mnemonicParsing="false" onAction="#btnModificarCategoriaClick" prefHeight="32.0" prefWidth="152.0" text="Modificar Categoria" AnchorPane.rightAnchor="36.0">
+      <Button fx:id="btnModificarCategoria" layoutX="734.0" layoutY="506.0" mnemonicParsing="false" onAction="#btnModificarCategoriaClick" prefHeight="32.0" prefWidth="152.0" text="Modificar Categoria" AnchorPane.rightAnchor="36.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -68,7 +71,17 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Separator layoutX="743.0" layoutY="402.0" prefHeight="0.0" prefWidth="134.0" AnchorPane.rightAnchor="44.60000000000002" />
+      <Separator layoutX="743.0" layoutY="422.0" prefHeight="0.0" prefWidth="134.0" AnchorPane.rightAnchor="44.60000000000002" />
       <Separator layoutX="48.0" layoutY="92.0" prefHeight="3.0" prefWidth="826.0" AnchorPane.topAnchor="93.0" />
+      <Pane layoutX="750.0" layoutY="118.0" prefHeight="112.0" prefWidth="119.0">
+         <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#2c2c2c" height="112.0" stroke="BLACK" strokeType="INSIDE" width="121.0" />
+            <ImageView fx:id="imagenProducto" fitHeight="112.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/noun_Food_3160306.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
    </children>
 </AnchorPane>

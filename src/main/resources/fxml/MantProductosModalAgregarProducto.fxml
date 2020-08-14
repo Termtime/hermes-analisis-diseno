@@ -6,13 +6,16 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="window-background-level3" stylesheets="@../styles/StyleTablasNivel3.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unah.hermes.MantProductosModalAgregarProducto">
+<AnchorPane id="AnchorPane" prefHeight="456.0" prefWidth="600.0" styleClass="window-background-level3" stylesheets="@../styles/StyleTablasNivel3.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unah.hermes.MantProductosModalAgregarProducto">
    <children>
-      <Pane layoutX="38.0" layoutY="284.0">
+      <Pane layoutX="38.0" layoutY="295.0">
          <children>
             <ComboBox fx:id="comboCategoria" layoutY="24.0" onAction="#comboCategoriaClick" prefHeight="30.0" prefWidth="360.0" promptText="Escoja una categoría" style="-fx-background-color: #ffffff;" />
             <Label layoutX="1.0" text="Categoría:">
@@ -27,7 +30,7 @@
             <Font size="27.0" />
          </font>
       </Label>
-      <Pane layoutX="38.0" layoutY="116.0">
+      <Pane layoutX="38.0" layoutY="127.0">
          <children>
             <Label text="Nombre:">
                <font>
@@ -41,15 +44,15 @@
             </TextField>
          </children>
       </Pane>
-      <Button fx:id="btnAgregar" layoutX="457.0" layoutY="174.0" mnemonicParsing="false" onAction="#btnAgregarClick" prefHeight="32.0" prefWidth="86.0" text="Agregar" AnchorPane.bottomAnchor="194.0">
+      <Button fx:id="btnAgregar" layoutX="193.0" layoutY="388.0" mnemonicParsing="false" onAction="#btnAgregarClick" prefHeight="32.0" prefWidth="86.0" text="Agregar" AnchorPane.bottomAnchor="36.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <Button fx:id="btnCancelar" layoutX="457.0" layoutY="258.0" mnemonicParsing="false" onAction="#btnCancelarClick" prefHeight="32.0" prefWidth="86.0" styleClass="btnCancelar" text="Cancelar" AnchorPane.bottomAnchor="110.0">
+      <Button fx:id="btnCancelar" layoutX="320.0" layoutY="388.0" mnemonicParsing="false" onAction="#btnCancelarClick" prefHeight="32.0" prefWidth="86.0" styleClass="btnCancelar" text="Cancelar" AnchorPane.bottomAnchor="36.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <Pane layoutX="38.0" layoutY="200.0">
+      <Pane layoutX="38.0" layoutY="211.0">
          <children>
             <Label text="Unidad:">
                <font>
@@ -64,5 +67,19 @@
          </children>
       </Pane>
       <Separator layoutX="53.0" layoutY="93.0" prefHeight="0.0" prefWidth="494.0" AnchorPane.topAnchor="93.0" />
+      <Pane layoutX="439.0" layoutY="161.0" prefHeight="112.0" prefWidth="119.0">
+         <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#2c2c2c" height="112.0" stroke="BLACK" strokeType="INSIDE" width="121.0" />
+            <ImageView fx:id="imagenProducto" fitHeight="112.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/noun_Food_3160306.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Button fx:id="btnAgregarImagenProducto" layoutX="436.0" layoutY="284.0" mnemonicParsing="false" onAction="#btnAgregarImagenProductoClick" text="Escoger Imagen">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
    </children>
 </AnchorPane>

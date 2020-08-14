@@ -12,7 +12,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="468.0" prefWidth="413.0" styleClass="window-background-level1" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unah.hermes.LoginPageController">
    <children>
-      <AnchorPane layoutX="31.0" layoutY="120.0" styleClass="window-background-level2" AnchorPane.leftAnchor="31.0" AnchorPane.rightAnchor="31.0">
+      <AnchorPane layoutX="31.0" layoutY="120.0" style="-fx-background-color: #3d3d3d;" AnchorPane.leftAnchor="31.0" AnchorPane.rightAnchor="31.0">
          <children>
             <AnchorPane layoutX="34.0" layoutY="59.0" AnchorPane.leftAnchor="34.0" AnchorPane.rightAnchor="34.0">
                <children>
@@ -53,7 +53,7 @@
             <Font size="48.0" />
          </font>
       </Label>
-      <Label layoutX="27.0" layoutY="76.0" prefHeight="17.0" prefWidth="361.0" text="Herramienta de Elaboración de Requisas por Medios Electronicos Sistematizados" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="27.0" AnchorPane.rightAnchor="27.0">
+      <Label layoutX="75.0" layoutY="75.0" prefHeight="35.0" prefWidth="263.0" text="Herramienta para la Entrega de Requisas por Medios Electònicos Sistematizados" textAlignment="CENTER" textFill="WHITE" wrapText="true" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="75.0">
          <font>
             <Font size="10.0" />
          </font>
