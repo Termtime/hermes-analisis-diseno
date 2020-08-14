@@ -443,6 +443,16 @@ public class FirebaseConnector {
             return false;
         }
     }
+    public boolean eliminarUsuario(String uid, String firestoreDocumentID) {
+        try {
+            auth.deleteUser(uid);
+            deleteDocument(FirestoreRoutes.USUARIOS, firestoreDocumentID);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
     public boolean cambiarPassword(String uid, String password) {
         UpdateRequest request = new UpdateRequest(uid).setPassword(password);
