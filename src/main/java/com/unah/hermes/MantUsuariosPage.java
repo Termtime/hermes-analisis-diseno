@@ -128,8 +128,8 @@ public class MantUsuariosPage implements Initializable {
     User tablaUSelectedItem;
     List<Area> areas = new ArrayList<Area>();
     ObservableList<User> usuarios = FXCollections.observableArrayList();
-    List<QueryDocumentSnapshot> documentos = db.getAllDocumentsFrom(FirestoreRoutes.USUARIOS);
-    List<QueryDocumentSnapshot> docsAreas = db.getAllDocumentsFrom(FirestoreRoutes.AREAS);  
+    List<QueryDocumentSnapshot> documentos;
+    List<QueryDocumentSnapshot> docsAreas;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -237,6 +237,10 @@ public class MantUsuariosPage implements Initializable {
     }
 */
   public void verTabla(){
+    tablaUsuarios.getItems().clear();
+    usuarios.clear();
+    documentos = db.getAllDocumentsFrom(FirestoreRoutes.USUARIOS);
+    docsAreas = db.getAllDocumentsFrom(FirestoreRoutes.AREAS);  
     for(DocumentSnapshot doc : docsAreas){
         Area tmp = new Area(doc.getId(), doc.getString("Area"));
         areas.add(tmp);

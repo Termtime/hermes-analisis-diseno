@@ -96,6 +96,7 @@ public class MantUsuariosModalModificarUsuario implements Initializable {
         User usuarioDatos = (User) data; 
         txtNombre.setText(usuarioDatos.nombre);
         txtCorreo.setText(usuarioDatos.userID); 
+        //comboAreaAcceso.selectionModelProperty().
         //listAreasSeleccionadas.set
 
     }
