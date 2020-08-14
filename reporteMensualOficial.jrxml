@@ -133,14 +133,14 @@
 				<text><![CDATA[REPORTE MENSUAL REQUISICIONES]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="260" y="40" width="53" height="30" uuid="624a417e-9532-4588-8d3b-dbba7b0ecc4b"/>
+				<reportElement x="260" y="40" width="70" height="30" uuid="624a417e-9532-4588-8d3b-dbba7b0ecc4b"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Fecha Final]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="360" y="40" width="80" height="20" uuid="f605c690-cc4d-45a9-9fc7-c657f633a46b"/>
+				<reportElement x="380" y="40" width="80" height="20" uuid="f605c690-cc4d-45a9-9fc7-c657f633a46b"/>
 				<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
 			</textField>
 		</band>
