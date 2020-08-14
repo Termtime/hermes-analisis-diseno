@@ -3,13 +3,21 @@ package com.unah.hermes;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.unah.hermes.provider.FirebaseConnector;
+import com.unah.hermes.utils.Navigation;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 
 import javafx.fxml.FXMLLoader;
@@ -19,43 +27,61 @@ import javafx.stage.Stage;
 import javafx.scene.Node;
 
 public class LoginPageController implements Initializable {
-    
-    private FirebaseConnector db;
 
+    private FirebaseConnector db;
+    @FXML
+    Label errorCorreo, errorPass;
+    @FXML
+    Button loginBtn;
     @FXML
     private TextField correoTxt;
     @FXML
     private PasswordField passTxt;
-    
+
     private String correo, pass;
+
     @FXML
-    private void loginBtnClick(ActionEvent event)
-    {
+    private void loginBtnClick(ActionEvent event) {
         correo = correoTxt.getText();
         pass = passTxt.getText();
 
-        if(db.loginWithEmailPassword(correo, pass))
-        {
-            Parent root;
-            try {
-                root = FXMLLoader.load(getClass().getResource("/fxml/MainPage.fxml"));
-                Stage stage = new Stage();
-                stage.setTitle("My New Stage Title");
-                stage.setScene(new Scene(root));
-                stage.show();
-                // Hide this current window (if this is what you want)
-                ((Node)(event.getSource())).getScene().getWindow().hide();
-            }
-            catch (IOException e) {
-                e.printStackTrace();
-            }
-            
+        if (db.loginWithEmailPassword(correo, pass)) {
+            Navigation.pushRoute("MainPage", event, true, false);
         }
     }
-    
+
+    @FXML
+    private void validarCorreo(KeyEvent event) {
+        
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        correoTxt.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if (newValue.isEmpty()) {
+                    loginBtn.setDisable(true);
+                    errorCorreo.setVisible(false);
+                    errorCorreo.setText("Debe ingresar un correo válido");
+                    return;
+                }
+                String regexString = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
+                Pattern regex = Pattern.compile(regexString);
+                Matcher matcher = regex.matcher(newValue);
+                if (matcher.find()) {
+                    loginBtn.setDisable(false);
+                    errorCorreo.setVisible(false);
+                } else {
+                    errorCorreo.setVisible(true);
+                    loginBtn.setDisable(true);
+                    errorCorreo.setText("Debe ingresar un correo válido");
+                }
+            }
+        });
         db = FirebaseConnector.getInstance();
+        errorCorreo.setVisible(false);
+        errorPass.setVisible(false);
     }    
     
 }
