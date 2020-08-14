@@ -86,7 +86,7 @@
 					<text><![CDATA[H.E.R.M.E.S]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="0" y="60" width="530" height="20" forecolor="#FFFFFF" uuid="39f9641d-813f-47d8-afbe-547618c84241"/>
+					<reportElement x="20" y="60" width="530" height="20" forecolor="#FFFFFF" uuid="39f9641d-813f-47d8-afbe-547618c84241"/>
 					<textElement textAlignment="Left">
 						<font size="14" isBold="false"/>
 					</textElement>
@@ -113,10 +113,16 @@
 			</textField>
 			<staticText>
 				<reportElement x="7" y="40" width="53" height="30" uuid="f4e4a1ae-a74e-43f6-9589-24a132e7dd49"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[Fecha]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="7" y="60" width="53" height="30" uuid="fdef3044-7188-4a80-90bc-9df1cf41ee56"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[Solicitante]]></text>
 			</staticText>
 			<staticText>
@@ -135,6 +141,9 @@
 			</line>
 			<staticText>
 				<reportElement x="7" y="36" width="100" height="30" uuid="ff8d43fc-586d-41b8-8a56-4aeb54cd7f60"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[Requisición]]></text>
 			</staticText>
 			<textField>
@@ -143,6 +152,9 @@
 			</textField>
 			<staticText>
 				<reportElement x="10" y="60" width="53" height="30" uuid="19601392-fef9-4d10-a1eb-ed9530224cb6"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[Fecha]]></text>
 			</staticText>
 			<textField>
@@ -151,6 +163,9 @@
 			</textField>
 			<staticText>
 				<reportElement x="160" y="60" width="53" height="30" uuid="4265842c-8bc9-4c6d-9e25-aa3db1e3b973"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[Hora]]></text>
 			</staticText>
 			<textField>
@@ -159,6 +174,9 @@
 			</textField>
 			<staticText>
 				<reportElement x="10" y="86" width="53" height="30" uuid="81ff1bba-ad53-4f6b-881e-d67106fbb5d7"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[Área]]></text>
 			</staticText>
 			<textField>
@@ -167,6 +185,9 @@
 			</textField>
 			<staticText>
 				<reportElement x="160" y="86" width="53" height="30" uuid="6ba8e922-a456-4304-9fda-8f59173e1bbf"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[Solicitante]]></text>
 			</staticText>
 			<textField>
