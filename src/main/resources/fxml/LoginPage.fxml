@@ -7,56 +7,77 @@
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="468.0" prefWidth="413.0" styleClass="window-background-level1" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unah.hermes.LoginPageController">
+<AnchorPane id="AnchorPane" prefHeight="471.0" prefWidth="714.0" styleClass="window-background-level1" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unah.hermes.LoginPageController">
    <children>
-      <AnchorPane layoutX="31.0" layoutY="120.0" style="-fx-background-color: #3d3d3d;" AnchorPane.leftAnchor="31.0" AnchorPane.rightAnchor="31.0">
+      <AnchorPane layoutX="369.0" layoutY="27.0" prefHeight="416.0" prefWidth="316.0" style="-fx-background-color: #3d3d3d;">
          <children>
-            <AnchorPane layoutX="34.0" layoutY="59.0" AnchorPane.leftAnchor="34.0" AnchorPane.rightAnchor="34.0">
-               <children>
-                  <Button fx:id="loginBtn" layoutX="23.0" layoutY="192.0" mnemonicParsing="false" onAction="#loginBtnClick" prefHeight="45.0" prefWidth="240.0" text="Iniciar Sesión" AnchorPane.leftAnchor="23.0" AnchorPane.rightAnchor="23.0">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor></Button>
-                  <PasswordField id="passTxt" fx:id="passTxt" layoutY="124.0" prefHeight="25.0" prefWidth="285.0" promptText="contraseña" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-                  <Label prefHeight="27.0" prefWidth="63.0" text="Correo:" textFill="WHITE">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label layoutY="91.0" prefHeight="17.0" prefWidth="98.0" text="Contraseña:" textFill="WHITE">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <TextField id="correoTxt" fx:id="correoTxt" layoutY="34.0" prefHeight="25.0" prefWidth="285.0" promptText="correo@correo.com" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-               </children>
-            </AnchorPane>
-            <Label layoutX="75.0" layoutY="14.0" prefHeight="35.0" prefWidth="195.0" text="Inicio de Sesión" textFill="WHITE" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="75.0">
+            <Label layoutX="63.0" layoutY="28.0" prefHeight="35.0" prefWidth="189.0" text="Inicio de Sesión" textFill="WHITE">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
-            <Separator layoutX="15.0" layoutY="48.0" prefHeight="2.0" prefWidth="317.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" />
+            <Separator layoutX="38.0" layoutY="76.0" prefHeight="0.0" prefWidth="240.0" />
+            <Pane layoutX="44.0" layoutY="129.0">
+               <children>
+                  <TextField id="correoTxt" fx:id="correoTxt" layoutY="22.0" prefHeight="30.0" prefWidth="227.0" promptText="correo@correo.com">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+                  <Label layoutX="3.0" prefHeight="14.0" prefWidth="46.0" text="Correo:" textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Pane layoutX="44.0" layoutY="214.0">
+               <children>
+                  <PasswordField id="passTxt" fx:id="passTxt" layoutY="22.0" prefHeight="30.0" prefWidth="227.0" promptText="contraseña">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </PasswordField>
+                  <Label layoutX="1.0" prefHeight="14.0" prefWidth="76.0" text="Contraseña:" textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Button fx:id="loginBtn" layoutX="94.0" layoutY="320.0" mnemonicParsing="false" onAction="#loginBtnClick" prefHeight="46.0" prefWidth="127.0" text="Iniciar Sesión">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
          </children>
          <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </padding>
       </AnchorPane>
-      <Label id="titleLabel" accessibleRoleDescription="\\@" layoutX="91.0" layoutY="14.0" prefHeight="70.0" prefWidth="240.0" text="H.E.R.M.E.S" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="91.0" AnchorPane.rightAnchor="82.0" AnchorPane.topAnchor="14.0">
-         <font>
-            <Font size="48.0" />
-         </font>
-      </Label>
-      <Label layoutX="75.0" layoutY="75.0" prefHeight="35.0" prefWidth="263.0" text="Herramienta para la Entrega de Requisas por Medios Electònicos Sistematizados" textAlignment="CENTER" textFill="WHITE" wrapText="true" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="75.0">
-         <font>
-            <Font size="10.0" />
-         </font>
-      </Label>
+      <Pane layoutX="35.0" layoutY="42.0">
+         <children>
+            <Label id="titleLabel" accessibleRoleDescription="\\@" layoutX="16.0" prefHeight="70.0" prefWidth="240.0" text="H.E.R.M.E.S" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font size="48.0" />
+               </font>
+            </Label>
+            <Label layoutY="79.0" prefHeight="35.0" prefWidth="263.0" text="Herramienta para la Entrega de Requisas por Medios Electrónicos Sistematizados" textAlignment="CENTER" textFill="WHITE" wrapText="true" />
+         </children>
+      </Pane>
+      <ImageView fitHeight="188.0" fitWidth="229.0" layoutX="59.0" layoutY="192.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/logo.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
