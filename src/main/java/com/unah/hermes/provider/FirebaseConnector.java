@@ -2,11 +2,15 @@ package com.unah.hermes.provider;
 
 import java.io.DataOutputStream;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.channels.Channels;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -16,6 +20,7 @@ import java.util.Scanner;
 
 import com.google.api.core.ApiFuture;
 import com.google.auth.oauth2.GoogleCredentials;
+import com.google.cloud.ReadChannel;
 import com.google.cloud.firestore.CollectionReference;
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
@@ -26,6 +31,11 @@ import com.google.cloud.firestore.Query;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
 import com.google.cloud.firestore.WriteResult;
+import com.google.cloud.storage.Blob;
+import com.google.cloud.storage.BlobId;
+import com.google.cloud.storage.BlobInfo;
+import com.google.cloud.storage.Storage;
+import com.google.cloud.storage.StorageOptions;
 import com.google.firebase.cloud.FirestoreClient;
 import com.google.cloud.firestore.EventListener;
 import com.google.gson.Gson;
@@ -43,6 +53,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import javafx.application.Platform;
+import javafx.scene.image.Image;
 
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.FirebaseAuth;
@@ -55,7 +66,10 @@ public class FirebaseConnector {
     private Firestore db;
     private FirebaseApp app;
     private FirebaseAuth auth;
+    private Storage storage;
     private String API_KEY;
+    private String BUCKET_NAME = "hermes-proyecto-is702.appspot.com";
+    private String PROJECT_ID;
     // Patron SINGLETON
     private static final FirebaseConnector instance = new FirebaseConnector();
 
@@ -71,23 +85,40 @@ public class FirebaseConnector {
 
     private void initFirebase() {
         try {
-            final JSONParser jsonParser = new JSONParser();
-            final FileReader file = new FileReader("api_key.json");
-            final Object obj = jsonParser.parse(file);
-            final JSONObject apiKey = (JSONObject) obj;
-            API_KEY = (String) apiKey.get("api_key");
-            final FileInputStream serviceAccount = new FileInputStream(
-                    "hermes-proyecto-is702-firebase-adminsdk-development.json");
+            //obtener el Api key
+             JSONParser jsonParser = new JSONParser();
+             FileReader file = new FileReader("api_key.json");
+             Object obj = jsonParser.parse(file);
+             JSONObject apiKey = (JSONObject) obj;
+             API_KEY = (String) apiKey.get("api_key");
+             //obtener el project ID
+             FileReader adminSDK = new FileReader("hermes-proyecto-is702-firebase-adminsdk-development.json");
+             Object obj2 = jsonParser.parse(adminSDK);
+             JSONObject serviceAccJSON = (JSONObject) obj2;
+             adminSDK.close();
+             PROJECT_ID = serviceAccJSON.get("project_id").toString();
+
+            //obtener el project ID
+
+            final FileInputStream firestorage = new FileInputStream("hermes-proyecto-is702-firebase-adminsdk-development.json");
+            final FileInputStream serviceAccount = new FileInputStream("hermes-proyecto-is702-firebase-adminsdk-development.json");
+            final StorageOptions firestorageOptions = StorageOptions.newBuilder()
+                .setProjectId(PROJECT_ID)
+                .setCredentials(GoogleCredentials.fromStream(firestorage)).build();
+
             final FirebaseOptions options = new FirebaseOptions.Builder()
-                    .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                    .setDatabaseUrl("https://hermes-proyecto-is702.firebaseio.com").build();
+                .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                .setStorageBucket(BUCKET_NAME)
+                .setProjectId(PROJECT_ID)
+                .setDatabaseUrl("https://hermes-proyecto-is702.firebaseio.com").build();
             app = FirebaseApp.initializeApp(options);
             db = FirestoreClient.getFirestore(app);
             auth = FirebaseAuth.getInstance(app);
+            storage =  firestorageOptions.getService();
             System.out.println("FINISHED LOADING");
             // System.out.println(db);
         } catch (final Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
     }
 
@@ -481,6 +512,47 @@ public class FirebaseConnector {
         }catch(Exception e)
         {
             System.out.println(e);
+            return null;
+        }
+    }
+
+    //Google cloud storage methods
+    public boolean uploadImage(String firestoragePath, String filePath){
+        System.out.println("Subiendo archivo");
+        String objectName= Paths.get(filePath).getFileName().toString();
+        try {
+            String mimeType = Files.probeContentType(Paths.get(filePath));
+            //si el archivo seleccionado no es una imagen png o jpeg no proseguir
+            if(!mimeType.equals("image/png") && !mimeType.equals("image/jpeg")) return false;
+            // Storage storage = StorageOptions.newBuilder().setProjectId(projectId).build().getService();
+            BlobId blobId = BlobId.of(BUCKET_NAME, firestoragePath+objectName);
+            BlobInfo blobInfo = BlobInfo.newBuilder(blobId)
+                .setContentType(mimeType)
+                .build();
+            storage.create(blobInfo, Files.readAllBytes(Paths.get(filePath)));
+        
+            System.out.println(
+                "File " + filePath + " uploaded to bucket " + BUCKET_NAME + " as " + objectName);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("error subiendo archivo");
+            return false;
+        }
+    }
+
+    public Image downloadImage(String firestoragePath, String objectName){
+        try {
+            //obtener el archivo, crear un canal de lectura y un input stream para crear una imagen
+            Blob blob = storage.get(BUCKET_NAME, firestoragePath + objectName);
+            ReadChannel readChannel = blob.reader();
+            InputStream inputStream = Channels.newInputStream(readChannel);
+            Image imagen = new Image(inputStream);
+
+            return imagen;
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("error bajando archivo");
             return null;
         }
     }
