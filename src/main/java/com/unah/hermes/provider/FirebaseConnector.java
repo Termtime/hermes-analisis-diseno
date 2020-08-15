@@ -329,7 +329,7 @@ public class FirebaseConnector {
     };
     // AUTH METHODS
 
-    public boolean loginWithEmailPassword(final String email, final String password) {
+    public String loginWithEmailPassword(final String email, final String password) {
         final String API_ENDPOINT = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key="
                 + API_KEY;
         try {
@@ -358,19 +358,19 @@ public class FirebaseConnector {
                 System.out.println(status);
                 System.out.println("FAIL");
                 System.out.println(((Map<String, Object>) (httpResponse.get("error"))).get("message"));
-                return false;
+                return ((Map<String, Object>) (httpResponse.get("error"))).get("message").toString();
             } else {
                 in = con.getInputStream();
                 httpResponse = getJSONfromHttpStream(con, in);
                 System.out.println("PASS");
                 con.disconnect();
-                return true;
+                return "PASS";
             }
 
         } catch (final IOException e) {
             System.out.println(e);
             System.out.println("FAIL");
-            return false;
+            return "ERROR";
         }
 
     }
