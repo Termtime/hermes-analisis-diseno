@@ -30,8 +30,10 @@ import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.function.Function;
 
 import com.google.cloud.firestore.DocumentReference;
@@ -84,6 +86,18 @@ public class MantAreasPage implements Initializable {
         @FXML
         AnchorPane MantenimientoAreas;
 
+        Area areaSelected;
+        String areaSelectedID;
+        User selectedUser;
+        String areaID;
+        String usuarioID;
+        String usuarioEmail;
+        String usuarioName;
+        String usuarioAcces;
+        List<String> areasUsuarioArray;
+        List<Area> areas;
+        int index;
+
         @FXML
         private void btnCrearAreaClick(ActionEvent event) {
                 Navigation.pushRoute("MantAreasModalCrearArea", event, false, true);
@@ -108,7 +122,14 @@ public class MantAreasPage implements Initializable {
 
         @FXML
         private void btnEliminarUsuarioAreaClick(ActionEvent event) {
+                
+                if (!usuarioID.isEmpty() && !areasUsuarioArray.isEmpty()) {
+                        Map<String, Object> datos = new HashMap();
+                        areasUsuarioArray.remove(index);
+                        datos.put("areas", areasUsuarioArray);
+                        db.updateDocument(FirestoreRoutes.USUARIOS, usuarioID, datos);
 
+                }
         }
 
         FirebaseConnector db;
@@ -183,9 +204,28 @@ public class MantAreasPage implements Initializable {
                 tablaArea.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Area>() {
                         @Override
                         public void changed(ObservableValue<? extends Area> observable, Area oldValue, Area newValue) {
+                                areaSelectedID ="";
                                 TablaAreaSelectedRow = newValue;
                                 // System.out.println(newValue);
                                 llenarTablaUsuario(newValue.areaID);
+                                areaSelectedID = TablaAreaSelectedRow.areaID;
+                        }
+                });
+
+                tablaUsuario.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<User>() {
+                        @Override
+                        public void changed(ObservableValue<? extends User> observable, User oldValue, User newValue) {
+                                selectedUser = newValue;
+                                // System.out.println(newValue);
+                                // llenarTablaUsuario(newValue.areaID);
+                                usuarioID = selectedUser.userID;
+                                areasUsuarioArray = selectedUser.areas;
+                                index = areasUsuarioArray.indexOf(areaSelectedID);
+                                
+                                // areasUsuarioArray.add(areaID);
+                                usuarioEmail = "correo@email.com";
+                                usuarioName = selectedUser.nombre;
+                                usuarioAcces = selectedUser.nivelAcceso;
                         }
                 });
         }
