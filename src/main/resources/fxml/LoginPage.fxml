@@ -66,7 +66,7 @@
       </AnchorPane>
       <Pane layoutX="35.0" layoutY="42.0">
          <children>
-            <Label id="titleLabel" accessibleRoleDescription="\\@" layoutX="16.0" prefHeight="70.0" prefWidth="240.0" text="H.E.R.M.E.S" textAlignment="CENTER" textFill="WHITE">
+            <Label id="titleLabel" accessibleRoleDescription="\\@" layoutX="7.0" prefHeight="70.0" prefWidth="250.0" text="H.E.R.M.E.S." textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font size="48.0" />
                </font>
@@ -74,7 +74,7 @@
             <Label layoutY="79.0" prefHeight="35.0" prefWidth="263.0" text="Herramienta para la Entrega de Requisas por Medios Electrónicos Sistematizados" textAlignment="CENTER" textFill="WHITE" wrapText="true" />
          </children>
       </Pane>
-      <ImageView fitHeight="188.0" fitWidth="229.0" layoutX="59.0" layoutY="192.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="216.0" fitWidth="250.0" layoutX="43.0" layoutY="187.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/logo.png" />
          </image>
