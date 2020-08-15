@@ -25,7 +25,7 @@
             <Separator layoutX="38.0" layoutY="76.0" prefHeight="0.0" prefWidth="240.0" />
             <Pane layoutX="44.0" layoutY="129.0">
                <children>
-                  <TextField id="correoTxt" fx:id="correoTxt" layoutY="22.0" prefHeight="30.0" prefWidth="227.0" promptText="correo@correo.com">
+                  <TextField id="correoTxt" fx:id="correoTxt" layoutY="22.0" prefHeight="30.0" prefWidth="227.0" promptText="correo@dominio.com">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -51,7 +51,7 @@
                   </Label>
                </children>
             </Pane>
-            <Button fx:id="loginBtn" layoutX="94.0" layoutY="320.0" mnemonicParsing="false" onAction="#loginBtnClick" prefHeight="46.0" prefWidth="127.0" text="Iniciar Sesión">
+            <Button fx:id="loginBtn" disable="true" layoutX="94.0" layoutY="320.0" mnemonicParsing="false" onAction="#loginBtnClick" prefHeight="46.0" prefWidth="127.0" text="Iniciar Sesión">
                <font>
                   <Font size="16.0" />
                </font>
@@ -59,6 +59,8 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
+            <Label fx:id="errorCorreo" layoutX="44.0" layoutY="183.0" style="-fx-text-fill: #f14949;" text="Debe ingresar un correo válido" textFill="#f14949" />
+            <Label fx:id="errorPass" layoutX="44.0" layoutY="268.0" style="-fx-text-fill: #f14949;" text="Debe ingresar un correo válido" textFill="#f14949" />
          </children>
          <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

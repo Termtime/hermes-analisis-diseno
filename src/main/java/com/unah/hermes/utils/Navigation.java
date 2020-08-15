@@ -16,6 +16,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -32,6 +33,55 @@ public class Navigation {
      * @param data datos que se quieran pasar y recibir en la otra pantalla
      */
     public static void pushRoute(String pageName, ActionEvent event, Boolean hide, Boolean modal)
+    {
+        Parent root;
+        Window parentStage;
+        try{
+            parentStage = ((Node)(event.getSource())).getScene().getWindow();
+        }catch(Exception e)
+        {
+            try{
+                //intentar obtener el parent de un MenuItem
+                parentStage = ((MenuItem)event.getTarget()).getParentPopup().getOwnerWindow();
+            }catch(Exception ex){
+                //fallar suavemente
+                ex.printStackTrace();
+                parentStage = null;
+            }
+        }
+        try {
+            FXMLLoader loader = new FXMLLoader(Navigation.class.getResource("/fxml/" + pageName + ".fxml"));
+            root = loader.load();
+            Stage stage = new Stage();
+            // stage.setTitle("My New Stage Title");
+            stage.setScene(new Scene(root));
+            if(modal) {
+                stage.initOwner(parentStage);
+                stage.initModality(Modality.APPLICATION_MODAL); 
+                stage.showAndWait();
+            } else {
+                stage.show();    
+            }
+            // Ocultar la pagina anterior si es lo que se especifica
+            if(hide) parentStage.hide();
+            
+            // return controller;
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    /**
+     * Abre una nueva ventana
+     * Por lo general se usa dentro de los handler de eventos de los clicks, ya que son los que tienen
+     * ActionEvents
+     * @param pageName Nombre (de archivo.fxml) de la pagina a abrir
+     * @param event Es el evento que ocurre (click u otras cosas)
+     * @param hide booleano para indicar si la pagina anterior debe ocultarse
+     * @param modal boolean para indicar si la nueva pagina es modal
+     * @param data datos que se quieran pasar y recibir en la otra pantalla
+     */
+    public static void pushRoute(String pageName, KeyEvent event, Boolean hide, Boolean modal)
     {
         Parent root;
         Window parentStage;
