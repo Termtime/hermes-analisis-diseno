@@ -285,7 +285,6 @@ public class MainPage implements Initializable {
         });
 
         db = FirebaseConnector.getInstance();
-        db.uploadObject("Usuarios/","blabla");
         requisicionesListener = db.iniciarListenerRequisiciones();
         listaRQE.setItems(RequisicionesEntregadas);
         listaRQP.setItems(RequisicionesPendientes);
