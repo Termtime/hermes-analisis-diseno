@@ -42,11 +42,35 @@ public class LoginPageController implements Initializable {
 
     @FXML
     private void loginBtnClick(ActionEvent event) {
+        //resetear el estado de los labels de error
+        errorCorreo.setVisible(false);
+        errorPass.setVisible(false);
+        errorCorreo.setText("");
+        errorPass.setText("");
+        //procesar el login
         correo = correoTxt.getText();
         pass = passTxt.getText();
-
-        if (db.loginWithEmailPassword(correo, pass)) {
+        String response = db.loginWithEmailPassword(correo, pass);
+        if (response.equals("PASS")) {
             Navigation.pushRoute("MainPage", event, true, false);
+        }else if(response.equals("ERROR")){
+            errorCorreo.setText("Error desconocido, contacte al personal de IT");
+            errorCorreo.setVisible(true);
+        }else if(response.equals("EMAIL_NOT_FOUND")){
+            errorCorreo.setText("Usuario no encontrado");
+            errorCorreo.setVisible(true);
+        }else if(response.equals("INVALID_PASSWORD")){
+            errorPass.setText("Credenciales invalidas");
+            errorPass.setVisible(true);
+        }else if(response.equals("USER_DISABLED")){
+            errorCorreo.setText("Usuario deshabilitado");
+            errorCorreo.setVisible(true);
+        }else if(response.equals("TOO_MANY_ATTEMPTS_TRY_LATER")){
+            errorPass.setText("Demasiados intentos, intente más tarde");
+            errorPass.setVisible(true);
+        }else if(response.equals("MISSING_PASSWORD")){
+            errorPass.setText("Credenciales invalidas");
+            errorPass.setVisible(true);
         }
     }
 
@@ -60,6 +84,10 @@ public class LoginPageController implements Initializable {
         correoTxt.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                errorCorreo.setVisible(false);
+                errorPass.setVisible(false);
+                errorCorreo.setText("");
+                errorPass.setText("");
                 if (newValue.isEmpty()) {
                     loginBtn.setDisable(true);
                     errorCorreo.setVisible(false);
