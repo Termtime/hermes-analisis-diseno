@@ -231,7 +231,7 @@ public class MainPage implements Initializable {
         gridReqEntregadas.setVisible(false);
         gridReqPendientes.setVisible(false);
 
-        if (((Node) event.getSource()).getParent().getId().equals("vboxMenu"))
+        if (!(vboxMenu.getTranslateX() != Math.ceil((vboxMenu.getWidth() + vboxMenuPequeno.getWidth() - 6) - 272)))
             cerrarNav();
     }
 
@@ -241,7 +241,7 @@ public class MainPage implements Initializable {
         gridReqEntregadas.setVisible(true);
         gridReqPendientes.setVisible(false);
 
-        if (((Node) event.getSource()).getParent().getId().equals("vboxMenu"))
+        if (!(vboxMenu.getTranslateX() != Math.ceil((vboxMenu.getWidth() + vboxMenuPequeno.getWidth() - 6) - 272)))
             cerrarNav();
     }
 
@@ -251,7 +251,7 @@ public class MainPage implements Initializable {
         gridReqEntregadas.setVisible(false);
         gridReqPendientes.setVisible(true);
 
-        if (((Node) event.getSource()).getParent().getId().equals("vboxMenu"))
+        if (!(vboxMenu.getTranslateX() != Math.ceil((vboxMenu.getWidth() + vboxMenuPequeno.getWidth() - 6) - 272)))
             cerrarNav();
     }
     ///////////////////////////////////////////////////////////////////////////////////
