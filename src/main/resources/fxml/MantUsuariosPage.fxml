@@ -34,29 +34,23 @@
           <TableColumn prefWidth="152.79998779296875" text="Area" />          
         </columns>
       </TableView>
-      <Button fx:id="btnAgregarUsuario" layoutX="896.6" layoutY="278.0" mnemonicParsing="false" onAction="#btnAgregarUsuarioClick" prefHeight="32.0" prefWidth="150.0" text="Agregar Usuario" AnchorPane.rightAnchor="32.0">
+      <Button fx:id="btnAgregarUsuario" layoutX="897.0000000000001" layoutY="319.0" mnemonicParsing="false" onAction="#btnAgregarUsuarioClick" prefHeight="32.0" prefWidth="150.0" text="Agregar Usuario" AnchorPane.rightAnchor="31.59999999999991">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="btnModificar" layoutX="897.0000000000001" layoutY="330.0" mnemonicParsing="false" onAction="#btnModificarUsuarioClick" prefHeight="32.0" prefWidth="150.0" styleClass="btnModificarUsuario" text="Modificar Usuario" AnchorPane.rightAnchor="31.59999999999991">
+      <Button fx:id="btnModificar" layoutX="897.0" layoutY="381.0" mnemonicParsing="false" onAction="#btnModificarUsuarioClick" prefHeight="32.0" prefWidth="150.0" styleClass="btnModificarUsuario" text="Modificar Usuario" AnchorPane.rightAnchor="31.59999999999991">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="btnEliminarUsuario" layoutX="897.0000000000001" layoutY="382.0" mnemonicParsing="false" onAction="#btnEliminarUsuarioClick" prefHeight="32.0" prefWidth="150.0" styleClass="btnCancelar" text="Eliminar Usuario" AnchorPane.rightAnchor="31.59999999999991">
+      <Button fx:id="btnEliminarUsuario" layoutX="897.0000000000001" layoutY="443.0" mnemonicParsing="false" onAction="#btnEliminarUsuarioClick" prefHeight="32.0" prefWidth="150.0" styleClass="btnCancelar" text="Eliminar Usuario" AnchorPane.rightAnchor="31.59999999999991">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="btnPermisos" layoutX="897.0000000000001" layoutY="456.0" mnemonicParsing="false" onAction="#btnPermisosClick" prefHeight="32.0" prefWidth="150.0" text="Permisos" AnchorPane.rightAnchor="31.59999999999991">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Button>
-      <Separator layoutX="905.0000000000001" layoutY="434.0" prefHeight="0.0" prefWidth="134.0" AnchorPane.rightAnchor="39.59999999999991" />
       <Separator layoutX="58.0" layoutY="81.0" prefHeight="3.0" prefWidth="963.0" AnchorPane.leftAnchor="58.0" AnchorPane.rightAnchor="57.799999999999955" AnchorPane.topAnchor="93.0" />
-      <Pane layoutX="915.0" layoutY="132.0" prefHeight="112.0" prefWidth="114.0">
+      <Pane layoutX="915.0" layoutY="132.0" prefHeight="112.0" prefWidth="114.0" AnchorPane.bottomAnchor="393.0" AnchorPane.rightAnchor="49.599999999999994" AnchorPane.topAnchor="132.0">
          <children>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#2c2c2c" height="112.0" stroke="BLACK" strokeType="INSIDE" width="114.0" />
             <ImageView fx:id="imagenUsuario" fitHeight="112.0" fitWidth="165.0" pickOnBounds="true" preserveRatio="true">

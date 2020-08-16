@@ -380,6 +380,34 @@ public class MainPage implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // crear los listeners para los datos de firebase
         // TODO requisiciones denegadas, requisiciones entregadas
+
+        gridReqPendientes.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+                gridReqPendientes.requestFocus();
+                cerrarNav();
+            }
+        });
+
+        gridReqEntregadas.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+                gridReqEntregadas.requestFocus();
+                cerrarNav();
+            }
+        });
+
+        gridReqDenegadas.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+                gridReqDenegadas.requestFocus();
+                cerrarNav();
+            }
+        });
+
         btnReqPendientesGrande.hoverProperty().addListener(new ChangeListener<Boolean>() {
 
             @Override

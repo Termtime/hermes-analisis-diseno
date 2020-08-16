@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" fx:id="MantenimientoAreas" prefHeight="543.0" prefWidth="916.0" styleClass="window-background-level2" stylesheets="@../styles/StyleTablasNivel2.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unah.hermes.MantAreasPage">
+   <children>
+      <TableView fx:id="tablaArea" layoutX="164.0" layoutY="124.0" prefHeight="390.0" prefWidth="250.0" AnchorPane.bottomAnchor="28.600000000000023" AnchorPane.leftAnchor="164.0" AnchorPane.topAnchor="124.0">
+        <columns>
+          <TableColumn id="tblArea" prefWidth="249.59998168945313" text="Área" />
+        </columns>
+      </TableView>
+      <TableView fx:id="tablaUsuario" layoutX="501.0" layoutY="123.0" prefHeight="390.0" prefWidth="250.0" AnchorPane.bottomAnchor="29.600000000000023" AnchorPane.rightAnchor="164.60000000000002" AnchorPane.topAnchor="124.0">
+        <columns>
+          <TableColumn id="tblUsuario" prefWidth="249.60001220703126" text="Usuario" />
+        </columns>
+      </TableView>
+      <Label alignment="BASELINE_CENTER" layoutX="313.0" layoutY="32.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="39.0" prefWidth="296.0" text="Mantenimiento de Áreas" AnchorPane.leftAnchor="313.0" AnchorPane.rightAnchor="307.0" AnchorPane.topAnchor="30.0">
+         <font>
+            <Font size="27.0" />
+         </font></Label>
+      <Label alignment="CENTER" layoutX="175.0" layoutY="97.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="30.0" prefWidth="228.0" text="Pulse un área para ver sus usuarios..." AnchorPane.bottomAnchor="415.6" AnchorPane.leftAnchor="175.0" AnchorPane.topAnchor="96.99999999999997">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+      <Separator layoutX="455.0" layoutY="137.0" orientation="VERTICAL" prefHeight="363.0" prefWidth="0.0" AnchorPane.bottomAnchor="42.80000000000001" AnchorPane.leftAnchor="455.0" AnchorPane.rightAnchor="454.6" AnchorPane.topAnchor="137.0" />
+      <Button fx:id="btnAgregarUsuarioArea" layoutX="768.0" layoutY="254.0" mnemonicParsing="false" onAction="#btnAgregarUsuarioAreaClick" prefHeight="54.0" prefWidth="131.0" style="-fx-background-coor: black;" text="Agregar Usuario al Área" textAlignment="CENTER" wrapText="true" AnchorPane.rightAnchor="16.799999999999955" AnchorPane.topAnchor="254.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Button fx:id="btnCrearArea" layoutX="28.0" layoutY="265.0" mnemonicParsing="false" onAction="#btnCrearAreaClick" prefHeight="32.0" prefWidth="109.0" text="Crear Área" AnchorPane.leftAnchor="28.0" AnchorPane.topAnchor="265.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Button fx:id="btnEliminarUsuarioArea" layoutX="768.0" layoutY="377.0" mnemonicParsing="false" onAction="#btnEliminarUsuarioAreaClick" prefHeight="54.0" prefWidth="131.0" styleClass="btnCancelar" text="Eliminar Usuario del Área" textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="111.60000000000002" AnchorPane.rightAnchor="16.799999999999955">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Button fx:id="btnEliminarArea" layoutX="27.0" layoutY="388.0" mnemonicParsing="false" onAction="#btnEliminarAreaClick" prefHeight="32.0" prefWidth="110.0" styleClass="btnCancelar" text="Eliminar Área" AnchorPane.bottomAnchor="123.0" AnchorPane.leftAnchor="27.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Separator layoutX="95.0" layoutY="75.0" prefHeight="0.0" prefWidth="731.0" AnchorPane.leftAnchor="89.0" AnchorPane.rightAnchor="89.0" AnchorPane.topAnchor="83.0" />
+   </children>
+</AnchorPane>
