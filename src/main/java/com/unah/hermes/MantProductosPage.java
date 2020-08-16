@@ -100,11 +100,15 @@ public class MantProductosPage implements Initializable {
         if(tablaProductoSelectedItem != null)
             Navigation.pushRouteWithParameter("MantProductosModalModificarProducto", event, false, true, MantProductosModalModificarProducto.class, tablaProductoSelectedItem );
         else{
-            Alert alert = new Alert(AlertType.ERROR,"Debe seleccionar un Usuario antes", ButtonType.OK);
-            alert.showAndWait();
+            Navigation.pushRoute("AlertError", event, false, true);
         }
+        refreshProductos();
     }
     @FXML private void btnEliminarProductoClick(ActionEvent event) {
+        if(tablaProductos.getSelectionModel().getSelectedItem()==null){
+            Navigation.pushRoute("AlertError", event, false, true);
+            return;
+        }
         for (DocumentSnapshot doc : documentos) {
             Producto tmp;
             if(doc.exists()){
@@ -126,9 +130,13 @@ public class MantProductosPage implements Initializable {
     
     @FXML private void btnAgregarCategoriaClick(ActionEvent event) {
         Navigation.pushRoute("MantProductosModalAgregarCategoria", event, false, true);
+        refreshCategorias();
+        refreshProductos();
     }
     @FXML private void btnModificarCategoriaClick(ActionEvent event) {
-         Navigation.pushRoute("MantProductosModalModificarCategoria", event, false, true);
+        Navigation.pushRoute("MantProductosModalModificarCategoria", event, false, true);
+        refreshCategorias();
+        refreshProductos();
     }
     @FXML private void btnEliminarCategoriaClick(ActionEvent event) {
         for (DocumentSnapshot doc : categoriaDocumentos) {
@@ -139,14 +147,14 @@ public class MantProductosPage implements Initializable {
                 {
                     if(tmp.Nombre.equals(comboCategoria.getSelectionModel().getSelectedItem().toString()))
                     {
-                        db.deleteDocument("Categoria", tmp.CategoriaID);
-                        refreshCategorias();
-                        refreshProductos();
+                        db.deleteDocument("Categorias", tmp.CategoriaID);
                         break;
                     }
                 }
             }
         }
+        refreshCategorias();
+        refreshProductos();
     }
     @FXML private void txtFiltroInput(KeyEvent event) {
         tablaProductos.getItems().clear();
@@ -244,7 +252,7 @@ public class MantProductosPage implements Initializable {
          tablaProductos.getColumns().clear();
          TableColumn columnaProducto = new TableColumn<>("Producto");
          columnaProducto.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-         columnaProducto.setPrefWidth(tablaProductos.getWidth()*0.38);
+         columnaProducto.setPrefWidth(tablaProductos.getWidth()*0.35);
          columnaProducto.setResizable(false);
 
          TableColumn columnaCategoria = new TableColumn<>("Categoria");

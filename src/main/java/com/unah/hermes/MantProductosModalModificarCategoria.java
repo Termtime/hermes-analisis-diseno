@@ -70,6 +70,10 @@ public class MantProductosModalModificarCategoria implements Initializable{
         
     }
     @FXML private void btnModificarClick(ActionEvent event) {
+        if(txtNuevoNombre.getText().equals("")){
+            Navigation.pushRoute("AlertError", event, false, true);
+            return;
+        }
         Map<String, Object> data= new HashMap<>();
         data.put("nombre", txtNuevoNombre.getText());
         String categoriaid="";
@@ -84,12 +88,18 @@ public class MantProductosModalModificarCategoria implements Initializable{
                         categoriaid=tmp.CategoriaID;
                     }
                 }
-                
             }
         }
-        db.updateDocument("Categorias", categoriaid, data);
-        Stage stage = (Stage) btnCancelar.getScene().getWindow();
-        stage.close();
+        try {
+            db.updateDocument("Categorias", categoriaid, data);
+            Navigation.pushRoute("AlertExito", event, false, true);
+            Stage stage = (Stage) btnCancelar.getScene().getWindow();
+            stage.close();
+        } catch (Exception e) {
+            Navigation.pushRoute("AlertError", event, false, true);
+        }
+        
+        
     }
     @FXML AnchorPane mantProductosModalModificarCategoria;
     @Override

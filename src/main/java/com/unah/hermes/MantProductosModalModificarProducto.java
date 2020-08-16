@@ -73,15 +73,28 @@ public class MantProductosModalModificarProducto implements Initializable {
         
     }
     @FXML private void btnModificarClick(ActionEvent event) {
+        if(txtNombreProducto.getText().equals("")||txtUnidad.getText().equals(""))
+        {
+            Navigation.pushRoute("AlertError", event, false, true);
+            return;
+        }
         Map<String, Object> data= new HashMap<>();
         data.put("Producto", txtNombreProducto.getText());
         data.put("Unidad", txtUnidad.getText());
         data.put("Categoria", comboCategoria.getSelectionModel().getSelectedItem().toString());
-        db.updateDocument("Productos", productoID, data);
-        Stage stage = (Stage) btnCancelar.getScene().getWindow();
-        stage.close();
+        try {
+            db.updateDocument("Productos", productoID, data);
+            Navigation.pushRoute("AlertExito", event, false, true);
+            Stage stage = (Stage) btnCancelar.getScene().getWindow();
+            stage.close();
+        } catch (Exception e) {
+            Navigation.pushRoute("AlertError", event, false, true);
+        }
+        
     }
-    
+    @FXML private void btnAgregarImagenProductoClick(ActionEvent event){
+        
+    }
     
     Producto productoData;
     String productoID;
