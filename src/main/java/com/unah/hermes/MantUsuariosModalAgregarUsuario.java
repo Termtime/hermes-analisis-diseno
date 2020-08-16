@@ -74,6 +74,7 @@ public class MantUsuariosModalAgregarUsuario implements Initializable {
     ComboBox<Area> comboAreaAcceso;
     @FXML Button btnAgregarArea;
     @FXML Button btnQuitarArea;
+    @FXML Button btnAgregar;
 
     @FXML
     public void btnAgregarClick(ActionEvent event) {
@@ -85,13 +86,18 @@ public class MantUsuariosModalAgregarUsuario implements Initializable {
         }else if(comboNivelAcceso.getSelectionModel().getSelectedItem().equals("Jefe de Area")){
             areasSeleccionadas.addAll(listAreasSeleccionadas.getItems());
         }
-        // areas.addAll((Collection<? extends Area>)
-        // comboNivelAcceso.getSelectionModel().getSelectedItem());
-
+        
+        // validaciones de caja de texto
+        if(txtCorreo.getText().trim()!=null && txtContrasena.getText().trim()!=null){
+            if( txtNombre.getText().trim()!=null )
         db.crearUsuario(txtCorreo.getText(), txtContrasena.getText(), txtNombre.getText(),
-                comboNivelAcceso.getSelectionModel().getSelectedItem().toString(), areasSeleccionadas);
+        comboNivelAcceso.getSelectionModel().getSelectedItem().toString(), areasSeleccionadas);
+       
+        //cierre de pantalla
+        Stage stage = (Stage) btnAgregar.getScene().getWindow();
+        stage.close();
+        }
 
-        System.out.println(listAreasSeleccionadas);
 
     }
 
@@ -222,73 +228,5 @@ public class MantUsuariosModalAgregarUsuario implements Initializable {
     }
 
 
-/*
-    private void llenarComboBox(){   
-        
-       List<User> nivelAcceso = new ArrayList<User>();
-        for(User usuario: usuarios){
-            for (DocumentSnapshot doc : documentos) {
-                Producto tmp;
-                if(doc.exists()){
-                    tmp = new User(doc.getId(), doc.getString("Nombre"), doc.getString("nivelAcceso"), doc.getString("Categoria"));
-                    int cont=0;
-                    for(nivelAcceso acceso: comboNivelAcceso)
-                    {
-                        if(tmp.categoria.equals(comboNivelAcceso.get(i).categoria))
-                        {
-                            cont++;
-                        }
-                    }
-                    if(cont==0)
-                        comboCategoria.getItems().add(tmp.getCategoria());
-                }
-            } 
-                   
-    }      
-}
-comboNivelAcceso.getItems().addListener((ListChangeListener<? super String>) nivelAcceso);
-    
-
-
-    private void llenarComboBox(){
-        System.out.println("llenarcombo");
-        
-        List<User> comboNivelAcceso = new ArrayList<User>();
-        for(DocumentSnapshot doc : docsAreas){
-            Area tmp = new Area(doc.getId(), doc.getString("Area"));
-            areas.add(tmp);
-        }
-        for (DocumentSnapshot doc : documentos) {
-            User tmp;
-            if(doc.exists()){
-                List<String> arregloIDAreas = (List<String>) doc.get("areas");
-                List<String> areasConNombre = new ArrayList();
-                for(Area area : areas){
-                    for(String areaID : arregloIDAreas){
-                        if(areaID.equals(area.areaID.trim()))
-                        {
-                            areasConNombre.add(area.nombre);
-                            break;
-                        }   
-                    }
-                }
-                tmp = new User(doc.getId(), doc.getString("Nombre"),doc.getString("nivelAcceso"),areasConNombre);
-                usuarios.add(tmp);
-                int cont=0;
-                for(int i=0;i<comboNivelAcceso.size();i++)
-                {
-                    if(tmp.nivelAcceso.equals(comboNivelAcceso.get(i).nivelAcceso))
-                    {
-                        cont++;
-                    }
-                }
-                if(cont==0)
-                 System.out.println(usuarios);
-                 System.out.println("!!!");
-
-                
-            }
-        } 
-    }*/
     
 }

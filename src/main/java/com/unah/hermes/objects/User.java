@@ -15,11 +15,11 @@ public class User {
         this.nombre = nombre;
         this.nivelAcceso = nivelAcceso;
         this.areas = areas;
-        stringDeArea = "";
+        this.stringDeArea = "";
         for(String area : areas){
             stringDeArea += area + ", ";
         }
-        stringDeArea = stringDeArea.substring(0,stringDeArea.length()-2);
+        if(!areas.isEmpty()) this.stringDeArea = stringDeArea.substring(0,stringDeArea.length()-2);
     }
 
     public String getUserID() {
