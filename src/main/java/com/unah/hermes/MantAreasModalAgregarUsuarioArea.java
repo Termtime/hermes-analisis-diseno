@@ -84,7 +84,7 @@ public class MantAreasModalAgregarUsuarioArea implements Initializable {
     AnchorPane MantAreasModalAgregarUsuarioArea;
 
     @FXML
-    TextField txtBuscarInput;
+    TextField txtBuscar;
 
     @FXML
     private javafx.scene.control.Button btnCancelar;
@@ -100,6 +100,10 @@ public class MantAreasModalAgregarUsuarioArea implements Initializable {
             db.updateDocument(FirestoreRoutes.USUARIOS, usuarioID, datos);
             Navigation.mostrarAlertExito("Usuario Agregado exitosamente al área", event);
             llenarTabla();
+
+            Stage ventana = (Stage) btnCancelar.getScene().getWindow();
+
+            ventana.close();
         } else {
             Navigation.mostrarAlertError("No ha seleccionado un usuario", event);
         }
@@ -117,11 +121,11 @@ public class MantAreasModalAgregarUsuarioArea implements Initializable {
     @FXML
     private void txtBuscarInput(KeyEvent event) {
         tablaUsuariosArea.getItems().clear();
-        List<User> usuariosFiltro = new ArrayList();
+        List<User> usuariosFiltro = new ArrayList<User>();
 
         for (User usuario : usuarios) {
-            if (usuario.nombre.toLowerCase().contains(txtBuscarInput.getText().toLowerCase())
-                    || txtBuscarInput.getText().equals("")) {
+            if (usuario.nombre.toLowerCase().contains(txtBuscar.getText().toLowerCase())
+                    || txtBuscar.getText().equals("")) {
                 usuariosFiltro.add(usuario);
             }
         }
@@ -132,7 +136,7 @@ public class MantAreasModalAgregarUsuarioArea implements Initializable {
     Area areaSelected;
     User selectedUser;
     String areaID;
-    String usuarioID;
+    String usuarioID = "";
     String usuarioEmail;
     String usuarioName;
     String usuarioAcces;

@@ -34,7 +34,7 @@
       </TableView>
       <AnchorPane layoutX="52.0" layoutY="124.0" prefHeight="26.0" prefWidth="200.0" AnchorPane.leftAnchor="52.0" AnchorPane.rightAnchor="194.0" AnchorPane.topAnchor="124.0">
          <children>
-            <TextField fx:id="txtBuscar" layoutX="51.0" onInputMethodTextChanged="#txtBuscarInput" />
+            <TextField fx:id="txtBuscar" layoutX="51.0" onKeyTyped="#txtBuscarInput" />
             <Label layoutY="4.0" text="Buscar:">
                <font>
                   <Font size="14.0" />
