@@ -72,7 +72,7 @@ import javafx.stage.WindowEvent;
 import javafx.stage.Modality;
 
 import com.unah.hermes.objects.Area;
-import com.unah.hermes.objects.User; //Consulta objeto
+import com.unah.hermes.objects.User;
 import com.unah.hermes.utils.Navigation;
 
 public class MantAreasModalAgregarUsuarioArea implements Initializable {
@@ -84,7 +84,10 @@ public class MantAreasModalAgregarUsuarioArea implements Initializable {
     AnchorPane MantAreasModalAgregarUsuarioArea;
 
     @FXML
-    TextField txtBuscarInput;
+    TextField txtBuscar;
+
+    @FXML
+    private javafx.scene.control.Button btnCancelar;
 
     ObservableList<User> usuarios = FXCollections.observableArrayList();
 
@@ -95,23 +98,33 @@ public class MantAreasModalAgregarUsuarioArea implements Initializable {
 
             datos.put("areas", areasUsuarioArray);
             db.updateDocument(FirestoreRoutes.USUARIOS, usuarioID, datos);
+            Navigation.mostrarAlertExito("Usuario Agregado exitosamente al área", event);
+            llenarTabla();
 
+            Stage ventana = (Stage) btnCancelar.getScene().getWindow();
+
+            ventana.close();
+        } else {
+            Navigation.mostrarAlertError("No ha seleccionado un usuario", event);
         }
     }
 
     @FXML
     private void btnCancelarClick(ActionEvent event) {
+        Stage ventana = (Stage) btnCancelar.getScene().getWindow();
+
+        ventana.close();
 
     }
 
     @FXML
     private void txtBuscarInput(KeyEvent event) {
         tablaUsuariosArea.getItems().clear();
-        List<User> usuariosFiltro = new ArrayList();
+        List<User> usuariosFiltro = new ArrayList<User>();
 
         for (User usuario : usuarios) {
-            if (usuario.nombre.toLowerCase().contains(txtBuscarInput.getText().toLowerCase())
-                    || txtBuscarInput.getText().equals("")) {
+            if (usuario.nombre.toLowerCase().contains(txtBuscar.getText().toLowerCase())
+                    || txtBuscar.getText().equals("")) {
                 usuariosFiltro.add(usuario);
             }
         }
@@ -122,7 +135,7 @@ public class MantAreasModalAgregarUsuarioArea implements Initializable {
     Area areaSelected;
     User selectedUser;
     String areaID;
-    String usuarioID;
+    String usuarioID = "";
     String usuarioEmail;
     String usuarioName;
     String usuarioAcces;
@@ -143,32 +156,8 @@ public class MantAreasModalAgregarUsuarioArea implements Initializable {
             @Override
             public Void apply(Window parent) {
                 iniciarEstructuraTablas();
-                db = FirebaseConnector.getInstance();
+                llenarTabla();
 
-                // Usuarios inicio (Prueba)
-                List<QueryDocumentSnapshot> usuariosFirebase = db.getAllDocumentsFrom(FirestoreRoutes.USUARIOS);
-                List<QueryDocumentSnapshot> docsAreas = db.getAllDocumentsFrom(FirestoreRoutes.AREAS);
-                tablaUsuariosArea.getItems().clear();
-                for (DocumentSnapshot doc : usuariosFirebase) {
-                    User tmp;
-
-                    if (doc.exists()) {
-                        List<String> arregloIDAreas = (List<String>) doc.get("areas");
-                        if (!arregloIDAreas.contains(areaSelected.areaID)) {
-                            tmp = new User(doc.getId(), doc.getString("Nombre"), doc.getString("nivelAcceso"),
-                                    arregloIDAreas);
-                            System.out.println(tmp.nombre);
-                            usuarios.add(tmp);
-                        }
-
-                    }
-                }
-                tablaUsuariosArea.getItems().addAll(usuarios);
-                // Platform.runLater(new Runnable() {
-                // @Override
-                // public void run() {
-                // }
-                // });
                 return null;
             }
         });
@@ -177,8 +166,7 @@ public class MantAreasModalAgregarUsuarioArea implements Initializable {
             @Override
             public void changed(ObservableValue<? extends User> observable, User oldValue, User newValue) {
                 selectedUser = newValue;
-                // System.out.println(newValue);
-                // llenarTablaUsuario(newValue.areaID);
+
                 usuarioID = selectedUser.userID;
                 areasUsuarioArray = selectedUser.areas;
                 areasUsuarioArray.add(areaID);
@@ -198,6 +186,30 @@ public class MantAreasModalAgregarUsuarioArea implements Initializable {
         columnUsuario.setPrefWidth(tablaUsuariosArea.getWidth() * 0.98);
 
         tablaUsuariosArea.getColumns().addAll(columnUsuario);
+    }
+
+    private void llenarTabla() {
+        db = FirebaseConnector.getInstance();
+
+        // Usuarios inicio (Prueba)
+        List<QueryDocumentSnapshot> usuariosFirebase = db.getAllDocumentsFrom(FirestoreRoutes.USUARIOS);
+        List<QueryDocumentSnapshot> docsAreas = db.getAllDocumentsFrom(FirestoreRoutes.AREAS);
+        usuarios.clear();
+        for (DocumentSnapshot doc : usuariosFirebase) {
+            User tmp;
+
+            if (doc.exists()) {
+                List<String> arregloIDAreas = (List<String>) doc.get("areas");
+                if (!arregloIDAreas.contains(areaSelected.areaID)) {
+                    tmp = new User(doc.getId(), doc.getString("Nombre"), doc.getString("nivelAcceso"), arregloIDAreas);
+                    System.out.println(tmp.nombre);
+                    usuarios.add(tmp);
+                }
+
+            }
+        }
+        tablaUsuariosArea.getItems().clear();
+        tablaUsuariosArea.getItems().addAll(usuarios);
     }
 
 }

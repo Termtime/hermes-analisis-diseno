@@ -66,9 +66,13 @@ public class MantAreasModalCrearArea implements Initializable {
             db.createDocument(FirestoreRoutes.AREAS, area);
             areaNueva = "";
             txtNombreArea.setText(areaNueva);
+            Navigation.mostrarAlertExito("Area Agregada Exitosamente", event);
+
+            Stage ventana = (Stage) btnCancelar.getScene().getWindow();
+
+            ventana.close();
         } else {
-            Alert alert = new Alert(AlertType.ERROR, "Nombre de Area en Blanco", ButtonType.OK);
-            alert.showAndWait();
+            Navigation.mostrarAlertError("Nombre de Area en Blanco", event);
         }
 
     }
@@ -87,6 +91,6 @@ public class MantAreasModalCrearArea implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        //
+
     }
 }

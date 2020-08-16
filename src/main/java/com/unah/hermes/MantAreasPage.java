@@ -77,12 +77,11 @@ import javafx.scene.control.ButtonType;
 
 public class MantAreasPage implements Initializable {
 
-        // Consulta
         @FXML
         TableView<Area> tablaArea;
         @FXML
         TableView<User> tablaUsuario;
-        // Consulta
+
         @FXML
         AnchorPane MantenimientoAreas;
 
@@ -90,7 +89,7 @@ public class MantAreasPage implements Initializable {
         String areaSelectedID;
         User selectedUser;
         String areaID;
-        String usuarioID;
+        String usuarioID = "";
         String usuarioEmail;
         String usuarioName;
         String usuarioAcces;
@@ -101,34 +100,58 @@ public class MantAreasPage implements Initializable {
         @FXML
         private void btnCrearAreaClick(ActionEvent event) {
                 Navigation.pushRoute("MantAreasModalCrearArea", event, false, true);
+                llenarTablaAreas();
         }
 
         @FXML
         private void btnEliminarAreaClick(ActionEvent event) {
+                if (!areaSelectedID.isEmpty()) {
+                        for (User usuario : usuarios) {
+                                if (usuario.areas.contains(areaSelectedID)) {
+                                        usuario.areas.remove(areaSelectedID);
+                                        Map<String, Object> datos = new HashMap();
+                                        List<String> vacio = new ArrayList();
+                                        vacio.add("");
+                                        if (usuario.areas.isEmpty())
+                                                datos.put("areas", vacio);
+                                        else
+                                                datos.put("areas", usuario.areas);
 
+                                        db.updateDocument(FirestoreRoutes.USUARIOS, usuario.userID, datos);
+                                }
+                        }
+                        db.deleteDocument(FirestoreRoutes.AREAS, areaSelectedID);
+                        Navigation.mostrarAlertExito("Area eliminada exitosamente", event);
+                        llenarTablaAreas();
+                        tablaUsuario.getItems().clear();
+                } else {
+                        Navigation.mostrarAlertError("Debe seleccionar un Area antes", event);
+                }
         }
 
         @FXML
         private void btnAgregarUsuarioAreaClick(ActionEvent event) {
-                // Navigation.pushRoute("MantAreasAgregarUsuarioArea", event, false, true);
-                if (TablaAreaSelectedRow != null)
+                if (TablaAreaSelectedRow != null) {
                         Navigation.pushRouteWithParameter("MantAreasAgregarUsuarioArea", event, false, true,
                                         MantAreasModalAgregarUsuarioArea.class, TablaAreaSelectedRow);
-                else {
-                        Alert alert = new Alert(AlertType.ERROR, "Debe seleccionar un Area antes", ButtonType.OK);
-                        alert.showAndWait();
+                        llenarTablaUsuario(areaSelectedID);
+                } else {
+                        Navigation.mostrarAlertError("Debe seleccionar un Area antes", event);
                 }
         }
 
         @FXML
         private void btnEliminarUsuarioAreaClick(ActionEvent event) {
-                
+
                 if (!usuarioID.isEmpty() && !areasUsuarioArray.isEmpty()) {
                         Map<String, Object> datos = new HashMap();
                         areasUsuarioArray.remove(index);
                         datos.put("areas", areasUsuarioArray);
                         db.updateDocument(FirestoreRoutes.USUARIOS, usuarioID, datos);
-
+                        Navigation.mostrarAlertExito("Usuario eliminado exitosamente del área", event);
+                        llenarTablaUsuario(areaSelectedID);
+                } else {
+                        Navigation.mostrarAlertError("No ha seleccionado un usuario", event);
                 }
         }
 
@@ -152,43 +175,27 @@ public class MantAreasPage implements Initializable {
                                 iniciarEstructuraTablas();
                                 db = FirebaseConnector.getInstance();
                                 // Areas
-                                List<QueryDocumentSnapshot> documentos = db.getAllDocumentsFrom(FirestoreRoutes.AREAS);
+                                llenarTablaAreas();
 
-                                for (DocumentSnapshot doc : documentos) {
-                                        // System.out.println(doc);
-                                        Area tmp;
-
-                                        if (doc.exists()) {
-                                                tmp = new Area(doc.getId(), doc.getString("Area"));
-                                                // System.out.println(tmp.nombre);
-                                                // System.out.println(doc.getData());
-                                                Areas.add(tmp);
-                                                // System.out.println(Areas);
-                                        }
-                                }
-                                tablaArea.getItems().addAll(Areas);
-
-                                // Usuarios inicio (Prueba)
+                                // Usuarios inicio
 
                                 List<QueryDocumentSnapshot> usuariosFirebase = db
                                                 .getAllDocumentsFrom(FirestoreRoutes.USUARIOS);
                                 List<QueryDocumentSnapshot> docsAreas = db.getAllDocumentsFrom(FirestoreRoutes.AREAS);
                                 for (DocumentSnapshot doc : usuariosFirebase) {
-                                        // System.out.println(doc);
                                         User tmp;
 
                                         if (doc.exists()) {
                                                 List<String> arregloIDAreas = (List<String>) doc.get("areas");
-                                                // System.out.println(arregloIDAreas);
+
                                                 tmp = new User(doc.getId(), doc.getString("Nombre"),
                                                                 doc.getString("nivelAcceso"), arregloIDAreas);
-                                                // System.out.println(tmp.nombre);
-                                                // System.out.println(doc.getData());
+
                                                 usuarios.add(tmp);
-                                                // System.out.println(usuarios);
+
                                         }
                                 }
-                                // tablaUsuario.getItems().addAll(usuariosArea);
+
                                 return null;
                         }
                 });
@@ -197,16 +204,15 @@ public class MantAreasPage implements Initializable {
                         @Override
                         public void changed(ObservableValue<? extends Number> observable, Number oldValue,
                                         Number newValue) {
-                                // recalcularColumnWidth();
+
                         }
                 });
 
                 tablaArea.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Area>() {
                         @Override
                         public void changed(ObservableValue<? extends Area> observable, Area oldValue, Area newValue) {
-                                areaSelectedID ="";
+                                areaSelectedID = "";
                                 TablaAreaSelectedRow = newValue;
-                                // System.out.println(newValue);
                                 llenarTablaUsuario(newValue.areaID);
                                 areaSelectedID = TablaAreaSelectedRow.areaID;
                         }
@@ -216,12 +222,10 @@ public class MantAreasPage implements Initializable {
                         @Override
                         public void changed(ObservableValue<? extends User> observable, User oldValue, User newValue) {
                                 selectedUser = newValue;
-                                // System.out.println(newValue);
-                                // llenarTablaUsuario(newValue.areaID);
                                 usuarioID = selectedUser.userID;
                                 areasUsuarioArray = selectedUser.areas;
                                 index = areasUsuarioArray.indexOf(areaSelectedID);
-                                
+
                                 // areasUsuarioArray.add(areaID);
                                 usuarioEmail = "correo@email.com";
                                 usuarioName = selectedUser.nombre;
@@ -251,6 +255,22 @@ public class MantAreasPage implements Initializable {
         }
 
         private void llenarTablaUsuario(String areaID) {
+                usuarios.clear();
+                List<QueryDocumentSnapshot> usuariosFirebase = db.getAllDocumentsFrom(FirestoreRoutes.USUARIOS);
+                List<QueryDocumentSnapshot> docsAreas = db.getAllDocumentsFrom(FirestoreRoutes.AREAS);
+                for (DocumentSnapshot doc : usuariosFirebase) {
+                        User tmp;
+
+                        if (doc.exists()) {
+                                List<String> arregloIDAreas = (List<String>) doc.get("areas");
+
+                                tmp = new User(doc.getId(), doc.getString("Nombre"), doc.getString("nivelAcceso"),
+                                                arregloIDAreas);
+
+                                usuarios.add(tmp);
+
+                        }
+                }
                 tablaUsuario.getItems().clear();
                 for (User usuario : usuarios) {
                         for (int i = 0; i < usuario.areas.size(); i++) {
@@ -261,5 +281,26 @@ public class MantAreasPage implements Initializable {
 
                         }
                 }
+        }
+
+        public void llenarTablaAreas() {
+                db = FirebaseConnector.getInstance();
+                Areas.clear();
+                // Areas
+                List<QueryDocumentSnapshot> documentos = db.getAllDocumentsFrom(FirestoreRoutes.AREAS);
+
+                for (DocumentSnapshot doc : documentos) {
+
+                        Area tmp;
+
+                        if (doc.exists()) {
+                                tmp = new Area(doc.getId(), doc.getString("Area"));
+
+                                Areas.add(tmp);
+
+                        }
+                }
+                tablaArea.getItems().clear();
+                tablaArea.getItems().addAll(Areas);
         }
 }
