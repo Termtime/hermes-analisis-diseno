@@ -39,12 +39,22 @@ public class SimpleAlert implements Initializable {
     }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        labelMsg.setText(mensaje);
+        
+
         EventListeners.onWindowOpening(alertBody, new Function<Window,Void>(){
 
             @Override
             public Void apply(Window t) {
                 ((Stage)t).initStyle(StageStyle.UNDECORATED);
+                return null;
+            }
+            
+        });
+        EventListeners.onWindowOpened(alertBody, new Function<Window,Void>(){
+
+            @Override
+            public Void apply(Window t) {
+                labelMsg.setText(mensaje);
                 return null;
             }
             

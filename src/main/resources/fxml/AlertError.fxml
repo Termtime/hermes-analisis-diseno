@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="alertBody" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="214.0" prefWidth="433.0" styleClass="window-background-level2" stylesheets="@../styles/StyleTablasNivel2.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="alertBody" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="214.0" prefWidth="433.0" styleClass="window-background-level2" stylesheets="@../styles/StyleTablasNivel2.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unah.hermes.utils.CustomAlerts.SimpleAlert">
    <children>
       <ImageView fitHeight="79.0" fitWidth="96.0" layoutX="310.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
          <image>

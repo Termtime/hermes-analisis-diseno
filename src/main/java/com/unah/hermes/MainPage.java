@@ -255,12 +255,13 @@ public class MainPage implements Initializable {
 
     @FXML
     public void menuBtnImprimirClick(ActionEvent event) {
-
+        Navigation.mostrarAlertError("Hola LA KGASTE", event);
+        
     }
 
     @FXML
     public void menuBtnImprimirMensualClick(ActionEvent event) {
-
+        Navigation.mostrarAlertExito("Hola! no la KGASTE!", event);
     }
 
     @FXML
@@ -376,7 +377,7 @@ public class MainPage implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // crear los listeners para los datos de firebase
-        // TODO requisiciones denegadas, requisiciones entregadas
+        
 
         gridReqPendientes.setOnMouseClicked(new EventHandler<MouseEvent>() {
 

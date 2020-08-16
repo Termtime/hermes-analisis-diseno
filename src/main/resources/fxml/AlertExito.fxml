@@ -8,14 +8,14 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="alertBody" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="214.0" prefWidth="433.0" styleClass="window-background-level2" stylesheets="@../styles/StyleTablasNivel2.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="alertBody" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="214.0" prefWidth="433.0" styleClass="window-background-level2" stylesheets="@../styles/StyleTablasNivel2.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unah.hermes.utils.CustomAlerts.SimpleAlert">
    <children>
       <ImageView fitHeight="86.0" fitWidth="87.0" layoutX="310.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/noun_done_2111614.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnOk" layoutX="321.0" layoutY="158.0" mnemonicParsing="false" onAction="#btnOk" prefHeight="30.0" prefWidth="67.0" text="OK">
+      <Button fx:id="btnOk" layoutX="321.0" layoutY="158.0" mnemonicParsing="false" onAction="#btnOkClick" prefHeight="30.0" prefWidth="67.0" text="OK">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
