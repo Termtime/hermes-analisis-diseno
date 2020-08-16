@@ -58,6 +58,7 @@ import javafx.scene.image.Image;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.UserRecord;
 import com.google.firebase.auth.UserRecord.CreateRequest;
 import com.google.firebase.auth.UserRecord.UpdateRequest;
 import com.google.firebase.FirebaseApp;
@@ -420,7 +421,8 @@ public class FirebaseConnector {
         try {
             // crear el usuario en firebase auth
             CreateRequest request = new CreateRequest().setEmail(email).setPassword(password).setDisplayName(nombre);
-            auth.createUser(request);
+            UserRecord nuevoUsuario = auth.createUser(request);
+
             // crear el usuario en firestore
             List<String> areasID = new ArrayList<>();
             for (Area area : areas) {
@@ -430,6 +432,7 @@ public class FirebaseConnector {
             datos.put("Nombre", nombre);
             datos.put("nivelAcceso", nivelAcceso);
             datos.put("areas", areasID);
+            datos.put("uid", nuevoUsuario.getUid());
             // ejecutar la instruccion en firebase
             db.collection("Usuarios").document(email).set(datos);
             return true;

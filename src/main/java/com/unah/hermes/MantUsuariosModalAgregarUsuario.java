@@ -68,6 +68,7 @@ public class MantUsuariosModalAgregarUsuario implements Initializable {
     TextField txtCorreo;
     @FXML
     PasswordField txtContrasena;
+    @FXML Button btnAgregarImagenUsuario;
     @FXML
     PasswordField txtConrfirmeContrasena;
     @FXML
@@ -77,6 +78,16 @@ public class MantUsuariosModalAgregarUsuario implements Initializable {
     @FXML Button btnAgregar;
 
     @FXML
+
+    public void btnAgregarImagenUsuarioClick(ActionEvent event){
+
+    }
+    public void cerrarVentana(){
+        Stage stage = (Stage) btnCancelar.getScene().getWindow();
+
+        stage.close();
+    }
+
     public void btnAgregarClick(ActionEvent event) {
         //arriba de esto irian las validaciones
         List<Area> areasSeleccionadas = new ArrayList();
@@ -98,7 +109,21 @@ public class MantUsuariosModalAgregarUsuario implements Initializable {
         stage.close();
         }
 
+        // areas.addAll((Collection<? extends Area>)
+        // comboNivelAcceso.getSelectionModel().getSelectedItem());
 
+        if(db.crearUsuario(txtCorreo.getText(), txtContrasena.getText(), txtNombre.getText(),
+            comboNivelAcceso.getSelectionModel().getSelectedItem().toString(), areasSeleccionadas))
+        {
+            System.out.println(listAreasSeleccionadas);
+
+            //antes de esta instruccion mostrar dialogo de alerta de que se completo exitosamente
+            cerrarVentana();
+        }else{
+            //mostrar alert de que no se pudo ingresar
+        }
+
+        
     }
 
     @FXML
@@ -131,7 +156,17 @@ public class MantUsuariosModalAgregarUsuario implements Initializable {
     }
 
     @FXML
-    public void comboNivelAccesoClick(ActionEvent event) {
+    public void comboNivelAccesoClick(ActionEvent event){       
+
+        
+        //  comboNivelAcceso.getSelectionModel().selectFirst();
+        //  comboAreaAcceso.setVisible(true);
+        //  listAreas.setVisible(true);
+        //  listAreasSeleccionadas.setVisible(true);
+        //  btnAgregarArea.setVisible(true);
+        //  btnQuitarArea.setVisible(true);
+
+        
     }
 
     @FXML
@@ -199,13 +234,15 @@ public class MantUsuariosModalAgregarUsuario implements Initializable {
         comboNivelAcceso.getItems().add("Usuario");
         comboNivelAcceso.getItems().add("Jefe de Area");
         comboNivelAcceso.getItems().add("Administrador");
-        
+
         comboNivelAcceso.getSelectionModel().selectFirst();
         comboAreaAcceso.setVisible(true);
         listAreas.setVisible(false);
         listAreasSeleccionadas.setVisible(false);
         btnAgregarArea.setVisible(false);
         btnQuitarArea.setVisible(false);
+        
+        
         //llenado del combobox de areas
         comboAreaAcceso.getItems().addAll(areas);
 

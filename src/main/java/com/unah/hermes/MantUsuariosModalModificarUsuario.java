@@ -2,15 +2,22 @@ package com.unah.hermes;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.function.Function;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.unah.hermes.objects.Area;
 import com.unah.hermes.objects.User;
+import com.unah.hermes.provider.FirebaseConnector;
+import com.unah.hermes.provider.FirestoreRoutes;
+import com.unah.hermes.utils.EventListeners;
 import com.unah.hermes.utils.Navigation;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
+//import com.google.protobuf.DescriptorProtos.FieldDescriptorProto.Label;
 import com.google.cloud.firestore.DocumentSnapshot;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -24,10 +31,12 @@ import javafx.scene.layout.Pane;
 import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 public class MantUsuariosModalModificarUsuario implements Initializable {
     @FXML ListView<Area>  listAreas;
@@ -47,6 +56,8 @@ public class MantUsuariosModalModificarUsuario implements Initializable {
     ComboBox<Area> comboAreaAcceso;
     @FXML Button btnAgregarArea;
     @FXML Button btnQuitarArea;
+    @FXML Label labelAreasSeleccionada;
+    @FXML Label labelAreas;
 
     
     @FXML public void btnAgregarClick(ActionEvent event) {
@@ -67,13 +78,40 @@ public class MantUsuariosModalModificarUsuario implements Initializable {
     @FXML public void comboAreaAccesoClick(ActionEvent event) {
         
     }
-    @FXML public void btnAgregarAreaClick(ActionEvent event) {
+
+    public void btnAgregarImagenUsuarioClick(ActionEvent event){
+
     }
     @FXML public void btnModificarClick(ActionEvent event) {
     }
+    @FXML public void btnAgregarAreaClick(ActionEvent event) {
+        // if(listAreasSeleccionadas.getSelectionModel().getSelectedItem().equals(areas)){
+                       
+        // }
+    }
+    
     @FXML public void btnQuitarAreaClick(ActionEvent event) {
+        
     }
     @FXML public void comboNivelAccesoClick(ActionEvent event) {
+
+        if(comboNivelAcceso.getSelectionModel().isSelected(1)) {
+             comboAreaAcceso.setVisible(true);
+             listAreas.setVisible(true);
+             listAreasSeleccionadas.setVisible(true);
+             btnAgregarArea.setVisible(true);
+             btnQuitarArea.setVisible(true);
+   
+            }
+            if(comboNivelAcceso.getSelectionModel().isSelected(0)) {
+                comboAreaAcceso.setVisible(false);
+                listAreas.setVisible(false);
+                listAreasSeleccionadas.setVisible(false);
+                btnAgregarArea.setVisible(false);
+                btnQuitarArea.setVisible(false);
+      
+               }
+
     }
     
     @FXML public void txtCorreoInput(KeyEvent event) {
@@ -93,11 +131,18 @@ public class MantUsuariosModalModificarUsuario implements Initializable {
   
     public void initData(Object data){
         //System.out.println("Inicialiar datos");
-        User usuarioDatos = (User) data; 
-        txtNombre.setText(usuarioDatos.nombre);
-        txtCorreo.setText(usuarioDatos.userID); 
-        //comboAreaAcceso.selectionModelProperty().
-        //listAreasSeleccionadas.set
+        usuarioDatos = (User) data; 
+        // txtNombre.setText(usuarioDatos.nombre);
+        // txtCorreo.setText(usuarioDatos.userID);
+
+        // System.out.println(listAreas);
+        // System.out.println("listAreasSeleccionadas");
+
+        //llenarCombo();
+        //listAreas.setItems(areas);
+        //listAreasSeleccionadas.setItems(areas);
+        //comboNivelAcceso.setSelectionModel(usuarioDatos.nivelAcceso);
+        
 
     }
 
@@ -106,12 +151,26 @@ public class MantUsuariosModalModificarUsuario implements Initializable {
 
     ObservableList<Area> areas = FXCollections.observableArrayList();
     ObservableList<User> usuarios = FXCollections.observableArrayList();
+    FirebaseConnector db;
+    User usuarioDatos;
     List<QueryDocumentSnapshot> docsAreas;
-    List<QueryDocumentSnapshot> documentos;
     
     @FXML AnchorPane mantUsuariosModalModificarUsuario;
     @Override
     public void initialize(URL url,  ResourceBundle rb) {
+        db = FirebaseConnector.getInstance();
+        
+        EventListeners.onWindowOpened(mantUsuariosModalModificarUsuario, new Function<Window,Void>(){
+
+            @Override
+            public Void apply(Window t) {
+                docsAreas = db.getAllDocumentsFrom(FirestoreRoutes.AREAS);
+                llenarCombo();
+                llenarDatos();
+                return null;
+            }
+            
+        });
         mantUsuariosModalModificarUsuario.setOnMouseClicked(new EventHandler<MouseEvent>(){
             @Override
             public void handle(MouseEvent event) {
@@ -119,9 +178,73 @@ public class MantUsuariosModalModificarUsuario implements Initializable {
 
             }
         });
+        comboNivelAcceso.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>(){
+
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if(newValue.equals("Usuario")){
+                    ocultarJefeArea();
+                    mostrarUsuario();
+                }else if(newValue.equals("Jefe de Area")){
+                    labelAreas.setVisible(true);
+                    labelAreasSeleccionada.setVisible(true);
+                    mostrarJefeArea();
+                    ocultarUsuario();
+                }else if(newValue.equals("Administrador")){
+                    labelAreas.setVisible(false);
+                    labelAreasSeleccionada.setVisible(false);
+                    ocultarJefeArea();
+                    ocultarUsuario();
+                }
+				
+				
+			}
+            
+        });
     } 
     
+    public void llenarDatos(){
+        comboNivelAcceso.getSelectionModel().select(usuarioDatos.nivelAcceso);
+        txtCorreo.setText(usuarioDatos.userID);
+        txtCorreo.setDisable(true);
+        txtNombre.setText(usuarioDatos.nombre);
+        if(usuarioDatos.areas.size() == 1) {
+            for(Area area : areas){
+                if(area.areaID.equals(usuarioDatos.areas.get(0))) {
+                    comboAreaAcceso.getSelectionModel().select(area);
+                    ocultarJefeArea();
+                    mostrarUsuario();
+                    break;
+                }
+            }
+        }else if(usuarioDatos.areas.size() > 1 ){
+            mostrarJefeArea();
+            ocultarUsuario();
+        }else if(usuarioDatos.areas.isEmpty()){
+            ocultarJefeArea();
+            ocultarUsuario();
+        }
+    }
+    public void mostrarUsuario(){
 
+        comboAreaAcceso.setVisible(true);
+    }
+    public void ocultarUsuario(){
+        comboAreaAcceso.setVisible(false);
+    }
+    public void mostrarJefeArea(){
+            listAreas.setVisible(true);
+            listAreasSeleccionadas.setVisible(true);
+            btnAgregarArea.setVisible(true);
+            btnQuitarArea.setVisible(true);
+            
+    }
+    public void ocultarJefeArea(){
+            listAreas.setVisible(false);
+            listAreasSeleccionadas.setVisible(false);
+            btnAgregarArea.setVisible(false);
+            btnQuitarArea.setVisible(false);
+    }
     public void llenarCombo(){
         //procesar datos de firebase
         for (DocumentSnapshot doc : docsAreas) {
@@ -142,23 +265,23 @@ public class MantUsuariosModalModificarUsuario implements Initializable {
         btnQuitarArea.setVisible(false);
         //llenado del combobox de areas
         comboAreaAcceso.getItems().addAll(areas);
-
         //para la ventana de modificar, para llenar la lista de la derecha y la izquierda
         for (Area area : areas) {
-            //recibirias el usuario, tendrias un objeto -User usuario
-             //usuario.areas List<String>
+        //recibirias el usuario, tendrias un objeto -User usuario
+            // usuario.areas List<String>
              String areaID = area.areaID;
-             List<String> usuarioAreas = new ArrayList();
-             if(usuarioAreas.contains(areaID))
-             {
-                 listAreasSeleccionadas.getItems().add(area);
-             }else{
-                 //listaDeLaIzquierda
-             }
-         }
-        
-        //llenado de la lista de la izquierda
-        listAreas.getItems().addAll(areas);
+            //   List<String> usuarioAreas = new ArrayList();
+            System.out.print(usuarioDatos.areas);
+            if(usuarioDatos.areas.contains(areaID))
+            {
+                System.out.println("agregando a la derecha");
+                listAreasSeleccionadas.getItems().add(area);
+            }else{
+                System.out.println("agregando a la izquierda"); 
+                //listaDeLaIzquierda
+                listAreas.getItems().add(area);
+            }
+          }
     }
     
 }

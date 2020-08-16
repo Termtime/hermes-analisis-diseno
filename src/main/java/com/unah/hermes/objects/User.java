@@ -7,9 +7,26 @@ public class User {
     public String nivelAcceso;
     public String stringDeArea;
     public List<String> areas;
+    public String uid;
+    //agregue lista de String areasNombre
+    public List<String> areasNombre;
     //public ObservableList<User> Usuarios = FXCollections.observableArrayList();
 
-    public User(String userID, String nombre, String nivelAcceso, List<String> areas)
+    public User(String userID, String nombre, String nivelAcceso, String uid, List<String> areasNombre,List<String> areas)
+    {
+        this.userID = userID;
+        this.nombre = nombre;
+        this.nivelAcceso = nivelAcceso;
+        this.areas = areas;
+        this.areasNombre = areasNombre;
+        this.uid = uid;
+        stringDeArea = "";
+        for(String area : areasNombre){
+            stringDeArea += area + ", ";
+        }
+        stringDeArea = stringDeArea.substring(0,stringDeArea.length()-2);
+    }
+    public User(String userID, String nombre, String nivelAcceso,List<String> areas)
     {
         this.userID = userID;
         this.nombre = nombre;
