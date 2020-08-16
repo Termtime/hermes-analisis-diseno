@@ -66,6 +66,7 @@ import javafx.stage.Stage;
 import javafx.scene.Node;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
+//import jdk.nashorn.internal.runtime.ListAdapter;
 import javafx.stage.Modality;
 
 
@@ -79,6 +80,7 @@ public class MantUsuariosPage implements Initializable {
     @FXML
     private void btnAgregarUsuarioClick(ActionEvent event) {
         Navigation.pushRoute("MantUsuariosModalAgregarUsuario", event, false, true);
+        llenarTabla();
     }
 
     @FXML
@@ -93,8 +95,7 @@ public class MantUsuariosPage implements Initializable {
 
     @FXML
     private void btnEliminarUsuarioClick(ActionEvent event) {
-      //db.deleteDocument("Usuarios", tablaUSelectedItem.getUserID().toString());
-        
+        db.eliminarUsuario(tablaUSelectedItem.uid, tablaUSelectedItem.getUserID().toString());
     }
 
     @FXML
@@ -126,9 +127,44 @@ public class MantUsuariosPage implements Initializable {
     User tablaUSelectedItem;
     List<Area> areas = new ArrayList<Area>();
     ObservableList<User> usuarios = FXCollections.observableArrayList();
-    List<QueryDocumentSnapshot> documentos = db.getAllDocumentsFrom(FirestoreRoutes.USUARIOS);
-    List<QueryDocumentSnapshot> docsAreas = db.getAllDocumentsFrom(FirestoreRoutes.AREAS);  
+    List<QueryDocumentSnapshot> documentos;
+    List<QueryDocumentSnapshot> docsAreas;
     
+    public void llenarTabla(){
+        documentos = db.getAllDocumentsFrom(FirestoreRoutes.USUARIOS);
+        docsAreas = db.getAllDocumentsFrom(FirestoreRoutes.AREAS);
+        tablaUsuarios.getItems().clear();
+        usuarios.clear();
+        for(DocumentSnapshot doc : docsAreas){
+            Area tmp = new Area(doc.getId(), doc.getString("Area"));
+            areas.add(tmp);
+        }
+
+        for (DocumentSnapshot doc : documentos) {
+            User tmp;
+             if(doc.exists()){
+            List<String> arregloIDAreas = (List<String>) doc.get("areas");
+            List<String> areasConNombre = new ArrayList();
+            //agregar areas con ID
+            List<String> areasConID = new ArrayList();  
+
+                for(Area area : areas){
+                    for(String areaID : arregloIDAreas){
+                        if(areaID.equals(area.areaID.trim()))
+                        {
+                            areasConNombre.add(area.nombre);
+                            areasConID.add(area.areaID);
+                            break;
+                        }   
+                    }
+                }   
+                tmp = new User(doc.getId(), doc.getString("Nombre"),
+                doc.getString("nivelAcceso"), doc.getString("uid"), areasConNombre, areasConID);
+                usuarios.add(tmp);
+            }
+        }
+            tablaUsuarios.getItems().addAll(usuarios);
+    }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         MantUsuario.setOnMouseClicked(new EventHandler<MouseEvent>(){
@@ -142,34 +178,7 @@ public class MantUsuariosPage implements Initializable {
             @Override
             public Void apply(Window parent) {
                 iniciarEstructuraTablas();     
-                                         
-                               
-                for(DocumentSnapshot doc : docsAreas){
-                    Area tmp = new Area(doc.getId(), doc.getString("Area"));
-                    areas.add(tmp);
-                }
-
-                for (DocumentSnapshot doc : documentos) {
-                    User tmp;
-                     if(doc.exists()){
-                    List<String> arregloIDAreas = (List<String>) doc.get("areas");
-                    List<String> areasConNombre = new ArrayList();  
-
-                        for(Area area : areas){
-                            for(String areaID : arregloIDAreas){
-                                if(areaID.equals(area.areaID.trim()))
-                                {
-                                    areasConNombre.add(area.nombre);
-                                    break;
-                                }   
-                            }
-                        }   
-                        tmp = new User(doc.getId(), doc.getString("Nombre"),
-                        doc.getString("nivelAcceso"), areasConNombre);
-                        usuarios.add(tmp);
-                    }
-                }
-                    tablaUsuarios.getItems().addAll(usuarios);
+                llenarTabla();
 
                 return null;
             }
@@ -187,18 +196,18 @@ public class MantUsuariosPage implements Initializable {
             }
         });
 
-        tablaUsuarios.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<User>(){
-            @Override
+         tablaUsuarios.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<User>(){
+             @Override
             public void changed(ObservableValue<? extends User> observable, User oldValue, User newValue) {
                 tablaUSelectedItem = newValue;
             }
         });
-        MantUsuario.widthProperty().addListener(new ChangeListener<Number>(){
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                recalcularColumnWidth();
-            }
-        });
+         MantUsuario.widthProperty().addListener(new ChangeListener<Number>(){
+             @Override
+             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                 recalcularColumnWidth();
+             }
+         });
 
   
     }
@@ -212,9 +221,9 @@ public class MantUsuariosPage implements Initializable {
         ObservableList columnasUsuario = tablaUsuarios.getColumns();
 
         ((TableColumn)( columnasUsuario.get(0) )).setPrefWidth(tablaUsuarios.getWidth()*0.20);
-        ((TableColumn)( columnasUsuario.get(1) )).setPrefWidth(tablaUsuarios.getWidth()*0.30);
-        ((TableColumn)( columnasUsuario.get(2) )).setPrefWidth(tablaUsuarios.getWidth()*0.20);
-        ((TableColumn)( columnasUsuario.get(3) )).setPrefWidth(tablaUsuarios.getWidth()*0.20);
+        ((TableColumn)( columnasUsuario.get(1) )).setPrefWidth(tablaUsuarios.getWidth()*0.38);
+        ((TableColumn)( columnasUsuario.get(2) )).setPrefWidth(tablaUsuarios.getWidth()*0.15);
+        ((TableColumn)( columnasUsuario.get(3) )).setPrefWidth(tablaUsuarios.getWidth()*0.25);
         
         
     }    
@@ -227,13 +236,13 @@ public class MantUsuariosPage implements Initializable {
         //Tabla de usuarios
         tablaUsuarios.getItems().clear();
         tablaUsuarios.getColumns().clear();
-        TableColumn columnaCodigo = new TableColumn<>("Codigo");
+        TableColumn columnaCodigo = new TableColumn<>("Correo");
         columnaCodigo.setCellValueFactory(new PropertyValueFactory<>("userID"));
-        columnaCodigo.setPrefWidth(tablaUsuarios.getWidth()*0.15);
+        columnaCodigo.setPrefWidth(tablaUsuarios.getWidth()*0.25);
 
         TableColumn columnaUsuario = new TableColumn<>("Nombre");
         columnaUsuario.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-        columnaUsuario.setPrefWidth(tablaUsuarios.getWidth()*0.30);
+        columnaUsuario.setPrefWidth(tablaUsuarios.getWidth()*0.25);
 
         TableColumn columnaNivelAcceso = new TableColumn<>("Nivel de acceso");
         columnaNivelAcceso.setCellValueFactory(new PropertyValueFactory<>("nivelAcceso"));
@@ -241,26 +250,26 @@ public class MantUsuariosPage implements Initializable {
 
         TableColumn columnaArea = new TableColumn<>("Areas");
         columnaArea.setCellValueFactory(new PropertyValueFactory<>("stringDeArea"));
-        columnaArea.setPrefWidth(tablaUsuarios.getWidth()*0.15);
+        columnaArea.setPrefWidth(tablaUsuarios.getWidth()*0.28);
 
         
         tablaUsuarios.getColumns().addAll(columnaCodigo, columnaUsuario, columnaNivelAcceso, columnaArea);
 
        
     }
-/*
-    private void popularTablaMantUsuarios(TableView<User> tabla, ObservableList<User> Usuarios) {
-        try{
-            tabla.getItems().clear();
-            for (User usuario : Usuarios) {
-                User row = new User(usuario.userID, usuario.nombre, usuario.nivelAcceso, usuario.area, usuario.grupo);
-                tabla.getItems().add(row);
-            }
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-    }
-*/
+
+    // private void popularTablaMantUsuarios(ListView lista, ObservableList<User> Usuarios) {
+    //     try{
+    //         ListAdaptertItems().clear();
+    //         for (User usuario : Usuarios) {
+    //             User row = new User(usuario.userID, usuario.nombre, usuario.nivelAcceso,usuario.areas);
+    //             lista.getItems().add(row);
+    //         }
+    //     }catch(Exception e){
+    //         e.printStackTrace();
+    //     }
+    // }
+
 
 
 }

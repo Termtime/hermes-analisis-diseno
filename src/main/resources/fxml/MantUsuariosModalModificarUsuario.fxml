@@ -15,7 +15,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mantUsuariosModalModificarUsuario" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="542.0" prefWidth="647.0" styleClass="window-background-level3" stylesheets="@../styles/StyleTablasNivel3.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unah.hermes.MantUsuariosModalModificarUsuario">
+<AnchorPane fx:id="mantUsuariosModalModificarUsuario" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="542.0" prefWidth="647.0" styleClass="window-background-level3" stylesheets="@../styles/StyleTablasNivel3.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unah.hermes.MantUsuariosModalModificarUsuario">
    <children>
       <Label alignment="CENTER" layoutX="178.0" layoutY="39.0" prefHeight="39.0" prefWidth="224.0" text="Modificar Usuario" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="178.0" AnchorPane.rightAnchor="176.0" AnchorPane.topAnchor="40.0">
          <font>
@@ -74,7 +74,7 @@
             </Pane>
             <Pane layoutX="2.0" layoutY="128.0" prefHeight="107.0" prefWidth="360.0">
                <children>
-                  <Label text="Area(s):">
+                  <Label fx:id="labelAreas" text="Area(s):">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -82,7 +82,7 @@
                   <ComboBox fx:id="comboAreaAcceso" layoutY="23.0" onAction="#comboAreaAccesoClick" prefHeight="30.0" prefWidth="360.0" promptText="Escoja el Area" style="-fx-background-color: #ffffff;" visible="false" />
                   <ListView fx:id="listAreas" layoutY="21.0" prefHeight="87.0" prefWidth="155.0" />
                   <ListView fx:id="listAreasSeleccionadas" layoutX="205.0" layoutY="21.0" prefHeight="87.0" prefWidth="155.0" />
-                  <Label layoutX="205.0" text="Area(s) Seleccionada(s):">
+                  <Label fx:id="labelAreasSeleccionada" layoutX="205.0" text="Area(s) Seleccionada(s):">
                      <font>
                         <Font size="14.0" />
                      </font>
