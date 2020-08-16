@@ -1,6 +1,8 @@
 package com.unah.hermes.utils;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.unah.hermes.EntregaReqPage;
 import com.unah.hermes.MainPage;
@@ -9,6 +11,7 @@ import com.unah.hermes.MantProductosModalModificarProducto;
 import com.unah.hermes.MantUsuariosModalAgregarUsuario;
 import com.unah.hermes.MantUsuariosModalModificarUsuario;
 import com.unah.hermes.MantUsuariosPage;
+import com.unah.hermes.utils.CustomAlerts.SimpleAlert;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -207,6 +210,11 @@ public class Navigation {
                 EntregaReqPage controller = loader.getController();
                 controller.initData(data);
             }
+            //manejar los alerts
+            else if(tipoControlador == SimpleAlert.class){
+                SimpleAlert controller = loader.getController();
+                controller.initData(data);
+            }
             stage.setScene(new Scene(root));
             if(modal) {
                 stage.initOwner(parentStage);
@@ -223,5 +231,13 @@ public class Navigation {
         catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void mostrarAlertError(String mensaje, ActionEvent event){
+        pushRouteWithParameter("AlertError", event, false, true, SimpleAlert.class, mensaje);
+    }
+
+    public void mostrarAlertExito(String mensaje, ActionEvent event){
+        pushRouteWithParameter("AlertExito", event, false, true, SimpleAlert.class, mensaje);
     }
 }
