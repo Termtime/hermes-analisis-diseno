@@ -86,6 +86,9 @@ public class MantAreasModalAgregarUsuarioArea implements Initializable {
     @FXML
     TextField txtBuscarInput;
 
+    @FXML
+    private javafx.scene.control.Button btnCancelar;
+
     ObservableList<User> usuarios = FXCollections.observableArrayList();
 
     @FXML
@@ -96,6 +99,7 @@ public class MantAreasModalAgregarUsuarioArea implements Initializable {
             datos.put("areas", areasUsuarioArray);
             db.updateDocument(FirestoreRoutes.USUARIOS, usuarioID, datos);
             Navigation.mostrarAlertExito("Usuario Agregado exitosamente al área", event);
+            llenarTabla();
         } else {
             Navigation.mostrarAlertError("No ha seleccionado un usuario", event);
         }
@@ -103,7 +107,11 @@ public class MantAreasModalAgregarUsuarioArea implements Initializable {
 
     @FXML
     private void btnCancelarClick(ActionEvent event) {
+        Stage ventana = (Stage) btnCancelar.getScene().getWindow();
 
+        ventana.close();
+
+        // ventana.show();
     }
 
     @FXML
@@ -145,27 +153,31 @@ public class MantAreasModalAgregarUsuarioArea implements Initializable {
             @Override
             public Void apply(Window parent) {
                 iniciarEstructuraTablas();
-                db = FirebaseConnector.getInstance();
+                llenarTabla();
+                // db = FirebaseConnector.getInstance();
 
-                // Usuarios inicio (Prueba)
-                List<QueryDocumentSnapshot> usuariosFirebase = db.getAllDocumentsFrom(FirestoreRoutes.USUARIOS);
-                List<QueryDocumentSnapshot> docsAreas = db.getAllDocumentsFrom(FirestoreRoutes.AREAS);
-                tablaUsuariosArea.getItems().clear();
-                for (DocumentSnapshot doc : usuariosFirebase) {
-                    User tmp;
+                // // Usuarios inicio (Prueba)
+                // List<QueryDocumentSnapshot> usuariosFirebase =
+                // db.getAllDocumentsFrom(FirestoreRoutes.USUARIOS);
+                // List<QueryDocumentSnapshot> docsAreas =
+                // db.getAllDocumentsFrom(FirestoreRoutes.AREAS);
+                // tablaUsuariosArea.getItems().clear();
+                // for (DocumentSnapshot doc : usuariosFirebase) {
+                // User tmp;
 
-                    if (doc.exists()) {
-                        List<String> arregloIDAreas = (List<String>) doc.get("areas");
-                        if (!arregloIDAreas.contains(areaSelected.areaID)) {
-                            tmp = new User(doc.getId(), doc.getString("Nombre"), doc.getString("nivelAcceso"),
-                                    arregloIDAreas);
-                            System.out.println(tmp.nombre);
-                            usuarios.add(tmp);
-                        }
+                // if (doc.exists()) {
+                // List<String> arregloIDAreas = (List<String>) doc.get("areas");
+                // if (!arregloIDAreas.contains(areaSelected.areaID)) {
+                // tmp = new User(doc.getId(), doc.getString("Nombre"),
+                // doc.getString("nivelAcceso"),
+                // arregloIDAreas);
+                // System.out.println(tmp.nombre);
+                // usuarios.add(tmp);
+                // }
 
-                    }
-                }
-                tablaUsuariosArea.getItems().addAll(usuarios);
+                // }
+                // }
+                // tablaUsuariosArea.getItems().addAll(usuarios);
                 // Platform.runLater(new Runnable() {
                 // @Override
                 // public void run() {
@@ -200,6 +212,30 @@ public class MantAreasModalAgregarUsuarioArea implements Initializable {
         columnUsuario.setPrefWidth(tablaUsuariosArea.getWidth() * 0.98);
 
         tablaUsuariosArea.getColumns().addAll(columnUsuario);
+    }
+
+    private void llenarTabla() {
+        db = FirebaseConnector.getInstance();
+
+        // Usuarios inicio (Prueba)
+        List<QueryDocumentSnapshot> usuariosFirebase = db.getAllDocumentsFrom(FirestoreRoutes.USUARIOS);
+        List<QueryDocumentSnapshot> docsAreas = db.getAllDocumentsFrom(FirestoreRoutes.AREAS);
+        usuarios.clear();
+        for (DocumentSnapshot doc : usuariosFirebase) {
+            User tmp;
+
+            if (doc.exists()) {
+                List<String> arregloIDAreas = (List<String>) doc.get("areas");
+                if (!arregloIDAreas.contains(areaSelected.areaID)) {
+                    tmp = new User(doc.getId(), doc.getString("Nombre"), doc.getString("nivelAcceso"), arregloIDAreas);
+                    System.out.println(tmp.nombre);
+                    usuarios.add(tmp);
+                }
+
+            }
+        }
+        tablaUsuariosArea.getItems().clear();
+        tablaUsuariosArea.getItems().addAll(usuarios);
     }
 
 }

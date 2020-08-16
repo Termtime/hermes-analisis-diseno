@@ -110,17 +110,20 @@ public class MantAreasPage implements Initializable {
                                 if (usuario.areas.contains(areaSelectedID)) {
                                         usuario.areas.remove(areaSelectedID);
                                         Map<String, Object> datos = new HashMap();
-                                        
                                         List<String> vacio = new ArrayList();
                                         vacio.add("");
-                                        if(usuario.areas.isEmpty()) datos.put("areas", vacio);
-                                        else datos.put("areas", usuario.areas);
+                                        if (usuario.areas.isEmpty())
+                                                datos.put("areas", vacio);
+                                        else
+                                                datos.put("areas", usuario.areas);
 
                                         db.updateDocument(FirestoreRoutes.USUARIOS, usuario.userID, datos);
                                 }
                         }
                         db.deleteDocument(FirestoreRoutes.AREAS, areaSelectedID);
                         Navigation.mostrarAlertExito("Area eliminada exitosamente", event);
+                } else {
+                        Navigation.mostrarAlertError("Debe seleccionar un Area antes", event);
                 }
         }
 
@@ -147,7 +150,7 @@ public class MantAreasPage implements Initializable {
                         datos.put("areas", areasUsuarioArray);
                         db.updateDocument(FirestoreRoutes.USUARIOS, usuarioID, datos);
                         Navigation.mostrarAlertExito("Usuario eliminado exitosamente del área", event);
-
+                        llenarTablaUsuario(areaID);
                 } else {
                         Navigation.mostrarAlertError("No ha seleccionado un usuario", event);
                 }
