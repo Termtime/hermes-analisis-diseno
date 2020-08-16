@@ -72,7 +72,7 @@ import javafx.stage.WindowEvent;
 import javafx.stage.Modality;
 
 import com.unah.hermes.objects.Area;
-import com.unah.hermes.objects.User; //Consulta objeto
+import com.unah.hermes.objects.User;
 import com.unah.hermes.utils.Navigation;
 
 public class MantAreasModalAgregarUsuarioArea implements Initializable {
@@ -115,7 +115,6 @@ public class MantAreasModalAgregarUsuarioArea implements Initializable {
 
         ventana.close();
 
-        // ventana.show();
     }
 
     @FXML
@@ -158,35 +157,7 @@ public class MantAreasModalAgregarUsuarioArea implements Initializable {
             public Void apply(Window parent) {
                 iniciarEstructuraTablas();
                 llenarTabla();
-                // db = FirebaseConnector.getInstance();
 
-                // // Usuarios inicio (Prueba)
-                // List<QueryDocumentSnapshot> usuariosFirebase =
-                // db.getAllDocumentsFrom(FirestoreRoutes.USUARIOS);
-                // List<QueryDocumentSnapshot> docsAreas =
-                // db.getAllDocumentsFrom(FirestoreRoutes.AREAS);
-                // tablaUsuariosArea.getItems().clear();
-                // for (DocumentSnapshot doc : usuariosFirebase) {
-                // User tmp;
-
-                // if (doc.exists()) {
-                // List<String> arregloIDAreas = (List<String>) doc.get("areas");
-                // if (!arregloIDAreas.contains(areaSelected.areaID)) {
-                // tmp = new User(doc.getId(), doc.getString("Nombre"),
-                // doc.getString("nivelAcceso"),
-                // arregloIDAreas);
-                // System.out.println(tmp.nombre);
-                // usuarios.add(tmp);
-                // }
-
-                // }
-                // }
-                // tablaUsuariosArea.getItems().addAll(usuarios);
-                // Platform.runLater(new Runnable() {
-                // @Override
-                // public void run() {
-                // }
-                // });
                 return null;
             }
         });
@@ -195,8 +166,7 @@ public class MantAreasModalAgregarUsuarioArea implements Initializable {
             @Override
             public void changed(ObservableValue<? extends User> observable, User oldValue, User newValue) {
                 selectedUser = newValue;
-                // System.out.println(newValue);
-                // llenarTablaUsuario(newValue.areaID);
+
                 usuarioID = selectedUser.userID;
                 areasUsuarioArray = selectedUser.areas;
                 areasUsuarioArray.add(areaID);

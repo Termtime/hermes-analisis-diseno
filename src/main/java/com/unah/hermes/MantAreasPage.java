@@ -77,12 +77,11 @@ import javafx.scene.control.ButtonType;
 
 public class MantAreasPage implements Initializable {
 
-        // Consulta
         @FXML
         TableView<Area> tablaArea;
         @FXML
         TableView<User> tablaUsuario;
-        // Consulta
+
         @FXML
         AnchorPane MantenimientoAreas;
 
@@ -132,7 +131,6 @@ public class MantAreasPage implements Initializable {
 
         @FXML
         private void btnAgregarUsuarioAreaClick(ActionEvent event) {
-                // Navigation.pushRoute("MantAreasAgregarUsuarioArea", event, false, true);
                 if (TablaAreaSelectedRow != null) {
                         Navigation.pushRouteWithParameter("MantAreasAgregarUsuarioArea", event, false, true,
                                         MantAreasModalAgregarUsuarioArea.class, TablaAreaSelectedRow);
