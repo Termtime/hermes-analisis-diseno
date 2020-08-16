@@ -5,8 +5,10 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.function.Function;
 
 import com.unah.hermes.provider.FirebaseConnector;
+import com.unah.hermes.utils.EventListeners;
 import com.unah.hermes.utils.Navigation;
 
 import javafx.beans.value.ChangeListener;
@@ -16,6 +18,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -23,7 +26,9 @@ import javafx.scene.control.PasswordField;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import javafx.scene.Node;
 
 public class LoginPageController implements Initializable {
@@ -33,6 +38,8 @@ public class LoginPageController implements Initializable {
     Label errorCorreo, errorPass;
     @FXML
     Button loginBtn;
+    @FXML
+    private AnchorPane anchorLogin;
     @FXML
     private TextField correoTxt;
     @FXML
@@ -81,6 +88,17 @@ public class LoginPageController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
+        EventListeners.onWindowOpening(anchorLogin, new Function<Window, Void>() {
+
+            @Override
+            public Void apply(Window t) {
+                ((Stage) t).setResizable(false);
+                return null;
+            }
+
+        });
+
         correoTxt.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {

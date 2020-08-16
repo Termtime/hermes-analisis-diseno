@@ -49,101 +49,127 @@
       </MenuBar>
       <AnchorPane layoutY="22.0" prefHeight="213.0" prefWidth="1162.0" AnchorPane.bottomAnchor="-9.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="6.2000000000000455" AnchorPane.topAnchor="22.0">
          <children>
-            <VBox fx:id="vboxMenuPequeno" alignment="TOP_CENTER" layoutX="-2.0" prefHeight="641.0" prefWidth="67.0" styleClass="vbox" AnchorPane.bottomAnchor="6.399999999999977" AnchorPane.topAnchor="0.0">
+            <VBox fx:id="vboxMenuPequeno" alignment="TOP_CENTER" layoutX="-2.0" prefHeight="642.0" prefWidth="55.0" styleClass="vbox" AnchorPane.bottomAnchor="6.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <Pane prefHeight="23.0" prefWidth="74.0" />
-                  <Button fx:id="btnExpandirMenu" mnemonicParsing="false" onAction="#btnExpandirMenuClick" styleClass="btnMenu">
-                     <graphic>
-                        <ImageView fitHeight="31.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../images/menu.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
-                  <Pane prefHeight="103.5" prefWidth="67.0" />
-                  <ImageView fx:id="imagenIcono" fitHeight="72.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/logo.png" />
-                     </image>
-                  </ImageView>
-                  <Pane prefHeight="92.5" prefWidth="71.0" />
-                  <Button fx:id="btnReqPendientes" mnemonicParsing="false" onAction="#btnReqPendientesGrandeClick" prefHeight="88.0" prefWidth="84.0" style="-fx-padding: 0;" styleClass="btnMenu">
-                     <graphic>
-                        <ImageView fitHeight="49.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../images/pendiente.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
-                  <Button fx:id="btnReqEntregadas" graphicTextGap="0.0" mnemonicParsing="false" onAction="#btnReqEntregadasGrandeClick" prefHeight="88.0" prefWidth="60.0" styleClass="btnMenu">
-                     <graphic>
-                        <ImageView fitHeight="49.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../images/entregada.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
-                  <Button fx:id="btnReqDenegadas" mnemonicParsing="false" onAction="#btnReqDenegadasGrandeClick" prefHeight="88.0" prefWidth="60.0" styleClass="btnMenu">
-                     <graphic>
-                        <ImageView fitHeight="49.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../images/denegada.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
+                  <AnchorPane prefHeight="642.0" prefWidth="58.0">
+                     <children>
+                        <AnchorPane layoutX="3.0" prefHeight="294.0" prefWidth="62.0">
+                           <children>
+                              <Button fx:id="btnExpandirMenu" layoutX="3.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnExpandirMenuClick" prefHeight="46.0" prefWidth="60.0" styleClass="btnMenu">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                                 <graphic>
+                                    <ImageView fitHeight="31.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../images/menu.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                              <ImageView fx:id="imagenIcono" fitHeight="86.0" fitWidth="87.0" layoutX="7.0" layoutY="147.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/logo.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </AnchorPane>
+                        <Button fx:id="btnReqPendientes" layoutX="3.0" layoutY="294.0" mnemonicParsing="false" onAction="#btnReqPendientesGrandeClick" prefHeight="86.0" prefWidth="71.0" style="-fx-padding: 0;" styleClass="btnMenu">
+                           <graphic>
+                              <ImageView fitHeight="49.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/pendiente.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Button fx:id="btnReqEntregadas" graphicTextGap="0.0" layoutX="3.0" layoutY="380.0" mnemonicParsing="false" onAction="#btnReqEntregadasGrandeClick" prefHeight="86.0" prefWidth="62.0" styleClass="btnMenu">
+                           <graphic>
+                              <ImageView fitHeight="49.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/entregada.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Button fx:id="btnReqDenegadas" layoutX="3.0" layoutY="466.0" mnemonicParsing="false" onAction="#btnReqDenegadasGrandeClick" prefHeight="86.0" prefWidth="62.0" styleClass="btnMenu">
+                           <graphic>
+                              <ImageView fitHeight="49.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/denegada.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Button fx:id="btnLogout" layoutX="3.0" layoutY="552.0" mnemonicParsing="false" onAction="#btnLogoutGrandeClick" prefHeight="86.0" prefWidth="62.0" styleClass="btnMenu">
+                           <graphic>
+                              <ImageView fitHeight="49.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/logout.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                     </children>
+                  </AnchorPane>
                </children>
             </VBox>
-            <VBox fx:id="vboxMenu" layoutX="3.0" prefHeight="642.0" prefWidth="271.0" styleClass="vbox" translateX="-272.0" AnchorPane.bottomAnchor="5.600000000000023" AnchorPane.topAnchor="0.0">
+            <VBox fx:id="vboxMenu" layoutX="3.0" prefHeight="642.0" prefWidth="250.0" styleClass="vbox" translateX="-280.0" AnchorPane.bottomAnchor="6.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <Pane prefHeight="318.0" prefWidth="287.0">
+                  <AnchorPane prefHeight="641.0" prefWidth="270.0">
                      <children>
-                        <Label id="titleLabel" accessibleRoleDescription="\\@" layoutX="7.0" layoutY="12.0" prefHeight="70.0" prefWidth="250.0" text="H.E.R.M.E.S." textAlignment="CENTER" textFill="WHITE">
-                           <font>
-                              <Font size="48.0" />
-                           </font>
-                        </Label>
-                        <Label layoutY="80.0" prefHeight="35.0" prefWidth="263.0" text="Herramienta para la Entrega de Requisas por Medios Electrónicos Sistematizados" textAlignment="CENTER" textFill="WHITE" wrapText="true" />
-                        <ImageView fitHeight="164.0" fitWidth="198.0" layoutX="37.0" layoutY="130.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../images/logo.png" />
-                           </image>
-                        </ImageView>
+                        <Pane prefHeight="293.0" prefWidth="270.0">
+                           <children>
+                              <Label id="titleLabel" accessibleRoleDescription="\\@" layoutX="7.0" layoutY="12.0" prefHeight="70.0" prefWidth="250.0" text="H.E.R.M.E.S." textAlignment="CENTER" textFill="WHITE">
+                                 <font>
+                                    <Font size="48.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutY="80.0" prefHeight="35.0" prefWidth="263.0" text="Herramienta para la Entrega de Requisas por Medios Electrónicos Sistematizados" textAlignment="CENTER" textFill="WHITE" wrapText="true" />
+                              <ImageView fitHeight="173.0" fitWidth="119.0" layoutX="76.0" layoutY="115.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/logo.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </Pane>
+                        <Button fx:id="btnReqPendientesGrande" alignment="BASELINE_LEFT" graphicTextGap="0.0" layoutY="294.0" mnemonicParsing="false" onAction="#btnReqPendientesGrandeClick" prefHeight="85.0" prefWidth="270.0" style="-fx-padding: 2;" styleClass="btnMenu" text="Requisiciones Pendientes">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </Button>
+                        <Button fx:id="btnReqEntregadasGrande" alignment="BASELINE_LEFT" graphicTextGap="0.0" layoutY="380.0" mnemonicParsing="false" onAction="#btnReqEntregadasGrandeClick" prefHeight="85.0" prefWidth="270.0" style="-fx-padding: 2;" styleClass="btnMenu" text="Requisiciones Entregadas">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Button fx:id="btnReqDenegadasGrande" alignment="BASELINE_LEFT" graphicTextGap="0.0" layoutY="466.0" mnemonicParsing="false" onAction="#btnReqDenegadasGrandeClick" prefHeight="85.0" prefWidth="270.0" style="-fx-padding: 2;" styleClass="btnMenu" text="Requisiciones Denegadas">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Button fx:id="btnLogoutGrande" alignment="BASELINE_LEFT" graphicTextGap="0.0" layoutY="552.0" mnemonicParsing="false" onAction="#btnLogoutGrandeClick" prefHeight="85.0" prefWidth="270.0" style="-fx-padding: 2;" styleClass="btnMenu" text="Cerrar Sesión">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
                      </children>
-                  </Pane>
-                  <Button fx:id="btnReqPendientesGrande" alignment="BASELINE_LEFT" graphicTextGap="0.0" mnemonicParsing="false" onAction="#btnReqPendientesGrandeClick" prefHeight="88.0" prefWidth="287.0" style="-fx-padding: 0;" styleClass="btnMenu" text="Requisiciones Pendientes">
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                  </Button>
-                  <Button fx:id="btnReqEntregadasGrande" alignment="BASELINE_LEFT" graphicTextGap="0.0" mnemonicParsing="false" onAction="#btnReqEntregadasGrandeClick" prefHeight="88.0" prefWidth="287.0" style="-fx-padding: 0;" styleClass="btnMenu" text="Requisiciones Entregadas">
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
-                  <Button fx:id="btnReqDenegadasGrande" alignment="BASELINE_LEFT" graphicTextGap="0.0" mnemonicParsing="false" onAction="#btnReqDenegadasGrandeClick" prefHeight="88.0" prefWidth="287.0" style="-fx-padding: 0;" styleClass="btnMenu" text="Requisiciones Denegadas">
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
+                  </AnchorPane>
                </children>
             </VBox>
             <AnchorPane fx:id="gridReqPendientes" layoutX="65.0" prefHeight="648.0" prefWidth="1231.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="65.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="0.0">

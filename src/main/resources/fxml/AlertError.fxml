@@ -13,7 +13,7 @@
    <children>
       <ImageView fitHeight="79.0" fitWidth="96.0" layoutX="310.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../images/noun_Alert_2111566.png" />
+            <Image url="@../images/error.png" />
          </image>
       </ImageView>
       <Button fx:id="btnOk" layoutX="321.0" layoutY="158.0" mnemonicParsing="false" onAction="#btnOkClick" prefHeight="30.0" prefWidth="67.0" text="OK">

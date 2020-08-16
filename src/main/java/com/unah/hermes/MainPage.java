@@ -169,6 +169,12 @@ public class MainPage implements Initializable {
     @FXML
     private AnchorPane gridReqDenegadas;
 
+    @FXML
+    private Button btnLogoutGrande;
+
+    @FXML
+    private Button btnLogout;
+
     TranslateTransition openNav;
     TranslateTransition closeNav;
 
@@ -192,22 +198,23 @@ public class MainPage implements Initializable {
         aparecerIcono.play();
         closeNav.setToX(-(vboxMenu.getWidth() + vboxMenuPequeno.getWidth()));
         closeNav.play();
-        if(isNavOpen) isNavOpen = false;
+        if (isNavOpen)
+            isNavOpen = false;
         // Task<Void> sleeper = new Task<Void>() {
-        //     @Override
-        //     protected Void call() throws Exception {
-        //         try {
-        //             Thread.sleep(500);
-        //         } catch (InterruptedException e) {
-        //         }
-        //         return null;
-        //     }
+        // @Override
+        // protected Void call() throws Exception {
+        // try {
+        // Thread.sleep(500);
+        // } catch (InterruptedException e) {
+        // }
+        // return null;
+        // }
         // };
         // sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
-        //     @Override
-        //     public void handle(WorkerStateEvent event) {
-        //         vboxMenu.setViewOrder(0);
-        //     }
+        // @Override
+        // public void handle(WorkerStateEvent event) {
+        // vboxMenu.setViewOrder(0);
+        // }
         // });
         // new Thread(sleeper).start();
 
@@ -217,7 +224,8 @@ public class MainPage implements Initializable {
     public void abrirNav() {
         desaparecerIcono.play();
         openNav.play();
-        if(!isNavOpen) isNavOpen = true;
+        if (!isNavOpen)
+            isNavOpen = true;
         aparecerNav.play();
         desaparecerIcono.play();
     }
@@ -251,12 +259,21 @@ public class MainPage implements Initializable {
         if (isNavOpen)
             cerrarNav();
     }
+
+    @FXML
+    void btnLogoutGrandeClick(ActionEvent event) {
+        // algo va aqui pero todavia no se el que
+        if (isNavOpen)
+            cerrarNav();
+
+        Navigation.pushRoute("LoginPage", event, true, false);
+    }
     ///////////////////////////////////////////////////////////////////////////////////
 
     @FXML
     public void menuBtnImprimirClick(ActionEvent event) {
         Navigation.mostrarAlertError("Hola LA KGASTE", event);
-        
+
     }
 
     @FXML
@@ -377,14 +394,14 @@ public class MainPage implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // crear los listeners para los datos de firebase
-        
 
         gridReqPendientes.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
             @Override
             public void handle(MouseEvent event) {
                 gridReqPendientes.requestFocus();
-                if(isNavOpen)cerrarNav();
+                if (isNavOpen)
+                    cerrarNav();
             }
         });
 
@@ -393,7 +410,8 @@ public class MainPage implements Initializable {
             @Override
             public void handle(MouseEvent event) {
                 gridReqEntregadas.requestFocus();
-                if(isNavOpen)cerrarNav();
+                if (isNavOpen)
+                    cerrarNav();
             }
         });
 
@@ -402,7 +420,8 @@ public class MainPage implements Initializable {
             @Override
             public void handle(MouseEvent event) {
                 gridReqDenegadas.requestFocus();
-                if(isNavOpen)cerrarNav();
+                if (isNavOpen)
+                    cerrarNav();
             }
         });
 
@@ -490,6 +509,34 @@ public class MainPage implements Initializable {
             }
 
         });
+        btnLogout.hoverProperty().addListener(new ChangeListener<Boolean>() {
+
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (newValue) {
+                    Event.fireEvent(btnLogoutGrande, new MouseEvent(MouseEvent.MOUSE_ENTERED_TARGET, 0, 0, 0, 0,
+                            MouseButton.PRIMARY, 1, true, true, true, true, true, true, true, true, true, true, null));
+                } else {
+                    Event.fireEvent(btnLogoutGrande, new MouseEvent(MouseEvent.MOUSE_EXITED_TARGET, 0, 0, 0, 0,
+                            MouseButton.PRIMARY, 1, true, true, true, true, true, true, true, true, true, true, null));
+                }
+            }
+
+        });
+        btnLogoutGrande.hoverProperty().addListener(new ChangeListener<Boolean>() {
+
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (newValue) {
+                    Event.fireEvent(btnLogout, new MouseEvent(MouseEvent.MOUSE_ENTERED_TARGET, 0, 0, 0, 0,
+                            MouseButton.PRIMARY, 1, true, true, true, true, true, true, true, true, true, true, null));
+                } else {
+                    Event.fireEvent(btnLogout, new MouseEvent(MouseEvent.MOUSE_EXITED_TARGET, 0, 0, 0, 0,
+                            MouseButton.PRIMARY, 1, true, true, true, true, true, true, true, true, true, true, null));
+                }
+            }
+
+        });
 
         EventListeners.onWindowOpened(mainPage, new Function<Window, Void>() {
             @Override
@@ -500,9 +547,9 @@ public class MainPage implements Initializable {
                 // ///////////////////////////////////////////////////////////
                 vboxMenu.setViewOrder(-1.0);
                 vboxMenuPequeno.setViewOrder(-2.0);
-                
+
                 openNav = new TranslateTransition(new Duration(450), vboxMenu);
-                openNav.setToX(0 + vboxMenuPequeno.getWidth() - 6);
+                openNav.setToX(vboxMenuPequeno.getWidth() - 6);
                 closeNav = new TranslateTransition(new Duration(450), vboxMenu);
 
                 aparecerIcono = new FadeTransition(new Duration(250), imagenIcono);
