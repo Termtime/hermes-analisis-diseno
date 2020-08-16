@@ -49,6 +49,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.scene.Node;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
@@ -206,7 +207,16 @@ public class MantUsuariosModalAgregarUsuario implements Initializable {
        // Area area1= new Area("nombre1");
        // listAreasSeleccionadas.getItems().add(area1.nombre);
         
-       // listAreasSeleccionadas.getItems().add(area.nombre);
+       // listAreasSeleccionadas.getItems().add(area.nombre)
+       EventListeners.onWindowOpening(mantUsuariosModalAgregarUsuario, new Function<Window,Void>(){
+
+        @Override
+        public Void apply(Window t) {
+            ((Stage)t).resizableProperty().setValue(Boolean.FALSE);
+            return null;
+        }
+        
+        });;
         mantUsuariosModalAgregarUsuario.setOnMouseClicked(new EventHandler<MouseEvent>(){
             @Override
             public void handle(MouseEvent event) {

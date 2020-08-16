@@ -1,9 +1,11 @@
 package com.unah.hermes;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.function.Function;
 
 import javax.swing.JOptionPane;
 
@@ -13,6 +15,7 @@ import com.google.cloud.firestore.FirestoreException;
 import com.unah.hermes.objects.Producto;
 import com.unah.hermes.objects.Requisicion;
 import com.unah.hermes.provider.FirebaseConnector;
+import com.unah.hermes.utils.EventListeners;
 import com.unah.hermes.utils.Navigation;
 
 import javafx.beans.value.ChangeListener;
@@ -37,6 +40,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.scene.Node;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
@@ -64,8 +68,18 @@ public class MantProductosModalAgregarCategoria implements Initializable{
         txtAgregarCategoria.setText("");
     }
     FirebaseConnector db;
+    @FXML AnchorPane mantProductosModalAgregarCategoria;
     @Override
     public void initialize(URL url,  ResourceBundle rb) {
+        EventListeners.onWindowOpening(mantProductosModalAgregarCategoria, new Function<Window,Void>(){
+
+            @Override
+            public Void apply(Window t) {
+                ((Stage)t).resizableProperty().setValue(Boolean.FALSE);
+                return null;
+            }
+            
+        });
         db=FirebaseConnector.getInstance();
     }
 }

@@ -36,6 +36,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.stage.Window;
 
 public class MantUsuariosModalModificarUsuario implements Initializable {
@@ -159,7 +160,15 @@ public class MantUsuariosModalModificarUsuario implements Initializable {
     @Override
     public void initialize(URL url,  ResourceBundle rb) {
         db = FirebaseConnector.getInstance();
-        
+        EventListeners.onWindowOpening(mantUsuariosModalModificarUsuario, new Function<Window,Void>(){
+
+            @Override
+            public Void apply(Window t) {
+                ((Stage)t).resizableProperty().setValue(Boolean.FALSE);
+                return null;
+            }
+            
+        });
         EventListeners.onWindowOpened(mantUsuariosModalModificarUsuario, new Function<Window,Void>(){
 
             @Override

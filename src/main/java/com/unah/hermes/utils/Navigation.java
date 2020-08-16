@@ -213,7 +213,7 @@ public class Navigation {
             //manejar los alerts
             else if(tipoControlador == SimpleAlert.class){
                 SimpleAlert controller = loader.getController();
-                controller.initData(data);
+                controller.initData(data, parentStage);
             }
             stage.setScene(new Scene(root));
             if(modal) {
