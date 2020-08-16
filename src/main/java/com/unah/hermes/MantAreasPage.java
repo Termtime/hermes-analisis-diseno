@@ -122,6 +122,8 @@ public class MantAreasPage implements Initializable {
                         }
                         db.deleteDocument(FirestoreRoutes.AREAS, areaSelectedID);
                         Navigation.mostrarAlertExito("Area eliminada exitosamente", event);
+                        llenarTablaAreas();
+                        tablaUsuario.getItems().clear();
                 } else {
                         Navigation.mostrarAlertError("Debe seleccionar un Area antes", event);
                 }
@@ -176,21 +178,7 @@ public class MantAreasPage implements Initializable {
                                 iniciarEstructuraTablas();
                                 db = FirebaseConnector.getInstance();
                                 // Areas
-                                List<QueryDocumentSnapshot> documentos = db.getAllDocumentsFrom(FirestoreRoutes.AREAS);
-
-                                for (DocumentSnapshot doc : documentos) {
-                                        // System.out.println(doc);
-                                        Area tmp;
-
-                                        if (doc.exists()) {
-                                                tmp = new Area(doc.getId(), doc.getString("Area"));
-                                                // System.out.println(tmp.nombre);
-                                                // System.out.println(doc.getData());
-                                                Areas.add(tmp);
-                                                // System.out.println(Areas);
-                                        }
-                                }
-                                tablaArea.getItems().addAll(Areas);
+                                llenarTablaAreas();
 
                                 // Usuarios inicio (Prueba)
 
@@ -285,5 +273,27 @@ public class MantAreasPage implements Initializable {
 
                         }
                 }
+        }
+
+        public void llenarTablaAreas() {
+                db = FirebaseConnector.getInstance();
+                Areas.clear();
+                // Areas
+                List<QueryDocumentSnapshot> documentos = db.getAllDocumentsFrom(FirestoreRoutes.AREAS);
+
+                for (DocumentSnapshot doc : documentos) {
+                        // System.out.println(doc);
+                        Area tmp;
+
+                        if (doc.exists()) {
+                                tmp = new Area(doc.getId(), doc.getString("Area"));
+                                // System.out.println(tmp.nombre);
+                                // System.out.println(doc.getData());
+                                Areas.add(tmp);
+                                // System.out.println(Areas);
+                        }
+                }
+                tablaArea.getItems().clear();
+                tablaArea.getItems().addAll(Areas);
         }
 }
