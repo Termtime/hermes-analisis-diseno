@@ -90,7 +90,7 @@ public class MantAreasPage implements Initializable {
         String areaSelectedID;
         User selectedUser;
         String areaID;
-        String usuarioID;
+        String usuarioID = "";
         String usuarioEmail;
         String usuarioName;
         String usuarioAcces;
@@ -105,7 +105,21 @@ public class MantAreasPage implements Initializable {
 
         @FXML
         private void btnEliminarAreaClick(ActionEvent event) {
+                if (!areaSelectedID.isEmpty()) {
+                        tablaUsuario.getItems().clear();
+                        for (User usuario : usuarios) {
+                                for (int i = 0; i < usuario.areas.size(); i++) {
+                                        if (usuario.areas.get(i).equals(areaID)) {
+                                                usuario.areas.remove(i);
+                                                Map<String, Object> datos = new HashMap();
+                                                areasUsuarioArray = usuario.areas;
+                                                datos.put("areas", areasUsuarioArray);
+                                                db.updateDocument(FirestoreRoutes.USUARIOS, usuario.userID, datos);
+                                        }
 
+                                }
+                        }
+                }
         }
 
         @FXML
@@ -115,20 +129,25 @@ public class MantAreasPage implements Initializable {
                         Navigation.pushRouteWithParameter("MantAreasAgregarUsuarioArea", event, false, true,
                                         MantAreasModalAgregarUsuarioArea.class, TablaAreaSelectedRow);
                 else {
-                        Alert alert = new Alert(AlertType.ERROR, "Debe seleccionar un Area antes", ButtonType.OK);
-                        alert.showAndWait();
+                        // Alert alert = new Alert(AlertType.ERROR, "Debe seleccionar un Area antes",
+                        // ButtonType.OK);
+                        // alert.showAndWait();
+                        Navigation.mostrarAlertError("Debe seleccionar un Area antes", event);
                 }
         }
 
         @FXML
         private void btnEliminarUsuarioAreaClick(ActionEvent event) {
-                
+
                 if (!usuarioID.isEmpty() && !areasUsuarioArray.isEmpty()) {
                         Map<String, Object> datos = new HashMap();
                         areasUsuarioArray.remove(index);
                         datos.put("areas", areasUsuarioArray);
                         db.updateDocument(FirestoreRoutes.USUARIOS, usuarioID, datos);
+                        Navigation.mostrarAlertExito("Usuario eliminado exitosamente del área", event);
 
+                } else {
+                        Navigation.mostrarAlertError("No ha seleccionado un usuario", event);
                 }
         }
 
@@ -204,7 +223,7 @@ public class MantAreasPage implements Initializable {
                 tablaArea.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Area>() {
                         @Override
                         public void changed(ObservableValue<? extends Area> observable, Area oldValue, Area newValue) {
-                                areaSelectedID ="";
+                                areaSelectedID = "";
                                 TablaAreaSelectedRow = newValue;
                                 // System.out.println(newValue);
                                 llenarTablaUsuario(newValue.areaID);
@@ -221,7 +240,7 @@ public class MantAreasPage implements Initializable {
                                 usuarioID = selectedUser.userID;
                                 areasUsuarioArray = selectedUser.areas;
                                 index = areasUsuarioArray.indexOf(areaSelectedID);
-                                
+
                                 // areasUsuarioArray.add(areaID);
                                 usuarioEmail = "correo@email.com";
                                 usuarioName = selectedUser.nombre;

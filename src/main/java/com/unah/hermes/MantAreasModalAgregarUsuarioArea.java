@@ -95,7 +95,9 @@ public class MantAreasModalAgregarUsuarioArea implements Initializable {
 
             datos.put("areas", areasUsuarioArray);
             db.updateDocument(FirestoreRoutes.USUARIOS, usuarioID, datos);
-
+            Navigation.mostrarAlertExito("Usuario Agregado exitosamente al área", event);
+        } else {
+            Navigation.mostrarAlertError("No ha seleccionado un usuario", event);
         }
     }
 
