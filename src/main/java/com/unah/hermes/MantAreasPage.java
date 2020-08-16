@@ -108,13 +108,15 @@ public class MantAreasPage implements Initializable {
                 if (!areaSelectedID.isEmpty()) {
                         for (User usuario : usuarios) {
                                 for (int i = 0; i < usuario.areas.size(); i++) {
-                                        if (usuario.areas.get(i).equals(areaID)) {
-                                                areasUsuarioArray = usuario.areas;
-                                                int index = areasUsuarioArray.indexOf(areaID);
-                                                areasUsuarioArray.remove(index);
+                                        if (usuario.areas.contains(areaSelectedID)) {
+                                                usuario.areas.remove(areaSelectedID);
                                                 Map<String, Object> datos = new HashMap();
                                                 
-                                                datos.put("areas", areasUsuarioArray);
+                                                List<String> vacio = new ArrayList();
+                                                vacio.add("");
+                                                if(usuario.areas.isEmpty()) datos.put("areas", vacio);
+                                                else datos.put("areas", usuario.areas);
+
                                                 db.updateDocument(FirestoreRoutes.USUARIOS, usuario.userID, datos);
                                         }
                                 }
