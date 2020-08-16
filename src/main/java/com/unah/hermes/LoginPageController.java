@@ -42,33 +42,33 @@ public class LoginPageController implements Initializable {
 
     @FXML
     private void loginBtnClick(ActionEvent event) {
-        //resetear el estado de los labels de error
+        // resetear el estado de los labels de error
         errorCorreo.setVisible(false);
         errorPass.setVisible(false);
         errorCorreo.setText("");
         errorPass.setText("");
-        //procesar el login
+        // procesar el login
         correo = correoTxt.getText();
         pass = passTxt.getText();
         String response = db.loginWithEmailPassword(correo, pass);
         if (response.equals("PASS")) {
-            Navigation.pushRoute("MainPage", event, true, false);
-        }else if(response.equals("ERROR")){
+            Navigation.pushRoute("MainPageMenu", event, true, false);
+        } else if (response.equals("ERROR")) {
             errorCorreo.setText("Error desconocido, contacte al personal de IT");
             errorCorreo.setVisible(true);
-        }else if(response.equals("EMAIL_NOT_FOUND")){
+        } else if (response.equals("EMAIL_NOT_FOUND")) {
             errorCorreo.setText("Usuario no encontrado");
             errorCorreo.setVisible(true);
-        }else if(response.equals("INVALID_PASSWORD")){
+        } else if (response.equals("INVALID_PASSWORD")) {
             errorPass.setText("Credenciales invalidas");
             errorPass.setVisible(true);
-        }else if(response.equals("USER_DISABLED")){
+        } else if (response.equals("USER_DISABLED")) {
             errorCorreo.setText("Usuario deshabilitado");
             errorCorreo.setVisible(true);
-        }else if(response.equals("TOO_MANY_ATTEMPTS_TRY_LATER")){
+        } else if (response.equals("TOO_MANY_ATTEMPTS_TRY_LATER")) {
             errorPass.setText("Demasiados intentos, intente más tarde");
             errorPass.setVisible(true);
-        }else if(response.equals("MISSING_PASSWORD")){
+        } else if (response.equals("MISSING_PASSWORD")) {
             errorPass.setText("Credenciales invalidas");
             errorPass.setVisible(true);
         }
@@ -76,7 +76,7 @@ public class LoginPageController implements Initializable {
 
     @FXML
     private void validarCorreo(KeyEvent event) {
-        
+
     }
 
     @Override
@@ -110,6 +110,6 @@ public class LoginPageController implements Initializable {
         db = FirebaseConnector.getInstance();
         errorCorreo.setVisible(false);
         errorPass.setVisible(false);
-    }    
-    
+    }
+
 }

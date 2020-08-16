@@ -70,9 +70,9 @@
       <Pane layoutX="439.0" layoutY="161.0" prefHeight="112.0" prefWidth="119.0">
          <children>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#2c2c2c" height="112.0" stroke="BLACK" strokeType="INSIDE" width="121.0" />
-            <ImageView fx:id="imagenProducto" fitHeight="112.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="imagenProducto" fitHeight="112.0" fitWidth="119.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../images/noun_Food_3160306.png" />
+                  <Image url="@../images/productos.png" />
                </image>
             </ImageView>
          </children>

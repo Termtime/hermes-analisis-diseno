@@ -90,9 +90,10 @@
   -fx-background-color: #303030;
 }
 
+/************************************ COLOR DE LA BARRA DE SCROLL ************************************/
 .scroll-bar:horizontal .track,
 .scroll-bar:vertical .track {
-  -fx-background-color: #5f5f5f;
+  -fx-background-color: #444444;
   -fx-border-color: transparent;
   -fx-background-radius: 0em;
   -fx-border-radius: 2em;
@@ -126,14 +127,14 @@
 
 .scroll-bar:horizontal .thumb,
 .scroll-bar:vertical .thumb {
-  -fx-background-color: derive(black, 90%);
+  -fx-background-color: #5f5f5f;
   -fx-background-insets: 1, 0, 0;
   -fx-background-radius: 1em;
 }
 
 .scroll-bar:horizontal .thumb:hover,
 .scroll-bar:vertical .thumb:hover {
-  -fx-background-color: derive(#4d4c4f, 10%);
+  -fx-background-color: #696969;
   -fx-background-insets: 1, 0, 0;
   -fx-background-radius: 1em;
 }

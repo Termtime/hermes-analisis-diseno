@@ -166,33 +166,21 @@
 }
 /************************************ FIN TABS ************************************/
 
-/************************************ SOLO COSAS ************************************/
-/* @FXML
-    private TreeView<String> treeMantenimientos; */
+/************************************ VBOX ************************************/
+.vbox {
+  -fx-background-color: #3190a6;
+}
 
-/* List<String> itemsMed = Arrays.asList("algo1", "algo2");
-        List<String> itemsHos = Arrays.asList("algo3", "algo4");
-        Tree(itemsMed, itemsHos); */
+.btnMenu {
+  -fx-background-color: #3190a6;
+  -fx-font-size: 20;
+}
 
-/* private void Tree(List<String> itemsMed, List<String> itemsHos) {
-  TreeItem<String> root0 = new TreeItem<String>();
-
-  TreeItem<String> root1 = new TreeItem<String>("Medicamentos");
-  for (final String items1 : itemsMed) {
-      root1.getChildren().add(new TreeItem<String>(items1));
-  }
-
-  TreeItem<String> root2 = new TreeItem<String>("Hospitalizacion");
-  for (final String items2 : itemsHos) {
-      root2.getChildren().add(new TreeItem<String>(items2));
-  }
-
-  root0.getChildren().addAll(root1, root2);
-
-  treeMantenimientos.setRoot(root0);
-  treeMantenimientos.setShowRoot(false);
-} */
-/************************************ FIN SOLO COSAS ************************************/
+.btnMenu:hover {
+  -fx-background-color: #38a4be;
+  -fx-font-size: 20;
+}
+/************************************  FIN VBOX ************************************/
 
 /* COLOR DE FONDO DEPENDIENDO DEL NIVEL DE LA PANTALLA */
 .window-background-level1 {
