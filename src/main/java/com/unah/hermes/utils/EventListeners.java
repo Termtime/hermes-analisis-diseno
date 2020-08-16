@@ -41,6 +41,34 @@ public class EventListeners {
             }
         });
     }
+    /**
+     * Ejecuta una funcion cuando se ha abierto la pagina y sus componentes han sido renderizados
+     * @param rootPane un AnchorPane, por lo general se recomienda que sea el elemento root del .fxml
+     * @param metodo es un metodo para ejecutar
+     */
+    public static void onWindowOpening(AnchorPane rootPane, Function<Window,Void> metodo){
+        rootPane.sceneProperty().addListener(new ChangeListener<Scene>() {
+            @Override
+            public void changed(ObservableValue<? extends Scene> observable, Scene oldValue, Scene newValue) {
+              newValue.windowProperty().addListener(new ChangeListener<Window>() {
+                @Override
+                public void changed(ObservableValue<? extends Window> observable, Window oldValue, Window newValue) {
+                    Window parent = newValue;
+                    newValue.addEventHandler(WindowEvent.WINDOW_SHOWING, new EventHandler<WindowEvent>() {
+                    @Override
+                    public void handle(WindowEvent event) {
+                        try{
+                            metodo.apply(parent);
+                        }catch(Exception ex){
+                            ex.printStackTrace();
+                            System.out.println("WINDOW OPENED - NO SE PUDO BINDEAR A " + rootPane.getId());
+                        }
+                  }});
+                }
+              });
+            }
+        });
+    }
 
     /**
      * Ejecuta una funcion cuando se ha empezado la destruccion de la página y sus componentes estan por destruirse
