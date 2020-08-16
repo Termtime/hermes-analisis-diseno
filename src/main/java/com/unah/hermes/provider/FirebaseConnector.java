@@ -1,6 +1,7 @@
 package com.unah.hermes.provider;
 
 import java.io.DataOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
@@ -41,6 +42,7 @@ import com.google.cloud.firestore.EventListener;
 import com.google.gson.Gson;
 import com.unah.hermes.MainPage;
 import com.unah.hermes.objects.Area;
+import com.unah.hermes.objects.Producto;
 import com.unah.hermes.MantUsuariosPage;
 import com.unah.hermes.objects.Requisicion;
 import com.unah.hermes.objects.User;
@@ -54,6 +56,7 @@ import org.json.simple.parser.JSONParser;
 
 import javafx.application.Platform;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.FirebaseAuth;
@@ -134,17 +137,17 @@ public class FirebaseConnector {
      * @return Booleano que indica si el documento fue creado exitosamente
      */
     // FIRESTORE METHODS
-    public boolean createDocument(final String databaseCollectionPath, final Map<String, Object> data) {
+    public String createDocument(final String databaseCollectionPath, final Map<String, Object> data) {
 
         try {
             final ApiFuture<DocumentReference> query = db.collection(databaseCollectionPath).add(data);
             // execute query
-            query.get();
-            return true;
+            DocumentReference respuesta = query.get();
+            return respuesta.getId();
         } catch (final Exception e) {
             System.out.println(e);
             // query did not execute correctly
-            return false;
+            return null;
         }
     }
 
@@ -517,25 +520,34 @@ public class FirebaseConnector {
             System.out.println(e);
             return null;
         }
+
+        
     }
 
     //Google cloud storage methods
-    public boolean uploadImage(String firestoragePath, String filePath){
+    /**
+     * Sube un archivo de imagen
+     * @param firestoragePath ruta de donde se encuentra la imagen (Usuarios o Productos)
+     * @param archivo objeto tipo File que obtienen de un file chooser
+     * @param nombreArchivo preferiblemente el ID de lo que estan subiendo, ej. id de usuario si es foto de usuario, id de producto si es un producto
+     * @return
+     */
+    public boolean uploadImage(String firestoragePath, File archivo, String nombreArchivo){
         System.out.println("Subiendo archivo");
-        String objectName= Paths.get(filePath).getFileName().toString();
+        String objectName = archivo.getName();
         try {
-            String mimeType = Files.probeContentType(Paths.get(filePath));
+            String mimeType = Files.probeContentType(archivo.toPath());
             //si el archivo seleccionado no es una imagen png o jpeg no proseguir
             if(!mimeType.equals("image/png") && !mimeType.equals("image/jpeg")) return false;
             // Storage storage = StorageOptions.newBuilder().setProjectId(projectId).build().getService();
-            BlobId blobId = BlobId.of(BUCKET_NAME, firestoragePath+objectName);
+            BlobId blobId = BlobId.of(BUCKET_NAME, firestoragePath+nombreArchivo);
             BlobInfo blobInfo = BlobInfo.newBuilder(blobId)
                 .setContentType(mimeType)
                 .build();
-            storage.create(blobInfo, Files.readAllBytes(Paths.get(filePath)));
+            storage.create(blobInfo, Files.readAllBytes(archivo.toPath()));
         
             System.out.println(
-                "File " + filePath + " uploaded to bucket " + BUCKET_NAME + " as " + objectName);
+                "File " + archivo + " uploaded to bucket " + BUCKET_NAME + " as " + objectName);
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -544,10 +556,16 @@ public class FirebaseConnector {
         }
     }
 
-    public Image downloadImage(String firestoragePath, String objectName){
+    /**
+     * Obtiene una imagen desde la ruta especificada con el nombre especificado
+     * @param firestoragePath ruta de donde se encuentra la imagen (Usuarios o Productos)
+     * @param nombreArchivo ID de lo que estan buscando, ej. correo (id del documento) de usuario si es foto de usuario, id de producto si es un producto
+     * @return un objeto tipo Image listo para ser colocado en un ImageView
+     */
+    public Image downloadImage(String firestoragePath, String nombreArchivo){
         try {
             //obtener el archivo, crear un canal de lectura y un input stream para crear una imagen
-            Blob blob = storage.get(BUCKET_NAME, firestoragePath + objectName);
+            Blob blob = storage.get(BUCKET_NAME, firestoragePath + nombreArchivo);
             ReadChannel readChannel = blob.reader();
             InputStream inputStream = Channels.newInputStream(readChannel);
             Image imagen = new Image(inputStream);

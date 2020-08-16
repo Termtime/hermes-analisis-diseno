@@ -168,6 +168,48 @@ public class MantUsuariosPage implements Initializable {
     }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        // ////MANUAL DE COMO BAJAR Y SUBIR FOTOS
+        // //HANDLER DEL BOTON ESCOGER IMAGEN
+        // //crear un filechooser
+        // FileChooser fileChooser = new FileChooser();
+        // fileChooser.setTitle("Selecciona una foto");
+        // //colocar filtros para solo permitir imagenes
+        // fileChooser.getExtensionFilters().addAll(
+        //         new ExtensionFilter("Image Files", "*.png", "*.jpg"),
+        // ///abrir file chooser
+        // // selectedFile declarenlo globalmente 
+        // //     File selectedFile
+        // selectedFile = fileChooser.showOpenDialog(mainStage);
+        // if (selectedFile != null) {
+        //     // si el archivo no es nulo, entonces crear un input stream y
+        //     // popular el imageView con la imagen seleccionada
+        //     InputStream is = new FileInputStream(selectedFile);
+        //     nombreDeTuImageView.setImage(new Image(is));
+        // }
+
+
+        // //A LA HORA de AGREGAR y MODIFICAR    
+        // //cuando ya le den agregar o modificar
+        //     //ustedes tendrian un ID de lo que ya crearon (el correo para el usuario,
+        //     // el id del producto que regresa el metodo createDocument() )
+
+        //     //USUARIO EJEMPLO
+        //     if (selectedFile != null) {
+        //         uploadImage(FirestorageRoutes.USUARIOS,selectedFile, txtCorreo.getText());
+        //     }
+        //     //PRODUCTO EJEMPLO
+        //     String idDelProductoRecienCreado = db.createDocument("Productos", data);
+        //     if (selectedFile != null) {
+
+        //         uploadImage(FirestorageRoutes.PRODUCTOS, selectedFile, idDelProductoRecienCreado);
+        //     }
+ 
+        // //PARA BAJAR LA IMAGEN
+        // //aqui tendrian el usuario o producto que seleccionaron que en el handler de seleccion se llama newValue
+        // //esto va dentro del TU_TABLA.getSelectionModel().selectedItemProperty().addListener{blablabla}
+        //     if(newValue == null) return;
+        //     Image imagenDeUsuario/Producto = downloadImage(FirestorageRoutes.USUARIOS, newValue.ubicacionFoto);
+        //     nombreDeTuImageView.setImage(imagenDeUsuario/Producto);
         MantUsuario.setOnMouseClicked(new EventHandler<MouseEvent>(){
 
             @Override
