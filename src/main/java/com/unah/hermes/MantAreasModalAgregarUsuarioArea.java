@@ -8,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.control.TableColumn;
 
@@ -26,6 +27,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 
@@ -81,6 +83,9 @@ public class MantAreasModalAgregarUsuarioArea implements Initializable {
     @FXML
     AnchorPane MantAreasModalAgregarUsuarioArea;
 
+    @FXML
+    TextField txtBuscarInput;
+
     ObservableList<User> usuarios = FXCollections.observableArrayList();
 
     @FXML
@@ -100,8 +105,17 @@ public class MantAreasModalAgregarUsuarioArea implements Initializable {
     }
 
     @FXML
-    private void txtBuscarInput(ActionEvent event) {
+    private void txtBuscarInput(KeyEvent event) {
+        tablaUsuariosArea.getItems().clear();
+        List<User> usuariosFiltro = new ArrayList();
 
+        for (User usuario : usuarios) {
+            if (usuario.nombre.toLowerCase().contains(txtBuscarInput.getText().toLowerCase())
+                    || txtBuscarInput.getText().equals("")) {
+                usuariosFiltro.add(usuario);
+            }
+        }
+        tablaUsuariosArea.getItems().addAll(usuariosFiltro);
     }
 
     User usuariosNoArea;
