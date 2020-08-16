@@ -150,7 +150,7 @@ public class MantAreasPage implements Initializable {
                         datos.put("areas", areasUsuarioArray);
                         db.updateDocument(FirestoreRoutes.USUARIOS, usuarioID, datos);
                         Navigation.mostrarAlertExito("Usuario eliminado exitosamente del área", event);
-                        llenarTablaUsuario(areaID);
+                        llenarTablaUsuario(areaSelectedID);
                 } else {
                         Navigation.mostrarAlertError("No ha seleccionado un usuario", event);
                 }
