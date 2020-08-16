@@ -24,7 +24,7 @@ public class User {
         for(String area : areasNombre){
             stringDeArea += area + ", ";
         }
-        stringDeArea = stringDeArea.substring(0,stringDeArea.length()-2);
+        if(!areasNombre.isEmpty()) stringDeArea = stringDeArea.substring(0,stringDeArea.length()-2);
     }
     public User(String userID, String nombre, String nivelAcceso,List<String> areas)
     {

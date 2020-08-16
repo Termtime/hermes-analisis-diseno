@@ -192,24 +192,24 @@ public class MainPage implements Initializable {
         aparecerIcono.play();
         closeNav.setToX(-(vboxMenu.getWidth() + vboxMenuPequeno.getWidth()));
         closeNav.play();
-
-        Task<Void> sleeper = new Task<Void>() {
-            @Override
-            protected Void call() throws Exception {
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                }
-                return null;
-            }
-        };
-        sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
-            @Override
-            public void handle(WorkerStateEvent event) {
-                vboxMenu.setViewOrder(0);
-            }
-        });
-        new Thread(sleeper).start();
+        if(isNavOpen) isNavOpen = false;
+        // Task<Void> sleeper = new Task<Void>() {
+        //     @Override
+        //     protected Void call() throws Exception {
+        //         try {
+        //             Thread.sleep(500);
+        //         } catch (InterruptedException e) {
+        //         }
+        //         return null;
+        //     }
+        // };
+        // sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+        //     @Override
+        //     public void handle(WorkerStateEvent event) {
+        //         vboxMenu.setViewOrder(0);
+        //     }
+        // });
+        // new Thread(sleeper).start();
 
         desaparecerNav.play();
     }
@@ -217,11 +217,8 @@ public class MainPage implements Initializable {
     public void abrirNav() {
         desaparecerIcono.play();
         openNav.play();
-        vboxMenu.setViewOrder(-1.0);
-
+        if(!isNavOpen) isNavOpen = true;
         aparecerNav.play();
-
-        vboxMenuPequeno.setViewOrder(-2.0);
         desaparecerIcono.play();
     }
 
@@ -231,7 +228,7 @@ public class MainPage implements Initializable {
         gridReqEntregadas.setVisible(false);
         gridReqPendientes.setVisible(false);
 
-        if (!(vboxMenu.getTranslateX() != Math.ceil((vboxMenu.getWidth() + vboxMenuPequeno.getWidth() - 6) - 272)))
+        if (isNavOpen)
             cerrarNav();
     }
 
@@ -241,7 +238,7 @@ public class MainPage implements Initializable {
         gridReqEntregadas.setVisible(true);
         gridReqPendientes.setVisible(false);
 
-        if (!(vboxMenu.getTranslateX() != Math.ceil((vboxMenu.getWidth() + vboxMenuPequeno.getWidth() - 6) - 272)))
+        if (isNavOpen)
             cerrarNav();
     }
 
@@ -251,7 +248,7 @@ public class MainPage implements Initializable {
         gridReqEntregadas.setVisible(false);
         gridReqPendientes.setVisible(true);
 
-        if (!(vboxMenu.getTranslateX() != Math.ceil((vboxMenu.getWidth() + vboxMenuPequeno.getWidth() - 6) - 272)))
+        if (isNavOpen)
             cerrarNav();
     }
     ///////////////////////////////////////////////////////////////////////////////////
@@ -297,7 +294,7 @@ public class MainPage implements Initializable {
 
     @FXML
     void btnExpandirMenuClick(ActionEvent event) {
-        if (vboxMenu.getTranslateX() != Math.ceil((vboxMenu.getWidth() + vboxMenuPequeno.getWidth() - 6) - 272)) {
+        if (!isNavOpen) {
             // System.out.println(vboxMenu.getTranslateX());
             // System.out.println(Math.ceil((vboxMenu.getWidth() +
             // vboxMenuPequeno.getWidth() - 6) - 272));
@@ -361,7 +358,7 @@ public class MainPage implements Initializable {
 
     @FXML
     private AnchorPane mainPage;
-
+    Boolean isNavOpen = false;
     ListenerRegistration requisicionesListener;
     FirebaseConnector db;
     Requisicion tablaPSelectedItem = null;
@@ -386,7 +383,7 @@ public class MainPage implements Initializable {
             @Override
             public void handle(MouseEvent event) {
                 gridReqPendientes.requestFocus();
-                cerrarNav();
+                if(isNavOpen)cerrarNav();
             }
         });
 
@@ -395,7 +392,7 @@ public class MainPage implements Initializable {
             @Override
             public void handle(MouseEvent event) {
                 gridReqEntregadas.requestFocus();
-                cerrarNav();
+                if(isNavOpen)cerrarNav();
             }
         });
 
@@ -404,7 +401,7 @@ public class MainPage implements Initializable {
             @Override
             public void handle(MouseEvent event) {
                 gridReqDenegadas.requestFocus();
-                cerrarNav();
+                if(isNavOpen)cerrarNav();
             }
         });
 
@@ -500,6 +497,9 @@ public class MainPage implements Initializable {
 
                 // CREACION DE ANIMACIONES
                 // ///////////////////////////////////////////////////////////
+                vboxMenu.setViewOrder(-1.0);
+                vboxMenuPequeno.setViewOrder(-2.0);
+                
                 openNav = new TranslateTransition(new Duration(450), vboxMenu);
                 openNav.setToX(0 + vboxMenuPequeno.getWidth() - 6);
                 closeNav = new TranslateTransition(new Duration(450), vboxMenu);
