@@ -3,6 +3,7 @@ package com.unah.hermes;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.function.Function;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,6 +13,7 @@ import com.google.cloud.firestore.FirestoreException;
 import com.unah.hermes.objects.Producto;
 import com.unah.hermes.objects.Requisicion;
 import com.unah.hermes.provider.FirebaseConnector;
+import com.unah.hermes.utils.EventListeners;
 import com.unah.hermes.utils.Navigation;
 
 import javafx.beans.value.ChangeListener;
@@ -37,6 +39,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.scene.Node;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
@@ -89,9 +92,18 @@ public class MantProductosModalModificarProducto implements Initializable {
         productoID=productoData.getProductoID();
         comboCategoria.getSelectionModel().select(productoData.categoria);
     }
-
+    @FXML AnchorPane mantProductosModalModificarProducto;
     @Override
     public void initialize(URL url,  ResourceBundle rb) {
+        EventListeners.onWindowOpening(mantProductosModalModificarProducto, new Function<Window,Void>(){
+
+            @Override
+            public Void apply(Window t) {
+                ((Stage)t).resizableProperty().setValue(Boolean.FALSE);
+                return null;
+            }
+            
+        });
         for(DocumentSnapshot cat: categoriaDocumentos){
             Categoria tmp;
             if(cat.exists()){
