@@ -233,11 +233,11 @@ public class Navigation {
         }
     }
 
-    public void mostrarAlertError(String mensaje, ActionEvent event){
+    public static void mostrarAlertError(String mensaje, ActionEvent event){
         pushRouteWithParameter("AlertError", event, false, true, SimpleAlert.class, mensaje);
     }
 
-    public void mostrarAlertExito(String mensaje, ActionEvent event){
+    public static void mostrarAlertExito(String mensaje, ActionEvent event){
         pushRouteWithParameter("AlertExito", event, false, true, SimpleAlert.class, mensaje);
     }
 }
