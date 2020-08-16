@@ -61,11 +61,24 @@ public class MantProductosModalAgregarCategoria implements Initializable{
         
     }
     @FXML private void btnAgregarClick(ActionEvent event) {
-        Map<String, Object> data= new HashMap<>();
-        data.put("nombre", txtAgregarCategoria.getText());
-        db.createDocument("Categorias", data);
-        JOptionPane.showMessageDialog(null, "Categoria Ingresada Exitosamente", "Agregar Categoria", JOptionPane.INFORMATION_MESSAGE);
-        txtAgregarCategoria.setText("");
+        if(txtAgregarCategoria.getText().equals(""))
+            {
+                Navigation.pushRoute("AlertError", event, false, true);
+                return;
+            }else{
+                Map<String, Object> data= new HashMap<>();
+                data.put("nombre", txtAgregarCategoria.getText());
+                
+                try {
+                    db.createDocument("Categorias", data);
+                    Navigation.pushRoute("AlertExito", event, false, true);
+                } catch (Exception e) {
+                    Navigation.pushRoute("AlertError", event, false, true);
+                }
+                Stage stage = (Stage) btnCancelar.getScene().getWindow();
+
+            stage.close();
+            }   
     }
     FirebaseConnector db;
     @FXML AnchorPane mantProductosModalAgregarCategoria;

@@ -79,9 +79,19 @@ public class MantProductosModalAgregarProducto implements Initializable {
         data.put("Producto", txtNombreProducto.getText());
         data.put("Unidad", txtUnidad.getText());
         data.put("Categoria", comboCategoria.getSelectionModel().getSelectedItem().toString());
-        db.createDocument("Productos", data);
-        Stage stage = (Stage) btnCancelar.getScene().getWindow();
-       stage.close();
+        try {
+            db.createDocument("Productos", data);
+            Navigation.pushRoute("AlertExito", event, false, true);
+            Stage stage = (Stage) btnCancelar.getScene().getWindow();
+            stage.close();
+        } catch (Exception e) {
+            Navigation.pushRoute("AlertError", event, false, true);
+        }
+        
+       
+    }
+    @FXML private void btnAgregarImagenProductoClick(ActionEvent event){
+
     }
     @FXML AnchorPane mantProductosModalAgregarProducto;
     @Override
