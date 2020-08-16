@@ -107,18 +107,16 @@ public class MantAreasPage implements Initializable {
         private void btnEliminarAreaClick(ActionEvent event) {
                 if (!areaSelectedID.isEmpty()) {
                         for (User usuario : usuarios) {
-                                for (int i = 0; i < usuario.areas.size(); i++) {
-                                        if (usuario.areas.contains(areaSelectedID)) {
-                                                usuario.areas.remove(areaSelectedID);
-                                                Map<String, Object> datos = new HashMap();
-                                                
-                                                List<String> vacio = new ArrayList();
-                                                vacio.add("");
-                                                if(usuario.areas.isEmpty()) datos.put("areas", vacio);
-                                                else datos.put("areas", usuario.areas);
+                                if (usuario.areas.contains(areaSelectedID)) {
+                                        usuario.areas.remove(areaSelectedID);
+                                        Map<String, Object> datos = new HashMap();
+                                        
+                                        List<String> vacio = new ArrayList();
+                                        vacio.add("");
+                                        if(usuario.areas.isEmpty()) datos.put("areas", vacio);
+                                        else datos.put("areas", usuario.areas);
 
-                                                db.updateDocument(FirestoreRoutes.USUARIOS, usuario.userID, datos);
-                                        }
+                                        db.updateDocument(FirestoreRoutes.USUARIOS, usuario.userID, datos);
                                 }
                         }
                         db.deleteDocument(FirestoreRoutes.AREAS, areaSelectedID);
