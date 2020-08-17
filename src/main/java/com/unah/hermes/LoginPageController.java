@@ -59,6 +59,7 @@ public class LoginPageController implements Initializable {
         pass = passTxt.getText();
         String response = db.loginWithEmailPassword(correo, pass);
         if (response.equals("PASS")) {
+            System.out.println("SENDING IT");
             Navigation.pushRoute("MainPageMenu", event, true, false);
         } else if (response.equals("ERROR")) {
             errorCorreo.setText("Error desconocido, contacte al personal de IT");

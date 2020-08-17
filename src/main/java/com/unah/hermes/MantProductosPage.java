@@ -1,101 +1,42 @@
 package com.unah.hermes;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
-import java.util.Vector;
+import java.util.function.Function;
 
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.collections.ObservableList;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.control.TableColumn;
-
-import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
-import com.google.cloud.firestore.EventListener;
-import com.google.cloud.firestore.FirestoreException;
-import com.google.cloud.firestore.ListenerRegistration;
+import com.google.cloud.firestore.QueryDocumentSnapshot;
+import com.unah.hermes.objects.Categoria;
+import com.unah.hermes.objects.Producto;
 import com.unah.hermes.provider.FirebaseConnector;
 import com.unah.hermes.provider.FirestorageRoutes;
 import com.unah.hermes.provider.FirestoreRoutes;
 import com.unah.hermes.utils.EventListeners;
+import com.unah.hermes.utils.Navigation;
+
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.InputEvent;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
-import javafx.stage.Window;
-import javafx.stage.WindowEvent;
-//import sun.swing.SwingAccessor.JTextComponentAccessor;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.function.Function;
-
-import javax.swing.JTextField;
-
-import com.google.cloud.firestore.DocumentReference;
-import com.google.cloud.firestore.DocumentSnapshot;
-import com.google.cloud.firestore.EventListener;
-import com.google.cloud.firestore.FirestoreException;
-import com.google.cloud.firestore.ListenerRegistration;
-import com.unah.hermes.objects.Requisicion;
-import com.unah.hermes.provider.FirebaseConnector;
-import com.unah.hermes.utils.EventListeners;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.MultipleSelectionModel;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-import javafx.scene.Node;
 import javafx.stage.Window;
-import javafx.stage.WindowEvent;
-import javafx.stage.Modality;
-
-import com.google.cloud.firestore.QueryDocumentSnapshot;
-import com.unah.hermes.objects.Categoria;
-import com.unah.hermes.objects.Producto;
-import com.unah.hermes.utils.Navigation;
-
-//import org.graalvm.compiler.core.common.type.ArithmeticOpTable.BinaryOp.Add;
-
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ComboBox;
-
-
-
 public class MantProductosPage implements Initializable {
-    @FXML TableView<Producto> tablaProductos;
-    @FXML AnchorPane MantenimientoProductos;
-    @FXML TextField txtFiltro;
-    @FXML ComboBox<String> comboCategoria= new ComboBox<>();
-    @FXML ImageView imagenProducto;
+    
     @FXML private void btnAgregarProductoClick(ActionEvent event) {
         Navigation.pushRoute("MantProductosModalAgregarProducto", event, false, true);
         refreshProductos();
@@ -131,7 +72,6 @@ public class MantProductosPage implements Initializable {
         
 
     }
-    
     @FXML private void btnAgregarCategoriaClick(ActionEvent event) {
         Navigation.pushRoute("MantProductosModalAgregarCategoria", event, false, true);
         refreshCategorias();
@@ -180,13 +120,18 @@ public class MantProductosPage implements Initializable {
         }
         tablaProductos.getItems().addAll(categoriaFiltrados);
     }
+    @FXML TableView<Producto> tablaProductos;
+    @FXML AnchorPane MantenimientoProductos;
+    @FXML TextField txtFiltro;
+    @FXML ComboBox<String> comboCategoria= new ComboBox<>();
+    @FXML ImageView imagenProducto;
 
-    FirebaseConnector db=FirebaseConnector.getInstance();
     Producto tablaProductoSelectedItem;
-    
+    FirebaseConnector db=FirebaseConnector.getInstance();   
     ObservableList<Producto> productos = FXCollections.observableArrayList();
     List<QueryDocumentSnapshot> documentos = db.getAllDocumentsFrom(FirestoreRoutes.PRODUCTOS);
     List<QueryDocumentSnapshot> categoriaDocumentos = db.getAllDocumentsFrom(FirestoreRoutes.CATEGORIAS);
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         MantenimientoProductos.setOnMouseClicked(new EventHandler<MouseEvent>(){
@@ -220,12 +165,7 @@ public class MantProductosPage implements Initializable {
             }
            
         });
-        MantenimientoProductos.widthProperty().addListener(new ChangeListener<Number>(){
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                recalcularColumnWidth();
-            }
-        });
+        MantenimientoProductos.widthProperty().addListener(evt -> recalcularColumnWidth());
 
         tablaProductos.widthProperty().addListener(new ChangeListener<Number>(){
             @Override
@@ -275,7 +215,7 @@ public class MantProductosPage implements Initializable {
          
          tablaProductos.getColumns().addAll(columnaProducto, columnaCategoria, columnaUnidad);
      }
-     private void refreshProductos(){
+    private void refreshProductos(){
         tablaProductos.getItems().clear();
         productos.clear();
         documentos = db.getAllDocumentsFrom(FirestoreRoutes.PRODUCTOS);

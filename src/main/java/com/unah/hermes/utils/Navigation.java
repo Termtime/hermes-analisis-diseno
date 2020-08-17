@@ -19,6 +19,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -34,7 +35,7 @@ public class Navigation {
      * @param hide booleano para indicar si la pagina anterior debe ocultarse
      * @param modal boolean para indicar si la nueva pagina es modal
      * @param data datos que se quieran pasar y recibir en la otra pantalla
-     */
+     */ 
     public static void pushRoute(String pageName, ActionEvent event, Boolean hide, Boolean modal)
     {
         Parent root;
@@ -58,6 +59,8 @@ public class Navigation {
             Stage stage = new Stage();
             // stage.setTitle("My New Stage Title");
             stage.setScene(new Scene(root));
+            stage.getIcons().add(new Image(Navigation.class.getResourceAsStream("/images/icono32x32.png")));
+            stage.setTitle("H.E.R.M.E.S.");
             if(modal) {
                 stage.initOwner(parentStage);
                 stage.initModality(Modality.APPLICATION_MODAL); 
@@ -70,7 +73,7 @@ public class Navigation {
             
             // return controller;
         }
-        catch (IOException e) {
+        catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -107,6 +110,8 @@ public class Navigation {
             Stage stage = new Stage();
             // stage.setTitle("My New Stage Title");
             stage.setScene(new Scene(root));
+            stage.setScene(new Scene(root));
+            stage.getIcons().add(new Image(Navigation.class.getResourceAsStream("/images/icono32x32.png")));
             if(modal) {
                 stage.initOwner(parentStage);
                 stage.initModality(Modality.APPLICATION_MODAL); 
@@ -119,7 +124,7 @@ public class Navigation {
             
             // return controller;
         }
-        catch (IOException e) {
+        catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -139,8 +144,8 @@ public class Navigation {
         try {
             root = FXMLLoader.load(Navigation.class.getResource("/fxml/" + pageName + ".fxml"));
             Stage stage = new Stage();
-            stage.setTitle("My New Stage Title");
             stage.setScene(new Scene(root));
+            stage.getIcons().add(new Image(Navigation.class.getResourceAsStream("/images/icono32x32.png")));
             if(modal) {
                 stage.initOwner(parentStage);
                 stage.initModality(Modality.APPLICATION_MODAL); 
@@ -189,6 +194,7 @@ public class Navigation {
             FXMLLoader loader = new FXMLLoader(Navigation.class.getResource("/fxml/" + pageName + ".fxml"));
             root = loader.load();
             Stage stage = new Stage();
+            System.out.println("PARENT STAGE: " + parentStage);
             //encontrar el tipo de controlador
             if(tipoControlador == MainPage.class){
                 MainPage controller = loader.getController();
@@ -221,6 +227,7 @@ public class Navigation {
                 stage.initModality(Modality.APPLICATION_MODAL); 
                 stage.showAndWait();
             } else {
+                stage.initOwner(parentStage);
                 stage.show();    
             }
             // Ocultar la pagina anterior si es lo que se especifica
