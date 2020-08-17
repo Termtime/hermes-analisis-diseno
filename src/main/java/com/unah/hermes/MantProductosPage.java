@@ -20,12 +20,15 @@ import com.google.cloud.firestore.EventListener;
 import com.google.cloud.firestore.FirestoreException;
 import com.google.cloud.firestore.ListenerRegistration;
 import com.unah.hermes.provider.FirebaseConnector;
+import com.unah.hermes.provider.FirestorageRoutes;
 import com.unah.hermes.provider.FirestoreRoutes;
 import com.unah.hermes.utils.EventListeners;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.InputEvent;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -92,6 +95,7 @@ public class MantProductosPage implements Initializable {
     @FXML AnchorPane MantenimientoProductos;
     @FXML TextField txtFiltro;
     @FXML ComboBox<String> comboCategoria= new ComboBox<>();
+    @FXML ImageView imagenProducto;
     @FXML private void btnAgregarProductoClick(ActionEvent event) {
         Navigation.pushRoute("MantProductosModalAgregarProducto", event, false, true);
         refreshProductos();
@@ -233,6 +237,10 @@ public class MantProductosPage implements Initializable {
             @Override
             public void changed(ObservableValue<? extends Producto> observable, Producto oldValue, Producto newValue) {
                 tablaProductoSelectedItem = newValue;
+
+                if(newValue == null) return;
+                Image imagenDeProducto = db.downloadImage(FirestorageRoutes.PRODUCTOS,"Productos"+newValue.productoID);
+                imagenProducto.setImage(imagenDeProducto);
             }
         });
     }  
