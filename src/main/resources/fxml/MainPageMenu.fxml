@@ -26,16 +26,13 @@
         <menus>
           <Menu id="Archivo" mnemonicParsing="false" text="Archivo">
             <items>
-              <MenuItem fx:id="menuBtnCerrar" mnemonicParsing="false" onAction="#menuBtnCerrarClick" text="Close" />
-                  <MenuItem fx:id="menuBtnImprimir" mnemonicParsing="false" onAction="#menuBtnImprimirClick" text="Imprimir" />
-                  <MenuItem fx:id="menuBtnImprimirMensual" mnemonicParsing="false" onAction="#menuBtnImprimirMensualClick" text="Imprimir reporte mensual" />
+              <MenuItem fx:id="menuBtnCerrar" mnemonicParsing="false" onAction="#menuBtnCerrarClick" text="Cerrar" />
             </items>
           </Menu>
           <Menu id="Editar" mnemonicParsing="false" text="Editar">
             <items>
               <MenuItem fx:id="menuBtnEntregarReq" mnemonicParsing="false" onAction="#menuBtnEntregarReqClick" text="Entregar Requisicion" />
                   <MenuItem fx:id="menuBtnDenegReq" mnemonicParsing="false" onAction="#menuBtnDenegReqClick" text="Denegar Requisicion" />
-                  <MenuItem fx:id="menuBtnOcultarReq" mnemonicParsing="false" onAction="#menuBtnOcultarReqClick" text="Ocultar Requisicion" />
             </items>
           </Menu>
           <Menu id="Utilidad" mnemonicParsing="false" text="Utilidad">

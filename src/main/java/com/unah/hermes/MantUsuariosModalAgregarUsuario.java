@@ -44,7 +44,7 @@ import javafx.stage.Window;
 public class MantUsuariosModalAgregarUsuario implements Initializable {
     
     @FXML
-    public void btnAgregarImagenUsuarioClick(ActionEvent event){
+    private void btnAgregarImagenUsuarioClick(ActionEvent event){
         try {
             //crear un filechooser
             FileChooser fileChooser = new FileChooser();
@@ -69,7 +69,7 @@ public class MantUsuariosModalAgregarUsuario implements Initializable {
     }
 
     @FXML
-    public void btnAgregarClick(ActionEvent event) {
+    private void btnAgregarClick(ActionEvent event) {
         //arriba de esto irian las validaciones
         List<Area> areasSeleccionadas = new ArrayList();
         if(comboNivelAcceso.getSelectionModel().getSelectedItem().equals("Usuario"))
@@ -101,17 +101,17 @@ public class MantUsuariosModalAgregarUsuario implements Initializable {
     }
 
     @FXML
-    public void btnAgregarAreaClick(ActionEvent event) {
+    private void btnAgregarAreaClick(ActionEvent event) {
         //TODO IMPLEMENTAR ESTO
     }
 
     @FXML
-    public void btnQuitarAreaClick(ActionEvent event) {
+    private void btnQuitarAreaClick(ActionEvent event) {
         //TODO IMPLEMENTAR ESTO
     }
 
     @FXML
-    public void btnCancelarClick(ActionEvent event) {
+    private void btnCancelarClick(ActionEvent event) {
         cerrarVentana();
     }
 
@@ -173,7 +173,7 @@ public class MantUsuariosModalAgregarUsuario implements Initializable {
         });
     }
 
-    public void llenarCombo(){
+    private void llenarCombo(){
         //procesar datos de firebase
         for (DocumentSnapshot doc : docsAreas) {
             Area tmp = new Area(doc.getId(), doc.getString("Area"));
@@ -199,7 +199,7 @@ public class MantUsuariosModalAgregarUsuario implements Initializable {
         listAreas.getItems().addAll(areas);
     }
     
-    public void cerrarVentana(){
+    private void cerrarVentana(){
         Stage stage = (Stage) btnCancelar.getScene().getWindow();
         stage.close();
     }

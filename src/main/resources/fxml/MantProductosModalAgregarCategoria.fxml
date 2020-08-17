@@ -20,7 +20,7 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="txtAgregarCategoria" layoutX="120.0" layoutY="115.0" onInputMethodTextChanged="#txtAgregarCategoriaInput" prefHeight="26.0" prefWidth="360.0" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="120.0" AnchorPane.topAnchor="115.0">
+      <TextField fx:id="txtAgregarCategoria" layoutX="120.0" layoutY="115.0" prefHeight="26.0" prefWidth="360.0" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="120.0" AnchorPane.topAnchor="115.0">
          <font>
             <Font size="14.0" />
          </font></TextField>

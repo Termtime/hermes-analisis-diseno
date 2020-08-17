@@ -12,14 +12,12 @@ public class MainApp extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/MainPageMenu.fxml"));
-
         Scene scene = new Scene(root);
         scene.getStylesheets().add("/styles/Styles.css");
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/icono32x32.png")));
         stage.setTitle("H.E.R.M.E.S.");
         stage.setScene(scene);
         stage.show();
-
     }
 
     /**

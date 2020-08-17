@@ -49,8 +49,7 @@ import javafx.stage.Window;
 public class MantUsuariosModalModificarUsuario implements Initializable {
     
     
-    @FXML 
-    public void btnAgregarImagenUsuarioClick(ActionEvent event){
+    @FXML private void btnAgregarImagenUsuarioClick(ActionEvent event){
         System.out.println("se esta ejecutando");
         try {
             ////MANUAL DE COMO BAJAR Y SUBIR FOTOS
@@ -88,8 +87,7 @@ public class MantUsuariosModalModificarUsuario implements Initializable {
         }
 
     }
-    @FXML 
-    public void btnModificarClick(ActionEvent event) {
+    @FXML private void btnModificarClick(ActionEvent event) {
         List<Area> areasSeleccionadas = new ArrayList();
         if(comboNivelAcceso.getSelectionModel().getSelectedItem().equals("Usuario"))
         {
@@ -121,8 +119,7 @@ public class MantUsuariosModalModificarUsuario implements Initializable {
         }
 
     }
-    @FXML 
-    public void btnAgregarAreaClick(ActionEvent event) {
+    @FXML private void btnAgregarAreaClick(ActionEvent event) {
         //enviar areas seleccionadas a areas
         try{
             objetoBorrado = listAreas.getSelectionModel().getSelectedItem();
@@ -136,8 +133,7 @@ public class MantUsuariosModalModificarUsuario implements Initializable {
     
         
     }    
-    @FXML 
-    public void btnQuitarAreaClick(ActionEvent event) {
+    @FXML private void btnQuitarAreaClick(ActionEvent event) {
         try{
             objetoABorrar = listAreasSeleccionadas.getSelectionModel().getSelectedItem();
             int indice = listAreasSeleccionadas.getSelectionModel().getSelectedIndex();
@@ -148,8 +144,7 @@ public class MantUsuariosModalModificarUsuario implements Initializable {
 
         }
     }
-    @FXML 
-    public void comboNivelAccesoClick(ActionEvent event) {
+    @FXML private void comboNivelAccesoClick(ActionEvent event) {
         if(comboNivelAcceso.getSelectionModel().isSelected(1)) {
              comboAreaAcceso.setVisible(true);
              listAreas.setVisible(true);
@@ -165,8 +160,7 @@ public class MantUsuariosModalModificarUsuario implements Initializable {
             btnQuitarArea.setVisible(false);
         }
     }
-    @FXML 
-    public void btnCancelarClick(ActionEvent event) {
+    @FXML private void btnCancelarClick(ActionEvent event) {
         cerrarVentana();
     }
     

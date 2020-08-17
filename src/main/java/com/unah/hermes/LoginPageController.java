@@ -1,11 +1,10 @@
 package com.unah.hermes;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.function.Function;
 
 import com.unah.hermes.provider.FirebaseConnector;
 import com.unah.hermes.utils.EventListeners;
@@ -16,39 +15,26 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TextField;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
-
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Modality;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-import javafx.scene.Node;
 
 public class LoginPageController implements Initializable {
 
-    private FirebaseConnector db;
-    @FXML
-    Label errorCorreo, errorPass;
-    @FXML
-    Button loginBtn;
-    @FXML
-    private AnchorPane anchorLogin;
-    @FXML
-    private TextField correoTxt;
-    @FXML
-    private PasswordField passTxt;
-
-    private String correo, pass;
-
-    @FXML
-    private void loginBtnClick(ActionEvent event) {
+    @FXML private Label errorCorreo, errorPass;
+    @FXML private Button loginBtn;
+    @FXML private AnchorPane anchorLogin;
+    @FXML private TextField correoTxt;
+    @FXML private PasswordField passTxt;
+    
+    String correo, pass;
+    FirebaseConnector db;
+    
+    @FXML private void loginBtnClick(ActionEvent event) {
         // resetear el estado de los labels de error
         errorCorreo.setVisible(false);
         errorPass.setVisible(false);
@@ -82,13 +68,7 @@ public class LoginPageController implements Initializable {
         }
     }
 
-    @FXML
-    private void validarCorreo(KeyEvent event) {
-
-    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    @Override public void initialize(URL url, ResourceBundle rb) {
 
         EventListeners.onWindowOpening(anchorLogin, new Function<Window, Void>() {
 
