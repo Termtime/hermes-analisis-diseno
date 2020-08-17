@@ -1,9 +1,14 @@
 package com.unah.hermes;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.lang.Object;
+import javafx.stage.FileChooser;
 
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
@@ -13,6 +18,7 @@ import com.unah.hermes.objects.Area;
 import com.unah.hermes.objects.Producto;
 import com.unah.hermes.objects.User;
 import com.unah.hermes.provider.FirebaseConnector;
+import com.unah.hermes.provider.FirestorageRoutes;
 import com.unah.hermes.provider.FirestoreRoutes;
 import com.unah.hermes.utils.EventListeners;
 import com.unah.hermes.utils.Navigation;
@@ -30,6 +36,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -41,6 +48,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -53,6 +62,9 @@ import javafx.stage.StageStyle;
 import javafx.scene.Node;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
+import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.stage.FileChooser;
+//import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -77,12 +89,39 @@ public class MantUsuariosModalAgregarUsuario implements Initializable {
     @FXML Button btnAgregarArea;
     @FXML Button btnQuitarArea;
     @FXML Button btnAgregar;
+    @FXML ImageView imagenUsuario;
+    Window ventaPrincipal;
 
     @FXML
 
     public void btnAgregarImagenUsuarioClick(ActionEvent event){
+        try {
+           ////MANUAL DE COMO BAJAR Y SUBIR FOTOS
+          //HANDLER DEL BOTON ESCOGER IMAGEN
+          //crear un filechooser
+          FileChooser fileChooser = new FileChooser();
+          fileChooser.setTitle("Selecciona una foto");
+          //colocar filtros para solo permitir imagenes
+          fileChooser.getExtensionFilters().add(
+                  new ExtensionFilter("Image Files", "*.png", "*.jpg"));
+          ///abrir file chooser
+          // selectedFile declarenlo globalmente 
+               
+          selectedFile = fileChooser.showOpenDialog(ventaPrincipal);
+          if (selectedFile != null) {
+              // si el archivo no es nulo, entonces crear un input stream y
+              // popular el imageView con la imagen seleccionada
+              InputStream is = new FileInputStream(selectedFile);
+              imagenUsuario.setImage(new Image(is));
+          }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("error seleccionando foto");
+        }
 
     }
+         
     public void cerrarVentana(){
         Stage stage = (Stage) btnCancelar.getScene().getWindow();
 
@@ -102,26 +141,30 @@ public class MantUsuariosModalAgregarUsuario implements Initializable {
         // validaciones de caja de texto
         if(txtCorreo.getText().trim()!=null && txtContrasena.getText().trim()!=null){
             if( txtNombre.getText().trim()!=null )
+
+ 
+        
         db.crearUsuario(txtCorreo.getText(), txtContrasena.getText(), txtNombre.getText(),
         comboNivelAcceso.getSelectionModel().getSelectedItem().toString(), areasSeleccionadas);
        
+        //A LA HORA de AGREGAR y MODIFICAR    
+        //cuando ya se de agregar o modificar
+            //tendriamos un ID de lo que ya crearon (el correo para el usuario,
+            // el id del producto que regresa el metodo createDocument() )
+
+            //USUARIO EJEMPLO
+            if (selectedFile != null) {
+                db.uploadImage(FirestorageRoutes.USUARIOS, selectedFile, txtCorreo.getText());
+            }
         //cierre de pantalla
         Stage stage = (Stage) btnAgregar.getScene().getWindow();
         stage.close();
         }
-
-        // areas.addAll((Collection<? extends Area>)
-        // comboNivelAcceso.getSelectionModel().getSelectedItem());
-
-        if(db.crearUsuario(txtCorreo.getText(), txtContrasena.getText(), txtNombre.getText(),
-            comboNivelAcceso.getSelectionModel().getSelectedItem().toString(), areasSeleccionadas))
-        {
-            System.out.println(listAreasSeleccionadas);
-
-            //antes de esta instruccion mostrar dialogo de alerta de que se completo exitosamente
-            cerrarVentana();
-        }else{
+        
+        else{
             //mostrar alert de que no se pudo ingresar
+            Navigation.mostrarAlertError("Falta llenar algunos campos en el formulario!!!", event);
+        
         }
 
         
@@ -157,17 +200,8 @@ public class MantUsuariosModalAgregarUsuario implements Initializable {
     }
 
     @FXML
-    public void comboNivelAccesoClick(ActionEvent event){       
-
-        
-        //  comboNivelAcceso.getSelectionModel().selectFirst();
-        //  comboAreaAcceso.setVisible(true);
-        //  listAreas.setVisible(true);
-        //  listAreasSeleccionadas.setVisible(true);
-        //  btnAgregarArea.setVisible(true);
-        //  btnQuitarArea.setVisible(true);
-
-        
+    public void comboNivelAccesoClick(ActionEvent event){     
+             
     }
 
     @FXML
@@ -197,26 +231,29 @@ public class MantUsuariosModalAgregarUsuario implements Initializable {
     ObservableList<User> usuarios = FXCollections.observableArrayList();
     List<QueryDocumentSnapshot> docsAreas;
     List<QueryDocumentSnapshot> documentos;
+    File selectedFile;
+        
+ 
 
     @Override
     public void initialize(URL url,  ResourceBundle rb) {
         documentos = db.getAllDocumentsFrom(FirestoreRoutes.USUARIOS);
         docsAreas = db.getAllDocumentsFrom(FirestoreRoutes.AREAS);
         llenarCombo();
-       // Area area= new Area("nombre");
-       // Area area1= new Area("nombre1");
-       // listAreasSeleccionadas.getItems().add(area1.nombre);
-        
+       
+       
+         
        // listAreasSeleccionadas.getItems().add(area.nombre)
        EventListeners.onWindowOpening(mantUsuariosModalAgregarUsuario, new Function<Window,Void>(){
 
         @Override
         public Void apply(Window t) {
+            ventaPrincipal = t;
             ((Stage)t).resizableProperty().setValue(Boolean.FALSE);
             return null;
         }
         
-        });;
+        });
         mantUsuariosModalAgregarUsuario.setOnMouseClicked(new EventHandler<MouseEvent>(){
             @Override
             public void handle(MouseEvent event) {
