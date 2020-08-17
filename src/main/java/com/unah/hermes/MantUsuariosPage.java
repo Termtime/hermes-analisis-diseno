@@ -16,6 +16,7 @@ import com.google.cloud.firestore.FirestoreException;
 import com.google.cloud.firestore.ListenerRegistration;
 import com.google.cloud.firestore.ListenerRegistration;
 import com.unah.hermes.provider.FirebaseConnector;
+import com.unah.hermes.provider.FirestorageRoutes;
 import com.unah.hermes.provider.FirestoreRoutes;
 import com.unah.hermes.utils.EventListeners;
 import com.unah.hermes.utils.Navigation;
@@ -56,6 +57,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -76,6 +79,7 @@ public class MantUsuariosPage implements Initializable {
 
     @FXML
     TableView<User> tablaUsuarios;
+    @FXML ImageView imagenUsuario;
 
     @FXML
     private void btnAgregarUsuarioClick(ActionEvent event) {
@@ -143,13 +147,16 @@ public class MantUsuariosPage implements Initializable {
 
         for (DocumentSnapshot doc : documentos) {
             User tmp;
-             if(doc.exists()){
-            List<String> arregloIDAreas = (List<String>) doc.get("areas");
-            List<String> areasConNombre = new ArrayList();
-            //agregar areas con ID
-            List<String> areasConID = new ArrayList();  
+             if(doc.exists())
+              {
+            //     if(doc.getBoolean("inhabilitado") == null) continue;
+                
+                List<String> arregloIDAreas = (List<String>) doc.get("areas");
+                List<String> areasConNombre = new ArrayList();
+                //agregar areas con ID
+                List<String> areasConID = new ArrayList();  
 
-                for(Area area : areas){
+                    for(Area area : areas){
                     for(String areaID : arregloIDAreas){
                         if(areaID.equals(area.areaID.trim()))
                         {
@@ -238,11 +245,24 @@ public class MantUsuariosPage implements Initializable {
                
             }
         });
+        tablaUsuarios.widthProperty().addListener(new ChangeListener<Number>(){
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                recalcularColumnWidth();
+            }
+        });
 
          tablaUsuarios.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<User>(){
              @Override
             public void changed(ObservableValue<? extends User> observable, User oldValue, User newValue) {
                 tablaUSelectedItem = newValue;
+                
+            //PARA BAJAR LA IMAGEN
+            //aqui tendrian el usuario o producto que seleccionaron que en el handler de seleccion se llama newValue
+            //esto va dentro del TU_TABLA.getSelectionModel().selectedItemProperty().addListener{blablabla}
+                if(newValue == null) return;
+                Image imagenDeUsuario = db.downloadImage(FirestorageRoutes.USUARIOS, newValue.userID);
+                imagenUsuario.setImage(imagenDeUsuario);
             }
         });
          MantUsuario.widthProperty().addListener(new ChangeListener<Number>(){

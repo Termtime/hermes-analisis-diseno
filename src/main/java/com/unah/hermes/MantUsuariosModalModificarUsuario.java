@@ -5,10 +5,15 @@ import java.util.ResourceBundle;
 import java.util.function.Function;
 import java.util.ArrayList;
 import java.util.List;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+
 
 import com.unah.hermes.objects.Area;
 import com.unah.hermes.objects.User;
 import com.unah.hermes.provider.FirebaseConnector;
+import com.unah.hermes.provider.FirestorageRoutes;
 import com.unah.hermes.provider.FirestoreRoutes;
 import com.unah.hermes.utils.EventListeners;
 import com.unah.hermes.utils.Navigation;
@@ -31,13 +36,16 @@ import javafx.scene.layout.Pane;
 import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javafx.stage.Window;
+import javafx.stage.FileChooser.ExtensionFilter;
 
 public class MantUsuariosModalModificarUsuario implements Initializable {
     @FXML ListView<Area>  listAreas;
@@ -59,6 +67,10 @@ public class MantUsuariosModalModificarUsuario implements Initializable {
     @FXML Button btnQuitarArea;
     @FXML Label labelAreasSeleccionada;
     @FXML Label labelAreas;
+    @FXML ImageView imagenUsuario;
+    Window ventaPrincipalModificar;
+    @FXML Button btnModificar;
+    
 
     
     @FXML public void btnAgregarClick(ActionEvent event) {
@@ -79,19 +91,100 @@ public class MantUsuariosModalModificarUsuario implements Initializable {
     @FXML public void comboAreaAccesoClick(ActionEvent event) {
         
     }
-
+    @FXML
     public void btnAgregarImagenUsuarioClick(ActionEvent event){
+        System.out.println("se esta ejecutando");
+        try {
+        ////MANUAL DE COMO BAJAR Y SUBIR FOTOS
+          //HANDLER DEL BOTON ESCOGER IMAGEN
+          //crear un filechooser
+          FileChooser fileChooser = new FileChooser();
+          fileChooser.setTitle("Selecciona una nueva foto");
+          //colocar filtros para solo permitir imagenes
+          fileChooser.getExtensionFilters().add(
+                  new ExtensionFilter("Image Files", "*.png", "*.jpg"));
+          ///abrir file chooser
+          // selectedFile declarenlo globalmente 
+               
+          selectedFile = fileChooser.showOpenDialog(ventaPrincipalModificar);
+          if (selectedFile != null) {
+              // si el archivo no es nulo, entonces crear un input stream y
+              // popular el imageView con la imagen seleccionada
+              InputStream is = new FileInputStream(selectedFile);
+              imagenUsuario.setImage(new Image(is));
+          }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("error seleccionando foto");
+        }
 
     }
     @FXML public void btnModificarClick(ActionEvent event) {
+        List<Area> areasSeleccionadas = new ArrayList();
+        if(comboNivelAcceso.getSelectionModel().getSelectedItem().equals("Usuario"))
+        {
+            areasSeleccionadas.add(comboAreaAcceso.getSelectionModel().getSelectedItem());
+        }else if(comboNivelAcceso.getSelectionModel().getSelectedItem().equals("Jefe de Area")){
+            areasSeleccionadas.addAll(listAreasSeleccionadas.getItems());
+        }
+        
+        // validaciones de caja de texto
+        if(!areasSeleccionadas.isEmpty()){
+            if( txtNombre.getText().trim()!=null )
+
+        //A LA HORA de AGREGAR y MODIFICAR    
+        //cuando ya le den agregar o modificar
+            //ustedes tendrian un ID de lo que ya crearon (el correo para el usuario,
+            // el id del producto que regresa el metodo createDocument())
+
+            db.modificarUsuario(usuarioDatos.uid,txtCorreo.getText(), txtNombre.getText(),
+            comboNivelAcceso.getSelectionModel().getSelectedItem().toString(), areasSeleccionadas);
+
+            if(!txtContrasena.getText().trim().isEmpty() && txtContrasena.getText().trim().length() >= 6)
+                db.cambiarPassword(usuarioDatos.uid, txtContrasena.getText().trim());
+            else
+                Navigation.mostrarAlertError("La contraseña debe tener minimo 6 caracteres", event);
+            //USUARIO EJEMPLO
+            if (selectedFile != null) {
+                db.uploadImage(FirestorageRoutes.USUARIOS, selectedFile, txtCorreo.getText());
+            }
+            Stage stage = (Stage) btnModificar.getScene().getWindow();
+        stage.close();
+        }
+        else{
+            //mostrar alert de que no se pudo ingresar
+            Navigation.mostrarAlertError("Falta llenar algunos campos en el formulario", event);
+        
+        }
+
     }
     @FXML public void btnAgregarAreaClick(ActionEvent event) {
-        // if(listAreasSeleccionadas.getSelectionModel().getSelectedItem().equals(areas)){
-                       
-        // }
-    }
+        //enviar areas seleccionadas a areas
+        try{
+            objetoBorrado = listAreas.getSelectionModel().getSelectedItem();
+            int indice = listAreas.getSelectionModel().getSelectedIndex();
+            listAreas.getItems().remove(indice);         
+            listAreasSeleccionadas.getItems().add(objetoBorrado);     
+            listAreas.getSelectionModel().clearSelection();
+        }catch(Exception e){
+            
+        }
     
+        
+    }    
     @FXML public void btnQuitarAreaClick(ActionEvent event) {
+        try{
+
+            objetoABorrar = listAreasSeleccionadas.getSelectionModel().getSelectedItem();
+            int indice = listAreasSeleccionadas.getSelectionModel().getSelectedIndex();
+            listAreasSeleccionadas.getItems().remove(indice);         
+            listAreas.getItems().add(objetoABorrar);    
+            listAreasSeleccionadas.getSelectionModel().clearSelection();
+        }catch(Exception e){
+
+        }
+        //enviar areas a areas seleccionadas 
         
     }
     @FXML public void comboNivelAccesoClick(ActionEvent event) {
@@ -155,20 +248,36 @@ public class MantUsuariosModalModificarUsuario implements Initializable {
     FirebaseConnector db;
     User usuarioDatos;
     List<QueryDocumentSnapshot> docsAreas;
+    File selectedFile;
+    Area objetoABorrar;
+    Area  objetoBorrado;
     
+
+   
     @FXML AnchorPane mantUsuariosModalModificarUsuario;
     @Override
     public void initialize(URL url,  ResourceBundle rb) {
         db = FirebaseConnector.getInstance();
+
         EventListeners.onWindowOpening(mantUsuariosModalModificarUsuario, new Function<Window,Void>(){
 
             @Override
             public Void apply(Window t) {
+                ventaPrincipalModificar = t;
                 ((Stage)t).resizableProperty().setValue(Boolean.FALSE);
                 return null;
             }
-            
         });
+        
+       
+        mantUsuariosModalModificarUsuario.setOnMouseClicked(new EventHandler<MouseEvent>(){
+            @Override
+            public void handle(MouseEvent event) {
+                mantUsuariosModalModificarUsuario.requestFocus();
+
+            }
+        });
+
         EventListeners.onWindowOpened(mantUsuariosModalModificarUsuario, new Function<Window,Void>(){
 
             @Override
@@ -180,13 +289,8 @@ public class MantUsuariosModalModificarUsuario implements Initializable {
             }
             
         });
-        mantUsuariosModalModificarUsuario.setOnMouseClicked(new EventHandler<MouseEvent>(){
-            @Override
-            public void handle(MouseEvent event) {
-                mantUsuariosModalModificarUsuario.requestFocus();
+      
 
-            }
-        });
         comboNivelAcceso.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>(){
 
 			@Override
@@ -276,7 +380,7 @@ public class MantUsuariosModalModificarUsuario implements Initializable {
         comboAreaAcceso.getItems().addAll(areas);
         //para la ventana de modificar, para llenar la lista de la derecha y la izquierda
         for (Area area : areas) {
-        //recibirias el usuario, tendrias un objeto -User usuario
+        //     //recibirias el usuario, tendrias un objeto -User usuario
             // usuario.areas List<String>
              String areaID = area.areaID;
             //   List<String> usuarioAreas = new ArrayList();
