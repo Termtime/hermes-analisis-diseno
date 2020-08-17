@@ -145,6 +145,15 @@ public class MantUsuariosModalModificarUsuario implements Initializable {
         }
     }
     @FXML private void comboNivelAccesoClick(ActionEvent event) {
+        //validaciones al momento de seleccioanr el combobox
+        if(comboNivelAcceso.getSelectionModel().isSelected(0)) {
+            comboAreaAcceso.setVisible(false);
+            listAreas.setVisible(false);
+            listAreasSeleccionadas.setVisible(false);
+            btnAgregarArea.setVisible(false);
+            btnQuitarArea.setVisible(false);
+            
+        }
         if(comboNivelAcceso.getSelectionModel().isSelected(1)) {
              comboAreaAcceso.setVisible(true);
              listAreas.setVisible(true);
@@ -152,13 +161,14 @@ public class MantUsuariosModalModificarUsuario implements Initializable {
              btnAgregarArea.setVisible(true);
              btnQuitarArea.setVisible(true);
         }
-        if(comboNivelAcceso.getSelectionModel().isSelected(0)) {
+        if(comboNivelAcceso.getSelectionModel().isSelected(2)) {
             comboAreaAcceso.setVisible(false);
             listAreas.setVisible(false);
             listAreasSeleccionadas.setVisible(false);
             btnAgregarArea.setVisible(false);
             btnQuitarArea.setVisible(false);
         }
+       
     }
     @FXML private void btnCancelarClick(ActionEvent event) {
         cerrarVentana();
@@ -242,13 +252,15 @@ public class MantUsuariosModalModificarUsuario implements Initializable {
                 if(newValue.equals("Usuario")){
                     ocultarJefeArea();
                     mostrarUsuario();
+                    labelAreas.setText("Area");
+                    labelAreasSeleccionada.setVisible(false);
                 }else if(newValue.equals("Jefe de Area")){
-                    labelAreas.setVisible(true);
+                    labelAreas.setText("Area(s)");
                     labelAreasSeleccionada.setVisible(true);
                     mostrarJefeArea();
                     ocultarUsuario();
                 }else if(newValue.equals("Administrador")){
-                    labelAreas.setVisible(false);
+                    labelAreas.setText("");
                     labelAreasSeleccionada.setVisible(false);
                     ocultarJefeArea();
                     ocultarUsuario();
@@ -340,6 +352,7 @@ public class MantUsuariosModalModificarUsuario implements Initializable {
             }
           }
     }
+    //metodo para cerrar ventana
     private void cerrarVentana(){
         Stage stage = (Stage) btnCancelar.getScene().getWindow();
         stage.close();
