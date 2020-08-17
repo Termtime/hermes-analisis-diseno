@@ -1,6 +1,9 @@
 package com.unah.hermes;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.function.Function;
@@ -16,6 +19,7 @@ import com.unah.hermes.provider.FirebaseConnector;
 import com.unah.hermes.utils.EventListeners;
 import com.unah.hermes.utils.Navigation;
 
+import io.opencensus.common.ServerStatsFieldEnums.Id;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -34,6 +38,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -43,8 +49,11 @@ import javafx.stage.StageStyle;
 import javafx.scene.Node;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
+import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
+
 import java.util.List;
 import com.unah.hermes.provider.FirestoreRoutes;
 import com.unah.hermes.objects.Categoria;
@@ -55,9 +64,13 @@ public class MantProductosModalAgregarProducto implements Initializable {
     @FXML ComboBox<String> comboCategoria= new ComboBox<>();
     @FXML TextField txtNombreProducto;
     @FXML TextField  txtUnidad;
+    @FXML ImageView imagenProducto;
+    File selectedFile;
+    Window ventanaPrincipal;
     FirebaseConnector db=FirebaseConnector.getInstance();
     List<QueryDocumentSnapshot> categoriaDocumentos = db.getAllDocumentsFrom(FirestoreRoutes.CATEGORIAS);
-
+    List<QueryDocumentSnapshot> documentos;
+    ObservableList<Producto> productos = FXCollections.observableArrayList();
     @FXML private void btnCancelarClick(ActionEvent event) {
 
        Stage stage = (Stage) btnCancelar.getScene().getWindow();
@@ -75,15 +88,33 @@ public class MantProductosModalAgregarProducto implements Initializable {
         
     }
     @FXML private void btnAgregarClick(ActionEvent event) {
+        
         Map<String, Object> data= new HashMap<>();
+        
         data.put("Producto", txtNombreProducto.getText());
         data.put("Unidad", txtUnidad.getText());
         data.put("Categoria", comboCategoria.getSelectionModel().getSelectedItem().toString());
         try {
+            
             db.createDocument("Productos", data);
-            Navigation.pushRoute("AlertExito", event, false, true);
-            Stage stage = (Stage) btnCancelar.getScene().getWindow();
-            stage.close();
+            documentos = db.getAllDocumentsFrom(FirestoreRoutes.PRODUCTOS);
+            productos.clear();
+            for (DocumentSnapshot doc : documentos) {
+                Producto tmp;
+                if(doc.exists()){
+                    tmp = new Producto(doc.getId(), doc.getString("Producto"), doc.getString("Unidad"), doc.getString("Categoria"));
+                    productos.add(tmp);
+                }
+            }
+                for(Producto producto: productos){
+                    if(producto.nombre.toLowerCase().equals(txtNombreProducto.getText().toLowerCase())){
+                        db.uploadImage(FirestoreRoutes.PRODUCTOS+"/Productos", selectedFile, producto.productoID);
+                    }
+                }
+                
+                Navigation.pushRoute("AlertExito", event, false, true);
+                Stage stage = (Stage) btnCancelar.getScene().getWindow();
+                stage.close();
         } catch (Exception e) {
             Navigation.pushRoute("AlertError", event, false, true);
         }
@@ -91,7 +122,18 @@ public class MantProductosModalAgregarProducto implements Initializable {
        
     }
     @FXML private void btnAgregarImagenProductoClick(ActionEvent event){
-
+        try {
+            FileChooser fileChooser= new FileChooser();
+            fileChooser.setTitle("Seleccione una Foto");
+            fileChooser.getExtensionFilters().add(new ExtensionFilter("Image Files", "*.png","*.jpg"));
+            selectedFile=fileChooser.showOpenDialog(ventanaPrincipal);
+            if(selectedFile!= null){
+                InputStream is=new FileInputStream(selectedFile);
+                imagenProducto.setImage(new Image(is));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     @FXML AnchorPane mantProductosModalAgregarProducto;
     @Override
@@ -101,6 +143,7 @@ public class MantProductosModalAgregarProducto implements Initializable {
             @Override
             public Void apply(Window t) {
                 ((Stage)t).resizableProperty().setValue(Boolean.FALSE);
+                ventanaPrincipal=t;
                 return null;
             }
             
