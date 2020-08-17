@@ -76,7 +76,7 @@
             <Separator layoutX="9.0" layoutY="320.0" prefHeight="0.0" prefWidth="134.0" />
             <Pane layoutX="16.0" prefHeight="112.0" prefWidth="119.0" AnchorPane.bottomAnchor="376.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.799999999999997" AnchorPane.topAnchor="0.0">
                <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#2c2c2c" height="112.0" stroke="BLACK" strokeType="INSIDE" width="121.0" />
+                  <Rectangle fx:id="marco" arcHeight="5.0" arcWidth="5.0" fill="#2c2c2c" height="112.0" stroke="BLACK" strokeType="INSIDE" width="121.0" />
                   <ImageView fx:id="imagenProducto" fitHeight="112.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/productos.png" />

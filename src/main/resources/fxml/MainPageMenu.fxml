@@ -14,6 +14,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.input.KeyCodeCombination?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
@@ -26,23 +27,38 @@
         <menus>
           <Menu id="Archivo" mnemonicParsing="false" text="Archivo">
             <items>
-              <MenuItem fx:id="menuBtnCerrar" mnemonicParsing="false" onAction="#menuBtnCerrarClick" text="Close" />
-                  <MenuItem fx:id="menuBtnImprimir" mnemonicParsing="false" onAction="#menuBtnImprimirClick" text="Imprimir" />
-                  <MenuItem fx:id="menuBtnImprimirMensual" mnemonicParsing="false" onAction="#menuBtnImprimirMensualClick" text="Imprimir reporte mensual" />
+              <MenuItem id="Cerrar" fx:id="menuBtnCerrar" mnemonicParsing="false" onAction="#menuBtnCerrarClick" text="Cerrar">
+                     <accelerator>
+                        <KeyCodeCombination alt="DOWN" code="F4" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
             </items>
           </Menu>
           <Menu id="Editar" mnemonicParsing="false" text="Editar">
             <items>
-              <MenuItem fx:id="menuBtnEntregarReq" mnemonicParsing="false" onAction="#menuBtnEntregarReqClick" text="Entregar Requisicion" />
-                  <MenuItem fx:id="menuBtnDenegReq" mnemonicParsing="false" onAction="#menuBtnDenegReqClick" text="Denegar Requisicion" />
-                  <MenuItem fx:id="menuBtnOcultarReq" mnemonicParsing="false" onAction="#menuBtnOcultarReqClick" text="Ocultar Requisicion" />
+              <MenuItem id="Entregar Req" fx:id="menuBtnEntregarReq" mnemonicParsing="false" onAction="#menuBtnEntregarReqClick" text="Entregar Requisicion">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="E" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
+                  <MenuItem id="Denegar Req" fx:id="menuBtnDenegReq" mnemonicParsing="false" onAction="#menuBtnDenegReqClick" text="Denegar Requisicion">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="D" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
             </items>
           </Menu>
           <Menu id="Utilidad" mnemonicParsing="false" text="Utilidad">
             <items>
-              <MenuItem fx:id="menuBtnMantUsuarios" mnemonicParsing="false" onAction="#menuBtnMantUsuariosClick" text="Mantenimiento de Usuarios" />
-                  <MenuItem fx:id="menuBtnMantProductos" mnemonicParsing="false" onAction="#menuBtnMantProductosClick" text="Mantenimiento de Productos" />
-                  <MenuItem fx:id="menuBtnMantAreas" mnemonicParsing="false" onAction="#menuBtnMantAreasClick" text="Mantenimiento de Áreas" />
+              <MenuItem id="Mant Usuarios" fx:id="menuBtnMantUsuarios" mnemonicParsing="false" onAction="#menuBtnMantUsuariosClick" text="Mantenimiento de Usuarios">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="DIGIT1" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
+                  <MenuItem id="Mant Productos" fx:id="menuBtnMantProductos" mnemonicParsing="false" onAction="#menuBtnMantProductosClick" text="Mantenimiento de Productos">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="DIGIT2" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
+                  <MenuItem id="Mant Areas" fx:id="menuBtnMantAreas" mnemonicParsing="false" onAction="#menuBtnMantAreasClick" text="Mantenimiento de Áreas">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="DIGIT3" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
             </items>
           </Menu>
         </menus>
@@ -203,42 +219,42 @@
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="245.0" layoutY="-7.0" text="Fecha:">
+                              <Label id="Fecha" layoutX="332.0" layoutY="-7.0" text="Fecha:">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="250.0" layoutY="25.0" text="Hora:">
+                              <Label id="Hora" layoutX="337.0" layoutY="25.0" text="Hora:">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="489.0" layoutY="-7.0" text="Area:">
+                              <Label id="Area" layoutX="576.0" layoutY="-7.0" text="Area:">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="450.0" layoutY="25.0" text="Solicitante:">
+                              <Label id="Solicitante" layoutX="537.0" layoutY="25.0" text="Solicitante:">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="lblFechaP" layoutX="290.0" layoutY="-7.0">
+                              <Label id="FechaV" fx:id="lblFechaP" layoutX="377.0" layoutY="-7.0">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="lblHoraP" layoutX="290.0" layoutY="25.0">
+                              <Label id="HoraV" fx:id="lblHoraP" layoutX="377.0" layoutY="25.0">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="lblSolicitanteP" layoutX="526.0" layoutY="25.0">
+                              <Label id="SolicitanteV" fx:id="lblSolicitanteP" layoutX="613.0" layoutY="25.0">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="lblAreaP" layoutX="526.0" layoutY="-7.0">
+                              <Label id="AreaV" fx:id="lblAreaP" layoutX="613.0" layoutY="-7.0">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
@@ -333,42 +349,42 @@
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="245.0" layoutY="-7.0" text="Fecha:">
+                              <Label id="Fecha" layoutX="332.0" layoutY="-7.0" text="Fecha:">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="250.0" layoutY="25.0" text="Hora:">
+                              <Label id="Hora" layoutX="337.0" layoutY="25.0" text="Hora:">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="489.0" layoutY="-7.0" text="Area:">
+                              <Label id="Area" layoutX="576.0" layoutY="-7.0" text="Area:">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="450.0" layoutY="25.0" text="Solicitante:">
+                              <Label id="Solicitante" layoutX="537.0" layoutY="25.0" text="Solicitante:">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="lblFechaE" layoutX="290.0" layoutY="-7.0">
+                              <Label id="FechaV" fx:id="lblFechaE" layoutX="377.0" layoutY="-7.0">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="lblHoraE" layoutX="290.0" layoutY="25.0">
+                              <Label id="HoraV" fx:id="lblHoraE" layoutX="377.0" layoutY="25.0">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="lblSolicitanteE" layoutX="526.0" layoutY="25.0">
+                              <Label id="SolicitanteV" fx:id="lblSolicitanteE" layoutX="613.0" layoutY="25.0">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="lblAreaE" layoutX="526.0" layoutY="-7.0">
+                              <Label id="Area" fx:id="lblAreaE" layoutX="613.0" layoutY="-7.0">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
@@ -432,42 +448,42 @@
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="245.0" layoutY="-7.0" text="Fecha:">
+                              <Label id="Fecha" layoutX="332.0" layoutY="-7.0" text="Fecha:">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="250.0" layoutY="25.0" text="Hora:">
+                              <Label id="Hora" layoutX="337.0" layoutY="25.0" text="Hora:">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="489.0" layoutY="-7.0" text="Area:">
+                              <Label id="Area" layoutX="576.0" layoutY="-7.0" text="Area:">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="450.0" layoutY="25.0" text="Solicitante:">
+                              <Label id="Solicitante" layoutX="537.0" layoutY="25.0" text="Solicitante:">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="lblFechaD" layoutX="290.0" layoutY="-7.0">
+                              <Label id="FechaV" fx:id="lblFechaD" layoutX="377.0" layoutY="-7.0">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="lblHoraD" layoutX="290.0" layoutY="25.0">
+                              <Label id="HoraV" fx:id="lblHoraD" layoutX="377.0" layoutY="25.0">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="lblSolicitanteD" layoutX="526.0" layoutY="25.0">
+                              <Label id="SolicitanteV" fx:id="lblSolicitanteD" layoutX="613.0" layoutY="25.0">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="lblAreaD" layoutX="526.0" layoutY="-7.0">
+                              <Label id="AreaV" fx:id="lblAreaD" layoutX="613.0" layoutY="-7.0">
                                  <font>
                                     <Font size="14.0" />
                                  </font>

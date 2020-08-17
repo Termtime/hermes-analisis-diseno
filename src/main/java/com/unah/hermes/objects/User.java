@@ -8,11 +8,12 @@ public class User {
     public String stringDeArea;
     public List<String> areas;
     public String uid;
+    public Boolean desactivado;
     //agregue lista de String areasNombre
     public List<String> areasNombre;
     //public ObservableList<User> Usuarios = FXCollections.observableArrayList();
 
-    public User(String userID, String nombre, String nivelAcceso, String uid, List<String> areasNombre,List<String> areas)
+    public User(String userID, String nombre, String nivelAcceso, String uid, List<String> areasNombre,List<String> areas, Boolean desactivado)
     {
         this.userID = userID;
         this.nombre = nombre;
@@ -20,6 +21,7 @@ public class User {
         this.areas = areas;
         this.areasNombre = areasNombre;
         this.uid = uid;
+        this.desactivado = desactivado;
         stringDeArea = "";
         for(String area : areasNombre){
             stringDeArea += area + ", ";

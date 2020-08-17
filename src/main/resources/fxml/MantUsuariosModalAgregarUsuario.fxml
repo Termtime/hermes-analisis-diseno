@@ -40,7 +40,7 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <TextField id="txtAreaNueva" fx:id="txtNombre" layoutY="23.0" onInputMethodTextChanged="#txtNombreInput" prefHeight="26.0" prefWidth="360.0">
+                  <TextField id="txtAreaNueva" fx:id="txtNombre" layoutY="23.0" prefHeight="26.0" prefWidth="360.0">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -54,7 +54,7 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <TextField id="txtAreaNueva" fx:id="txtCorreo" layoutY="23.0" onInputMethodTextChanged="#txtCorreoInput" prefHeight="26.0" prefWidth="360.0">
+                  <TextField id="txtAreaNueva" fx:id="txtCorreo" layoutY="23.0" prefHeight="26.0" prefWidth="360.0">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -68,7 +68,7 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <ComboBox fx:id="comboNivelAcceso" layoutY="23.0" onAction="#comboNivelAccesoClick" prefHeight="30.0" prefWidth="360.0" promptText="Escoja un nivel de acceso" style="-fx-background-color: #ffffff;" />
+                  <ComboBox fx:id="comboNivelAcceso" layoutY="23.0" prefHeight="30.0" prefWidth="360.0" promptText="Escoja un nivel de acceso" style="-fx-background-color: #ffffff;" />
                </children>
             </Pane>
             <Pane layoutX="2.0" layoutY="308.0">
@@ -78,7 +78,7 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <PasswordField fx:id="txtContrasena" layoutX="-2.0" layoutY="23.0" onInputMethodTextChanged="#txtContrasenaInput" prefHeight="30.0" prefWidth="360.0" />
+                  <PasswordField fx:id="txtContrasena" layoutX="-2.0" layoutY="23.0" prefHeight="30.0" prefWidth="360.0" />
                </children>
             </Pane>
             <Pane layoutX="2.0" layoutY="128.0" prefHeight="107.0" prefWidth="360.0">
@@ -88,7 +88,7 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <ComboBox fx:id="comboAreaAcceso" layoutY="23.0" onAction="#comboAreaAccesoClick" prefHeight="30.0" prefWidth="360.0" promptText="Escoja el Area" style="-fx-background-color: #ffffff;" visible="false" />
+                  <ComboBox fx:id="comboAreaAcceso" layoutY="23.0" prefHeight="30.0" prefWidth="360.0" promptText="Escoja el Area" style="-fx-background-color: #ffffff;" visible="false" />
                   <ListView layoutY="21.0" prefHeight="87.0" prefWidth="222.0" visible="false" />
                   <ListView fx:id="listAreas" layoutY="21.0" prefHeight="87.0" prefWidth="155.0" />
                   <ListView fx:id="listAreasSeleccionadas" layoutX="205.0" layoutY="21.0" prefHeight="87.0" prefWidth="155.0" />
@@ -122,15 +122,15 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <PasswordField fx:id="txtConrfirmeContrasena" layoutX="-2.0" layoutY="23.0" onInputMethodTextChanged="#txtConfirmeContrasenaInput" prefHeight="30.0" prefWidth="360.0" />
+                  <PasswordField fx:id="txtConrfirmeContrasena" layoutX="-2.0" layoutY="23.0" prefHeight="30.0" prefWidth="360.0" />
                </children>
             </Pane>
          </children>
       </Pane>
       <Pane layoutX="489.0" layoutY="178.0" prefHeight="112.0" prefWidth="114.0">
          <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#2c2c2c" height="112.0" stroke="BLACK" strokeType="INSIDE" width="114.0" />
-            <ImageView fx:id="imagenUsuario" fitHeight="112.0" fitWidth="165.0" pickOnBounds="true" preserveRatio="true">
+            <Rectangle fx:id="marco" arcHeight="5.0" arcWidth="5.0" fill="#2c2c2c" height="112.0" stroke="BLACK" strokeType="INSIDE" width="114.0" />
+            <ImageView fx:id="imagenUsuario" fitHeight="112.0" fitWidth="114.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/usuarios.png" />
                </image>

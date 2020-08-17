@@ -436,6 +436,7 @@ public class FirebaseConnector {
             datos.put("nivelAcceso", nivelAcceso);
             datos.put("areas", areasID);
             datos.put("uid", nuevoUsuario.getUid());
+            datos.put("deshabilitado", false);
             // ejecutar la instruccion en firebase
             db.collection("Usuarios").document(email).set(datos);
             return true;
@@ -480,10 +481,33 @@ public class FirebaseConnector {
             return false;
         }
     }
-    public boolean eliminarUsuario(String uid, String firestoreDocumentID) {
+    public boolean deshabilitarUsuario(String uid, String firestoreDocumentID) {
         try {
-            auth.deleteUser(uid);
-            deleteDocument(FirestoreRoutes.USUARIOS, firestoreDocumentID);
+            //implementacion anterior
+            UpdateRequest ur = new UpdateRequest(uid)
+            .setDisabled(true);
+
+            auth.updateUser(ur);
+            //deleteDocument(FirestoreRoutes.USUARIOS, firestoreDocumentID, data);
+            //nueva implementacion:
+            Map<String,Object> data = new HashMap<>();
+            data.put("deshabilitado", true);
+            updateDocument(FirestoreRoutes.USUARIOS, firestoreDocumentID, data);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean activarUsuario(String uid, String firestoreDocumentID) {
+        try {
+            UpdateRequest ur = new UpdateRequest(uid)
+            .setDisabled(false);
+            auth.updateUser(ur);
+            Map<String,Object> data = new HashMap<>();
+            data.put("deshabilitado", false);
+            updateDocument(FirestoreRoutes.USUARIOS, firestoreDocumentID, data);
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -572,7 +596,8 @@ public class FirebaseConnector {
 
             return imagen;
         } catch (Exception e) {
-            e.printStackTrace();
+            //removido para evitar sustos
+            // e.printStackTrace();
             System.out.println("error bajando archivo");
             return null;
         }

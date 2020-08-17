@@ -1,15 +1,17 @@
 package com.unah.hermes;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-import java.util.function.Function;
-import java.util.ArrayList;
-import java.util.List;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
+import java.util.function.Function;
 
-
+//import com.google.protobuf.DescriptorProtos.FieldDescriptorProto.Label;
+import com.google.cloud.firestore.DocumentSnapshot;
+import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.unah.hermes.objects.Area;
 import com.unah.hermes.objects.User;
 import com.unah.hermes.provider.FirebaseConnector;
@@ -17,9 +19,6 @@ import com.unah.hermes.provider.FirestorageRoutes;
 import com.unah.hermes.provider.FirestoreRoutes;
 import com.unah.hermes.utils.EventListeners;
 import com.unah.hermes.utils.Navigation;
-import com.google.cloud.firestore.QueryDocumentSnapshot;
-//import com.google.protobuf.DescriptorProtos.FieldDescriptorProto.Label;
-import com.google.cloud.firestore.DocumentSnapshot;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -31,88 +30,56 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-
-import javafx.scene.layout.Pane;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-import javafx.stage.FileChooser.ExtensionFilter;
 
 public class MantUsuariosModalModificarUsuario implements Initializable {
-    @FXML ListView<Area>  listAreas;
-    @FXML
-    TextField txtNombre;
-    @FXML
-    ComboBox<String> comboNivelAcceso = new ComboBox<>();
-    @FXML
-    ListView<Area> listAreasSeleccionadas;
-    @FXML
-    TextField txtCorreo;
-    @FXML
-    PasswordField txtContrasena;
-    @FXML
-    PasswordField txtConrfirmeContrasena;
-    @FXML
-    ComboBox<Area> comboAreaAcceso;
-    @FXML Button btnAgregarArea;
-    @FXML Button btnQuitarArea;
-    @FXML Label labelAreasSeleccionada;
-    @FXML Label labelAreas;
-    @FXML ImageView imagenUsuario;
-    Window ventaPrincipalModificar;
-    @FXML Button btnModificar;
     
-
     
-    @FXML public void btnAgregarClick(ActionEvent event) {
-        
-        Navigation.pushRoute("MantUsuariosPage", event, false, true);
-
-    }
-    @FXML public void txtUsuarioInput(KeyEvent event) {
-    }
-
-    @FXML public void txtNombreInput(KeyEvent event) {
-    }
-    @FXML public void txtContrasenaInput(KeyEvent event) {
-    }
-    @FXML public void txtConfirmeContrasenaInput(KeyEvent event) {
-    }
-
-    @FXML public void comboAreaAccesoClick(ActionEvent event) {
-        
-    }
-    @FXML
-    public void btnAgregarImagenUsuarioClick(ActionEvent event){
+    @FXML private void btnAgregarImagenUsuarioClick(ActionEvent event){
         System.out.println("se esta ejecutando");
         try {
-        ////MANUAL DE COMO BAJAR Y SUBIR FOTOS
-          //HANDLER DEL BOTON ESCOGER IMAGEN
-          //crear un filechooser
-          FileChooser fileChooser = new FileChooser();
-          fileChooser.setTitle("Selecciona una nueva foto");
-          //colocar filtros para solo permitir imagenes
-          fileChooser.getExtensionFilters().add(
-                  new ExtensionFilter("Image Files", "*.png", "*.jpg"));
-          ///abrir file chooser
-          // selectedFile declarenlo globalmente 
+            ////MANUAL DE COMO BAJAR Y SUBIR FOTOS
+            //HANDLER DEL BOTON ESCOGER IMAGEN
+            //crear un filechooser
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Selecciona una nueva foto");
+            //colocar filtros para solo permitir imagenes
+            fileChooser.getExtensionFilters().add(
+                    new ExtensionFilter("Image Files", "*.png", "*.jpg"));
+            ///abrir file chooser
+            // selectedFile declarenlo globalmente 
                
-          selectedFile = fileChooser.showOpenDialog(ventaPrincipalModificar);
-          if (selectedFile != null) {
-              // si el archivo no es nulo, entonces crear un input stream y
-              // popular el imageView con la imagen seleccionada
-              InputStream is = new FileInputStream(selectedFile);
-              imagenUsuario.setImage(new Image(is));
-          }
+            selectedFile = fileChooser.showOpenDialog(ventaPrincipalModificar);
+            if (selectedFile != null) {
+                // si el archivo no es nulo, entonces crear un input stream y
+                // popular el imageView con la imagen seleccionada
+                InputStream is = new FileInputStream(selectedFile);
+                Image image = new Image(is);
+                imagenUsuario.setImage(image);
+                
+                double aspectRatio = image.getWidth() / image.getHeight();
+                double realWidth = Math.min(imagenUsuario.getFitWidth(), imagenUsuario.getFitHeight() * aspectRatio);
+                double realHeight = Math.min(imagenUsuario.getFitHeight(), imagenUsuario.getFitWidth() / aspectRatio);
+                imagenUsuario.setTranslateX(6);
+                imagenUsuario.setTranslateY(6);
+
+                marco.setWidth(realWidth+12);
+                marco.setHeight(realHeight+12);
+            }
             
         } catch (Exception e) {
             e.printStackTrace();
@@ -120,7 +87,7 @@ public class MantUsuariosModalModificarUsuario implements Initializable {
         }
 
     }
-    @FXML public void btnModificarClick(ActionEvent event) {
+    @FXML private void btnModificarClick(ActionEvent event) {
         List<Area> areasSeleccionadas = new ArrayList();
         if(comboNivelAcceso.getSelectionModel().getSelectedItem().equals("Usuario"))
         {
@@ -132,12 +99,6 @@ public class MantUsuariosModalModificarUsuario implements Initializable {
         // validaciones de caja de texto
         if(!areasSeleccionadas.isEmpty()){
             if( txtNombre.getText().trim()!=null )
-
-        //A LA HORA de AGREGAR y MODIFICAR    
-        //cuando ya le den agregar o modificar
-            //ustedes tendrian un ID de lo que ya crearon (el correo para el usuario,
-            // el id del producto que regresa el metodo createDocument())
-
             db.modificarUsuario(usuarioDatos.uid,txtCorreo.getText(), txtNombre.getText(),
             comboNivelAcceso.getSelectionModel().getSelectedItem().toString(), areasSeleccionadas);
 
@@ -145,12 +106,11 @@ public class MantUsuariosModalModificarUsuario implements Initializable {
                 db.cambiarPassword(usuarioDatos.uid, txtContrasena.getText().trim());
             else
                 Navigation.mostrarAlertError("La contraseña debe tener minimo 6 caracteres", event);
-            //USUARIO EJEMPLO
+
             if (selectedFile != null) {
                 db.uploadImage(FirestorageRoutes.USUARIOS, selectedFile, txtCorreo.getText());
             }
-            Stage stage = (Stage) btnModificar.getScene().getWindow();
-        stage.close();
+            cerrarVentana();
         }
         else{
             //mostrar alert de que no se pudo ingresar
@@ -159,7 +119,7 @@ public class MantUsuariosModalModificarUsuario implements Initializable {
         }
 
     }
-    @FXML public void btnAgregarAreaClick(ActionEvent event) {
+    @FXML private void btnAgregarAreaClick(ActionEvent event) {
         //enviar areas seleccionadas a areas
         try{
             objetoBorrado = listAreas.getSelectionModel().getSelectedItem();
@@ -173,9 +133,8 @@ public class MantUsuariosModalModificarUsuario implements Initializable {
     
         
     }    
-    @FXML public void btnQuitarAreaClick(ActionEvent event) {
+    @FXML private void btnQuitarAreaClick(ActionEvent event) {
         try{
-
             objetoABorrar = listAreasSeleccionadas.getSelectionModel().getSelectedItem();
             int indice = listAreasSeleccionadas.getSelectionModel().getSelectedIndex();
             listAreasSeleccionadas.getItems().remove(indice);         
@@ -184,67 +143,48 @@ public class MantUsuariosModalModificarUsuario implements Initializable {
         }catch(Exception e){
 
         }
-        //enviar areas a areas seleccionadas 
-        
     }
-    @FXML public void comboNivelAccesoClick(ActionEvent event) {
-
+    @FXML private void comboNivelAccesoClick(ActionEvent event) {
         if(comboNivelAcceso.getSelectionModel().isSelected(1)) {
              comboAreaAcceso.setVisible(true);
              listAreas.setVisible(true);
              listAreasSeleccionadas.setVisible(true);
              btnAgregarArea.setVisible(true);
              btnQuitarArea.setVisible(true);
-   
-            }
-            if(comboNivelAcceso.getSelectionModel().isSelected(0)) {
-                comboAreaAcceso.setVisible(false);
-                listAreas.setVisible(false);
-                listAreasSeleccionadas.setVisible(false);
-                btnAgregarArea.setVisible(false);
-                btnQuitarArea.setVisible(false);
-      
-               }
-
+        }
+        if(comboNivelAcceso.getSelectionModel().isSelected(0)) {
+            comboAreaAcceso.setVisible(false);
+            listAreas.setVisible(false);
+            listAreasSeleccionadas.setVisible(false);
+            btnAgregarArea.setVisible(false);
+            btnQuitarArea.setVisible(false);
+        }
+    }
+    @FXML private void btnCancelarClick(ActionEvent event) {
+        cerrarVentana();
     }
     
-    @FXML public void txtCorreoInput(KeyEvent event) {
-    }
-   
-
-    @FXML public void btnCancelarClick(ActionEvent event) {
-        
-       Stage stage = (Stage) btnCancelar.getScene().getWindow();
-       
-       stage.close();
-
-    }
- 
-
-    @FXML private javafx.scene.control.Button btnCancelar;
-  
-    public void initData(Object data){
-        //System.out.println("Inicialiar datos");
-        usuarioDatos = (User) data; 
-        // txtNombre.setText(usuarioDatos.nombre);
-        // txtCorreo.setText(usuarioDatos.userID);
-
-        // System.out.println(listAreas);
-        // System.out.println("listAreasSeleccionadas");
-
-        //llenarCombo();
-        //listAreas.setItems(areas);
-        //listAreasSeleccionadas.setItems(areas);
-        //comboNivelAcceso.setSelectionModel(usuarioDatos.nivelAcceso);
-        
-
-    }
-
+    @FXML Button btnCancelar;
     @FXML Pane panelJefeUsuario;
     @FXML AnchorPane mantUsuariosModalAgregarUsuario;
+    @FXML ListView<Area>  listAreas;
+    @FXML TextField txtNombre;
+    @FXML ComboBox<String> comboNivelAcceso;
+    @FXML ListView<Area> listAreasSeleccionadas;
+    @FXML TextField txtCorreo;
+    @FXML PasswordField txtContrasena;
+    @FXML PasswordField txtConrfirmeContrasena;
+    @FXML ComboBox<Area> comboAreaAcceso;
+    @FXML Button btnAgregarArea;
+    @FXML Button btnQuitarArea;
+    @FXML Label labelAreasSeleccionada;
+    @FXML Label labelAreas;
+    @FXML ImageView imagenUsuario;
+    @FXML Button btnModificar;
+    @FXML Rectangle marco;
+    @FXML AnchorPane mantUsuariosModalModificarUsuario;
 
-    ObservableList<Area> areas = FXCollections.observableArrayList();
-    ObservableList<User> usuarios = FXCollections.observableArrayList();
+    Window ventaPrincipalModificar;
     FirebaseConnector db;
     User usuarioDatos;
     List<QueryDocumentSnapshot> docsAreas;
@@ -252,9 +192,13 @@ public class MantUsuariosModalModificarUsuario implements Initializable {
     Area objetoABorrar;
     Area  objetoBorrado;
     
+    ObservableList<Area> areas = FXCollections.observableArrayList();
+    ObservableList<User> usuarios = FXCollections.observableArrayList();
 
-   
-    @FXML AnchorPane mantUsuariosModalModificarUsuario;
+    public void initData(Object data){
+        usuarioDatos = (User) data; 
+    }
+
     @Override
     public void initialize(URL url,  ResourceBundle rb) {
         db = FirebaseConnector.getInstance();
@@ -316,7 +260,7 @@ public class MantUsuariosModalModificarUsuario implements Initializable {
         });
     } 
     
-    public void llenarDatos(){
+    private void llenarDatos(){
         comboNivelAcceso.getSelectionModel().select(usuarioDatos.nivelAcceso);
         txtCorreo.setText(usuarioDatos.userID);
         txtCorreo.setDisable(true);
@@ -338,27 +282,27 @@ public class MantUsuariosModalModificarUsuario implements Initializable {
             ocultarUsuario();
         }
     }
-    public void mostrarUsuario(){
+    private void mostrarUsuario(){
 
         comboAreaAcceso.setVisible(true);
     }
-    public void ocultarUsuario(){
+    private void ocultarUsuario(){
         comboAreaAcceso.setVisible(false);
     }
-    public void mostrarJefeArea(){
+    private void mostrarJefeArea(){
             listAreas.setVisible(true);
             listAreasSeleccionadas.setVisible(true);
             btnAgregarArea.setVisible(true);
             btnQuitarArea.setVisible(true);
             
     }
-    public void ocultarJefeArea(){
+    private void ocultarJefeArea(){
             listAreas.setVisible(false);
             listAreasSeleccionadas.setVisible(false);
             btnAgregarArea.setVisible(false);
             btnQuitarArea.setVisible(false);
     }
-    public void llenarCombo(){
+    private void llenarCombo(){
         //procesar datos de firebase
         for (DocumentSnapshot doc : docsAreas) {
             Area tmp = new Area(doc.getId(), doc.getString("Area"));
@@ -396,5 +340,8 @@ public class MantUsuariosModalModificarUsuario implements Initializable {
             }
           }
     }
-    
+    private void cerrarVentana(){
+        Stage stage = (Stage) btnCancelar.getScene().getWindow();
+        stage.close();
+    }
 }

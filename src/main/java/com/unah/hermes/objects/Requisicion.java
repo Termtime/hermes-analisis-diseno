@@ -54,8 +54,29 @@ public class Requisicion {
         }
     }
 
+    public Requisicion(Requisicion req){
+        this.reqID = req.reqID;
+        this.nombreDisplay = req.nombreDisplay;
+        this.estado = req.estado;
+        this.area = req.area;
+        this.autorizador = req.autorizador;
+        this.estaAutorizado = req.estaAutorizado;
+        this.solicitante = req.solicitante;
+        this.fecha = req.fecha;
+        this.fechaString = req.fechaString;
+        this.hora = req.hora;
+        this.productos = req.productos;
+    }
     @Override
     public String toString(){
         return nombreDisplay;
+    }
+    @Override
+    public Object clone() {
+        try {
+            return (Requisicion) super.clone();
+        } catch (CloneNotSupportedException e) {
+            return new Requisicion(this);
+        }
     }
 }

@@ -44,7 +44,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="btnEliminarUsuario" layoutX="897.0000000000001" layoutY="443.0" mnemonicParsing="false" onAction="#btnEliminarUsuarioClick" prefHeight="32.0" prefWidth="150.0" styleClass="btnCancelar" text="Eliminar Usuario" AnchorPane.rightAnchor="31.59999999999991">
+      <Button fx:id="btnEliminarUsuario" disable="true" layoutX="897.0000000000001" layoutY="443.0" mnemonicParsing="false" onAction="#btnEliminarUsuarioClick" prefHeight="32.0" prefWidth="150.0" styleClass="btnCancelar" text="Desactivar Usuario" AnchorPane.rightAnchor="31.59999999999991">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -52,7 +52,7 @@
       <Separator layoutX="58.0" layoutY="81.0" prefHeight="3.0" prefWidth="963.0" AnchorPane.leftAnchor="58.0" AnchorPane.rightAnchor="57.799999999999955" AnchorPane.topAnchor="93.0" />
       <Pane layoutX="915.0" layoutY="132.0" prefHeight="112.0" prefWidth="114.0" AnchorPane.bottomAnchor="393.0" AnchorPane.rightAnchor="49.599999999999994" AnchorPane.topAnchor="132.0">
          <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#2c2c2c" height="112.0" stroke="BLACK" strokeType="INSIDE" width="114.0" />
+            <Rectangle fx:id="marco" arcHeight="5.0" arcWidth="5.0" fill="#2c2c2c" height="112.0" stroke="BLACK" strokeType="INSIDE" width="114.0" />
             <ImageView fx:id="imagenUsuario" fitHeight="112.0" fitWidth="165.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/usuarios.png" />
@@ -60,5 +60,11 @@
             </ImageView>
          </children>
       </Pane>
+      <Button fx:id="btnReactivarUsuario" disable="true" layoutX="898.0000000000001" layoutY="513.0" mnemonicParsing="false" onAction="#btnReactivarUsuarioClick" prefHeight="32.0" prefWidth="150.0" text="Reactivar Usuario" AnchorPane.rightAnchor="30.999999999999886" AnchorPane.topAnchor="513.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Separator layoutX="897.0" layoutY="493.0" prefHeight="3.0" prefWidth="150.0" AnchorPane.rightAnchor="32.0" />
    </children>
 </AnchorPane>

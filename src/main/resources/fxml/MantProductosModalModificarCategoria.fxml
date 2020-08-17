@@ -24,7 +24,7 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <TextField id="txtAreaNueva" fx:id="txtNuevoNombre" layoutY="23.0" onInputMethodTextChanged="#txtNuevoNombreInput" prefHeight="26.0" prefWidth="360.0">
+            <TextField id="txtAreaNueva" fx:id="txtNuevoNombre" layoutY="23.0" prefHeight="26.0" prefWidth="360.0">
                <font>
                   <Font size="14.0" />
                </font>
@@ -38,7 +38,7 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <ComboBox fx:id="comboCategoria" layoutY="23.0" onAction="#comboCategoriaClick" prefHeight="30.0" prefWidth="360.0" promptText="Escoja una categoría" style="-fx-background-color: #ffffff;" />
+            <ComboBox fx:id="comboCategoria" layoutY="23.0" prefHeight="30.0" prefWidth="360.0" promptText="Escoja una categoría" style="-fx-background-color: #ffffff;" />
          </children>
       </Pane>
       <Button fx:id="btnModificar" layoutX="460.0" layoutY="148.0" mnemonicParsing="false" onAction="#btnModificarClick" prefHeight="32.0" prefWidth="86.0" text="Modificar">

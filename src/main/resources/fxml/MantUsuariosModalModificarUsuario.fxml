@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
@@ -15,7 +16,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mantUsuariosModalModificarUsuario" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="542.0" prefWidth="647.0" styleClass="window-background-level3" stylesheets="@../styles/StyleTablasNivel3.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unah.hermes.MantUsuariosModalModificarUsuario">
+<AnchorPane fx:id="mantUsuariosModalModificarUsuario" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="542.0" prefWidth="647.0" styleClass="window-background-level3" stylesheets="@../styles/StyleTablasNivel3.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unah.hermes.MantUsuariosModalModificarUsuario">
    <children>
       <Label alignment="CENTER" layoutX="178.0" layoutY="39.0" prefHeight="39.0" prefWidth="224.0" text="Modificar Usuario" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="178.0" AnchorPane.rightAnchor="176.0" AnchorPane.topAnchor="40.0">
          <font>
@@ -31,7 +32,7 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <TextField id="txtAreaNueva" fx:id="txtNombre" layoutY="23.0" onInputMethodTextChanged="#txtNombreInput" prefHeight="26.0" prefWidth="360.0">
+                  <TextField id="txtAreaNueva" fx:id="txtNombre" layoutY="23.0" prefHeight="26.0" prefWidth="360.0">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -45,7 +46,7 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <TextField id="txtAreaNueva" fx:id="txtCorreo" layoutY="23.0" onInputMethodTextChanged="#txtCorreoInput" prefHeight="26.0" prefWidth="360.0">
+                  <TextField id="txtAreaNueva" fx:id="txtCorreo" layoutY="23.0" prefHeight="26.0" prefWidth="360.0">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -59,7 +60,7 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <ComboBox fx:id="comboNivelAcceso" layoutY="23.0" onAction="#comboNivelAccesoClick" prefHeight="30.0" prefWidth="360.0" promptText="Escoja un nivel de acceso" style="-fx-background-color: #ffffff;" />
+                  <ComboBox fx:id="comboNivelAcceso" layoutY="23.0" prefHeight="30.0" prefWidth="360.0" promptText="Escoja un nivel de acceso" style="-fx-background-color: #ffffff;" />
                </children>
             </Pane>
             <Pane layoutX="2.0" layoutY="318.0">
@@ -69,7 +70,7 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <PasswordField fx:id="txtContrasena" layoutX="-2.0" layoutY="23.0" onInputMethodTextChanged="#txtContrasenaInput" prefHeight="30.0" prefWidth="360.0" />
+                  <PasswordField fx:id="txtContrasena" layoutX="-2.0" layoutY="23.0" prefHeight="30.0" prefWidth="360.0" />
                </children>
             </Pane>
             <Pane layoutX="2.0" layoutY="128.0" prefHeight="107.0" prefWidth="360.0">
@@ -79,7 +80,7 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <ComboBox fx:id="comboAreaAcceso" layoutY="23.0" onAction="#comboAreaAccesoClick" prefHeight="30.0" prefWidth="360.0" promptText="Escoja el Area" style="-fx-background-color: #ffffff;" visible="false" />
+                  <ComboBox fx:id="comboAreaAcceso" layoutY="23.0" prefHeight="30.0" prefWidth="360.0" promptText="Escoja el Area" style="-fx-background-color: #ffffff;" visible="false" />
                   <ListView fx:id="listAreas" layoutY="21.0" prefHeight="87.0" prefWidth="155.0" />
                   <ListView fx:id="listAreasSeleccionadas" layoutX="205.0" layoutY="21.0" prefHeight="87.0" prefWidth="155.0" />
                   <Label fx:id="labelAreasSeleccionada" layoutX="205.0" text="Area(s) Seleccionada(s):">
@@ -112,11 +113,14 @@
       <Separator layoutX="87.0" layoutY="95.0" prefHeight="0.0" prefWidth="577.0" AnchorPane.leftAnchor="87.0" AnchorPane.rightAnchor="86.0" AnchorPane.topAnchor="95.0" />
       <Pane layoutX="489.0" layoutY="178.0" prefHeight="112.0" prefWidth="114.0">
          <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#2c2c2c" height="112.0" stroke="BLACK" strokeType="INSIDE" width="114.0" />
-            <ImageView fx:id="imagenUsuario" fitHeight="112.0" fitWidth="165.0" pickOnBounds="true" preserveRatio="true">
+            <Rectangle fx:id="marco" arcHeight="5.0" arcWidth="5.0" fill="#2c2c2c" height="112.0" stroke="BLACK" strokeType="INSIDE" width="114.0" />
+            <ImageView fx:id="imagenUsuario" fitHeight="112.0" fitWidth="114.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/usuarios.png" />
                </image>
+               <viewport>
+                  <Rectangle2D />
+               </viewport>
             </ImageView>
          </children>
       </Pane>
