@@ -69,7 +69,8 @@ public class LoginPageController implements Initializable {
     }
 
     @Override public void initialize(URL url, ResourceBundle rb) {
-
+        correoTxt.setOnAction(evt -> loginBtn.fire());
+        passTxt.setOnAction(evt -> loginBtn.fire());
         EventListeners.onWindowOpening(anchorLogin, new Function<Window, Void>() {
 
             @Override

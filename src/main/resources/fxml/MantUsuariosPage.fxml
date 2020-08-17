@@ -44,7 +44,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="btnEliminarUsuario" layoutX="897.0000000000001" layoutY="443.0" mnemonicParsing="false" onAction="#btnEliminarUsuarioClick" prefHeight="32.0" prefWidth="150.0" styleClass="btnCancelar" text="Desactivar Usuario" AnchorPane.rightAnchor="31.59999999999991">
+      <Button fx:id="btnEliminarUsuario" disable="true" layoutX="897.0000000000001" layoutY="443.0" mnemonicParsing="false" onAction="#btnEliminarUsuarioClick" prefHeight="32.0" prefWidth="150.0" styleClass="btnCancelar" text="Desactivar Usuario" AnchorPane.rightAnchor="31.59999999999991">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -60,11 +60,11 @@
             </ImageView>
          </children>
       </Pane>
-      <Button fx:id="btnReactivarUsuario" layoutX="898.0000000000001" layoutY="513.0" mnemonicParsing="false" onAction="#btnReactivarUsuarioClick" prefHeight="32.0" prefWidth="150.0" text="Reactivar Usuario">
+      <Button fx:id="btnReactivarUsuario" disable="true" layoutX="898.0000000000001" layoutY="513.0" mnemonicParsing="false" onAction="#btnReactivarUsuarioClick" prefHeight="32.0" prefWidth="150.0" text="Reactivar Usuario" AnchorPane.rightAnchor="30.999999999999886" AnchorPane.topAnchor="513.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Separator layoutX="897.0" layoutY="493.0" prefHeight="3.0" prefWidth="150.0" />
+      <Separator layoutX="897.0" layoutY="493.0" prefHeight="3.0" prefWidth="150.0" AnchorPane.rightAnchor="32.0" />
    </children>
 </AnchorPane>

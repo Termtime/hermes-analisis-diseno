@@ -11,6 +11,7 @@ import com.unah.hermes.MantProductosModalModificarProducto;
 import com.unah.hermes.MantUsuariosModalAgregarUsuario;
 import com.unah.hermes.MantUsuariosModalModificarUsuario;
 import com.unah.hermes.MantUsuariosPage;
+import com.unah.hermes.utils.CustomAlerts.ConfirmAlert;
 import com.unah.hermes.utils.CustomAlerts.SimpleAlert;
 
 import javafx.event.ActionEvent;
@@ -108,9 +109,8 @@ public class Navigation {
             FXMLLoader loader = new FXMLLoader(Navigation.class.getResource("/fxml/" + pageName + ".fxml"));
             root = loader.load();
             Stage stage = new Stage();
-            // stage.setTitle("My New Stage Title");
             stage.setScene(new Scene(root));
-            stage.setScene(new Scene(root));
+            stage.setTitle("H.E.R.M.E.S.");
             stage.getIcons().add(new Image(Navigation.class.getResourceAsStream("/images/icono32x32.png")));
             if(modal) {
                 stage.initOwner(parentStage);
@@ -145,6 +145,7 @@ public class Navigation {
             root = FXMLLoader.load(Navigation.class.getResource("/fxml/" + pageName + ".fxml"));
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
+            stage.setTitle("H.E.R.M.E.S.");
             stage.getIcons().add(new Image(Navigation.class.getResourceAsStream("/images/icono32x32.png")));
             if(modal) {
                 stage.initOwner(parentStage);
@@ -194,7 +195,6 @@ public class Navigation {
             FXMLLoader loader = new FXMLLoader(Navigation.class.getResource("/fxml/" + pageName + ".fxml"));
             root = loader.load();
             Stage stage = new Stage();
-            System.out.println("PARENT STAGE: " + parentStage);
             //encontrar el tipo de controlador
             if(tipoControlador == MainPage.class){
                 MainPage controller = loader.getController();
@@ -218,10 +218,12 @@ public class Navigation {
             }
             //manejar los alerts
             else if(tipoControlador == SimpleAlert.class){
-                SimpleAlert controller = loader.getController();
+                ConfirmAlert controller = loader.getController();
                 controller.initData(data, parentStage);
             }
             stage.setScene(new Scene(root));
+            stage.setTitle("H.E.R.M.E.S.");
+            stage.getIcons().add(new Image(Navigation.class.getResourceAsStream("/images/icono32x32.png")));
             if(modal) {
                 stage.initOwner(parentStage);
                 stage.initModality(Modality.APPLICATION_MODAL); 
@@ -240,11 +242,40 @@ public class Navigation {
         }
     }
 
+    public static Boolean pushConfirmModal(String pageName, ActionEvent event, Object data)
+    {
+        Parent root;
+        Window parentStage = ((Node)(event.getSource())).getScene().getWindow();
+        try {
+            FXMLLoader loader = new FXMLLoader(Navigation.class.getResource("/fxml/" + pageName + ".fxml"));
+            root = loader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("H.E.R.M.E.S.");
+            stage.getIcons().add(new Image(Navigation.class.getResourceAsStream("/images/icono32x32.png")));
+
+            ConfirmAlert controller = loader.getController();
+            controller.initData(data, parentStage);
+
+            stage.initOwner(parentStage);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+            return controller.confirmado;
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public static void mostrarAlertError(String mensaje, ActionEvent event){
         pushRouteWithParameter("AlertError", event, false, true, SimpleAlert.class, mensaje);
     }
 
     public static void mostrarAlertExito(String mensaje, ActionEvent event){
         pushRouteWithParameter("AlertExito", event, false, true, SimpleAlert.class, mensaje);
+    }
+    public static boolean mostrarAlertConfirmacion(String mensaje, ActionEvent event){
+        return pushConfirmModal("AlertConfirmar", event, mensaje);
     }
 }

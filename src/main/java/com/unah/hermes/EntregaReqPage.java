@@ -65,7 +65,8 @@ public class EntregaReqPage implements Initializable {
     @FXML AnchorPane entregaReqPage; 
 
     public void initData(Object obj){
-        requisicionSeleccionada = (Requisicion) obj;
+        Requisicion ref = (Requisicion) obj;
+        requisicionSeleccionada = (Requisicion) ref.clone();
         // labelID.setText(requisicionSeleccionada.reqID);
         labelArea.setText(requisicionSeleccionada.area);
         labelFecha.setText(requisicionSeleccionada.fechaString);
@@ -77,6 +78,7 @@ public class EntregaReqPage implements Initializable {
     ListenerRegistration requisicionesListener;
     FirebaseConnector db;
     Requisicion requisicionSeleccionada;
+    Requisicion requisicionOriginal;
     List<Producto> productos;
 
     @Override
@@ -96,6 +98,8 @@ public class EntregaReqPage implements Initializable {
                 
                 iniciarEstructuraTabla();
                 tablaVistaPrevia.getItems().addAll(productos);
+                //pedir focus para arreglar bug visual
+                entregaReqPage.requestFocus();
                 parent.widthProperty().addListener(new ChangeListener<Number>(){
 
                     @Override

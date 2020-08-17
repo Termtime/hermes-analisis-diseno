@@ -34,6 +34,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Window;
 public class MantProductosPage implements Initializable {
     
@@ -120,11 +121,12 @@ public class MantProductosPage implements Initializable {
         }
         tablaProductos.getItems().addAll(categoriaFiltrados);
     }
-    @FXML TableView<Producto> tablaProductos;
-    @FXML AnchorPane MantenimientoProductos;
-    @FXML TextField txtFiltro;
-    @FXML ComboBox<String> comboCategoria= new ComboBox<>();
-    @FXML ImageView imagenProducto;
+    @FXML private TableView<Producto> tablaProductos;
+    @FXML private AnchorPane MantenimientoProductos;
+    @FXML private TextField txtFiltro;
+    @FXML private ComboBox<String> comboCategoria= new ComboBox<>();
+    @FXML private ImageView imagenProducto;
+    @FXML private Rectangle marco;
 
     Producto tablaProductoSelectedItem;
     FirebaseConnector db=FirebaseConnector.getInstance();   
@@ -179,8 +181,21 @@ public class MantProductosPage implements Initializable {
                 tablaProductoSelectedItem = newValue;
 
                 if(newValue == null) return;
-                Image imagenDeProducto = db.downloadImage(FirestorageRoutes.PRODUCTOS,"Productos"+newValue.productoID);
-                imagenProducto.setImage(imagenDeProducto);
+                Image image = db.downloadImage(FirestorageRoutes.PRODUCTOS,"Productos"+newValue.productoID);
+                //si no tiene imagen, revertir al icono por defecto
+                if(image == null){
+                    image =  new Image(getClass().getResourceAsStream("/images/productos.png"));
+                }
+                imagenProducto.setImage(image);
+
+                double aspectRatio = image.getWidth() / image.getHeight();
+                double realWidth = Math.min(imagenProducto.getFitWidth(), imagenProducto.getFitHeight() * aspectRatio);
+                double realHeight = Math.min(imagenProducto.getFitHeight(), imagenProducto.getFitWidth() / aspectRatio);
+                imagenProducto.setTranslateX(6);
+                imagenProducto.setTranslateY(6);
+
+                marco.setWidth(realWidth+12);
+                marco.setHeight(realHeight+12);
             }
         });
     }  

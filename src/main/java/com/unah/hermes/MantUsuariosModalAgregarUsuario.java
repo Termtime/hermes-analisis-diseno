@@ -95,9 +95,7 @@ public class MantUsuariosModalAgregarUsuario implements Initializable {
         else{
             //mostrar alert de que no se pudo ingresar
             Navigation.mostrarAlertError("Falta llenar algunos campos en el formulario", event);
-        
         }
-
     }
 
     @FXML

@@ -37,6 +37,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -50,6 +52,22 @@ public class MainPage implements Initializable {
     @FXML private void menuBtnCerrarClick(ActionEvent event) {
         Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
         stage.close();
+    }
+    @FXML private void menuBtnMantUsuariosClick(ActionEvent event) {
+        Navigation.pushRoute("MantUsuariosPage", event, false, true);
+    }
+    @FXML private void menuBtnMantProductosClick(ActionEvent event) {
+        Navigation.pushRoute("MantProductosPage", event, false, true);
+    }
+    @FXML private void menuBtnMantAreasClick(ActionEvent event) {
+        Navigation.pushRoute("MantAreasPage", event, false, true);
+    }
+    @FXML private void btnExpandirMenuClick(ActionEvent event) {
+        if (!isNavOpen) {
+            abrirNav();
+        } else {
+            cerrarNav();
+        }
     }
     @FXML private void btnReqDenegadasGrandeClick(ActionEvent event) {
         gridReqDenegadas.setVisible(true);
@@ -76,65 +94,25 @@ public class MainPage implements Initializable {
             cerrarNav();
     }
     @FXML private void btnLogoutGrandeClick(ActionEvent event) {
+        //Cerrar Sesion
+        //confirmar si se desea cerrar sesión solo si no se está sosteniendo shift
+        if(!isShiftDown)
+            if(!Navigation.mostrarAlertConfirmacion("¿Desea cerrar sesión?", event)) return;
         if (isNavOpen)
             cerrarNav();
         Navigation.pushRoute("LoginPage", event, true, false);
     }
     @FXML private void menuBtnEntregarReqClick(ActionEvent event) {
-        if (tablaPSelectedItem != null)
-            Navigation.pushRouteWithParameter("EntregaReqPage", event, false, true, EntregaReqPage.class,
-                    tablaPSelectedItem);
-        else {
-            Alert alert = new Alert(AlertType.ERROR, "Debe seleccionar una requisicion pendiente antes", ButtonType.OK);
-            alert.showAndWait();
-        }
+        entregarRequisicionSeleccionada(event);
     }
     @FXML private void menuBtnDenegReqClick(ActionEvent event) {
-        if (tablaPSelectedItem != null) {
-            String[][] unparsedData = { { "estado", "Denegada" } };
-            Map<String, Object> newData = (Map) ArrayUtils.toMap(unparsedData);
-
-            db.updateDocument(FirestoreRoutes.REQUISICIONES, tablaPSelectedItem.reqID, newData);
-        } else {
-            Alert alert = new Alert(AlertType.ERROR, "Debe seleccionar una requisicion antes", ButtonType.OK);
-            alert.showAndWait();
-        }
-    }
-    @FXML private void btnExpandirMenuClick(ActionEvent event) {
-        if (!isNavOpen) {
-            abrirNav();
-        } else {
-            cerrarNav();
-        }
-    }
-    @FXML private void menuBtnMantUsuariosClick(ActionEvent event) {
-        Navigation.pushRoute("MantUsuariosPage", event, false, true);
-    }
-    @FXML private void menuBtnMantProductosClick(ActionEvent event) {
-        Navigation.pushRoute("MantProductosPage", event, false, true);
-    }
-    @FXML private void menuBtnMantAreasClick(ActionEvent event) {
-        Navigation.pushRoute("MantAreasPage", event, false, true);
+        denegarRequisicionSeleccionada(event);
     }
     @FXML private void btnEntregarClick(ActionEvent event) {
-        if (tablaPSelectedItem != null)
-            Navigation.pushRouteWithParameter("EntregaReqPage", event, false, true, EntregaReqPage.class,
-                    tablaPSelectedItem);
-        else {
-            Alert alert = new Alert(AlertType.ERROR, "Debe seleccionar una requisicion pendiente antes", ButtonType.OK);
-            alert.showAndWait();
-        }
+        entregarRequisicionSeleccionada(event);
     }
     @FXML private void btnDenegarClick(ActionEvent event) {
-        if (tablaPSelectedItem != null) {
-            String[][] unparsedData = { { "estado", "Denegada" } };
-            Map<String, Object> newData = (Map) ArrayUtils.toMap(unparsedData);
-
-            db.updateDocument(FirestoreRoutes.REQUISICIONES, tablaPSelectedItem.reqID, newData);
-        } else {
-            Alert alert = new Alert(AlertType.ERROR, "Debe seleccionar una requisicion antes", ButtonType.OK);
-            alert.showAndWait();
-        }
+        denegarRequisicionSeleccionada(event);
     }
 
     // listViews
@@ -209,6 +187,7 @@ public class MainPage implements Initializable {
 
     //Variables globales
     Boolean isNavOpen = false;
+    Boolean isShiftDown = false;
     ListenerRegistration requisicionesListener;
     FirebaseConnector db;
     Requisicion tablaPSelectedItem = null;
@@ -229,13 +208,32 @@ public class MainPage implements Initializable {
         bindListenersNavBar();
         //bindear las diferentes tablas y listas con listeners
         bindListeners();
-
+        bindBotonesConfirmar();
         EventListeners.onWindowOpened(mainPage, new Function<Window, Void>() {
             @Override
             public Void apply(Window parent) {
                 iniciarEstructuraTablas();
                 // creacion de animaciones
                 crearAnimacionesNavBar();
+                //escuchar cuando se sostiene shift para hacer override a los dialogos de confirmar
+                parent.getScene().addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
+                    System.out.println("key pressed");
+                    if (event.isShiftDown()) {
+                        isShiftDown = true;
+                    }else{
+                        isShiftDown = false;
+                    }
+                    // event.consume();
+                });
+                parent.getScene().addEventFilter(KeyEvent.KEY_RELEASED, (KeyEvent event) -> {
+                    System.out.println("key released");
+                    if (event.isShiftDown()) {
+                        isShiftDown = true;
+                    }else{
+                        isShiftDown = false;
+                    }
+                    // event.consume();
+                });
                 return null;
             }
         });
@@ -257,7 +255,17 @@ public class MainPage implements Initializable {
         listaRQP.setItems(RequisicionesPendientes);
         listaRQD.setItems(RequisicionesDenegadas);
     }
-    private void bindListenersNavBar(){
+    
+    private void bindBotonesConfirmar() {
+        btnLogoutGrande.setOnMouseClicked(event -> {
+            btnLogoutGrande.fire();
+        });
+        btnLogout.setOnMouseClicked(event -> {
+            btnLogout.fire();
+        });
+    }
+
+    private void bindListenersNavBar() {
         gridReqPendientes.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
             @Override
@@ -737,5 +745,28 @@ public class MainPage implements Initializable {
                 recalcularColumnWidth();
             }
         });
+    }
+    private void entregarRequisicionSeleccionada(ActionEvent event) {
+        if (tablaPSelectedItem != null)
+
+            Navigation.pushRouteWithParameter("EntregaReqPage", event, false, true, EntregaReqPage.class,
+                    tablaPSelectedItem);
+        else {
+            Navigation.mostrarAlertError("Debe seleccionar una requisicion antes", event);
+        }
+    }
+    private void denegarRequisicionSeleccionada(ActionEvent event) {
+        if (tablaPSelectedItem != null) {
+            //confirmar si se desea denegar solo si la tecla de shift no se está sosteniendo
+            if(!isShiftDown)
+                if(!Navigation.mostrarAlertConfirmacion("¿Desea denegar la requisición?", event)) return;
+
+            String[][] unparsedData = { { "estado", "Denegada" } };
+            Map<String, Object> newData = (Map) ArrayUtils.toMap(unparsedData);
+
+            db.updateDocument(FirestoreRoutes.REQUISICIONES, tablaPSelectedItem.reqID, newData);
+        } else {
+            Navigation.mostrarAlertError("Debe seleccionar una requisicion antes", event);
+        }
     }
 }

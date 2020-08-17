@@ -19,12 +19,14 @@ import com.unah.hermes.utils.Navigation;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
@@ -59,14 +61,21 @@ public class MantUsuariosPage implements Initializable {
 
     @FXML
     private void btnEliminarUsuarioClick(ActionEvent event) {
-        //TODO CAMBIAR ESTA IMPLEMENTACION POR UN DESAHIBILITAR USUARIO
-        db.eliminarUsuario(tablaUSelectedItem.uid, tablaUSelectedItem.getUserID().toString());
+        if(tablaUSelectedItem == null ){
+            Navigation.mostrarAlertError("Debe seleccionar un usuario activo", event);
+            return;
+        }
+        db.deshabilitarUsuario(tablaUSelectedItem.uid, tablaUSelectedItem.getUserID().toString());
         llenarTabla();
     }
-
     @FXML
     private void btnReactivarUsuarioClick(ActionEvent event) {
-        //TODO implementar este boton
+        if(tablaUSelectedItem == null){
+            Navigation.mostrarAlertError("Debe seleccionar un usuario desactivado", event);
+            // return;
+        }
+        db.activarUsuario(tablaUSelectedItem.uid, tablaUSelectedItem.getUserID().toString());
+        llenarTabla();
     }
     
     @FXML private void txtFiltroInput(KeyEvent event){                    
@@ -85,7 +94,9 @@ public class MantUsuariosPage implements Initializable {
     @FXML AnchorPane MantUsuario;
     @FXML TableView<User> tablaUsuarios;
     @FXML ImageView imagenUsuario;
-
+    @FXML Button btnEliminarUsuario;
+    @FXML Button btnReactivarUsuario;
+    
     User tablaUSelectedItem;
     List<Area> areas = new ArrayList<Area>();
     List<QueryDocumentSnapshot> documentos;
@@ -129,14 +140,20 @@ public class MantUsuariosPage implements Initializable {
          tablaUsuarios.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<User>(){
              @Override
             public void changed(ObservableValue<? extends User> observable, User oldValue, User newValue) {
-                tablaUSelectedItem = newValue;
-                
-            //PARA BAJAR LA IMAGEN
-            //aqui tendrian el usuario o producto que seleccionaron que en el handler de seleccion se llama newValue
-            //esto va dentro del TU_TABLA.getSelectionModel().selectedItemProperty().addListener{blablabla}
                 if(newValue == null) return;
+                tablaUSelectedItem = newValue;
+                if(!tablaUSelectedItem.desactivado){
+                    btnEliminarUsuario.setDisable(false); 
+                    btnReactivarUsuario.setDisable(true); 
+                }else{
+                    btnEliminarUsuario.setDisable(true); 
+                    btnReactivarUsuario.setDisable(false); 
+                }
+                
                 Image image = db.downloadImage(FirestorageRoutes.USUARIOS, newValue.userID);
-                if(image == null) return;
+                if(image == null){
+                    image =  new Image(getClass().getResourceAsStream("/images/usuarios.png"));
+                }
                 imagenUsuario.setImage(image);
                 
                 double aspectRatio = image.getWidth() / image.getHeight();
@@ -147,6 +164,27 @@ public class MantUsuariosPage implements Initializable {
 
                 marco.setWidth(realWidth+12);
                 marco.setHeight(realHeight+12);
+            }
+        });
+        tablaUsuarios.getItems().addListener(new ListChangeListener<User>() {
+            @Override
+            public void onChanged(ListChangeListener.Change<? extends User> change) {
+
+                if (change.getList().size() != 0) {
+                    if (tablaUSelectedItem == null)
+                        return;
+
+                    String userID = tablaUSelectedItem.userID;
+
+                    int index = 0;
+                    for (User requisicion : change.getList()) {
+                        if (requisicion.userID.equals(userID)) {
+                            tablaUsuarios.getSelectionModel().select(index);
+                            break;
+                        }
+                        index++;
+                    }
+                }
             }
         });
          MantUsuario.widthProperty().addListener(new ChangeListener<Number>(){
@@ -198,6 +236,7 @@ public class MantUsuariosPage implements Initializable {
         docsAreas = db.getAllDocumentsFrom(FirestoreRoutes.AREAS);
         tablaUsuarios.getItems().clear();
         usuarios.clear();
+        areas.clear();
         for(DocumentSnapshot doc : docsAreas){
             Area tmp = new Area(doc.getId(), doc.getString("Area"));
             areas.add(tmp);
@@ -207,8 +246,6 @@ public class MantUsuariosPage implements Initializable {
             User tmp;
              if(doc.exists())
               {
-            //     if(doc.getBoolean("inhabilitado") != null) continue;
-                
                 List<String> arregloIDAreas = (List<String>) doc.get("areas");
                 List<String> areasConNombre = new ArrayList();
                 //agregar areas con ID
@@ -225,7 +262,7 @@ public class MantUsuariosPage implements Initializable {
                     }
                 }   
                 tmp = new User(doc.getId(), doc.getString("Nombre"),
-                doc.getString("nivelAcceso"), doc.getString("uid"), areasConNombre, areasConID);
+                doc.getString("nivelAcceso"), doc.getString("uid"), areasConNombre, areasConID, doc.getBoolean("deshabilitado"));
                 usuarios.add(tmp);
             }
         }
