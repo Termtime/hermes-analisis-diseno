@@ -54,8 +54,10 @@ public class MantUsuariosPage implements Initializable {
         if(tablaUSelectedItem != null)
             Navigation.pushRouteWithParameter("MantUsuariosModalModificarUsuario", event, false, true, MantUsuariosModalModificarUsuario.class, tablaUSelectedItem );
         else{
-            Alert alert = new Alert(AlertType.ERROR,"Debe seleccionar un Usuario antes", ButtonType.OK);
-            alert.showAndWait();
+            // Alert alert = new Alert(AlertType.ERROR,"Debe seleccionar un Usuario antes", ButtonType.OK);
+            // alert.showAndWait();
+            Navigation.mostrarAlertError("Falta llenar algunos campos en el formulario", event);
+            
         }
     }
 

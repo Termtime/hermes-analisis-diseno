@@ -19,17 +19,23 @@ import com.unah.hermes.provider.FirestoreRoutes;
 import com.unah.hermes.utils.EventListeners;
 import com.unah.hermes.utils.Navigation;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -75,37 +81,88 @@ public class MantUsuariosModalAgregarUsuario implements Initializable {
         if(comboNivelAcceso.getSelectionModel().getSelectedItem().equals("Usuario"))
         {
             areasSeleccionadas.add(comboAreaAcceso.getSelectionModel().getSelectedItem());
-        }else if(comboNivelAcceso.getSelectionModel().getSelectedItem().equals("Jefe de Area")){
+        }
+        else if(comboNivelAcceso.getSelectionModel().getSelectedItem().equals("Jefe de Area")){
             areasSeleccionadas.addAll(listAreasSeleccionadas.getItems());
         }
         
         // validaciones de caja de texto
         if(txtCorreo.getText().trim()!=null && txtContrasena.getText().trim()!=null){
-            if( txtNombre.getText().trim()!=null )
+            if( txtNombre.getText().trim()!=null ){
             db.crearUsuario(txtCorreo.getText(), txtContrasena.getText(), txtNombre.getText(),
             comboNivelAcceso.getSelectionModel().getSelectedItem().toString(), areasSeleccionadas);
-    
+            
             if (selectedFile != null) {
                 db.uploadImage(FirestorageRoutes.USUARIOS, selectedFile, txtCorreo.getText());
+                
             }
-            //cierre de pantalla
             cerrarVentana();
         }
-        
-        else{
+            
+
+           else{
             //mostrar alert de que no se pudo ingresar
             Navigation.mostrarAlertError("Falta llenar algunos campos en el formulario", event);
+            
+            
         }
+        }
+        
+        
+    }
+    @FXML private void comboNivelAccesoClick(ActionEvent event) {
+        if(comboNivelAcceso.getSelectionModel().isSelected(0)) {
+            comboAreaAcceso.setVisible(false);
+            listAreas.setVisible(false);
+            listAreasSeleccionadas.setVisible(false);
+            btnAgregarArea.setVisible(false);
+            btnQuitarArea.setVisible(false);
+            
+        }
+        if(comboNivelAcceso.getSelectionModel().isSelected(1)) {
+             comboAreaAcceso.setVisible(true);
+             listAreas.setVisible(true);
+             listAreasSeleccionadas.setVisible(true);
+             btnAgregarArea.setVisible(true);
+             btnQuitarArea.setVisible(true);
+        }
+        if(comboNivelAcceso.getSelectionModel().isSelected(2)) {
+            comboAreaAcceso.setVisible(false);
+            listAreas.setVisible(false);
+            listAreasSeleccionadas.setVisible(false);
+            btnAgregarArea.setVisible(false);
+            btnQuitarArea.setVisible(false);
+        }
+       
     }
 
     @FXML
     private void btnAgregarAreaClick(ActionEvent event) {
         //TODO IMPLEMENTAR ESTO
+         //enviar areas seleccionadas a areas
+         try{
+            objetoBorrado = listAreas.getSelectionModel().getSelectedItem();
+            int indice = listAreas.getSelectionModel().getSelectedIndex();
+            listAreas.getItems().remove(indice);         
+            listAreasSeleccionadas.getItems().add(objetoBorrado);     
+            listAreas.getSelectionModel().clearSelection();
+        }catch(Exception e){
+            
+        }
     }
 
     @FXML
     private void btnQuitarAreaClick(ActionEvent event) {
         //TODO IMPLEMENTAR ESTO
+        try{
+            objetoABorrar = listAreasSeleccionadas.getSelectionModel().getSelectedItem();
+            int indice = listAreasSeleccionadas.getSelectionModel().getSelectedIndex();
+            listAreasSeleccionadas.getItems().remove(indice);         
+            listAreas.getItems().add(objetoABorrar);    
+            listAreasSeleccionadas.getSelectionModel().clearSelection();
+        }catch(Exception e){
+
+        }
     }
 
     @FXML
@@ -126,6 +183,8 @@ public class MantUsuariosModalAgregarUsuario implements Initializable {
     @FXML Button btnAgregarArea;
     @FXML Button btnQuitarArea;
     @FXML Button btnAgregar;
+    @FXML Label labelAreasSeleccionada;
+    @FXML Label labelAreas;
     @FXML ImageView imagenUsuario;
     @FXML Rectangle marco;
     Window ventaPrincipal;
@@ -138,12 +197,14 @@ public class MantUsuariosModalAgregarUsuario implements Initializable {
     FirebaseConnector db = FirebaseConnector.getInstance();
     ObservableList<Area> areas = FXCollections.observableArrayList();
     ObservableList<User> usuarios = FXCollections.observableArrayList();
+    Area objetoABorrar;
+    Area  objetoBorrado;
 
     @Override
     public void initialize(URL url,  ResourceBundle rb) {
         documentos = db.getAllDocumentsFrom(FirestoreRoutes.USUARIOS);
         docsAreas = db.getAllDocumentsFrom(FirestoreRoutes.AREAS);
-        llenarCombo();
+        
 
         EventListeners.onWindowOpening(mantUsuariosModalAgregarUsuario, new Function<Window,Void>(){
 
@@ -165,10 +226,39 @@ public class MantUsuariosModalAgregarUsuario implements Initializable {
         EventListeners.onWindowOpened(mantUsuariosModalAgregarUsuario, new Function<Window,Void>(){
             @Override
             public Void apply(Window parent) {
-                       
+                llenarCombo();       
                 return null;                 
             }
         });
+
+
+        comboNivelAcceso.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>(){
+
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if(newValue.equals("Usuario")){
+                    ocultarJefeArea();
+                    mostrarUsuario();
+                    labelAreas.setText("Area");
+                    labelAreasSeleccionada.setVisible(false);
+                }else if(newValue.equals("Jefe de Area")){
+                    labelAreas.setText("Area(s)");
+                    labelAreasSeleccionada.setVisible(true);
+                    mostrarJefeArea();
+                    ocultarUsuario();
+                }else if(newValue.equals("Administrador")){
+                    labelAreas.setText("");
+                    labelAreasSeleccionada.setVisible(false);
+                    ocultarJefeArea();
+                    ocultarUsuario();
+                }
+				
+				
+			}
+            
+        });        
+
+        
     }
 
     private void llenarCombo(){
@@ -201,4 +291,28 @@ public class MantUsuariosModalAgregarUsuario implements Initializable {
         Stage stage = (Stage) btnCancelar.getScene().getWindow();
         stage.close();
     }
+
+    
+    private void mostrarUsuario(){
+
+        comboAreaAcceso.setVisible(true);
+    }
+    private void ocultarUsuario(){
+        comboAreaAcceso.setVisible(false);
+    }
+    private void mostrarJefeArea(){
+            listAreas.setVisible(true);
+            listAreasSeleccionadas.setVisible(true);
+            btnAgregarArea.setVisible(true);
+            btnQuitarArea.setVisible(true);
+            
+    }
+    private void ocultarJefeArea(){
+            listAreas.setVisible(false);
+            listAreasSeleccionadas.setVisible(false);
+            btnAgregarArea.setVisible(false);
+            btnQuitarArea.setVisible(false);
+    }
+   
+
 }
