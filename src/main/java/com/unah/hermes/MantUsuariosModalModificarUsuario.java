@@ -100,10 +100,10 @@ public class MantUsuariosModalModificarUsuario implements Initializable {
         // validaciones de caja de texto
         if(!areasSeleccionadas.isEmpty()){
             if( txtNombre.getText().trim()!=null ){
-            db.modificarUsuario(labelUid.getText(),txtCorreo.getText(), txtNombre.getText(),
+            db.modificarUsuario(usuarioDatos.uid,txtCorreo.getText(), txtNombre.getText(),
             comboNivelAcceso.getSelectionModel().getSelectedItem().toString(), areasSeleccionadas);
             System.out.println("problemas con uid");
-            System.out.println(labelUid.getText());
+            System.out.println(usuarioDatos.uid);
             System.out.println("problemas con uid");
 
             if(!txtContrasena.getText().trim().isEmpty() && txtContrasena.getText().trim().length() >= 6){
@@ -169,8 +169,6 @@ public class MantUsuariosModalModificarUsuario implements Initializable {
              comboAreaAcceso.setVisible(true);
              listAreas.setVisible(true);
              listAreasSeleccionadas.setVisible(true);
-            //  labelAreas.setVisible(false);
-            //  labelAreasSeleccionada.setVisible(false);
              btnAgregarArea.setVisible(true);
              btnQuitarArea.setVisible(true);
         }
@@ -304,14 +302,12 @@ public class MantUsuariosModalModificarUsuario implements Initializable {
 
         
     } 
-    @FXML Label labelUid;
+   
 
     private void llenarDatos(){
         comboNivelAcceso.getSelectionModel().select(usuarioDatos.nivelAcceso);
         txtCorreo.setText(usuarioDatos.userID);
-        txtCorreo.setDisable(true);
-        labelUid.setText(usuarioDatos.uid);
-        labelUid.setVisible(false);
+        txtCorreo.setDisable(true);       
         txtNombre.setText(usuarioDatos.nombre);
         if(usuarioDatos.areas.size() == 1) {
             for(Area area : areas){

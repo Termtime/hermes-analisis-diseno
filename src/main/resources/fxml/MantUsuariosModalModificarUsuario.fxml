@@ -27,11 +27,6 @@
          <children>
             <Pane layoutX="2.0">
                <children>
-                  <Label fx:id="labelUid" layoutX="305.0" layoutY="4.0" text="__">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
                   <TextField id="txtAreaNueva" fx:id="txtNombre" layoutY="23.0" prefHeight="26.0" prefWidth="360.0">
                      <font>
                         <Font size="14.0" />
