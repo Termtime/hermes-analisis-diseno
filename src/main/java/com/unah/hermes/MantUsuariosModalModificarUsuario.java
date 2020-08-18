@@ -92,27 +92,37 @@ public class MantUsuariosModalModificarUsuario implements Initializable {
         if(comboNivelAcceso.getSelectionModel().getSelectedItem().equals("Usuario"))
         {
             areasSeleccionadas.add(comboAreaAcceso.getSelectionModel().getSelectedItem());
-        }else if(comboNivelAcceso.getSelectionModel().getSelectedItem().equals("Jefe de Area")){
+        }
+         if(comboNivelAcceso.getSelectionModel().getSelectedItem().equals("Jefe de Area")){
             areasSeleccionadas.addAll(listAreasSeleccionadas.getItems());
         }
         
         // validaciones de caja de texto
         if(!areasSeleccionadas.isEmpty()){
-            if( txtNombre.getText().trim()!=null )
-            db.modificarUsuario(usuarioDatos.uid,txtCorreo.getText(), txtNombre.getText(),
+            if( txtNombre.getText().trim()!=null ){
+            db.modificarUsuario(labelUid.getText(),txtCorreo.getText(), txtNombre.getText(),
             comboNivelAcceso.getSelectionModel().getSelectedItem().toString(), areasSeleccionadas);
+            System.out.println("problemas con uid");
+            System.out.println(labelUid.getText());
+            System.out.println("problemas con uid");
 
-            if(!txtContrasena.getText().trim().isEmpty() && txtContrasena.getText().trim().length() >= 6)
+            if(!txtContrasena.getText().trim().isEmpty() && txtContrasena.getText().trim().length() >= 6){
                 db.cambiarPassword(usuarioDatos.uid, txtContrasena.getText().trim());
-            else
+                cerrarVentana();
+                Navigation.mostrarAlertConfirmacion("Se lleno el formulario de correcta", event);
+            }
+              else
                 Navigation.mostrarAlertError("La contraseña debe tener minimo 6 caracteres", event);
+            }
 
             if (selectedFile != null) {
                 db.uploadImage(FirestorageRoutes.USUARIOS, selectedFile, txtCorreo.getText());
             }
-            cerrarVentana();
+            
+            
         }
-        else{
+        
+        if(txtNombre.getText().trim()==null){
             //mostrar alert de que no se pudo ingresar
             Navigation.mostrarAlertError("Falta llenar algunos campos en el formulario", event);
         
@@ -147,17 +157,20 @@ public class MantUsuariosModalModificarUsuario implements Initializable {
     @FXML private void comboNivelAccesoClick(ActionEvent event) {
         //validaciones al momento de seleccioanr el combobox
         if(comboNivelAcceso.getSelectionModel().isSelected(0)) {
-            comboAreaAcceso.setVisible(false);
-            listAreas.setVisible(false);
-            listAreasSeleccionadas.setVisible(false);
-            btnAgregarArea.setVisible(false);
-            btnQuitarArea.setVisible(false);
+           
+            ocultarJefeArea();
+            mostrarUsuario();
+            labelAreas.setText("Area");
+            labelAreasSeleccionada.setVisible(false);
+     
             
         }
         if(comboNivelAcceso.getSelectionModel().isSelected(1)) {
              comboAreaAcceso.setVisible(true);
              listAreas.setVisible(true);
              listAreasSeleccionadas.setVisible(true);
+            //  labelAreas.setVisible(false);
+            //  labelAreasSeleccionada.setVisible(false);
              btnAgregarArea.setVisible(true);
              btnQuitarArea.setVisible(true);
         }
@@ -208,6 +221,7 @@ public class MantUsuariosModalModificarUsuario implements Initializable {
 
     public void initData(Object data){
         usuarioDatos = (User) data; 
+        
     }
 
     @Override
@@ -222,8 +236,8 @@ public class MantUsuariosModalModificarUsuario implements Initializable {
                 }
                 if(newValue.length() >= 6){
                     errorPass.setVisible(false);
-                    btnModificar.setDisable(true);
-                }else{
+                    btnModificar.setDisable(false);
+                 }  else{
                     btnModificar.setDisable(true);
                     errorPass.setVisible(true);
                     errorPass.setText("La contraseña debe tener 6 caracteres");
@@ -271,12 +285,12 @@ public class MantUsuariosModalModificarUsuario implements Initializable {
                     mostrarUsuario();
                     labelAreas.setText("Area");
                     labelAreasSeleccionada.setVisible(false);
-                }else if(newValue.equals("Jefe de Area")){
+                }if(newValue.equals("Jefe de Area")){
                     labelAreas.setText("Area(s)");
                     labelAreasSeleccionada.setVisible(true);
                     mostrarJefeArea();
                     ocultarUsuario();
-                }else if(newValue.equals("Administrador")){
+                } if(newValue.equals("Administrador")){
                     labelAreas.setText("");
                     labelAreasSeleccionada.setVisible(false);
                     ocultarJefeArea();
@@ -287,12 +301,17 @@ public class MantUsuariosModalModificarUsuario implements Initializable {
 			}
             
         });
+
+        
     } 
-    
+    @FXML Label labelUid;
+
     private void llenarDatos(){
         comboNivelAcceso.getSelectionModel().select(usuarioDatos.nivelAcceso);
         txtCorreo.setText(usuarioDatos.userID);
         txtCorreo.setDisable(true);
+        labelUid.setText(usuarioDatos.uid);
+        labelUid.setVisible(false);
         txtNombre.setText(usuarioDatos.nombre);
         if(usuarioDatos.areas.size() == 1) {
             for(Area area : areas){
@@ -343,12 +362,12 @@ public class MantUsuariosModalModificarUsuario implements Initializable {
         comboNivelAcceso.getItems().add("Jefe de Area");
         comboNivelAcceso.getItems().add("Administrador");
         
-        comboNivelAcceso.getSelectionModel().selectFirst();
-        comboAreaAcceso.setVisible(true);
-        listAreas.setVisible(false);
-        listAreasSeleccionadas.setVisible(false);
-        btnAgregarArea.setVisible(false);
-        btnQuitarArea.setVisible(false);
+        // comboNivelAcceso.getSelectionModel().selectFirst();
+        // comboAreaAcceso.setVisible(true);
+        // listAreas.setVisible(false);
+        // listAreasSeleccionadas.setVisible(false);
+        // btnAgregarArea.setVisible(false);
+        // btnQuitarArea.setVisible(false);
         //llenado del combobox de areas
         comboAreaAcceso.getItems().addAll(areas);
         //para la ventana de modificar, para llenar la lista de la derecha y la izquierda
@@ -356,7 +375,7 @@ public class MantUsuariosModalModificarUsuario implements Initializable {
         //     //recibirias el usuario, tendrias un objeto -User usuario
             // usuario.areas List<String>
              String areaID = area.areaID;
-            //   List<String> usuarioAreas = new ArrayList();
+           
             System.out.print(usuarioDatos.areas);
             if(usuarioDatos.areas.contains(areaID))
             {
@@ -374,4 +393,19 @@ public class MantUsuariosModalModificarUsuario implements Initializable {
         Stage stage = (Stage) btnCancelar.getScene().getWindow();
         stage.close();
     }
+
+    //ObservableList<User> usuarios = FXCollections.observableArrayList();
+    private void llenarTabla(){
+       
+        //docsAreas = db.getAllDocumentsFrom(FirestoreRoutes.AREAS);
+        //usuarios.clear();
+        //areas.clear();
+        List<User> usuariosuid = new ArrayList<User>();
+        for(User usuario: usuarios){
+                    usuariosuid.add(usuario);
+            }  
+        
+            
+        } 
+    
 }

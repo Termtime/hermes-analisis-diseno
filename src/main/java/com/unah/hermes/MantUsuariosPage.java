@@ -232,12 +232,10 @@ public class MantUsuariosPage implements Initializable {
                     
                 }).start();
                 
-                
-                
-
-                
+                tablaUsuarios.refresh();                               
             }
         });
+        
         txtFiltro.onKeyTypedProperty().addListener(event -> {
             System.out.println("ahisajdajs");
         });
