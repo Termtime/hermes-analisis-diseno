@@ -474,7 +474,7 @@ public class FirebaseConnector {
             datos.put("nivelAcceso", nivelAcceso);
             datos.put("areas", areasID);
             // ejecutar la instruccion en firebase
-            db.collection("Usuarios").document(email).set(datos);
+            updateDocument(FirestoreRoutes.USUARIOS, email, datos);
             return true;
         } catch (Exception e) {
             e.printStackTrace();
