@@ -46,6 +46,10 @@ public class MantProductosModalModificarProducto implements Initializable {
 
     }
     @FXML private void btnModificarClick(ActionEvent event) {
+        if(comboCategoria.getSelectionModel().isSelected(0)){
+            Navigation.mostrarAlertError("Debe seleccionar una Categoria", event);
+            return;
+        }
         if(txtNombreProducto.getText().equals("")||txtUnidad.getText().equals(""))
         {
             Navigation.pushRoute("AlertError", event, false, true);
@@ -67,7 +71,7 @@ public class MantProductosModalModificarProducto implements Initializable {
                 }
             }
                 for(Producto producto: productos){
-                    if(producto.nombre.toLowerCase().equals(txtNombreProducto.getText().toLowerCase())){
+                    if(producto.nombre.toLowerCase().equals(txtNombreProducto.getText().toLowerCase())&&selectedFile!=null){
                         db.uploadImage(FirestoreRoutes.PRODUCTOS+"/Productos", selectedFile, producto.productoID);
                     }
                 }
@@ -75,7 +79,7 @@ public class MantProductosModalModificarProducto implements Initializable {
             Stage stage = (Stage) btnCancelar.getScene().getWindow();
             stage.close();
         } catch (Exception e) {
-            Navigation.pushRoute("AlertError", event, false, true);
+            Navigation.mostrarAlertError("Falta llenar algunos campos en el formulario", event);
         }
         
     }

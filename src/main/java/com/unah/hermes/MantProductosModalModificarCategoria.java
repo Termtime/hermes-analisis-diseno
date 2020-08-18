@@ -31,6 +31,10 @@ public class MantProductosModalModificarCategoria implements Initializable{
         cerrarVentana();
     }
     @FXML private void btnModificarClick(ActionEvent event) {
+        if(comboCategoria.getSelectionModel().isSelected(0)){
+            Navigation.mostrarAlertError("Debe seleccionar una Categoria", event);
+            return;
+        }
         if(txtNuevoNombre.getText().equals("")){
             Navigation.pushRoute("AlertError", event, false, true);
             return;
@@ -56,7 +60,7 @@ public class MantProductosModalModificarCategoria implements Initializable{
             Navigation.pushRoute("AlertExito", event, false, true);
             cerrarVentana();
         } catch (Exception e) {
-            Navigation.pushRoute("AlertError", event, false, true);
+            Navigation.mostrarAlertError("Falta llenar algunos campos en el formulario o debe seleccionar la categoria a modificar", event);
         }
         
     }

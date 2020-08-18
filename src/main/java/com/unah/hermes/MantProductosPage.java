@@ -54,7 +54,7 @@ public class MantProductosPage implements Initializable {
     }
     @FXML private void btnEliminarProductoClick(final ActionEvent event) {
         if(tablaProductos.getSelectionModel().getSelectedItem()==null){
-            Navigation.pushRoute("AlertError", event, false, true);
+            Navigation.mostrarAlertError("Debe selecionar un producto", event);
             return;
         }
 
@@ -89,6 +89,10 @@ public class MantProductosPage implements Initializable {
         refreshProductos();
     }
     @FXML private void btnEliminarCategoriaClick(final ActionEvent event) {
+        if(comboCategoria.getSelectionModel().isSelected(-1)||comboCategoria.getSelectionModel().isSelected(0)){
+            Navigation.mostrarAlertError("Debe seleccionar una Categoria", event);
+            return;
+        }
         //confirmar si se desea cerrar sesión solo si no se está sosteniendo shift
         if(!isShiftDown)
             if(!Navigation.mostrarAlertConfirmacion("¿Desea eliminar la Categoria '"+ comboCategoria.getSelectionModel().getSelectedItem() + "' ?", event)) return;
@@ -132,7 +136,7 @@ public class MantProductosPage implements Initializable {
     @FXML private TableView<Producto> tablaProductos;
     @FXML private AnchorPane MantenimientoProductos;
     @FXML private TextField txtFiltro;
-    @FXML private final ComboBox<String> comboCategoria= new ComboBox<>();
+    @FXML private ComboBox<String> comboCategoria= new ComboBox<>();
     @FXML private ImageView imagenProducto;
     @FXML private Rectangle marco;
     @FXML private Button btnEliminarCategoria;

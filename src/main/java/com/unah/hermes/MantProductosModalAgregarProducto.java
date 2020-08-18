@@ -43,10 +43,21 @@ public class MantProductosModalAgregarProducto implements Initializable {
     @FXML private void btnAgregarClick(ActionEvent event) {
         
         Map<String, Object> data= new HashMap<>();
-        
-        data.put("Producto", txtNombreProducto.getText());
-        data.put("Unidad", txtUnidad.getText());
-        data.put("Categoria", comboCategoria.getSelectionModel().getSelectedItem().toString());
+        if(selectedFile==null){
+            Navigation.mostrarAlertError("Debe seleccionar una Imagen", event);
+            return;
+        }
+        if(comboCategoria.getSelectionModel().isSelected(0)){
+            Navigation.mostrarAlertError("Debe seleccionar una Categoria", event);
+            return;
+        }
+        if(txtNombreProducto.getText().equals("")||txtUnidad.getText().equals("")){
+            Navigation.mostrarAlertError("Falta llenar algunos campos en el formulario", event);
+            return;
+        }
+            data.put("Producto", txtNombreProducto.getText());
+            data.put("Unidad", txtUnidad.getText());
+            data.put("Categoria", comboCategoria.getSelectionModel().getSelectedItem().toString());
         try {
             
             db.createDocument("Productos", data);
@@ -68,7 +79,7 @@ public class MantProductosModalAgregarProducto implements Initializable {
                 Navigation.pushRoute("AlertExito", event, false, true);
                 cerrarVentana();
         } catch (Exception e) {
-            Navigation.pushRoute("AlertError", event, false, true);
+            Navigation.mostrarAlertError("Falta llenar algunos campos en el formulario", event);
         }
         
        
