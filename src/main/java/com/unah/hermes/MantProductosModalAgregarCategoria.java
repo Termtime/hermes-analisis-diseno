@@ -30,7 +30,7 @@ public class MantProductosModalAgregarCategoria implements Initializable{
     @FXML private void btnAgregarClick(ActionEvent event) {
         if(txtAgregarCategoria.getText().equals(""))
             {
-                Navigation.pushRoute("AlertError", event, false, true);
+                Navigation.mostrarAlertError("Falta llenar algunos campos en el formulario", event);
                 return;
             }else{
                 Map<String, Object> data= new HashMap<>();
@@ -40,7 +40,7 @@ public class MantProductosModalAgregarCategoria implements Initializable{
                     db.createDocument("Categorias", data);
                     Navigation.pushRoute("AlertExito", event, false, true);
                 } catch (Exception e) {
-                    Navigation.pushRoute("AlertError", event, false, true);
+                    Navigation.mostrarAlertError("Falta llenar algunos campos en el formulario", event);
                 }
                 Stage stage = (Stage) btnCancelar.getScene().getWindow();
 
