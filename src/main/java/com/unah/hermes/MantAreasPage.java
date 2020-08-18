@@ -25,9 +25,11 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Window;
@@ -40,7 +42,10 @@ public class MantAreasPage implements Initializable {
     }
 
     @FXML private void btnEliminarAreaClick(ActionEvent event) {
+
         if (!areaSelectedID.isEmpty()) {
+            if(!isShiftDown)
+                if(!Navigation.mostrarAlertConfirmacion("¿Desea eliminar el area?", event)) return;
             for (User usuario : usuarios) {
                 if (usuario.areas.contains(areaSelectedID)) {
                     usuario.areas.remove(areaSelectedID);
@@ -75,8 +80,9 @@ public class MantAreasPage implements Initializable {
     }
 
     @FXML private void btnEliminarUsuarioAreaClick(ActionEvent event) {
-
         if (!usuarioID.isEmpty() && !areasUsuarioArray.isEmpty()) {
+            if(!isShiftDown)
+                if(!Navigation.mostrarAlertConfirmacion("¿Desea eliminar al usuario del Area?", event)) return;
             Map<String, Object> datos = new HashMap();
             areasUsuarioArray.remove(index);
             datos.put("areas", areasUsuarioArray);
@@ -91,6 +97,10 @@ public class MantAreasPage implements Initializable {
     @FXML TableView<Area> tablaArea;
     @FXML TableView<User> tablaUsuario;
     @FXML AnchorPane MantenimientoAreas;
+    @FXML Button btnEliminarUsuarioArea;
+    @FXML Button btnEliminarArea;
+    
+    Boolean isShiftDown = false;
     Area areaSelected;
     String areaSelectedID;
     User selectedUser;
@@ -109,6 +119,7 @@ public class MantAreasPage implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        bindBotonesConfirmar();
         MantenimientoAreas.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
             @Override
@@ -141,7 +152,25 @@ public class MantAreasPage implements Initializable {
 
                     }
                 }
-
+                //escuchar cuando se sostiene shift para hacer override a los dialogos de confirmar
+                parent.getScene().addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
+                    System.out.println("key pressed");
+                    if (event.isShiftDown()) {
+                        isShiftDown = true;
+                    }else{
+                        isShiftDown = false;
+                    }
+                    // event.consume();
+                });
+                parent.getScene().addEventFilter(KeyEvent.KEY_RELEASED, (KeyEvent event) -> {
+                    System.out.println("key released");
+                    if (event.isShiftDown()) {
+                        isShiftDown = true;
+                    }else{
+                        isShiftDown = false;
+                    }
+                    // event.consume();
+                });
                 return null;
             }
         });
@@ -156,6 +185,7 @@ public class MantAreasPage implements Initializable {
         tablaArea.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Area>() {
             @Override
             public void changed(ObservableValue<? extends Area> observable, Area oldValue, Area newValue) {
+                if(newValue == null) return;
                 areaSelectedID = "";
                 TablaAreaSelectedRow = newValue;
                 llenarTablaUsuario(newValue.areaID);
@@ -166,6 +196,7 @@ public class MantAreasPage implements Initializable {
         tablaUsuario.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<User>() {
             @Override
             public void changed(ObservableValue<? extends User> observable, User oldValue, User newValue) {
+                
                 selectedUser = newValue;
                 usuarioID = selectedUser.userID;
                 areasUsuarioArray = selectedUser.areas;
@@ -246,5 +277,13 @@ public class MantAreasPage implements Initializable {
         }
         tablaArea.getItems().clear();
         tablaArea.getItems().addAll(Areas);
+    }
+    private void bindBotonesConfirmar() {
+        btnEliminarArea.setOnMouseClicked(event -> {
+            btnEliminarArea.fire();
+        });
+        btnEliminarUsuarioArea.setOnMouseClicked(event -> {
+            btnEliminarUsuarioArea.fire();
+        });
     }
 }

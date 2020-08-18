@@ -16,6 +16,7 @@ import com.unah.hermes.provider.FirestoreRoutes;
 import com.unah.hermes.utils.EventListeners;
 import com.unah.hermes.utils.Navigation;
 
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -67,8 +68,34 @@ public class MantUsuariosPage implements Initializable {
             Navigation.mostrarAlertError("Debe seleccionar un usuario activo", event);
             return;
         }
-        db.deshabilitarUsuario(tablaUSelectedItem.uid, tablaUSelectedItem.getUserID().toString());
-        llenarTabla();
+        new Thread(new Runnable(){
+            @Override
+			public void run() {
+                db.deshabilitarUsuario(tablaUSelectedItem.uid, tablaUSelectedItem.getUserID().toString());
+                llenarTabla();
+                int index = 0;
+                for (User usuario : tablaUsuarios.getItems()) {
+                    if(usuario.userID.equals(tablaUSelectedItem.userID)){
+                        System.out.println("Encontramos usuario");
+                        final int indexEncontrado = index;
+                        Platform.runLater(new Runnable(){
+
+							@Override
+							public void run() {
+								tablaUsuarios.requestFocus();
+                                tablaUsuarios.getSelectionModel().select(indexEncontrado);
+							}
+                            
+                        });
+                        
+                        break;
+                    }
+                    index++;
+                }
+				
+			}
+        }).start();
+        
     }
     @FXML
     private void btnReactivarUsuarioClick(ActionEvent event) {
@@ -76,8 +103,33 @@ public class MantUsuariosPage implements Initializable {
             Navigation.mostrarAlertError("Debe seleccionar un usuario desactivado", event);
             // return;
         }
-        db.activarUsuario(tablaUSelectedItem.uid, tablaUSelectedItem.getUserID().toString());
-        llenarTabla();
+        new Thread(new Runnable(){
+            @Override
+			public void run() {
+                db.activarUsuario(tablaUSelectedItem.uid, tablaUSelectedItem.getUserID().toString());
+                llenarTabla();
+                int index = 0;
+                for (User usuario : tablaUsuarios.getItems()) {
+                    if(usuario.userID.equals(tablaUSelectedItem.userID)){
+                        System.out.println("Encontramos usuario");
+                        final int indexEncontrado = index;
+                        Platform.runLater(new Runnable(){
+
+							@Override
+							public void run() {
+								tablaUsuarios.requestFocus();
+                                tablaUsuarios.getSelectionModel().select(indexEncontrado);
+							}
+                            
+                        });
+                        
+                        break;
+                    }
+                    index++;
+                }
+				
+			}
+        }).start();
     }
     
     @FXML private void txtFiltroInput(KeyEvent event){                    
@@ -151,43 +203,43 @@ public class MantUsuariosPage implements Initializable {
                     btnEliminarUsuario.setDisable(true); 
                     btnReactivarUsuario.setDisable(false); 
                 }
-                
-                Image image = db.downloadImage(FirestorageRoutes.USUARIOS, newValue.userID);
-                if(image == null){
-                    image =  new Image(getClass().getResourceAsStream("/images/usuarios.png"));
-                }
-                imagenUsuario.setImage(image);
-                
-                double aspectRatio = image.getWidth() / image.getHeight();
-                double realWidth = Math.min(imagenUsuario.getFitWidth(), imagenUsuario.getFitHeight() * aspectRatio);
-                double realHeight = Math.min(imagenUsuario.getFitHeight(), imagenUsuario.getFitWidth() / aspectRatio);
-                imagenUsuario.setTranslateX(6);
-                imagenUsuario.setTranslateY(6);
+                new Thread(new Runnable(){
 
-                marco.setWidth(realWidth+12);
-                marco.setHeight(realHeight+12);
+					@Override
+					public void run() {
+						Image image = db.downloadImage(FirestorageRoutes.USUARIOS, newValue.userID);
+                        if(image == null){
+                            image =  new Image(getClass().getResourceAsStream("/images/usuarios.png"));
+                        }
+
+                        final Image imagenEscogida = image;
+                        Platform.runLater(new Runnable(){
+                             @Override
+                             public void run() {
+                                imagenUsuario.setImage(imagenEscogida);
+                                double aspectRatio = imagenEscogida.getWidth() / imagenEscogida.getHeight();
+                                double realWidth = Math.min(imagenUsuario.getFitWidth(), imagenUsuario.getFitHeight() * aspectRatio);
+                                double realHeight = Math.min(imagenUsuario.getFitHeight(), imagenUsuario.getFitWidth() / aspectRatio);
+                                imagenUsuario.setTranslateX(6);
+                                imagenUsuario.setTranslateY(6);
+                                marco.setWidth(realWidth+12);
+                                marco.setHeight(realHeight+12);
+                             }
+                            
+                        });
+						
+					}
+                    
+                }).start();
+                
+                
+                
+
+                
             }
         });
-        tablaUsuarios.getItems().addListener(new ListChangeListener<User>() {
-            @Override
-            public void onChanged(ListChangeListener.Change<? extends User> change) {
-
-                if (change.getList().size() != 0) {
-                    if (tablaUSelectedItem == null)
-                        return;
-
-                    String userID = tablaUSelectedItem.userID;
-
-                    int index = 0;
-                    for (User requisicion : change.getList()) {
-                        if (requisicion.userID.equals(userID)) {
-                            tablaUsuarios.getSelectionModel().select(index);
-                            break;
-                        }
-                        index++;
-                    }
-                }
-            }
+        txtFiltro.onKeyTypedProperty().addListener(event -> {
+            System.out.println("ahisajdajs");
         });
          MantUsuario.widthProperty().addListener(new ChangeListener<Number>(){
              @Override

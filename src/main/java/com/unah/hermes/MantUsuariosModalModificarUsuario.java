@@ -193,6 +193,7 @@ public class MantUsuariosModalModificarUsuario implements Initializable {
     @FXML Button btnModificar;
     @FXML Rectangle marco;
     @FXML AnchorPane mantUsuariosModalModificarUsuario;
+    @FXML Label errorPass;
 
     Window ventaPrincipalModificar;
     FirebaseConnector db;
@@ -212,7 +213,23 @@ public class MantUsuariosModalModificarUsuario implements Initializable {
     @Override
     public void initialize(URL url,  ResourceBundle rb) {
         db = FirebaseConnector.getInstance();
-
+        txtContrasena.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if(newValue.isEmpty()){
+                    btnModificar.setDisable(false);
+                    return;
+                }
+                if(newValue.length() >= 6){
+                    errorPass.setVisible(false);
+                    btnModificar.setDisable(true);
+                }else{
+                    btnModificar.setDisable(true);
+                    errorPass.setVisible(true);
+                    errorPass.setText("La contraseña debe tener 6 caracteres");
+                }
+            }
+        });
         EventListeners.onWindowOpening(mantUsuariosModalModificarUsuario, new Function<Window,Void>(){
 
             @Override
