@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.function.Function;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
@@ -190,7 +192,8 @@ public class MantUsuariosModalAgregarUsuario implements Initializable {
     Window ventaPrincipal;
     @FXML Pane panelJefeUsuario;
     @FXML AnchorPane mantUsuariosModalAgregarUsuario;
-    
+    @FXML Label errorCorreo;
+    @FXML Label errorPass;
     List<QueryDocumentSnapshot> docsAreas;
     List<QueryDocumentSnapshot> documentos;
     File selectedFile;
@@ -205,7 +208,55 @@ public class MantUsuariosModalAgregarUsuario implements Initializable {
         documentos = db.getAllDocumentsFrom(FirestoreRoutes.USUARIOS);
         docsAreas = db.getAllDocumentsFrom(FirestoreRoutes.AREAS);
         
+        txtCorreo.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                errorCorreo.setVisible(false);
+                errorCorreo.setText("");
+                if (newValue.isEmpty()) {
+                    btnAgregar.setDisable(true);
+                    errorCorreo.setVisible(false);
+                    errorCorreo.setText("Debe ingresar un correo válido");
+                    return;
+                }
+                String regexString = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
+                Pattern regex = Pattern.compile(regexString);
+                Matcher matcher = regex.matcher(newValue);
+                if (matcher.find()) {
+                    if(!errorPass.isVisible()) btnAgregar.setDisable(false);
+                    errorCorreo.setVisible(false);
+                } else {
+                    errorCorreo.setVisible(true);
+                    btnAgregar.setDisable(true);
+                    errorCorreo.setText("Debe ingresar un correo válido");
+                }
+            }
+        });
 
+        txtContrasena.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if(txtContrasena.getText().length() >= 6 && txtContrasena.getText().equals(txtConrfirmeContrasena.getText())){
+                    errorPass.setVisible(false);
+                    if(!errorCorreo.isVisible()) btnAgregar.setDisable(false);
+                }else{
+                    errorPass.setVisible(true);
+                    errorPass.setText("La contraseña debe tener 6 caracteres y ser iguales");
+                }
+            }
+        });
+        txtConrfirmeContrasena.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if(txtContrasena.getText().length() >= 6 && txtContrasena.getText().equals(txtConrfirmeContrasena.getText())){
+                    errorPass.setVisible(false);
+                    if(!errorCorreo.isVisible()) btnAgregar.setDisable(false);
+                }else{
+                    errorPass.setVisible(true);
+                    errorPass.setText("La contraseña debe tener 6 caracteres y ser iguales");
+                }
+            }
+        });
         EventListeners.onWindowOpening(mantUsuariosModalAgregarUsuario, new Function<Window,Void>(){
 
             @Override

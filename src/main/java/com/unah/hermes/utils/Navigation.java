@@ -218,7 +218,7 @@ public class Navigation {
             }
             //manejar los alerts
             else if(tipoControlador == SimpleAlert.class){
-                ConfirmAlert controller = loader.getController();
+                SimpleAlert controller = loader.getController();
                 controller.initData(data, parentStage);
             }
             stage.setScene(new Scene(root));

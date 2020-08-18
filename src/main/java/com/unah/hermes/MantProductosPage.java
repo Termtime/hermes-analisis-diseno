@@ -16,6 +16,7 @@ import com.unah.hermes.provider.FirestoreRoutes;
 import com.unah.hermes.utils.EventListeners;
 import com.unah.hermes.utils.Navigation;
 
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -24,6 +25,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -38,11 +40,11 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Window;
 public class MantProductosPage implements Initializable {
     
-    @FXML private void btnAgregarProductoClick(ActionEvent event) {
+    @FXML private void btnAgregarProductoClick(final ActionEvent event) {
         Navigation.pushRoute("MantProductosModalAgregarProducto", event, false, true);
         refreshProductos();
     }
-    @FXML private void btnModificarProductoClick(ActionEvent event) {
+    @FXML private void btnModificarProductoClick(final ActionEvent event) {
         if(tablaProductoSelectedItem != null)
             Navigation.pushRouteWithParameter("MantProductosModalModificarProducto", event, false, true, MantProductosModalModificarProducto.class, tablaProductoSelectedItem );
         else{
@@ -50,12 +52,15 @@ public class MantProductosPage implements Initializable {
         }
         refreshProductos();
     }
-    @FXML private void btnEliminarProductoClick(ActionEvent event) {
+    @FXML private void btnEliminarProductoClick(final ActionEvent event) {
         if(tablaProductos.getSelectionModel().getSelectedItem()==null){
             Navigation.pushRoute("AlertError", event, false, true);
             return;
         }
-        for (DocumentSnapshot doc : documentos) {
+
+        if(!isShiftDown)
+            if(!Navigation.mostrarAlertConfirmacion("¿Desea eliminar el producto '" + tablaProductos.getSelectionModel().getSelectedItem().nombre + "' ?", event)) return;
+        for (final DocumentSnapshot doc : documentos) {
             Producto tmp;
             if(doc.exists()){
                 tmp = new Producto(doc.getId(), doc.getString("Producto"), doc.getString("Unidad"), doc.getString("Categoria"));
@@ -73,18 +78,21 @@ public class MantProductosPage implements Initializable {
         
 
     }
-    @FXML private void btnAgregarCategoriaClick(ActionEvent event) {
+    @FXML private void btnAgregarCategoriaClick(final ActionEvent event) {
         Navigation.pushRoute("MantProductosModalAgregarCategoria", event, false, true);
         refreshCategorias();
         refreshProductos();
     }
-    @FXML private void btnModificarCategoriaClick(ActionEvent event) {
+    @FXML private void btnModificarCategoriaClick(final ActionEvent event) {
         Navigation.pushRoute("MantProductosModalModificarCategoria", event, false, true);
         refreshCategorias();
         refreshProductos();
     }
-    @FXML private void btnEliminarCategoriaClick(ActionEvent event) {
-        for (DocumentSnapshot doc : categoriaDocumentos) {
+    @FXML private void btnEliminarCategoriaClick(final ActionEvent event) {
+        //confirmar si se desea cerrar sesión solo si no se está sosteniendo shift
+        if(!isShiftDown)
+            if(!Navigation.mostrarAlertConfirmacion("¿Desea eliminar la Categoria '"+ comboCategoria.getSelectionModel().getSelectedItem() + "' ?", event)) return;
+        for (final DocumentSnapshot doc : categoriaDocumentos) {
             Categoria tmp;
             if(doc.exists()){
                 tmp = new Categoria(doc.getId(),doc.getString("nombre"));
@@ -101,20 +109,20 @@ public class MantProductosPage implements Initializable {
         refreshCategorias();
         refreshProductos();
     }
-    @FXML private void txtFiltroInput(KeyEvent event) {
+    @FXML private void txtFiltroInput(final KeyEvent event) {
         tablaProductos.getItems().clear();
-        List<Producto> productosFiltrados = new ArrayList<Producto>();
-        for(Producto producto: productos){
+        final List<Producto> productosFiltrados = new ArrayList<Producto>();
+        for(final Producto producto: productos){
             if(producto.nombre.toLowerCase().contains(txtFiltro.getText().toLowerCase()) || txtFiltro.getText().equals("")){
                 productosFiltrados.add(producto);
             }    
         }
         tablaProductos.getItems().addAll(productosFiltrados);
     }
-    @FXML private void comboCategoriaClick(ActionEvent event) {
+    @FXML private void comboCategoriaClick(final ActionEvent event) {
         tablaProductos.getItems().clear();
-        List<Producto> categoriaFiltrados = new ArrayList<Producto>();
-        for(Producto producto: productos){
+        final List<Producto> categoriaFiltrados = new ArrayList<Producto>();
+        for(final Producto producto: productos){
             if(producto.categoria.toLowerCase().equals(comboCategoria.getSelectionModel().getSelectedItem().toString().toLowerCase())){
                 categoriaFiltrados.add(producto);
             }    
@@ -124,10 +132,13 @@ public class MantProductosPage implements Initializable {
     @FXML private TableView<Producto> tablaProductos;
     @FXML private AnchorPane MantenimientoProductos;
     @FXML private TextField txtFiltro;
-    @FXML private ComboBox<String> comboCategoria= new ComboBox<>();
+    @FXML private final ComboBox<String> comboCategoria= new ComboBox<>();
     @FXML private ImageView imagenProducto;
     @FXML private Rectangle marco;
+    @FXML private Button btnEliminarCategoria;
+    @FXML private Button btnEliminarProducto;
 
+    Boolean isShiftDown = false;
     Producto tablaProductoSelectedItem;
     FirebaseConnector db=FirebaseConnector.getInstance();   
     ObservableList<Producto> productos = FXCollections.observableArrayList();
@@ -135,19 +146,20 @@ public class MantProductosPage implements Initializable {
     List<QueryDocumentSnapshot> categoriaDocumentos = db.getAllDocumentsFrom(FirestoreRoutes.CATEGORIAS);
 
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(final URL url, final ResourceBundle rb) {
+        bindBotonesConfirmar();
         MantenimientoProductos.setOnMouseClicked(new EventHandler<MouseEvent>(){
 
             @Override
-            public void handle(MouseEvent event) {
+            public void handle(final MouseEvent event) {
                 MantenimientoProductos.requestFocus();
             }
         });
         EventListeners.onWindowOpened(MantenimientoProductos, new Function<Window,Void>(){
             @Override
-            public Void apply(Window parent) {
+            public Void apply(final Window parent) {
                 iniciarEstructuraTablas();
-                for (DocumentSnapshot doc : documentos) {
+                for (final DocumentSnapshot doc : documentos) {
                     Producto tmp;
                     if(doc.exists()){
                         tmp = new Producto(doc.getId(), doc.getString("Producto"), doc.getString("Unidad"), doc.getString("Categoria"));
@@ -155,7 +167,7 @@ public class MantProductosPage implements Initializable {
                     }
                 }
                 tablaProductos.getItems().addAll(productos);
-                for(DocumentSnapshot cat: categoriaDocumentos){
+                for(final DocumentSnapshot cat: categoriaDocumentos){
                     Categoria tmp;
                     if(cat.exists()){
                         tmp=new Categoria(cat.getId(),cat.getString("nombre"));
@@ -163,6 +175,25 @@ public class MantProductosPage implements Initializable {
                         comboCategoria.getItems().add(tmp.getNombre());
                     }
                 }
+                //escuchar cuando se sostiene shift para hacer override a los dialogos de confirmar
+                parent.getScene().addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
+                    System.out.println("key pressed");
+                    if (event.isShiftDown()) {
+                        isShiftDown = true;
+                    }else{
+                        isShiftDown = false;
+                    }
+                    // event.consume();
+                });
+                parent.getScene().addEventFilter(KeyEvent.KEY_RELEASED, (KeyEvent event) -> {
+                    System.out.println("key released");
+                    if (event.isShiftDown()) {
+                        isShiftDown = true;
+                    }else{
+                        isShiftDown = false;
+                    }
+                    // event.consume();
+                });
                  return null;
             }
            
@@ -181,28 +212,44 @@ public class MantProductosPage implements Initializable {
                 tablaProductoSelectedItem = newValue;
 
                 if(newValue == null) return;
-                Image image = db.downloadImage(FirestorageRoutes.PRODUCTOS,"Productos"+newValue.productoID);
-                //si no tiene imagen, revertir al icono por defecto
-                if(image == null){
-                    image =  new Image(getClass().getResourceAsStream("/images/productos.png"));
-                }
-                imagenProducto.setImage(image);
+                new Thread(new Runnable(){
 
-                double aspectRatio = image.getWidth() / image.getHeight();
-                double realWidth = Math.min(imagenProducto.getFitWidth(), imagenProducto.getFitHeight() * aspectRatio);
-                double realHeight = Math.min(imagenProducto.getFitHeight(), imagenProducto.getFitWidth() / aspectRatio);
-                imagenProducto.setTranslateX(6);
-                imagenProducto.setTranslateY(6);
+                    @Override
+                    public void run() {
+                        Image image = db.downloadImage(FirestorageRoutes.PRODUCTOS,"Productos"+newValue.productoID);
+                        //si no tiene imagen, revertir al icono por defecto
+                        if(image == null){
+                            image =  new Image(getClass().getResourceAsStream("/images/productos.png"));
+                        }
+                        final Image imagenEscogida = image;
+                        Platform.runLater(new Runnable(){
 
-                marco.setWidth(realWidth+12);
-                marco.setHeight(realHeight+12);
+                            @Override
+                            public void run() {
+                                imagenProducto.setImage(imagenEscogida);
+                                double aspectRatio = imagenEscogida.getWidth() / imagenEscogida.getHeight();
+                                double realWidth = Math.min(imagenProducto.getFitWidth(), imagenProducto.getFitHeight() * aspectRatio);
+                                double realHeight = Math.min(imagenProducto.getFitHeight(), imagenProducto.getFitWidth() / aspectRatio);
+                                imagenProducto.setTranslateX(6);
+                                imagenProducto.setTranslateY(6);
+
+                                marco.setWidth(realWidth+12);
+                                marco.setHeight(realHeight+12);
+
+                            }
+                            
+                        });
+
+                    }
+                    
+                }).start();
             }
         });
     }  
 
     private void recalcularColumnWidth(){
                        
-        ObservableList columnasMantenimiento = tablaProductos.getColumns();
+        final ObservableList columnasMantenimiento = tablaProductos.getColumns();
 
         ((TableColumn)( columnasMantenimiento.get(0) )).setPrefWidth(tablaProductos.getWidth()*0.35);
         ((TableColumn)( columnasMantenimiento.get(1) )).setPrefWidth(tablaProductos.getWidth()*0.35);
@@ -213,17 +260,17 @@ public class MantProductosPage implements Initializable {
         
          tablaProductos.getItems().clear();
          tablaProductos.getColumns().clear();
-         TableColumn columnaProducto = new TableColumn<>("Producto");
+         final TableColumn columnaProducto = new TableColumn<>("Producto");
          columnaProducto.setCellValueFactory(new PropertyValueFactory<>("nombre"));
          columnaProducto.setPrefWidth(tablaProductos.getWidth()*0.35);
          columnaProducto.setResizable(false);
 
-         TableColumn columnaCategoria = new TableColumn<>("Categoria");
+         final TableColumn columnaCategoria = new TableColumn<>("Categoria");
          columnaCategoria.setCellValueFactory(new PropertyValueFactory<>("categoria"));
          columnaCategoria.setPrefWidth(tablaProductos.getWidth()*0.30);
          columnaCategoria.setResizable(false);
 
-         TableColumn columnaUnidad = new TableColumn<>("Unidad");
+         final TableColumn columnaUnidad = new TableColumn<>("Unidad");
          columnaUnidad.setCellValueFactory(new PropertyValueFactory<>("unidad"));
          columnaUnidad.setPrefWidth(tablaProductos.getWidth()*0.30);
          columnaUnidad.setResizable(false);
@@ -234,7 +281,7 @@ public class MantProductosPage implements Initializable {
         tablaProductos.getItems().clear();
         productos.clear();
         documentos = db.getAllDocumentsFrom(FirestoreRoutes.PRODUCTOS);
-        for (DocumentSnapshot doc : documentos) {
+        for (final DocumentSnapshot doc : documentos) {
             Producto tmp;
             if(doc.exists()){
                 tmp = new Producto(doc.getId(), doc.getString("Producto"), doc.getString("Unidad"), doc.getString("Categoria"));
@@ -246,7 +293,7 @@ public class MantProductosPage implements Initializable {
     private void refreshCategorias(){
         comboCategoria.getItems().clear();
         categoriaDocumentos = db.getAllDocumentsFrom(FirestoreRoutes.CATEGORIAS);
-        for(DocumentSnapshot cat: categoriaDocumentos){
+        for(final DocumentSnapshot cat: categoriaDocumentos){
             Categoria tmp;
             if(cat.exists()){
                 tmp=new Categoria(cat.getId(),cat.getString("nombre"));
@@ -254,5 +301,13 @@ public class MantProductosPage implements Initializable {
                 comboCategoria.getItems().add(tmp.getNombre());
             }
         }
+    }
+    private void bindBotonesConfirmar() {
+        btnEliminarCategoria.setOnMouseClicked(event -> {
+            btnEliminarCategoria.fire();
+        });
+        btnEliminarProducto.setOnMouseClicked(event -> {
+            btnEliminarProducto.fire();
+        });
     }
 }
