@@ -108,24 +108,22 @@ public class MantUsuariosModalModificarUsuario implements Initializable {
 
             if(!txtContrasena.getText().trim().isEmpty() && txtContrasena.getText().trim().length() >= 6){
                 db.cambiarPassword(usuarioDatos.uid, txtContrasena.getText().trim());
-                cerrarVentana();
-                Navigation.mostrarAlertConfirmacion("Se lleno el formulario de correcta", event);
+                Navigation.mostrarAlertConfirmacion("Se lleno el formulario de correctamente", event);
+                if(Navigation.mostrarAlertConfirmacion("Se lleno el formulario de correctamente", event)==true){
+                cerrarVentana();     
+                }           
             }
-              else
-                Navigation.mostrarAlertError("La contraseña debe tener minimo 6 caracteres", event);
+             
             }
 
             if (selectedFile != null) {
                 db.uploadImage(FirestorageRoutes.USUARIOS, selectedFile, txtCorreo.getText());
-            }
-            
-            
+            }           
         }
         
         if(txtNombre.getText().trim()==null){
             //mostrar alert de que no se pudo ingresar
             Navigation.mostrarAlertError("Falta llenar algunos campos en el formulario", event);
-        
         }
 
     }
@@ -156,14 +154,11 @@ public class MantUsuariosModalModificarUsuario implements Initializable {
     }
     @FXML private void comboNivelAccesoClick(ActionEvent event) {
         //validaciones al momento de seleccioanr el combobox
-        if(comboNivelAcceso.getSelectionModel().isSelected(0)) {
-           
+        if(comboNivelAcceso.getSelectionModel().isSelected(0)) {           
             ocultarJefeArea();
             mostrarUsuario();
             labelAreas.setText("Area");
-            labelAreasSeleccionada.setVisible(false);
-     
-            
+            labelAreasSeleccionada.setVisible(false);               
         }
         if(comboNivelAcceso.getSelectionModel().isSelected(1)) {
              comboAreaAcceso.setVisible(true);
@@ -286,6 +281,7 @@ public class MantUsuariosModalModificarUsuario implements Initializable {
                 }if(newValue.equals("Jefe de Area")){
                     labelAreas.setText("Area(s)");
                     labelAreasSeleccionada.setVisible(true);
+                    labelAreasSeleccionada.setVisible(true);
                     mostrarJefeArea();
                     ocultarUsuario();
                 } if(newValue.equals("Administrador")){
@@ -297,7 +293,7 @@ public class MantUsuariosModalModificarUsuario implements Initializable {
 				
 				
 			}
-            
+              
         });
 
         
