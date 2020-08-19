@@ -1,34 +1,39 @@
 package com.unah.hermes.objects;
 
 public class Categoria {
-    public String CategoriaID;
-    public String Nombre;
+    public String categoriaID;
+    public String nombre;
 
     public Categoria(String categoriaID, String nombre) {
-        CategoriaID = categoriaID;
-        Nombre = nombre;
+        this.categoriaID = categoriaID;
+        this.nombre = nombre;
     }
 
     public Categoria(Categoria categoria){
-        this.CategoriaID=categoria.CategoriaID;
-        this.Nombre=categoria.Nombre;
+        this.categoriaID=categoria.categoriaID;
+        this.nombre=categoria.nombre;
     }
     public Categoria(String categoria){
-        this.Nombre=categoria;
+        this.nombre=categoria;
     }
     public String getCategoriaID() {
-        return CategoriaID;
+        return categoriaID;
     }
 
     public void setCategoriaID(String categoriaID) {
-        CategoriaID = categoriaID;
+        this.categoriaID = categoriaID;
     }
 
     public String getNombre() {
-        return Nombre;
+        return nombre;
     }
 
     public void setNombre(String nombre) {
-        Nombre = nombre;
+        this.nombre = nombre;
+    }
+
+    @Override
+    public String toString(){
+        return nombre;
     }
 }

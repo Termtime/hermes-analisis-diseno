@@ -46,18 +46,18 @@ public class MantProductosModalModificarCategoria implements Initializable{
             Categoria tmp;
             if(cat2.exists()){
                 tmp=new Categoria(cat2.getId(),cat2.getString("nombre"));
-                System.out.println(tmp.Nombre+"categoria");
-                if(tmp.Nombre!=null){
-                    if(tmp.Nombre.equals(comboCategoria.getSelectionModel().getSelectedItem().toString()))
+                System.out.println(tmp.nombre+"categoria");
+                if(tmp.nombre!=null){
+                    if(tmp.nombre.equals(comboCategoria.getSelectionModel().getSelectedItem().toString()))
                     {
-                        categoriaid=tmp.CategoriaID;
+                        categoriaid=tmp.categoriaID;
                     }
                 }
             }
         }
         try {
             db.updateDocument("Categorias", categoriaid, data);
-            Navigation.pushRoute("AlertExito", event, false, true);
+            Navigation.mostrarAlertExito("Categoria modificada con éxito", event);
             cerrarVentana();
         } catch (Exception e) {
             Navigation.mostrarAlertError("Falta llenar algunos campos en el formulario o debe seleccionar la categoria a modificar", event);

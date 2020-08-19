@@ -48,7 +48,7 @@ public class MantProductosPage implements Initializable {
         if(tablaProductoSelectedItem != null)
             Navigation.pushRouteWithParameter("MantProductosModalModificarProducto", event, false, true, MantProductosModalModificarProducto.class, tablaProductoSelectedItem );
         else{
-            Navigation.pushRoute("AlertError", event, false, true);
+            Navigation.mostrarAlertError("Debe selecionar un producto", event);
         }
         refreshProductos();
     }
@@ -100,11 +100,11 @@ public class MantProductosPage implements Initializable {
             Categoria tmp;
             if(doc.exists()){
                 tmp = new Categoria(doc.getId(),doc.getString("nombre"));
-                if(tmp.Nombre!=null)
+                if(tmp.nombre!=null)
                 {
-                    if(tmp.Nombre.equals(comboCategoria.getSelectionModel().getSelectedItem().toString()))
+                    if(tmp.nombre.equals(comboCategoria.getSelectionModel().getSelectedItem().toString()))
                     {
-                        db.deleteDocument("Categorias", tmp.CategoriaID);
+                        db.deleteDocument("Categorias", tmp.categoriaID);
                         break;
                     }
                 }
@@ -115,9 +115,19 @@ public class MantProductosPage implements Initializable {
     }
     @FXML private void txtFiltroInput(final KeyEvent event) {
         tablaProductos.getItems().clear();
+        int indice = comboCategoria.getSelectionModel().getSelectedIndex();
+        Categoria categoriaSeleccionada =  comboCategoria.getSelectionModel().getSelectedItem();
+        String nombreCategoria;
+        if(categoriaSeleccionada != null){
+            nombreCategoria = categoriaSeleccionada.nombre;
+        }else{
+            nombreCategoria = "";
+        }
+        // System.out.println(indice);
+        // System.out.println(categoriaSeleccionada.nombre);
         final List<Producto> productosFiltrados = new ArrayList<Producto>();
         for(final Producto producto: productos){
-            if(producto.nombre.toLowerCase().contains(txtFiltro.getText().toLowerCase()) || txtFiltro.getText().equals("")){
+            if((producto.nombre.toLowerCase().contains(txtFiltro.getText().toLowerCase()) || txtFiltro.getText().equals("")) && (indice == 0 || indice == -1 || producto.categoria.equals(nombreCategoria))) {
                 productosFiltrados.add(producto);
             }    
         }
@@ -126,8 +136,10 @@ public class MantProductosPage implements Initializable {
     @FXML private void comboCategoriaClick(final ActionEvent event) {
         tablaProductos.getItems().clear();
         final List<Producto> categoriaFiltrados = new ArrayList<Producto>();
+        int index = comboCategoria.getSelectionModel().getSelectedIndex();
         for(final Producto producto: productos){
-            if(producto.categoria.toLowerCase().equals(comboCategoria.getSelectionModel().getSelectedItem().toString().toLowerCase())){
+            if(((index == 0 || index == -1) || producto.categoria.toLowerCase().equals(comboCategoria.getSelectionModel().getSelectedItem().toString().toLowerCase()))
+             && ((producto.nombre.toLowerCase().contains(txtFiltro.getText().toLowerCase()) || txtFiltro.getText().equals("")))){
                 categoriaFiltrados.add(producto);
             }    
         }
@@ -136,7 +148,7 @@ public class MantProductosPage implements Initializable {
     @FXML private TableView<Producto> tablaProductos;
     @FXML private AnchorPane MantenimientoProductos;
     @FXML private TextField txtFiltro;
-    @FXML private ComboBox<String> comboCategoria= new ComboBox<>();
+    @FXML private ComboBox<Categoria> comboCategoria;
     @FXML private ImageView imagenProducto;
     @FXML private Rectangle marco;
     @FXML private Button btnEliminarCategoria;
@@ -163,25 +175,36 @@ public class MantProductosPage implements Initializable {
             @Override
             public Void apply(final Window parent) {
                 iniciarEstructuraTablas();
-                for (final DocumentSnapshot doc : documentos) {
-                    Producto tmp;
-                    if(doc.exists()){
-                        tmp = new Producto(doc.getId(), doc.getString("Producto"), doc.getString("Unidad"), doc.getString("Categoria"));
-                        productos.add(tmp);
-                    }
-                }
+                
                 tablaProductos.getItems().addAll(productos);
+                //agregar la primera categoria
+                comboCategoria.getItems().add(new Categoria("T", "Todos"));
                 for(final DocumentSnapshot cat: categoriaDocumentos){
                     Categoria tmp;
                     if(cat.exists()){
                         tmp=new Categoria(cat.getId(),cat.getString("nombre"));
-                        System.out.println(tmp.getNombre());
-                        comboCategoria.getItems().add(tmp.getNombre());
+                        comboCategoria.getItems().add(tmp);
                     }
                 }
+                //agregar la categoria para los productos desactivados
+                comboCategoria.getItems().add(new Categoria("D", "Desactivados"));
+
+                //agregar los productos
+                for (final DocumentSnapshot doc : documentos) {
+                    Producto tmp;
+                    if(doc.exists()){
+                        for(Categoria categoria : comboCategoria.getItems()){
+                            if(categoria.categoriaID.equals(doc.getString("Categoria"))){
+                                tmp = new Producto(doc.getId(), doc.getString("Producto"), doc.getString("Unidad"), categoria.nombre);
+                                productos.add(tmp);
+                                break;
+                            }
+                        }
+                    }
+                }
+                tablaProductos.getItems().addAll(productos);
                 //escuchar cuando se sostiene shift para hacer override a los dialogos de confirmar
                 parent.getScene().addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
-                    System.out.println("key pressed");
                     if (event.isShiftDown()) {
                         isShiftDown = true;
                     }else{
@@ -190,7 +213,6 @@ public class MantProductosPage implements Initializable {
                     // event.consume();
                 });
                 parent.getScene().addEventFilter(KeyEvent.KEY_RELEASED, (KeyEvent event) -> {
-                    System.out.println("key released");
                     if (event.isShiftDown()) {
                         isShiftDown = true;
                     }else{
@@ -288,8 +310,13 @@ public class MantProductosPage implements Initializable {
         for (final DocumentSnapshot doc : documentos) {
             Producto tmp;
             if(doc.exists()){
-                tmp = new Producto(doc.getId(), doc.getString("Producto"), doc.getString("Unidad"), doc.getString("Categoria"));
-                productos.add(tmp);
+                for(Categoria categoria :comboCategoria.getItems()){
+                    if(categoria.categoriaID.equals(doc.getString("Categoria"))){
+                        tmp = new Producto(doc.getId(), doc.getString("Producto"), doc.getString("Unidad"), categoria.nombre);
+                        productos.add(tmp);
+                    }
+
+                }
             }
         }
         tablaProductos.getItems().addAll(productos);
@@ -297,14 +324,16 @@ public class MantProductosPage implements Initializable {
     private void refreshCategorias(){
         comboCategoria.getItems().clear();
         categoriaDocumentos = db.getAllDocumentsFrom(FirestoreRoutes.CATEGORIAS);
+        //reagregar la primera categoria
+        comboCategoria.getItems().add(new Categoria("T", "Todos"));
         for(final DocumentSnapshot cat: categoriaDocumentos){
             Categoria tmp;
             if(cat.exists()){
                 tmp=new Categoria(cat.getId(),cat.getString("nombre"));
-                System.out.println(tmp.getNombre());
-                comboCategoria.getItems().add(tmp.getNombre());
+                comboCategoria.getItems().add(tmp);
             }
         }
+        comboCategoria.getItems().add(new Categoria("D", "Desactivados"));
     }
     private void bindBotonesConfirmar() {
         btnEliminarCategoria.setOnMouseClicked(event -> {

@@ -27,6 +27,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -70,6 +71,10 @@ public class MainPage implements Initializable {
         }
     }
     @FXML private void btnReqDenegadasGrandeClick(ActionEvent event) {
+        listaRQD.getSelectionModel().clearSelection();
+        listaRQE.getSelectionModel().clearSelection();
+        listaRQP.getSelectionModel().clearSelection();
+        ((Stage)(((Node) event.getSource()).getScene().getWindow())).setTitle("H.E.R.M.E.S. Requisiciones Denegadas");
         gridReqDenegadas.setVisible(true);
         gridReqEntregadas.setVisible(false);
         gridReqPendientes.setVisible(false);
@@ -78,6 +83,10 @@ public class MainPage implements Initializable {
             cerrarNav();
     }
     @FXML private void btnReqEntregadasGrandeClick(ActionEvent event) {
+        listaRQD.getSelectionModel().clearSelection();
+        listaRQE.getSelectionModel().clearSelection();
+        listaRQP.getSelectionModel().clearSelection();
+        ((Stage)(((Node) event.getSource()).getScene().getWindow())).setTitle("H.E.R.M.E.S. Requisiciones Entregadas");
         gridReqDenegadas.setVisible(false);
         gridReqEntregadas.setVisible(true);
         gridReqPendientes.setVisible(false);
@@ -86,6 +95,10 @@ public class MainPage implements Initializable {
             cerrarNav();
     }
     @FXML private void btnReqPendientesGrandeClick(ActionEvent event) {
+        listaRQD.getSelectionModel().clearSelection();
+        listaRQE.getSelectionModel().clearSelection();
+        listaRQP.getSelectionModel().clearSelection();
+        ((Stage)(((Node) event.getSource()).getScene().getWindow())).setTitle("H.E.R.M.E.S. Requisiciones Pendientes");
         gridReqDenegadas.setVisible(false);
         gridReqEntregadas.setVisible(false);
         gridReqPendientes.setVisible(true);
@@ -217,7 +230,6 @@ public class MainPage implements Initializable {
                 crearAnimacionesNavBar();
                 //escuchar cuando se sostiene shift para hacer override a los dialogos de confirmar
                 parent.getScene().addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
-                    System.out.println("key pressed");
                     if (event.isShiftDown()) {
                         isShiftDown = true;
                     }else{
@@ -226,7 +238,6 @@ public class MainPage implements Initializable {
                     // event.consume();
                 });
                 parent.getScene().addEventFilter(KeyEvent.KEY_RELEASED, (KeyEvent event) -> {
-                    System.out.println("key released");
                     if (event.isShiftDown()) {
                         isShiftDown = true;
                     }else{
@@ -234,6 +245,7 @@ public class MainPage implements Initializable {
                     }
                     // event.consume();
                 });
+                ((Stage)(parent)).setTitle("H.E.R.M.E.S. Requisiciones Pendientes");
                 return null;
             }
         });

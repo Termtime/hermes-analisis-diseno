@@ -46,7 +46,7 @@ public class MantProductosModalModificarProducto implements Initializable {
 
     }
     @FXML private void btnModificarClick(ActionEvent event) {
-        if(comboCategoria.getSelectionModel().isSelected(0)){
+        if(comboCategoria.getSelectionModel().getSelectedIndex() == -1){
             Navigation.mostrarAlertError("Debe seleccionar una Categoria", event);
             return;
         }
@@ -58,7 +58,7 @@ public class MantProductosModalModificarProducto implements Initializable {
         Map<String, Object> data= new HashMap<>();
         data.put("Producto", txtNombreProducto.getText());
         data.put("Unidad", txtUnidad.getText());
-        data.put("Categoria", comboCategoria.getSelectionModel().getSelectedItem().toString());
+        data.put("Categoria", comboCategoria.getSelectionModel().getSelectedItem().categoriaID);
         try {
             db.updateDocument("Productos", productoID, data);
             documentos = db.getAllDocumentsFrom(FirestoreRoutes.PRODUCTOS);
@@ -100,7 +100,7 @@ public class MantProductosModalModificarProducto implements Initializable {
     
     @FXML TextField txtNombreProducto;
     @FXML TextField txtUnidad;
-    @FXML ComboBox<String> comboCategoria= new  ComboBox<>();
+    @FXML ComboBox<Categoria> comboCategoria;
     @FXML Button btnCancelar;
     @FXML ImageView imagenProducto;
 
@@ -117,7 +117,7 @@ public class MantProductosModalModificarProducto implements Initializable {
         txtNombreProducto.setText(productoData.nombre);
         txtUnidad.setText(productoData.unidad);
         productoID=productoData.getProductoID();
-        comboCategoria.getSelectionModel().select(productoData.categoria);
+        
     }
     @FXML AnchorPane mantProductosModalModificarProducto;
     @Override
@@ -128,17 +128,25 @@ public class MantProductosModalModificarProducto implements Initializable {
             public Void apply(Window t) {
                 ((Stage)t).resizableProperty().setValue(Boolean.FALSE);
                 ventanaPrincipal=t;
+                for(DocumentSnapshot cat: categoriaDocumentos){
+                    Categoria tmp;
+                    if(cat.exists()){
+                        tmp=new Categoria(cat.getId(),cat.getString("nombre"));
+                        comboCategoria.getItems().add(tmp);
+                    }
+                }
+                
+                int index = 0;
+                for(Categoria categoria : comboCategoria.getItems()){
+                    if(categoria.nombre.equals(productoData.categoria)){
+                        comboCategoria.getSelectionModel().select(index);
+                    }
+                    index++;
+                }
                 return null;
             }
             
         });
-        for(DocumentSnapshot cat: categoriaDocumentos){
-            Categoria tmp;
-            if(cat.exists()){
-                tmp=new Categoria(cat.getId(),cat.getString("nombre"));
-                System.out.println(tmp.getNombre());
-                comboCategoria.getItems().add(tmp.getNombre());
-            }
-        }
+        
     }
 }
