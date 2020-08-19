@@ -95,7 +95,7 @@ public class MantUsuariosModalAgregarUsuario implements Initializable {
                     db.uploadImage(FirestorageRoutes.USUARIOS, selectedFile, txtCorreo.getText());
 
                 }
-                Navigation.mostrarAlertExito("Se llenoó el formulario de correctamente.", event);
+                Navigation.mostrarAlertExito("Se llenó el formulario de correctamente.", event);
                 cerrarVentana();
             }
 
