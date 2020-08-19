@@ -48,7 +48,7 @@ public class MantProductosPage implements Initializable {
         if(tablaProductoSelectedItem != null)
             Navigation.pushRouteWithParameter("MantProductosModalModificarProducto", event, false, true, MantProductosModalModificarProducto.class, tablaProductoSelectedItem );
         else{
-            Navigation.pushRoute("AlertError", event, false, true);
+            Navigation.mostrarAlertError("Debe selecionar un producto", event);
         }
         refreshProductos();
     }
@@ -130,8 +130,10 @@ public class MantProductosPage implements Initializable {
     @FXML private void comboCategoriaClick(final ActionEvent event) {
         tablaProductos.getItems().clear();
         final List<Producto> categoriaFiltrados = new ArrayList<Producto>();
+        int index = comboCategoria.getSelectionModel().getSelectedIndex();
         for(final Producto producto: productos){
-            if(producto.categoria.toLowerCase().equals(comboCategoria.getSelectionModel().getSelectedItem().toString().toLowerCase()) ){
+            if(((index == 0 || index == -1) || producto.categoria.toLowerCase().equals(comboCategoria.getSelectionModel().getSelectedItem().toString().toLowerCase()))
+             && ((producto.nombre.toLowerCase().contains(txtFiltro.getText().toLowerCase()) || txtFiltro.getText().equals("")))){
                 categoriaFiltrados.add(producto);
             }    
         }

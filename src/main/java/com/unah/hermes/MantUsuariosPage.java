@@ -52,11 +52,11 @@ public class MantUsuariosPage implements Initializable {
 
     @FXML
     private void btnModificarUsuarioClick(ActionEvent event) {
-        if(tablaUSelectedItem != null)
+        if(tablaUSelectedItem != null){
             Navigation.pushRouteWithParameter("MantUsuariosModalModificarUsuario", event, false, true, MantUsuariosModalModificarUsuario.class, tablaUSelectedItem );
+            llenarTabla();
+        }
         else{
-            // Alert alert = new Alert(AlertType.ERROR,"Debe seleccionar un Usuario antes", ButtonType.OK);
-            // alert.showAndWait();
             Navigation.mostrarAlertError("Debe seleccionar un usuario antes", event);
             
         }
@@ -231,8 +231,6 @@ public class MantUsuariosPage implements Initializable {
 					}
                     
                 }).start();
-                
-                tablaUsuarios.refresh();                               
             }
         });
         

@@ -76,7 +76,7 @@ public class MantProductosModalAgregarProducto implements Initializable {
                     }
                 }
                 
-                Navigation.pushRoute("AlertExito", event, false, true);
+                Navigation.mostrarAlertExito("Categoria agregada con éxito", event);
                 cerrarVentana();
         } catch (Exception e) {
             Navigation.mostrarAlertError("Falta llenar algunos campos en el formulario", event);

@@ -57,7 +57,7 @@ public class MantProductosModalModificarCategoria implements Initializable{
         }
         try {
             db.updateDocument("Categorias", categoriaid, data);
-            Navigation.pushRoute("AlertExito", event, false, true);
+            Navigation.mostrarAlertExito("Categoria modificada con éxito", event);
             cerrarVentana();
         } catch (Exception e) {
             Navigation.mostrarAlertError("Falta llenar algunos campos en el formulario o debe seleccionar la categoria a modificar", event);
