@@ -178,8 +178,10 @@ public class MantUsuariosModalModificarUsuario implements Initializable {
     @FXML private void checkCambiarContraClick(ActionEvent event){
         if(checkCambiarContra.isSelected()){
             txtContrasena.setDisable(false);
+            if(txtContrasena.getText().isEmpty())btnModificar.setDisable(true);
         }else{
             txtContrasena.setDisable(true);
+            if(txtContrasena.getText().isEmpty())btnModificar.setDisable(false);
         }
     }
     

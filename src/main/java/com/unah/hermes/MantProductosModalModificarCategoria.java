@@ -46,11 +46,11 @@ public class MantProductosModalModificarCategoria implements Initializable{
             Categoria tmp;
             if(cat2.exists()){
                 tmp=new Categoria(cat2.getId(),cat2.getString("nombre"));
-                System.out.println(tmp.Nombre+"categoria");
-                if(tmp.Nombre!=null){
-                    if(tmp.Nombre.equals(comboCategoria.getSelectionModel().getSelectedItem().toString()))
+                System.out.println(tmp.nombre+"categoria");
+                if(tmp.nombre!=null){
+                    if(tmp.nombre.equals(comboCategoria.getSelectionModel().getSelectedItem().toString()))
                     {
-                        categoriaid=tmp.CategoriaID;
+                        categoriaid=tmp.categoriaID;
                     }
                 }
             }

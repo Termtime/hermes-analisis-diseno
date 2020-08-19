@@ -43,11 +43,12 @@ public class MantProductosModalAgregarProducto implements Initializable {
     @FXML private void btnAgregarClick(ActionEvent event) {
         
         Map<String, Object> data= new HashMap<>();
-        if(selectedFile==null){
-            Navigation.mostrarAlertError("Debe seleccionar una Imagen", event);
-            return;
-        }
-        if(comboCategoria.getSelectionModel().isSelected(0)){
+        //removido temporalmente, preguntar a la Ingeniera
+        // if(selectedFile==null){
+        //     Navigation.mostrarAlertError("Debe seleccionar una Imagen", event);
+        //     return;
+        // }
+        if(comboCategoria.getSelectionModel().getSelectedIndex() == -1){
             Navigation.mostrarAlertError("Debe seleccionar una Categoria", event);
             return;
         }
@@ -57,27 +58,17 @@ public class MantProductosModalAgregarProducto implements Initializable {
         }
             data.put("Producto", txtNombreProducto.getText());
             data.put("Unidad", txtUnidad.getText());
-            data.put("Categoria", comboCategoria.getSelectionModel().getSelectedItem().toString());
+            data.put("Categoria", comboCategoria.getSelectionModel().getSelectedItem().categoriaID);
         try {
             
-            db.createDocument("Productos", data);
+            String productoID = db.createDocument("Productos", data);
             documentos = db.getAllDocumentsFrom(FirestoreRoutes.PRODUCTOS);
             productos.clear();
-            for (DocumentSnapshot doc : documentos) {
-                Producto tmp;
-                if(doc.exists()){
-                    tmp = new Producto(doc.getId(), doc.getString("Producto"), doc.getString("Unidad"), doc.getString("Categoria"));
-                    productos.add(tmp);
-                }
+            if(selectedFile != null){
+                db.uploadImage(FirestoreRoutes.PRODUCTOS+"/Productos", selectedFile, productoID);
             }
-                for(Producto producto: productos){
-                    if(producto.nombre.toLowerCase().equals(txtNombreProducto.getText().toLowerCase())){
-                        db.uploadImage(FirestoreRoutes.PRODUCTOS+"/Productos", selectedFile, producto.productoID);
-                    }
-                }
-                
-                Navigation.mostrarAlertExito("Categoria agregada con éxito", event);
-                cerrarVentana();
+            Navigation.mostrarAlertExito("Categoria agregada con éxito", event);
+            cerrarVentana();
         } catch (Exception e) {
             Navigation.mostrarAlertError("Falta llenar algunos campos en el formulario", event);
         }
@@ -90,7 +81,7 @@ public class MantProductosModalAgregarProducto implements Initializable {
             fileChooser.setTitle("Seleccione una Foto");
             fileChooser.getExtensionFilters().add(new ExtensionFilter("Image Files", "*.png","*.jpg"));
             selectedFile=fileChooser.showOpenDialog(ventanaPrincipal);
-            if(selectedFile!= null){
+            if(selectedFile != null){
                 InputStream is=new FileInputStream(selectedFile);
                 imagenProducto.setImage(new Image(is));
             }
@@ -100,7 +91,7 @@ public class MantProductosModalAgregarProducto implements Initializable {
     }
     
     @FXML Button btnCancelar;
-    @FXML ComboBox<String> comboCategoria= new ComboBox<>();
+    @FXML ComboBox<Categoria> comboCategoria;
     @FXML TextField txtNombreProducto;
     @FXML TextField  txtUnidad;
     @FXML ImageView imagenProducto;
@@ -127,8 +118,7 @@ public class MantProductosModalAgregarProducto implements Initializable {
             Categoria tmp;
             if(cat.exists()){
                 tmp=new Categoria(cat.getId(),cat.getString("nombre"));
-                System.out.println(tmp.getNombre());
-                comboCategoria.getItems().add(tmp.getNombre());
+                comboCategoria.getItems().add(tmp);
             }
         }
     }

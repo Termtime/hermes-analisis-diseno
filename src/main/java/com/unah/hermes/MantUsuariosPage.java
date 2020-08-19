@@ -310,7 +310,13 @@ public class MantUsuariosPage implements Initializable {
                             break;
                         }   
                     }
-                }   
+                }
+                if(doc.getString("nivelAcceso").equals("Administrador")){
+                    areasConNombre= new ArrayList<>();
+                    areasConID = new ArrayList<>();
+                    areasConNombre.add("Todas");
+                    areasConID.add("T");
+                }
                 tmp = new User(doc.getId(), doc.getString("Nombre"),
                 doc.getString("nivelAcceso"), doc.getString("uid"), areasConNombre, areasConID, doc.getBoolean("deshabilitado"));
                 usuarios.add(tmp);
