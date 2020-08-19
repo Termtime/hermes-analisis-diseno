@@ -19,53 +19,64 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
-public class MantProductosModalAgregarCategoria implements Initializable{
-    
-    @FXML private void btnCancelarClick(ActionEvent event) {
+public class MantProductosModalAgregarCategoria implements Initializable {
+
+    @FXML
+    private void btnCancelarClick(ActionEvent event) {
         cerrarVentana();
     }
-    @FXML private void txtAgregarCategoriaInput(ActionEvent event) {
-        
+
+    @FXML
+    private void txtAgregarCategoriaInput(ActionEvent event) {
+
     }
-    @FXML private void btnAgregarClick(ActionEvent event) {
-        if(txtAgregarCategoria.getText().equals(""))
-            {
-                Navigation.mostrarAlertError("Falta llenar algunos campos en el formulario", event);
-                return;
-            }else{
-                Map<String, Object> data= new HashMap<>();
-                data.put("nombre", txtAgregarCategoria.getText());
-                
-                try {
-                    db.createDocument("Categorias", data);
-                    Navigation.pushRoute("AlertExito", event, false, true);
-                } catch (Exception e) {
-                    Navigation.mostrarAlertError("Falta llenar algunos campos en el formulario", event);
-                }
-                Stage stage = (Stage) btnCancelar.getScene().getWindow();
+
+    @FXML
+    private void btnAgregarClick(ActionEvent event) {
+        if (txtAgregarCategoria.getText().equals("")) {
+            Navigation.mostrarAlertError("Falta llenar algunos campos en el formulario.", event);
+            return;
+        } else {
+            Map<String, Object> data = new HashMap<>();
+            data.put("nombre", txtAgregarCategoria.getText());
+
+            try {
+                db.createDocument("Categorias", data);
+                Navigation.pushRoute("AlertExito", event, false, true);
+            } catch (Exception e) {
+                Navigation.mostrarAlertError("Falta llenar algunos campos en el formulario.", event);
+            }
+            Stage stage = (Stage) btnCancelar.getScene().getWindow();
 
             stage.close();
-            }   
+        }
     }
-    @FXML AnchorPane mantProductosModalAgregarCategoria;
-    @FXML AnchorPane AgregarCategoria;
-    @FXML Button btnCancelar;
-    @FXML TextField txtAgregarCategoria;
+
+    @FXML
+    AnchorPane mantProductosModalAgregarCategoria;
+    @FXML
+    AnchorPane AgregarCategoria;
+    @FXML
+    Button btnCancelar;
+    @FXML
+    TextField txtAgregarCategoria;
     FirebaseConnector db;
+
     @Override
-    public void initialize(URL url,  ResourceBundle rb) {
-        EventListeners.onWindowOpening(mantProductosModalAgregarCategoria, new Function<Window,Void>(){
+    public void initialize(URL url, ResourceBundle rb) {
+        EventListeners.onWindowOpening(mantProductosModalAgregarCategoria, new Function<Window, Void>() {
 
             @Override
             public Void apply(Window t) {
-                ((Stage)t).resizableProperty().setValue(Boolean.FALSE);
+                ((Stage) t).resizableProperty().setValue(Boolean.FALSE);
                 return null;
             }
-            
+
         });
-        db=FirebaseConnector.getInstance();
+        db = FirebaseConnector.getInstance();
     }
-    private void cerrarVentana(){
+
+    private void cerrarVentana() {
         Stage stage = (Stage) btnCancelar.getScene().getWindow();
         stage.close();
     }

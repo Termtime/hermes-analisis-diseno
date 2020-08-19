@@ -36,31 +36,34 @@ import javafx.stage.Window;
 
 public class MantAreasModalAgregarUsuarioArea implements Initializable {
 
-    @FXML private void btnAgregarClick(ActionEvent event) {
+    @FXML
+    private void btnAgregarClick(ActionEvent event) {
         if (!usuarioID.isEmpty() && !areasUsuarioArray.isEmpty()) {
             Map<String, Object> datos = new HashMap();
 
             datos.put("areas", areasUsuarioArray);
             db.updateDocument(FirestoreRoutes.USUARIOS, usuarioID, datos);
-            Navigation.mostrarAlertExito("Usuario Agregado exitosamente al área", event);
+            Navigation.mostrarAlertExito("Usuario agregado exitosamente al área.", event);
             llenarTabla();
 
             Stage ventana = (Stage) btnCancelar.getScene().getWindow();
 
             ventana.close();
         } else {
-            Navigation.mostrarAlertError("No ha seleccionado un usuario", event);
+            Navigation.mostrarAlertError("No ha seleccionado un usuario.", event);
         }
     }
 
-    @FXML private void btnCancelarClick(ActionEvent event) {
+    @FXML
+    private void btnCancelarClick(ActionEvent event) {
         Stage ventana = (Stage) btnCancelar.getScene().getWindow();
 
         ventana.close();
 
     }
 
-    @FXML private void txtBuscarInput(KeyEvent event) {
+    @FXML
+    private void txtBuscarInput(KeyEvent event) {
         tablaUsuariosArea.getItems().clear();
         List<User> usuariosFiltro = new ArrayList<User>();
 
@@ -73,10 +76,14 @@ public class MantAreasModalAgregarUsuarioArea implements Initializable {
         tablaUsuariosArea.getItems().addAll(usuariosFiltro);
     }
 
-    @FXML TableView<User> tablaUsuariosArea;
-    @FXML AnchorPane MantAreasModalAgregarUsuarioArea;
-    @FXML TextField txtBuscar;
-    @FXML Button btnCancelar;
+    @FXML
+    TableView<User> tablaUsuariosArea;
+    @FXML
+    AnchorPane MantAreasModalAgregarUsuarioArea;
+    @FXML
+    TextField txtBuscar;
+    @FXML
+    Button btnCancelar;
     User usuariosNoArea;
     Area areaSelected;
     User selectedUser;
@@ -89,6 +96,7 @@ public class MantAreasModalAgregarUsuarioArea implements Initializable {
     String usuarioID = "";
     ObservableList<User> usuarios = FXCollections.observableArrayList();
     FirebaseConnector db;
+
     public void initData(Object area) {
         areaSelected = (Area) area;
         areaID = areaSelected.areaID;

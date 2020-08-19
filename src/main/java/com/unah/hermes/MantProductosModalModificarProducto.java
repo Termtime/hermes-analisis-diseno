@@ -36,26 +36,27 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 
 public class MantProductosModalModificarProducto implements Initializable {
-    
-    
-    @FXML private void btnCancelarClick(ActionEvent event) {
 
-       Stage stage = (Stage) btnCancelar.getScene().getWindow();
+    @FXML
+    private void btnCancelarClick(ActionEvent event) {
 
-       stage.close();
+        Stage stage = (Stage) btnCancelar.getScene().getWindow();
+
+        stage.close();
 
     }
-    @FXML private void btnModificarClick(ActionEvent event) {
-        if(comboCategoria.getSelectionModel().getSelectedIndex() == -1){
-            Navigation.mostrarAlertError("Debe seleccionar una Categoria", event);
+
+    @FXML
+    private void btnModificarClick(ActionEvent event) {
+        if (comboCategoria.getSelectionModel().getSelectedIndex() == -1) {
+            Navigation.mostrarAlertError("Debe seleccionar una categoría.", event);
             return;
         }
-        if(txtNombreProducto.getText().equals("")||txtUnidad.getText().equals(""))
-        {
+        if (txtNombreProducto.getText().equals("") || txtUnidad.getText().equals("")) {
             Navigation.pushRoute("AlertError", event, false, true);
             return;
         }
-        Map<String, Object> data= new HashMap<>();
+        Map<String, Object> data = new HashMap<>();
         data.put("Producto", txtNombreProducto.getText());
         data.put("Unidad", txtUnidad.getText());
         data.put("Categoria", comboCategoria.getSelectionModel().getSelectedItem().categoriaID);
@@ -65,88 +66,101 @@ public class MantProductosModalModificarProducto implements Initializable {
             productos.clear();
             for (DocumentSnapshot doc : documentos) {
                 Producto tmp;
-                if(doc.exists()){
-                    tmp = new Producto(doc.getId(), doc.getString("Producto"), doc.getString("Unidad"), doc.getString("Categoria"));
+                if (doc.exists()) {
+                    tmp = new Producto(doc.getId(), doc.getString("Producto"), doc.getString("Unidad"),
+                            doc.getString("Categoria"));
                     productos.add(tmp);
                 }
             }
-                for(Producto producto: productos){
-                    if(producto.nombre.toLowerCase().equals(txtNombreProducto.getText().toLowerCase())&&selectedFile!=null){
-                        db.uploadImage(FirestoreRoutes.PRODUCTOS+"/Productos", selectedFile, producto.productoID);
-                    }
+            for (Producto producto : productos) {
+                if (producto.nombre.toLowerCase().equals(txtNombreProducto.getText().toLowerCase())
+                        && selectedFile != null) {
+                    db.uploadImage(FirestoreRoutes.PRODUCTOS + "/Productos", selectedFile, producto.productoID);
                 }
+            }
             Navigation.pushRoute("AlertExito", event, false, true);
             Stage stage = (Stage) btnCancelar.getScene().getWindow();
             stage.close();
         } catch (Exception e) {
-            Navigation.mostrarAlertError("Falta llenar algunos campos en el formulario", event);
+            Navigation.mostrarAlertError("Falta llenar algunos campos en el formulario.", event);
         }
-        
+
     }
-    @FXML private void btnAgregarImagenProductoClick(ActionEvent event){
+
+    @FXML
+    private void btnAgregarImagenProductoClick(ActionEvent event) {
         try {
-            FileChooser fileChooser= new FileChooser();
+            FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Seleccione una Foto");
-            fileChooser.getExtensionFilters().add(new ExtensionFilter("Image Files", "*.png","*.jpg"));
-            selectedFile=fileChooser.showOpenDialog(ventanaPrincipal);
-            if(selectedFile!= null){
-                InputStream is=new FileInputStream(selectedFile);
+            fileChooser.getExtensionFilters().add(new ExtensionFilter("Image Files", "*.png", "*.jpg"));
+            selectedFile = fileChooser.showOpenDialog(ventanaPrincipal);
+            if (selectedFile != null) {
+                InputStream is = new FileInputStream(selectedFile);
                 imagenProducto.setImage(new Image(is));
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
-    @FXML TextField txtNombreProducto;
-    @FXML TextField txtUnidad;
-    @FXML ComboBox<Categoria> comboCategoria;
-    @FXML Button btnCancelar;
-    @FXML ImageView imagenProducto;
+
+    @FXML
+    TextField txtNombreProducto;
+    @FXML
+    TextField txtUnidad;
+    @FXML
+    ComboBox<Categoria> comboCategoria;
+    @FXML
+    Button btnCancelar;
+    @FXML
+    ImageView imagenProducto;
 
     Producto productoData;
     String productoID;
     File selectedFile;
     Window ventanaPrincipal;
     List<QueryDocumentSnapshot> documentos;
-    FirebaseConnector db=FirebaseConnector.getInstance();
+    FirebaseConnector db = FirebaseConnector.getInstance();
     List<QueryDocumentSnapshot> categoriaDocumentos = db.getAllDocumentsFrom(FirestoreRoutes.CATEGORIAS);
     ObservableList<Producto> productos = FXCollections.observableArrayList();
-    public void initData(Object data){
+
+    public void initData(Object data) {
         productoData = (Producto) data;
         txtNombreProducto.setText(productoData.nombre);
         txtUnidad.setText(productoData.unidad);
-        productoID=productoData.getProductoID();
-        
+        productoID = productoData.getProductoID();
+
     }
-    @FXML AnchorPane mantProductosModalModificarProducto;
+
+    @FXML
+    AnchorPane mantProductosModalModificarProducto;
+
     @Override
-    public void initialize(URL url,  ResourceBundle rb) {
-        EventListeners.onWindowOpening(mantProductosModalModificarProducto, new Function<Window,Void>(){
+    public void initialize(URL url, ResourceBundle rb) {
+        EventListeners.onWindowOpening(mantProductosModalModificarProducto, new Function<Window, Void>() {
 
             @Override
             public Void apply(Window t) {
-                ((Stage)t).resizableProperty().setValue(Boolean.FALSE);
-                ventanaPrincipal=t;
-                for(DocumentSnapshot cat: categoriaDocumentos){
+                ((Stage) t).resizableProperty().setValue(Boolean.FALSE);
+                ventanaPrincipal = t;
+                for (DocumentSnapshot cat : categoriaDocumentos) {
                     Categoria tmp;
-                    if(cat.exists()){
-                        tmp=new Categoria(cat.getId(),cat.getString("nombre"));
+                    if (cat.exists()) {
+                        tmp = new Categoria(cat.getId(), cat.getString("nombre"));
                         comboCategoria.getItems().add(tmp);
                     }
                 }
-                
+
                 int index = 0;
-                for(Categoria categoria : comboCategoria.getItems()){
-                    if(categoria.nombre.equals(productoData.categoria)){
+                for (Categoria categoria : comboCategoria.getItems()) {
+                    if (categoria.nombre.equals(productoData.categoria)) {
                         comboCategoria.getSelectionModel().select(index);
                     }
                     index++;
                 }
                 return null;
             }
-            
+
         });
-        
+
     }
 }

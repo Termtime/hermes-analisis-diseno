@@ -25,76 +25,83 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
-public class MantProductosModalModificarCategoria implements Initializable{
-    
-    @FXML private void btnCancelarClick(ActionEvent event) {
+public class MantProductosModalModificarCategoria implements Initializable {
+
+    @FXML
+    private void btnCancelarClick(ActionEvent event) {
         cerrarVentana();
     }
-    @FXML private void btnModificarClick(ActionEvent event) {
-        if(comboCategoria.getSelectionModel().isSelected(0)){
-            Navigation.mostrarAlertError("Debe seleccionar una Categoria", event);
+
+    @FXML
+    private void btnModificarClick(ActionEvent event) {
+        if (comboCategoria.getSelectionModel().isSelected(0)) {
+            Navigation.mostrarAlertError("Debe seleccionar una categoría.", event);
             return;
         }
-        if(txtNuevoNombre.getText().equals("")){
+        if (txtNuevoNombre.getText().equals("")) {
             Navigation.pushRoute("AlertError", event, false, true);
             return;
         }
-        Map<String, Object> data= new HashMap<>();
+        Map<String, Object> data = new HashMap<>();
         data.put("nombre", txtNuevoNombre.getText());
-        String categoriaid="";
-        for(DocumentSnapshot cat2: categoriaDocumentos){
+        String categoriaid = "";
+        for (DocumentSnapshot cat2 : categoriaDocumentos) {
             Categoria tmp;
-            if(cat2.exists()){
-                tmp=new Categoria(cat2.getId(),cat2.getString("nombre"));
-                System.out.println(tmp.nombre+"categoria");
-                if(tmp.nombre!=null){
-                    if(tmp.nombre.equals(comboCategoria.getSelectionModel().getSelectedItem().toString()))
-                    {
-                        categoriaid=tmp.categoriaID;
+            if (cat2.exists()) {
+                tmp = new Categoria(cat2.getId(), cat2.getString("nombre"));
+                System.out.println(tmp.nombre + "categoria");
+                if (tmp.nombre != null) {
+                    if (tmp.nombre.equals(comboCategoria.getSelectionModel().getSelectedItem().toString())) {
+                        categoriaid = tmp.categoriaID;
                     }
                 }
             }
         }
         try {
             db.updateDocument("Categorias", categoriaid, data);
-            Navigation.mostrarAlertExito("Categoria modificada con éxito", event);
+            Navigation.mostrarAlertExito("Categoría modificada con éxito.", event);
             cerrarVentana();
         } catch (Exception e) {
-            Navigation.mostrarAlertError("Falta llenar algunos campos en el formulario o debe seleccionar la categoria a modificar", event);
+            Navigation.mostrarAlertError(
+                    "Falta llenar algunos campos en el formulario o debe seleccionar la categoría a modificar.", event);
         }
-        
+
     }
-    
-    @FXML ComboBox<String> comboCategoria;
-    @FXML Button btnCancelar;
-    @FXML TextField txtNuevoNombre;
-    @FXML AnchorPane mantProductosModalModificarCategoria;
-    FirebaseConnector db=FirebaseConnector.getInstance();
+
+    @FXML
+    ComboBox<String> comboCategoria;
+    @FXML
+    Button btnCancelar;
+    @FXML
+    TextField txtNuevoNombre;
+    @FXML
+    AnchorPane mantProductosModalModificarCategoria;
+    FirebaseConnector db = FirebaseConnector.getInstance();
     List<QueryDocumentSnapshot> categoriaDocumentos = db.getAllDocumentsFrom(FirestoreRoutes.CATEGORIAS);
 
     @Override
-    public void initialize(URL url,  ResourceBundle rb) {
-        
-        EventListeners.onWindowOpening(mantProductosModalModificarCategoria, new Function<Window,Void>(){
+    public void initialize(URL url, ResourceBundle rb) {
+
+        EventListeners.onWindowOpening(mantProductosModalModificarCategoria, new Function<Window, Void>() {
 
             @Override
             public Void apply(Window t) {
-                ((Stage)t).resizableProperty().setValue(Boolean.FALSE);
+                ((Stage) t).resizableProperty().setValue(Boolean.FALSE);
                 return null;
             }
-            
+
         });
-        
-        for(DocumentSnapshot cat: categoriaDocumentos){
+
+        for (DocumentSnapshot cat : categoriaDocumentos) {
             Categoria tmp;
-            if(cat.exists()){
-                tmp=new Categoria(cat.getId(),cat.getString("nombre"));
+            if (cat.exists()) {
+                tmp = new Categoria(cat.getId(), cat.getString("nombre"));
                 comboCategoria.getItems().add(tmp.getNombre());
             }
         }
     }
 
-    private void cerrarVentana(){
+    private void cerrarVentana() {
         Stage stage = (Stage) btnCancelar.getScene().getWindow();
         stage.close();
     }

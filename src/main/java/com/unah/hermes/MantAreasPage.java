@@ -36,16 +36,19 @@ import javafx.stage.Window;
 
 public class MantAreasPage implements Initializable {
 
-    @FXML private void btnCrearAreaClick(ActionEvent event) {
+    @FXML
+    private void btnCrearAreaClick(ActionEvent event) {
         Navigation.pushRoute("MantAreasModalCrearArea", event, false, true);
         llenarTablaAreas();
     }
 
-    @FXML private void btnEliminarAreaClick(ActionEvent event) {
+    @FXML
+    private void btnEliminarAreaClick(ActionEvent event) {
 
         if (!areaSelectedID.isEmpty()) {
-            if(!isShiftDown)
-                if(!Navigation.mostrarAlertConfirmacion("¿Desea eliminar el area?", event)) return;
+            if (!isShiftDown)
+                if (!Navigation.mostrarAlertConfirmacion("¿Desea eliminar el área?", event))
+                    return;
             for (User usuario : usuarios) {
                 if (usuario.areas.contains(areaSelectedID)) {
                     usuario.areas.remove(areaSelectedID);
@@ -61,45 +64,53 @@ public class MantAreasPage implements Initializable {
                 }
             }
             db.deleteDocument(FirestoreRoutes.AREAS, areaSelectedID);
-            Navigation.mostrarAlertExito("Area eliminada exitosamente", event);
+            Navigation.mostrarAlertExito("Área eliminada exitosamente.", event);
             llenarTablaAreas();
             tablaUsuario.getItems().clear();
         } else {
-            Navigation.mostrarAlertError("Debe seleccionar un Area antes", event);
+            Navigation.mostrarAlertError("Debe seleccionar un área antes.", event);
         }
     }
 
-    @FXML private void btnAgregarUsuarioAreaClick(ActionEvent event) {
+    @FXML
+    private void btnAgregarUsuarioAreaClick(ActionEvent event) {
         if (TablaAreaSelectedRow != null) {
             Navigation.pushRouteWithParameter("MantAreasAgregarUsuarioArea", event, false, true,
                     MantAreasModalAgregarUsuarioArea.class, TablaAreaSelectedRow);
             llenarTablaUsuario(areaSelectedID);
         } else {
-            Navigation.mostrarAlertError("Debe seleccionar un Area antes", event);
+            Navigation.mostrarAlertError("Debe seleccionar un Area antes.", event);
         }
     }
 
-    @FXML private void btnEliminarUsuarioAreaClick(ActionEvent event) {
+    @FXML
+    private void btnEliminarUsuarioAreaClick(ActionEvent event) {
         if (!usuarioID.isEmpty() && !areasUsuarioArray.isEmpty()) {
-            if(!isShiftDown)
-                if(!Navigation.mostrarAlertConfirmacion("¿Desea eliminar al usuario del Area?", event)) return;
+            if (!isShiftDown)
+                if (!Navigation.mostrarAlertConfirmacion("¿Desea eliminar al usuario del área?", event))
+                    return;
             Map<String, Object> datos = new HashMap();
             areasUsuarioArray.remove(index);
             datos.put("areas", areasUsuarioArray);
             db.updateDocument(FirestoreRoutes.USUARIOS, usuarioID, datos);
-            Navigation.mostrarAlertExito("Usuario eliminado exitosamente del área", event);
+            Navigation.mostrarAlertExito("Usuario eliminado exitosamente del área.", event);
             llenarTablaUsuario(areaSelectedID);
         } else {
-            Navigation.mostrarAlertError("No ha seleccionado un usuario", event);
+            Navigation.mostrarAlertError("No ha seleccionado un usuario.", event);
         }
     }
 
-    @FXML TableView<Area> tablaArea;
-    @FXML TableView<User> tablaUsuario;
-    @FXML AnchorPane MantenimientoAreas;
-    @FXML Button btnEliminarUsuarioArea;
-    @FXML Button btnEliminarArea;
-    
+    @FXML
+    TableView<Area> tablaArea;
+    @FXML
+    TableView<User> tablaUsuario;
+    @FXML
+    AnchorPane MantenimientoAreas;
+    @FXML
+    Button btnEliminarUsuarioArea;
+    @FXML
+    Button btnEliminarArea;
+
     Boolean isShiftDown = false;
     Area areaSelected;
     String areaSelectedID;
@@ -116,7 +127,7 @@ public class MantAreasPage implements Initializable {
     String usuarioID = "";
     ObservableList<Area> Areas = FXCollections.observableArrayList();
     ObservableList<User> usuarios = FXCollections.observableArrayList();
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         bindBotonesConfirmar();
@@ -152,12 +163,13 @@ public class MantAreasPage implements Initializable {
 
                     }
                 }
-                //escuchar cuando se sostiene shift para hacer override a los dialogos de confirmar
+                // escuchar cuando se sostiene shift para hacer override a los dialogos de
+                // confirmar
                 parent.getScene().addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
                     System.out.println("key pressed");
                     if (event.isShiftDown()) {
                         isShiftDown = true;
-                    }else{
+                    } else {
                         isShiftDown = false;
                     }
                     // event.consume();
@@ -166,7 +178,7 @@ public class MantAreasPage implements Initializable {
                     System.out.println("key released");
                     if (event.isShiftDown()) {
                         isShiftDown = true;
-                    }else{
+                    } else {
                         isShiftDown = false;
                     }
                     // event.consume();
@@ -185,7 +197,8 @@ public class MantAreasPage implements Initializable {
         tablaArea.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Area>() {
             @Override
             public void changed(ObservableValue<? extends Area> observable, Area oldValue, Area newValue) {
-                if(newValue == null) return;
+                if (newValue == null)
+                    return;
                 areaSelectedID = "";
                 TablaAreaSelectedRow = newValue;
                 llenarTablaUsuario(newValue.areaID);
@@ -196,7 +209,7 @@ public class MantAreasPage implements Initializable {
         tablaUsuario.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<User>() {
             @Override
             public void changed(ObservableValue<? extends User> observable, User oldValue, User newValue) {
-                
+
                 selectedUser = newValue;
                 usuarioID = selectedUser.userID;
                 areasUsuarioArray = selectedUser.areas;
@@ -278,6 +291,7 @@ public class MantAreasPage implements Initializable {
         tablaArea.getItems().clear();
         tablaArea.getItems().addAll(Areas);
     }
+
     private void bindBotonesConfirmar() {
         btnEliminarArea.setOnMouseClicked(event -> {
             btnEliminarArea.fire();

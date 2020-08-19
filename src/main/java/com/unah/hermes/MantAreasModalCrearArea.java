@@ -18,7 +18,8 @@ import javafx.stage.Stage;
 
 public class MantAreasModalCrearArea implements Initializable {
 
-    @FXML private void btnAgregarClick(ActionEvent event) {
+    @FXML
+    private void btnAgregarClick(ActionEvent event) {
         String areaNueva = txtNombreArea.getText().trim();
         if (!areaNueva.isEmpty()) {
             Map<String, Object> area = new HashMap();
@@ -27,31 +28,35 @@ public class MantAreasModalCrearArea implements Initializable {
             db.createDocument(FirestoreRoutes.AREAS, area);
             areaNueva = "";
             txtNombreArea.setText(areaNueva);
-            Navigation.mostrarAlertExito("Area Agregada Exitosamente", event);
+            Navigation.mostrarAlertExito("Área agregada exitosamente.", event);
 
             Stage ventana = (Stage) btnCancelar.getScene().getWindow();
 
             ventana.close();
         } else {
-            Navigation.mostrarAlertError("Nombre de Area en Blanco", event);
+            Navigation.mostrarAlertError("Nombre de área en blanco.", event);
         }
 
     }
 
-    @FXML private void btnCancelarClick(ActionEvent event) {
+    @FXML
+    private void btnCancelarClick(ActionEvent event) {
         Stage ventana = (Stage) btnCancelar.getScene().getWindow();
 
         ventana.close();
     }
 
-    @FXML private void txtNombreAreaInput(ActionEvent event) {
+    @FXML
+    private void txtNombreAreaInput(ActionEvent event) {
 
     }
-    
-    @FXML TextField txtNombreArea;
-    @FXML Button btnCancelar;
+
+    @FXML
+    TextField txtNombreArea;
+    @FXML
+    Button btnCancelar;
     FirebaseConnector db = FirebaseConnector.getInstance();
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
