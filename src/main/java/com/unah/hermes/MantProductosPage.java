@@ -115,9 +115,13 @@ public class MantProductosPage implements Initializable {
     }
     @FXML private void txtFiltroInput(final KeyEvent event) {
         tablaProductos.getItems().clear();
+        String categoriaSeleccionada = comboCategoria.getSelectionModel().getSelectedItem();
+        int indice = comboCategoria.getSelectionModel().getSelectedIndex();
+        // System.out.println(categoriaSeleccionada);
+        System.out.println(indice);
         final List<Producto> productosFiltrados = new ArrayList<Producto>();
         for(final Producto producto: productos){
-            if(producto.nombre.toLowerCase().contains(txtFiltro.getText().toLowerCase()) || txtFiltro.getText().equals("")){
+            if((producto.nombre.toLowerCase().contains(txtFiltro.getText().toLowerCase()) || txtFiltro.getText().equals("")) && (producto.categoria.equals(categoriaSeleccionada) || indice == 0 || indice == -1)) {
                 productosFiltrados.add(producto);
             }    
         }
@@ -127,7 +131,7 @@ public class MantProductosPage implements Initializable {
         tablaProductos.getItems().clear();
         final List<Producto> categoriaFiltrados = new ArrayList<Producto>();
         for(final Producto producto: productos){
-            if(producto.categoria.toLowerCase().equals(comboCategoria.getSelectionModel().getSelectedItem().toString().toLowerCase())){
+            if(producto.categoria.toLowerCase().equals(comboCategoria.getSelectionModel().getSelectedItem().toString().toLowerCase()) ){
                 categoriaFiltrados.add(producto);
             }    
         }
@@ -181,7 +185,6 @@ public class MantProductosPage implements Initializable {
                 }
                 //escuchar cuando se sostiene shift para hacer override a los dialogos de confirmar
                 parent.getScene().addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
-                    System.out.println("key pressed");
                     if (event.isShiftDown()) {
                         isShiftDown = true;
                     }else{
@@ -190,7 +193,6 @@ public class MantProductosPage implements Initializable {
                     // event.consume();
                 });
                 parent.getScene().addEventFilter(KeyEvent.KEY_RELEASED, (KeyEvent event) -> {
-                    System.out.println("key released");
                     if (event.isShiftDown()) {
                         isShiftDown = true;
                     }else{

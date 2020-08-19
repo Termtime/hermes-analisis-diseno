@@ -40,7 +40,7 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <TextField id="txtAreaNueva" fx:id="txtNombre" layoutY="23.0" prefHeight="26.0" prefWidth="360.0">
+                  <TextField id="txtAreaNueva" fx:id="txtNombre" layoutY="23.0" prefHeight="26.0" prefWidth="360.0" promptText="Primer Nombre y Primer Apellido">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -54,7 +54,7 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <TextField id="txtAreaNueva" fx:id="txtCorreo" layoutY="23.0" prefHeight="26.0" prefWidth="360.0">
+                  <TextField id="txtAreaNueva" fx:id="txtCorreo" layoutY="23.0" prefHeight="26.0" prefWidth="360.0" promptText="correo@dominio.com">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -83,7 +83,7 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <PasswordField fx:id="txtContrasena" layoutX="-2.0" layoutY="23.0" prefHeight="30.0" prefWidth="360.0" />
+                  <PasswordField fx:id="txtContrasena" layoutX="-2.0" layoutY="23.0" prefHeight="30.0" prefWidth="360.0" promptText="******" />
                </children>
             </Pane>
             <Pane layoutX="2.0" layoutY="128.0" prefHeight="107.0" prefWidth="360.0">
@@ -127,7 +127,7 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <PasswordField fx:id="txtConrfirmeContrasena" layoutX="-2.0" layoutY="23.0" prefHeight="30.0" prefWidth="360.0" />
+                  <PasswordField fx:id="txtConrfirmeContrasena" layoutX="-2.0" layoutY="23.0" prefHeight="30.0" prefWidth="360.0" promptText="******" />
                   <Label id="errorPass" fx:id="errorPass" layoutY="51.0" style="-fx-text-fill: #fb4949;" textFill="#fb4949">
                      <font>
                         <Font size="14.0" />

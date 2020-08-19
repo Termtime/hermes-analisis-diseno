@@ -57,7 +57,7 @@ public class MantUsuariosPage implements Initializable {
         else{
             // Alert alert = new Alert(AlertType.ERROR,"Debe seleccionar un Usuario antes", ButtonType.OK);
             // alert.showAndWait();
-            Navigation.mostrarAlertError("Falta llenar algunos campos en el formulario", event);
+            Navigation.mostrarAlertError("Debe seleccionar un usuario antes", event);
             
         }
     }
@@ -250,10 +250,10 @@ public class MantUsuariosPage implements Initializable {
     private void recalcularColumnWidth(){        
         ObservableList columnasUsuario = tablaUsuarios.getColumns();
 
-        ((TableColumn)( columnasUsuario.get(0) )).setPrefWidth(tablaUsuarios.getWidth()*0.20);
-        ((TableColumn)( columnasUsuario.get(1) )).setPrefWidth(tablaUsuarios.getWidth()*0.38);
+        ((TableColumn)( columnasUsuario.get(0) )).setPrefWidth(tablaUsuarios.getWidth()*0.23);
+        ((TableColumn)( columnasUsuario.get(1) )).setPrefWidth(tablaUsuarios.getWidth()*0.21);
         ((TableColumn)( columnasUsuario.get(2) )).setPrefWidth(tablaUsuarios.getWidth()*0.15);
-        ((TableColumn)( columnasUsuario.get(3) )).setPrefWidth(tablaUsuarios.getWidth()*0.25);
+        ((TableColumn)( columnasUsuario.get(3) )).setPrefWidth(tablaUsuarios.getWidth()*0.38);
     }    
 
     private void iniciarEstructuraTablas(){
@@ -264,22 +264,22 @@ public class MantUsuariosPage implements Initializable {
         tablaUsuarios.getColumns().clear();
         TableColumn columnaCodigo = new TableColumn<>("Correo");
         columnaCodigo.setCellValueFactory(new PropertyValueFactory<>("userID"));
-        columnaCodigo.setPrefWidth(tablaUsuarios.getWidth()*0.25);
+        columnaCodigo.setPrefWidth(tablaUsuarios.getWidth()*0.23);
 
         TableColumn columnaUsuario = new TableColumn<>("Nombre");
         columnaUsuario.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-        columnaUsuario.setPrefWidth(tablaUsuarios.getWidth()*0.25);
+        columnaUsuario.setPrefWidth(tablaUsuarios.getWidth()*0.21);
 
         TableColumn columnaNivelAcceso = new TableColumn<>("Nivel de acceso");
         columnaNivelAcceso.setCellValueFactory(new PropertyValueFactory<>("nivelAcceso"));
-        columnaNivelAcceso.setPrefWidth(tablaUsuarios.getWidth()*0.20);
+        columnaNivelAcceso.setPrefWidth(tablaUsuarios.getWidth()*0.15);
 
         TableColumn columnaArea = new TableColumn<>("Areas");
         columnaArea.setCellValueFactory(new PropertyValueFactory<>("stringDeArea"));
-        columnaArea.setPrefWidth(tablaUsuarios.getWidth()*0.28);
+        columnaArea.setPrefWidth(tablaUsuarios.getWidth()*0.38);
 
         
-        tablaUsuarios.getColumns().addAll(columnaCodigo, columnaUsuario, columnaNivelAcceso, columnaArea);
+        tablaUsuarios.getColumns().addAll(columnaUsuario, columnaCodigo, columnaNivelAcceso, columnaArea);
 
     }
     

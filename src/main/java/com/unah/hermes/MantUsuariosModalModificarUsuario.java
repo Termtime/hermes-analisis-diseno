@@ -29,6 +29,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -100,21 +101,16 @@ public class MantUsuariosModalModificarUsuario implements Initializable {
         // validaciones de caja de texto
         if(!areasSeleccionadas.isEmpty()){
             if( txtNombre.getText().trim()!=null ){
-            db.modificarUsuario(usuarioDatos.uid,txtCorreo.getText(), txtNombre.getText(),
-            comboNivelAcceso.getSelectionModel().getSelectedItem().toString(), areasSeleccionadas);
-            System.out.println("problemas con uid");
-            System.out.println(usuarioDatos.uid);
-            System.out.println("problemas con uid");
+                db.modificarUsuario(usuarioDatos.uid,txtCorreo.getText(), txtNombre.getText(),
+                comboNivelAcceso.getSelectionModel().getSelectedItem().toString(), areasSeleccionadas);
 
-            if(!txtContrasena.getText().trim().isEmpty() && txtContrasena.getText().trim().length() >= 6){
-                db.cambiarPassword(usuarioDatos.uid, txtContrasena.getText().trim());
-                Navigation.mostrarAlertConfirmacion("Se lleno el formulario de correctamente", event);
-                if(Navigation.mostrarAlertConfirmacion("Se lleno el formulario de correctamente", event)==true){
-                cerrarVentana();     
-                }           
-            }
-             
-            }
+                if(!txtContrasena.getText().trim().isEmpty() && txtContrasena.getText().trim().length() >= 6 && checkCambiarContra.isSelected()){
+                    db.cambiarPassword(usuarioDatos.uid, txtContrasena.getText().trim());
+                }
+                
+                Navigation.mostrarAlertExito("Usuario editado correctamente", event);
+                cerrarVentana(); 
+            }   
 
             if (selectedFile != null) {
                 db.uploadImage(FirestorageRoutes.USUARIOS, selectedFile, txtCorreo.getText());
@@ -179,6 +175,13 @@ public class MantUsuariosModalModificarUsuario implements Initializable {
     @FXML private void btnCancelarClick(ActionEvent event) {
         cerrarVentana();
     }
+    @FXML private void checkCambiarContraClick(ActionEvent event){
+        if(checkCambiarContra.isSelected()){
+            txtContrasena.setDisable(false);
+        }else{
+            txtContrasena.setDisable(true);
+        }
+    }
     
     @FXML Button btnCancelar;
     @FXML Pane panelJefeUsuario;
@@ -200,6 +203,7 @@ public class MantUsuariosModalModificarUsuario implements Initializable {
     @FXML Rectangle marco;
     @FXML AnchorPane mantUsuariosModalModificarUsuario;
     @FXML Label errorPass;
+    @FXML CheckBox checkCambiarContra;
 
     Window ventaPrincipalModificar;
     FirebaseConnector db;
@@ -223,8 +227,9 @@ public class MantUsuariosModalModificarUsuario implements Initializable {
         txtContrasena.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if(newValue.isEmpty()){
-                    btnModificar.setDisable(false);
+                if(txtContrasena.getText().trim().isEmpty()){
+                    System.out.println("hola");
+                    btnModificar.setDisable(true);
                     return;
                 }
                 if(newValue.length() >= 6){

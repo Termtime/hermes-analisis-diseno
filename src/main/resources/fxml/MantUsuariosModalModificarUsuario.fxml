@@ -3,6 +3,7 @@
 <?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
@@ -16,7 +17,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mantUsuariosModalModificarUsuario" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="542.0" prefWidth="647.0" styleClass="window-background-level3" stylesheets="@../styles/StyleTablasNivel3.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unah.hermes.MantUsuariosModalModificarUsuario">
+<AnchorPane fx:id="mantUsuariosModalModificarUsuario" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="542.0" prefWidth="647.0" styleClass="window-background-level3" stylesheets="@../styles/StyleTablasNivel3.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unah.hermes.MantUsuariosModalModificarUsuario">
    <children>
       <Label alignment="CENTER" layoutX="178.0" layoutY="39.0" prefHeight="39.0" prefWidth="224.0" text="Modificar Usuario" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="178.0" AnchorPane.rightAnchor="176.0" AnchorPane.topAnchor="40.0">
          <font>
@@ -27,7 +28,7 @@
          <children>
             <Pane layoutX="2.0">
                <children>
-                  <TextField id="txtAreaNueva" fx:id="txtNombre" layoutY="23.0" prefHeight="26.0" prefWidth="360.0">
+                  <TextField id="txtAreaNueva" fx:id="txtNombre" layoutY="23.0" prefHeight="26.0" prefWidth="360.0" promptText="Primer nombre y Primer Apellido">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -46,7 +47,7 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <TextField id="txtAreaNueva" fx:id="txtCorreo" layoutY="23.0" prefHeight="26.0" prefWidth="360.0">
+                  <TextField id="txtAreaNueva" fx:id="txtCorreo" layoutY="23.0" prefHeight="26.0" prefWidth="360.0" promptText="correo@dominio.com">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -65,17 +66,17 @@
             </Pane>
             <Pane layoutX="2.0" layoutY="318.0">
                <children>
-                  <Label text="Cambiar contraseña:">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-                  <PasswordField fx:id="txtContrasena" layoutX="-2.0" layoutY="23.0" prefHeight="30.0" prefWidth="360.0" />
+                  <PasswordField fx:id="txtContrasena" disable="true" layoutX="-2.0" layoutY="23.0" prefHeight="30.0" prefWidth="360.0" promptText="escriba la nueva contraseña" />
                   <Label fx:id="errorPass" layoutY="52.0" style="-fx-text-fill: #fb4949;">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
+                  <CheckBox fx:id="checkCambiarContra" mnemonicParsing="false" onAction="#checkCambiarContraClick" text="Cambiar contraseña:" textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </CheckBox>
                </children>
             </Pane>
             <Pane layoutX="2.0" layoutY="128.0" prefHeight="107.0" prefWidth="360.0">
