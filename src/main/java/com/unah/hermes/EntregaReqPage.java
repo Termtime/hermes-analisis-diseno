@@ -28,6 +28,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -152,8 +153,14 @@ public class EntregaReqPage implements Initializable {
         columnaCantidadEntregada.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Producto, Integer>>() {
             @Override
             public void handle(TableColumn.CellEditEvent<Producto, Integer> t) {
-                t.getRowValue().cantEntregada = t.getNewValue();
-                
+                if(t.getRowValue().cantPedida >= t.getNewValue()){
+                    t.getRowValue().cantEntregada = t.getNewValue();
+                }
+                else{
+                    t.getRowValue().cantEntregada = t.getOldValue();
+                    tablaVistaPrevia.getColumns().get(2).setVisible(false);
+                    tablaVistaPrevia.getColumns().get(2).setVisible(true);
+                }
             }
         });
         
