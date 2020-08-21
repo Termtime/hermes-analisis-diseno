@@ -1,5 +1,6 @@
 package com.unah.hermes;
 
+import java.io.File;
 import java.net.URL;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -11,6 +12,8 @@ import java.util.ResourceBundle;
 import java.util.function.Function;
 
 import com.google.cloud.firestore.ListenerRegistration;
+import com.unah.data.mock.ProductoMock;
+import com.unah.data.mock.RequisicionMock;
 import com.unah.hermes.objects.Producto;
 import com.unah.hermes.objects.Requisicion;
 import com.unah.hermes.provider.FirebaseConnector;
@@ -53,6 +56,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.Duration;
+import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -65,11 +69,22 @@ public class MainPage implements Initializable {
     @FXML
     void menuBtnReporteMensualClick(ActionEvent event) {
         try {
-            Map<String,Object> params = new HashMap();
+            
+            Map<String,Object> productosReq = new HashMap();
+            List<List<Producto>> productosList = new ArrayList<>();
+            for(Requisicion req : RequisicionesEntregadas){
+                productosList.add(req.productos);
+            }
+            
+            productosReq.put("productosRequisa", new JRBeanCollectionDataSource(productosList));
             JasperReport jr =  JasperCompileManager.compileReport("reporteMensualOficial.jrxml");
-            JasperPrint jp = JasperFillManager.fillReport(jr, params, getDatosMensuales());
-            JasperViewer jv = new JasperViewer(jp);
-            jv.setVisible(true);
+            JRDataSource datos = getDatosMensuales();
+
+            if(datos != null){
+                JasperPrint jp = JasperFillManager.fillReport(jr, null, datos );
+                JasperViewer jv = new JasperViewer(jp, false);
+                jv.setVisible(true);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -450,7 +465,7 @@ public class MainPage implements Initializable {
         tablaD.getColumns().addAll(columnaProductoD, columnaUnidadD, columnaCantidadPedidaD);
     }
     private void popularTablaRequisicionesPDConProductos(TableView<Producto> tabla,
-            ObservableList<Producto> productos) {
+            List<Producto> productos) {
         try {
             tabla.getItems().clear();
             if (productos == null)
@@ -462,7 +477,7 @@ public class MainPage implements Initializable {
             e.printStackTrace();
         }
     }
-    private void popularTablaRequisicionesEntregadas(TableView<Producto> tabla, ObservableList<Producto> productos) {
+    private void popularTablaRequisicionesEntregadas(TableView<Producto> tabla, List<Producto> productos) {
         try {
             tabla.getItems().clear();
             if (productos == null)
@@ -805,15 +820,31 @@ public class MainPage implements Initializable {
             Navigation.mostrarAlertError("Debe seleccionar una requisicion antes", event);
         }
     }
-    private JRBeanCollectionDataSource getDatosMensuales(){
+
+    private JRDataSource getDatosMensuales(){
         LocalDate now = LocalDate.now();
-        List<Requisicion> requisicionesSeleccionadas = new ArrayList<>();
+        // ArrayList<ProductoMock> prods = new ArrayList<>();
+        List<RequisicionMock> requisicionesSeleccionadas = new ArrayList<>();
+        if(RequisicionesEntregadas.isEmpty()){
+            Navigation.mostrarAlertError("", new ActionEvent(mainPage, mainPage));
+            return null;
+        }
         for(Requisicion req : RequisicionesEntregadas){
             //si la requisicion es del mes actual
             if(req.fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getMonthValue() == now.getMonthValue()){
-                requisicionesSeleccionadas.add(req);
+                requisicionesSeleccionadas.add(new RequisicionMock(req));
             }
         }
-        return new JRBeanCollectionDataSource(requisicionesSeleccionadas);
+        
+        // prods.add(new ProductoMock("2", "Mantequilla", "Libra", 1, 1, 0, "Mas azucar"));
+        // prods.add(new ProductoMock("3", "Pescado", "Libra", 10, 2, 0, "Mucho pescado"));
+        // prods.add(new ProductoMock("4", "Arroz", "Libra", 5, 4, 1, "se puede cambiar por asparragos"));
+
+        // requisicionesSeleccionadas.add(new RequisicionMock("1", "Cocina / 25-07-2020 / 11:41:41", "Entregada", "Cocina", "Mario", true, "Edgardo", new Date(2020,7,25), prods));
+        // requisicionesSeleccionadas.add(new RequisicionMock("2", "Bar / 29-07-2020 / 11:41:41", "Entregada", "Bar", "Edgardo", true, "Mario", new Date(2020,7,28), prods));
+        // requisicionesSeleccionadas.add(new RequisicionMock("3", "Cocina / 30-07-2020 / 11:41:41", "Entregada", "Cocina", "Boris", true, "Edgardo", new Date(2020,7,29), prods));
+
+        JRDataSource dataSource = new JRBeanCollectionDataSource(requisicionesSeleccionadas);
+        return dataSource;
     }
 }

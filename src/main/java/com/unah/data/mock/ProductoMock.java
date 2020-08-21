@@ -1,5 +1,6 @@
 package com.unah.data.mock;
 
+import com.unah.hermes.objects.Producto;
 
 public class ProductoMock {
     public String productoID = null;
@@ -20,6 +21,16 @@ public class ProductoMock {
         this.cantPedida = cantPedida;
         this.cantPendiente = cantPendiente;
         this.comentario = comentario;
+    }   
+
+    public ProductoMock(Producto prod){
+        this.productoID = prod.productoID != null && !prod.productoID.isEmpty()? prod.productoID : "";
+        this.nombre = prod.nombre != null && !prod.nombre.isEmpty()? prod.nombre : "";
+        this.unidad = prod.unidad != null && !prod.unidad.isEmpty()? prod.unidad : "";
+        this.cantEntregada = prod.cantEntregada;
+        this.cantPedida = prod.cantPedida;
+        this.cantPendiente = prod.cantPendiente;
+        this.comentario = prod.comentario != null && !prod.comentario.isEmpty()? prod.comentario : "";
     }
 
     public String getProductoID() {

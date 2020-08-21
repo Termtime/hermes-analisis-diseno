@@ -4,6 +4,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.unah.hermes.objects.Producto;
+import com.unah.hermes.objects.Requisicion;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
@@ -16,7 +19,8 @@ public class RequisicionMock {
     public Boolean estaAutorizado;
     public String nombreDisplay;
     public String solicitante;
-    public JRBeanCollectionDataSource productos;
+    public List<ProductoMock> productos;
+    // public JRBeanCollectionDataSource productos;
     public Date fecha;
     public String fechaString;
     public String hora;
@@ -35,10 +39,33 @@ public class RequisicionMock {
             this.fecha = fecha;
             this.fechaString = fecha.toString().substring(0,(fecha.toString().indexOf(":")-2));
             this.hora = fecha.toString().substring((fecha.toString().indexOf(":")-2));
-            this.productos = new JRBeanCollectionDataSource(prods);
+            this.productos = prods;
         }catch(Exception e){
             e.printStackTrace();
         }
+    }
+
+    public RequisicionMock(Requisicion req){
+        this.reqID = req.reqID != null && !req.reqID.isEmpty()? req.reqID : "";
+        // this.reqID = req.reqID != null && !req.reqID.isEmpty()? req.reqID : "";
+        this.nombreDisplay = req.nombreDisplay != null && !req.nombreDisplay.isEmpty()? req.nombreDisplay : "";
+        this.estado = req.estado != null && !req.estado.isEmpty()? req.estado : "";
+        this.area = req.area != null && !req.area.isEmpty()? req.area : "";
+        this.autorizador = req.autorizador != null && !req.autorizador.isEmpty()? req.autorizador : "";
+        this.estaAutorizado = req.estaAutorizado != null? req.estaAutorizado : false;
+        this.solicitante = req.solicitante != null && !req.solicitante.isEmpty()? req.solicitante : "";
+        //TODO revisar esto
+        this.fecha = req.fecha != null? req.fecha : new Date();
+        this.fechaString = req.fechaString != null && !req.fechaString.isEmpty()? req.fechaString : "";
+        this.hora = req.hora != null && !req.hora.isEmpty()? req.hora : "";
+        List<ProductoMock> productosConvertidos = new ArrayList();
+        for(Producto prod : req.productos){
+            ProductoMock tmp = new ProductoMock(prod);
+            productosConvertidos.add(tmp);
+            System.out.println("producto convertido");
+        }
+        this.productos = productosConvertidos;
+        // this.productos = new JRBeanCollectionDataSource(productosConvertidos);
     }
     @Override
     public String toString(){
@@ -126,12 +153,21 @@ public class RequisicionMock {
         this.hora = hora;
     }
 
-    public JRBeanCollectionDataSource getProductos() {
+    public List<ProductoMock> getProductos() {
         return productos;
     }
 
-    public void setProductos(JRBeanCollectionDataSource productos) {
+    public void setProductos(List<ProductoMock> productos) {
         this.productos = productos;
     }
+
+    // public JRBeanCollectionDataSource getProductos() {
+    //     return productos;
+    // }
+
+    // public void setProductos(JRBeanCollectionDataSource productos) {
+    //     this.productos = productos;
+    // }
+    
 
 }
