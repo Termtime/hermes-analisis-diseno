@@ -114,9 +114,9 @@
 					</textElement>
 					<text><![CDATA[Herramienta para la Entrega de Requisas por Medios Electronicos Sistematizados]]></text>
 				</staticText>
-				<image onErrorType="Blank">
-					<reportElement x="510" y="10" width="70" height="70" uuid="79807c4a-8ecd-4133-9fe7-19e1df93b6a0"/>
-					<imageExpression><![CDATA["/src/main/resources/images/logo.png"]]></imageExpression>
+				<image>
+					<reportElement x="510" y="10" width="74" height="77" uuid="84e589ff-10e6-4df4-96d9-0903a5379cba"/>
+					<imageExpression><![CDATA["./src/main/resources/images/logo.png"]]></imageExpression>
 				</image>
 			</frame>
 		</band>

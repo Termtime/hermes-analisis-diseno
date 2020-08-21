@@ -77,9 +77,6 @@
 	<field name="solicitante" class="java.lang.String">
 		<fieldDescription><![CDATA[solicitante]]></fieldDescription>
 	</field>
-	<field name="class" class="java.lang.Class">
-		<fieldDescription><![CDATA[class]]></fieldDescription>
-	</field>
 	<field name="productos" class="java.util.List">
 		<fieldDescription><![CDATA[productos]]></fieldDescription>
 	</field>
@@ -102,21 +99,21 @@
 				<staticText>
 					<reportElement x="20" y="20" width="234" height="43" forecolor="#FFFFFF" uuid="909f81d7-a37e-41fa-8770-ad3e2bcc31ed"/>
 					<textElement>
-						<font size="34" isBold="true"/>
+						<font fontName="Arial" size="34" isBold="true"/>
 					</textElement>
 					<text><![CDATA[H.E.R.M.E.S]]></text>
 				</staticText>
 				<staticText>
 					<reportElement x="20" y="60" width="555" height="20" forecolor="#FFFFFF" uuid="15d81594-838d-42ad-b79e-d11ca508c5d7"/>
 					<textElement textAlignment="Left">
-						<font size="11" isBold="false"/>
+						<font fontName="Arial" size="11" isBold="false"/>
 						<paragraph lineSpacing="Single"/>
 					</textElement>
 					<text><![CDATA[Herramienta para la Entrega de Requisas por Medios Electronicos Sistematizados]]></text>
 				</staticText>
-				<image onErrorType="Blank">
-					<reportElement x="510" y="10" width="70" height="70" uuid="13046767-14e4-4a29-950d-d9107024518f"/>
-					<imageExpression><![CDATA["/src/main/resources/images/logo.png"]]></imageExpression>
+				<image>
+					<reportElement x="520" y="11" width="70" height="70" uuid="3eeebcca-f78d-4d14-a754-58d100949233"/>
+					<imageExpression><![CDATA["./src/main/resources/images/logo.png"]]></imageExpression>
 				</image>
 			</frame>
 		</band>
@@ -129,14 +126,17 @@
 			<line>
 				<reportElement x="-20" y="60" width="595" height="1" forecolor="#666666" uuid="f3bf8a53-4779-4372-a5e1-afa315db54f8"/>
 			</line>
-			<textField>
+			<textField pattern="MM/d/yyyy">
 				<reportElement x="70" y="40" width="80" height="20" uuid="119d3d7c-e22d-423f-9cc1-3551f9a908dc"/>
-				<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="7" y="40" width="53" height="20" uuid="f4e4a1ae-a74e-43f6-9589-24a132e7dd49"/>
 				<textElement>
-					<font isBold="true"/>
+					<font fontName="Arial" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Fecha]]></text>
 			</staticText>
@@ -155,58 +155,73 @@
 				<reportElement positionType="FixRelativeToBottom" x="0" y="-5" width="555" height="1" uuid="c6a0f432-1536-43f4-8e10-ecf2333243b8"/>
 			</line>
 			<staticText>
-				<reportElement x="7" y="-24" width="100" height="20" uuid="ff8d43fc-586d-41b8-8a56-4aeb54cd7f60"/>
+				<reportElement x="7" y="-24" width="62" height="20" uuid="ff8d43fc-586d-41b8-8a56-4aeb54cd7f60"/>
 				<textElement>
-					<font isBold="true"/>
+					<font fontName="Arial" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Requisición]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="107" y="-24" width="100" height="20" uuid="59baa075-d48f-4360-ae2b-24d3c29c0dad"/>
+				<reportElement x="69" y="-24" width="100" height="20" uuid="59baa075-d48f-4360-ae2b-24d3c29c0dad"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{reqID}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="10" y="0" width="53" height="20" uuid="19601392-fef9-4d10-a1eb-ed9530224cb6"/>
 				<textElement>
-					<font isBold="true"/>
+					<font fontName="Arial" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Fecha]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="70" y="0" width="100" height="20" uuid="72986172-12f4-4037-a1bf-7e41caa21e05"/>
+				<reportElement x="69" y="0" width="100" height="20" uuid="72986172-12f4-4037-a1bf-7e41caa21e05"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="170" y="0" width="53" height="20" uuid="4265842c-8bc9-4c6d-9e25-aa3db1e3b973"/>
 				<textElement>
-					<font isBold="true"/>
+					<font fontName="Arial" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Hora]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="230" y="0" width="100" height="20" uuid="3a2fe580-07b8-48b6-b3ca-a2259599f040"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{hora}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="10" y="26" width="53" height="14" uuid="81ff1bba-ad53-4f6b-881e-d67106fbb5d7"/>
 				<textElement>
-					<font isBold="true"/>
+					<font fontName="Arial" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Área]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="70" y="26" width="100" height="14" uuid="048d032f-24b7-40d0-94c1-4241fe43d954"/>
+				<reportElement x="69" y="26" width="100" height="14" uuid="048d032f-24b7-40d0-94c1-4241fe43d954"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{area}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="170" y="26" width="53" height="14" uuid="6ba8e922-a456-4304-9fda-8f59173e1bbf"/>
 				<textElement>
-					<font isBold="true"/>
+					<font fontName="Arial" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Solicitante]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="230" y="26" width="100" height="14" uuid="c969e049-2593-47b0-afcc-ffbceffe7c09"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{solicitante}]]></textFieldExpression>
 			</textField>
 			<componentElement>
@@ -225,14 +240,18 @@
 						<jr:tableHeader style="Table 8_TH" height="30">
 							<staticText>
 								<reportElement x="0" y="0" width="140" height="30" forecolor="#F2F2F2" uuid="c49feb1e-a9c8-4c4a-aef5-e9f63ce5af40"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Arial"/>
+								</textElement>
 								<text><![CDATA[Nombre]]></text>
 							</staticText>
 						</jr:tableHeader>
 						<jr:detailCell style="Table 8_TD" height="30">
 							<textField>
 								<reportElement x="0" y="0" width="140" height="30" uuid="0aa97418-1136-46fc-826f-97e5d0e03c8e"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Arial"/>
+								</textElement>
 								<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
@@ -242,14 +261,18 @@
 						<jr:tableHeader style="Table 8_TH" height="30">
 							<staticText>
 								<reportElement x="0" y="0" width="120" height="30" forecolor="#F2F2F2" uuid="b9638dc7-0b8b-45ef-9fd4-f36167285a59"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Arial"/>
+								</textElement>
 								<text><![CDATA[Unidad]]></text>
 							</staticText>
 						</jr:tableHeader>
 						<jr:detailCell style="Table 8_TD" height="30">
 							<textField>
 								<reportElement x="0" y="0" width="120" height="30" uuid="de3e30f2-3869-4062-8d2a-60d03a9869a2"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Arial"/>
+								</textElement>
 								<textFieldExpression><![CDATA[$F{unidad}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
@@ -259,14 +282,18 @@
 						<jr:tableHeader style="Table 8_TH" height="30">
 							<staticText>
 								<reportElement x="0" y="0" width="60" height="30" forecolor="#F2F2F2" uuid="0f5a2288-8c82-4234-92f1-a3603ad3a8c3"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Arial"/>
+								</textElement>
 								<text><![CDATA[C. Pedida]]></text>
 							</staticText>
 						</jr:tableHeader>
 						<jr:detailCell style="Table 8_TD" height="30">
 							<textField>
 								<reportElement x="0" y="0" width="60" height="30" uuid="96b6bf6f-0791-4736-a769-0ca083cdf64e"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Arial"/>
+								</textElement>
 								<textFieldExpression><![CDATA[$F{cantPedida}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
@@ -276,14 +303,18 @@
 						<jr:tableHeader style="Table 8_TH" height="30">
 							<staticText>
 								<reportElement x="0" y="0" width="60" height="30" forecolor="#F2F2F2" uuid="dce355b3-2075-446a-8436-baffa96e0fb1"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Arial"/>
+								</textElement>
 								<text><![CDATA[C. Entregada]]></text>
 							</staticText>
 						</jr:tableHeader>
 						<jr:detailCell style="Table 8_TD" height="30">
 							<textField>
 								<reportElement x="0" y="0" width="60" height="30" uuid="8a5e61cf-135f-4624-a9a6-7ff7d23c0e4f"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Arial"/>
+								</textElement>
 								<textFieldExpression><![CDATA[$F{cantEntregada}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
@@ -293,14 +324,18 @@
 						<jr:tableHeader style="Table 8_TH" height="30">
 							<staticText>
 								<reportElement x="0" y="0" width="175" height="30" forecolor="#F2F2F2" uuid="cac96915-48df-4034-a238-aa73246e343e"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Arial"/>
+								</textElement>
 								<text><![CDATA[Comentario]]></text>
 							</staticText>
 						</jr:tableHeader>
 						<jr:detailCell style="Table 8_TD" height="30">
 							<textField>
 								<reportElement x="0" y="0" width="175" height="30" uuid="436dea35-03fb-40f0-afd3-6076a8ff6c72"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Arial"/>
+								</textElement>
 								<textFieldExpression><![CDATA[$F{comentario}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
@@ -317,7 +352,7 @@
 			<textField>
 				<reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6" uuid="95ba1684-bdc5-436d-8454-2088dae76956"/>
 				<textElement textAlignment="Right"/>
-				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
 				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="b88a8b97-9211-4763-a51b-962142f0398b"/>

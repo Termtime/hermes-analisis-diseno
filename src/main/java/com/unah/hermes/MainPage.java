@@ -69,14 +69,10 @@ public class MainPage implements Initializable {
     @FXML
     void menuBtnReporteMensualClick(ActionEvent event) {
         try {
-            
-            Map<String,Object> productosReq = new HashMap();
-            List<List<Producto>> productosList = new ArrayList<>();
-            for(Requisicion req : RequisicionesEntregadas){
-                productosList.add(req.productos);
+            if(RequisicionesEntregadas.isEmpty()){
+                Navigation.mostrarAlertError("No hay requisiciones por mostrar", event);
+                return;
             }
-            
-            productosReq.put("productosRequisa", new JRBeanCollectionDataSource(productosList));
             JasperReport jr =  JasperCompileManager.compileReport("reporteMensualOficial.jrxml");
             JRDataSource datos = getDatosMensuales();
 
@@ -84,6 +80,28 @@ public class MainPage implements Initializable {
                 JasperPrint jp = JasperFillManager.fillReport(jr, null, datos );
                 JasperViewer jv = new JasperViewer(jp, false);
                 jv.setVisible(true);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    @FXML
+    void menuBtnReporteRqEClick(ActionEvent event) {
+        try {
+            if(tablaESelectedItem == null){
+                Navigation.mostrarAlertError("Debe seleccionar una requisicion entregada", event);
+                return;
+            }
+            JasperReport jr =  JasperCompileManager.compileReport("reporteRequisicionesOficial.jrxml");
+            JRDataSource datos = getDatosReqEntregada();
+
+            if(datos != null){
+                JasperPrint jp = JasperFillManager.fillReport(jr, null, datos );
+                JasperViewer jv = new JasperViewer(jp, false);
+                jv.setVisible(true);
+            }else{
+                Navigation.mostrarAlertError("No hay requisiciones entregadas este mes", event);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -823,27 +841,23 @@ public class MainPage implements Initializable {
 
     private JRDataSource getDatosMensuales(){
         LocalDate now = LocalDate.now();
-        // ArrayList<ProductoMock> prods = new ArrayList<>();
         List<RequisicionMock> requisicionesSeleccionadas = new ArrayList<>();
-        if(RequisicionesEntregadas.isEmpty()){
-            Navigation.mostrarAlertError("", new ActionEvent(mainPage, mainPage));
-            return null;
-        }
         for(Requisicion req : RequisicionesEntregadas){
             //si la requisicion es del mes actual
             if(req.fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getMonthValue() == now.getMonthValue()){
                 requisicionesSeleccionadas.add(new RequisicionMock(req));
             }
         }
-        
-        // prods.add(new ProductoMock("2", "Mantequilla", "Libra", 1, 1, 0, "Mas azucar"));
-        // prods.add(new ProductoMock("3", "Pescado", "Libra", 10, 2, 0, "Mucho pescado"));
-        // prods.add(new ProductoMock("4", "Arroz", "Libra", 5, 4, 1, "se puede cambiar por asparragos"));
+        if(requisicionesSeleccionadas.isEmpty()){
+            return null;
+        }
+        JRDataSource dataSource = new JRBeanCollectionDataSource(requisicionesSeleccionadas);
+        return dataSource;
+    }
 
-        // requisicionesSeleccionadas.add(new RequisicionMock("1", "Cocina / 25-07-2020 / 11:41:41", "Entregada", "Cocina", "Mario", true, "Edgardo", new Date(2020,7,25), prods));
-        // requisicionesSeleccionadas.add(new RequisicionMock("2", "Bar / 29-07-2020 / 11:41:41", "Entregada", "Bar", "Edgardo", true, "Mario", new Date(2020,7,28), prods));
-        // requisicionesSeleccionadas.add(new RequisicionMock("3", "Cocina / 30-07-2020 / 11:41:41", "Entregada", "Cocina", "Boris", true, "Edgardo", new Date(2020,7,29), prods));
-
+    private JRDataSource getDatosReqEntregada(){
+        List<RequisicionMock> requisicionesSeleccionadas = new ArrayList<>();
+        requisicionesSeleccionadas.add(new RequisicionMock(tablaESelectedItem));
         JRDataSource dataSource = new JRBeanCollectionDataSource(requisicionesSeleccionadas);
         return dataSource;
     }

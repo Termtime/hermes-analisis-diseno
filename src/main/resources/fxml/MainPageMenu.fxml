@@ -23,11 +23,10 @@
 
 <AnchorPane id="AnchorPane" fx:id="mainPage" minHeight="661.0" minWidth="1109.0" prefHeight="661.0" prefWidth="1303.0" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unah.hermes.MainPage">
    <children>
-      <MenuBar prefHeight="25.0" prefWidth="600.0" styleClass="window-background-level1" AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <MenuBar prefHeight="25.0" prefWidth="600.0" styleClass="window-background-level1" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <menus>
           <Menu id="Archivo" mnemonicParsing="false" text="Archivo">
             <items>
-                  <MenuItem fx:id="menuBtnReporteMensual" mnemonicParsing="false" onAction="#menuBtnReporteMensualClick" text="Imprimir reporte mensual" />
               <MenuItem id="Cerrar" fx:id="menuBtnCerrar" mnemonicParsing="false" onAction="#menuBtnCerrarClick" text="Cerrar">
                      <accelerator>
                         <KeyCodeCombination alt="DOWN" code="F4" control="UP" meta="UP" shift="UP" shortcut="UP" />
@@ -62,6 +61,12 @@
                      </accelerator></MenuItem>
             </items>
           </Menu>
+            <Menu id="Reportes" mnemonicParsing="false" text="Reportes">
+              <items>
+                <MenuItem id="Reporte de Requisicion Entregada" fx:id="menuBtnReporteRqE" mnemonicParsing="false" onAction="#menuBtnReporteRqEClick" text="Reporte de Req. Entregada" />
+                  <MenuItem id="Reporte Mensual" fx:id="menuBtnReporteMensual" mnemonicParsing="false" onAction="#menuBtnReporteMensualClick" text="Reporte Mensual" />
+              </items>
+            </Menu>
         </menus>
       </MenuBar>
       <AnchorPane layoutY="22.0" prefHeight="213.0" prefWidth="1162.0" AnchorPane.bottomAnchor="-9.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="6.2000000000000455" AnchorPane.topAnchor="22.0">
