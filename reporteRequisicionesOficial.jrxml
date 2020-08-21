@@ -180,7 +180,7 @@
 				<textElement>
 					<font fontName="Arial"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{fechaString}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="170" y="0" width="53" height="20" uuid="4265842c-8bc9-4c6d-9e25-aa3db1e3b973"/>

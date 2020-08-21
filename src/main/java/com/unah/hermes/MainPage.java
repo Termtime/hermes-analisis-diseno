@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import com.google.cloud.firestore.ListenerRegistration;
 import com.unah.data.mock.ProductoMock;
@@ -107,6 +108,26 @@ public class MainPage implements Initializable {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    void menuBtnReporteProdsMensualClick(ActionEvent event) {
+        try {
+            JasperReport jr =  JasperCompileManager.compileReport("reporteProductosMensual.jrxml");
+            JRDataSource datos = productosMasDespachados();
+
+            if(datos != null){
+                JasperPrint jp = JasperFillManager.fillReport(jr, null, datos );
+                JasperViewer jv = new JasperViewer(jp, false);
+                jv.setVisible(true);
+            }else{
+                Navigation.mostrarAlertError("No hay productos despachados este mes", event);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+    }
+
     @FXML private void menuBtnCerrarClick(ActionEvent event) {
         Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
         stage.close();
@@ -860,5 +881,32 @@ public class MainPage implements Initializable {
         requisicionesSeleccionadas.add(new RequisicionMock(tablaESelectedItem));
         JRDataSource dataSource = new JRBeanCollectionDataSource(requisicionesSeleccionadas);
         return dataSource;
+    }
+
+    private JRDataSource productosMasDespachados(){
+        List<ProductoMock> productos = new ArrayList();
+        List<Producto> prodsDespacho = new ArrayList();
+        Map<String, Integer> cantidadPorProd = new HashMap<>();
+        LocalDate now = LocalDate.now();
+        List<RequisicionMock> requisicionesSeleccionadas = new ArrayList<>();
+        for(Requisicion req : RequisicionesEntregadas){
+            //si la requisicion es del mes actual
+            if(req.fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getMonthValue() == now.getMonthValue()){
+                for(Producto prod : req.productos){
+                    cantidadPorProd.put(prod.nombre, cantidadPorProd.getOrDefault(prod.nombre, 0) + prod.cantEntregada);
+                }
+            }
+        }
+        if(cantidadPorProd.isEmpty()){
+            return null;
+        }
+        for(String nombre : cantidadPorProd.keySet()){
+            prodsDespacho.add(new Producto(nombre, cantidadPorProd.get(nombre)));
+        }
+
+
+        System.out.println(cantidadPorProd);
+        
+        return new JRBeanCollectionDataSource(prodsDespacho);
     }
 }

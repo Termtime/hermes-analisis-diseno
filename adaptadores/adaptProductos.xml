@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beanDataAdapter class="net.sf.jasperreports.data.bean.BeanDataAdapterImpl"><name>adaptProductos</name><factoryClass>com.unah.data.mock.ProductoFactory</factoryClass><methodName>load</methodName><useFieldDescription>false</useFieldDescription></beanDataAdapter>

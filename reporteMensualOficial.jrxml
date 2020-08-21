@@ -115,7 +115,12 @@
 					<text><![CDATA[Herramienta para la Entrega de Requisas por Medios Electronicos Sistematizados]]></text>
 				</staticText>
 				<image>
-					<reportElement x="510" y="10" width="74" height="77" uuid="84e589ff-10e6-4df4-96d9-0903a5379cba"/>
+					<reportElement x="520" y="11" width="70" height="70" uuid="84e589ff-10e6-4df4-96d9-0903a5379cba">
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
 					<imageExpression><![CDATA["./src/main/resources/images/logo.png"]]></imageExpression>
 				</image>
 			</frame>
@@ -197,12 +202,12 @@
 				</textElement>
 				<text><![CDATA[Fecha]]></text>
 			</staticText>
-			<textField pattern="M/d/yy">
+			<textField>
 				<reportElement x="70" y="30" width="100" height="20" uuid="0c28213f-0034-4afe-8269-cfc0e9da04ac"/>
 				<textElement>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{fecha}.toString()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{fechaString}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="170" y="30" width="53" height="20" uuid="dcc810fb-c865-4849-9c79-220f574345d9"/>

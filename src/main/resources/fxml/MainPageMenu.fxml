@@ -65,6 +65,7 @@
               <items>
                 <MenuItem id="Reporte de Requisicion Entregada" fx:id="menuBtnReporteRqE" mnemonicParsing="false" onAction="#menuBtnReporteRqEClick" text="Reporte de Req. Entregada" />
                   <MenuItem id="Reporte Mensual" fx:id="menuBtnReporteMensual" mnemonicParsing="false" onAction="#menuBtnReporteMensualClick" text="Reporte Mensual" />
+                  <MenuItem id="Productos más vendidos" fx:id="menuBtnReporteProdsMensual" mnemonicParsing="false" onAction="#menuBtnReporteProdsMensualClick" text="Productos más vendidos del mes" />
               </items>
             </Menu>
         </menus>
