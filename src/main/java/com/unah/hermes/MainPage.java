@@ -1,6 +1,11 @@
 package com.unah.hermes;
 
 import java.net.URL;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.function.Function;
@@ -14,6 +19,7 @@ import com.unah.hermes.utils.EventListeners;
 import com.unah.hermes.utils.Navigation;
 
 import org.apache.commons.lang3.ArrayUtils;
+import org.threeten.bp.LocalDate;
 
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
@@ -47,9 +53,27 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.Duration;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.view.JasperViewer;
 
 public class MainPage implements Initializable {
     
+    @FXML
+    void menuBtnReporteMensualClick(ActionEvent event) {
+        try {
+            Map<String,Object> params = new HashMap();
+            JasperReport jr =  JasperCompileManager.compileReport("reporteMensualOficial.jrxml");
+            JasperPrint jp = JasperFillManager.fillReport(jr, params, getDatosMensuales());
+            JasperViewer jv = new JasperViewer(jp);
+            jv.setVisible(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     @FXML private void menuBtnCerrarClick(ActionEvent event) {
         Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
         stage.close();
@@ -780,5 +804,16 @@ public class MainPage implements Initializable {
         } else {
             Navigation.mostrarAlertError("Debe seleccionar una requisicion antes", event);
         }
+    }
+    private JRBeanCollectionDataSource getDatosMensuales(){
+        LocalDate now = LocalDate.now();
+        List<Requisicion> requisicionesSeleccionadas = new ArrayList<>();
+        for(Requisicion req : RequisicionesEntregadas){
+            //si la requisicion es del mes actual
+            if(req.fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getMonthValue() == now.getMonthValue()){
+                requisicionesSeleccionadas.add(req);
+            }
+        }
+        return new JRBeanCollectionDataSource(requisicionesSeleccionadas);
     }
 }

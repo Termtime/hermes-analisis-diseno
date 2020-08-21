@@ -23,10 +23,11 @@
 
 <AnchorPane id="AnchorPane" fx:id="mainPage" minHeight="661.0" minWidth="1109.0" prefHeight="661.0" prefWidth="1303.0" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.unah.hermes.MainPage">
    <children>
-      <MenuBar prefHeight="25.0" prefWidth="600.0" styleClass="window-background-level1" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <MenuBar prefHeight="25.0" prefWidth="600.0" styleClass="window-background-level1" AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <menus>
           <Menu id="Archivo" mnemonicParsing="false" text="Archivo">
             <items>
+                  <MenuItem fx:id="menuBtnReporteMensual" mnemonicParsing="false" onAction="#menuBtnReporteMensualClick" text="Imprimir reporte mensual" />
               <MenuItem id="Cerrar" fx:id="menuBtnCerrar" mnemonicParsing="false" onAction="#menuBtnCerrarClick" text="Cerrar">
                      <accelerator>
                         <KeyCodeCombination alt="DOWN" code="F4" control="UP" meta="UP" shift="UP" shortcut="UP" />
@@ -45,7 +46,7 @@
                      </accelerator></MenuItem>
             </items>
           </Menu>
-          <Menu id="Utilidad" mnemonicParsing="false" text="Utilidad">
+          <Menu id="Utilidad" mnemonicParsing="false" text="Utilitarios">
             <items>
               <MenuItem id="Mant Usuarios" fx:id="menuBtnMantUsuarios" mnemonicParsing="false" onAction="#menuBtnMantUsuariosClick" text="Mantenimiento de Usuarios">
                      <accelerator>
