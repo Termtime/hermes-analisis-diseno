@@ -32,6 +32,11 @@ public class Producto {
         }catch(Exception e){}
     }
     
+    //constructor para el reporte
+    public Producto(String nombre, int cantEntregada){
+        this.nombre = nombre;
+        this.cantEntregada = cantEntregada;
+    }
     //constructor para las tablas de requisiciones
     public Producto(String productoID, String nombre, String unidad, int cantEntregada, int cantPedida, int cantPendiente, String comentario)
     {

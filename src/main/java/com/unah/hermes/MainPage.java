@@ -1,11 +1,20 @@
 package com.unah.hermes;
 
+import java.io.File;
 import java.net.URL;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import com.google.cloud.firestore.ListenerRegistration;
+import com.unah.data.mock.ProductoMock;
+import com.unah.data.mock.RequisicionMock;
 import com.unah.hermes.objects.Producto;
 import com.unah.hermes.objects.Requisicion;
 import com.unah.hermes.provider.FirebaseConnector;
@@ -14,6 +23,7 @@ import com.unah.hermes.utils.EventListeners;
 import com.unah.hermes.utils.Navigation;
 
 import org.apache.commons.lang3.ArrayUtils;
+import org.threeten.bp.LocalDate;
 
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
@@ -47,9 +57,77 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.Duration;
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.view.JasperViewer;
 
 public class MainPage implements Initializable {
     
+    @FXML
+    void menuBtnReporteMensualClick(ActionEvent event) {
+        try {
+            if(RequisicionesEntregadas.isEmpty()){
+                Navigation.mostrarAlertError("No hay requisiciones por mostrar", event);
+                return;
+            }
+            JasperReport jr =  JasperCompileManager.compileReport("reporteMensualOficial.jrxml");
+            JRDataSource datos = getDatosMensuales();
+
+            if(datos != null){
+                JasperPrint jp = JasperFillManager.fillReport(jr, null, datos );
+                JasperViewer jv = new JasperViewer(jp, false);
+                jv.setVisible(true);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    @FXML
+    void menuBtnReporteRqEClick(ActionEvent event) {
+        try {
+            if(tablaESelectedItem == null){
+                Navigation.mostrarAlertError("Debe seleccionar una requisicion entregada", event);
+                return;
+            }
+            JasperReport jr =  JasperCompileManager.compileReport("reporteRequisicionesOficial.jrxml");
+            JRDataSource datos = getDatosReqEntregada();
+
+            if(datos != null){
+                JasperPrint jp = JasperFillManager.fillReport(jr, null, datos );
+                JasperViewer jv = new JasperViewer(jp, false);
+                jv.setVisible(true);
+            }else{
+                Navigation.mostrarAlertError("No hay requisiciones entregadas este mes", event);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void menuBtnReporteProdsMensualClick(ActionEvent event) {
+        try {
+            JasperReport jr =  JasperCompileManager.compileReport("reporteProductosMensual.jrxml");
+            JRDataSource datos = productosMasDespachados();
+
+            if(datos != null){
+                JasperPrint jp = JasperFillManager.fillReport(jr, null, datos );
+                JasperViewer jv = new JasperViewer(jp, false);
+                jv.setVisible(true);
+            }else{
+                Navigation.mostrarAlertError("No hay productos despachados este mes", event);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+    }
+
     @FXML private void menuBtnCerrarClick(ActionEvent event) {
         Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
         stage.close();
@@ -426,7 +504,7 @@ public class MainPage implements Initializable {
         tablaD.getColumns().addAll(columnaProductoD, columnaUnidadD, columnaCantidadPedidaD);
     }
     private void popularTablaRequisicionesPDConProductos(TableView<Producto> tabla,
-            ObservableList<Producto> productos) {
+            List<Producto> productos) {
         try {
             tabla.getItems().clear();
             if (productos == null)
@@ -438,7 +516,7 @@ public class MainPage implements Initializable {
             e.printStackTrace();
         }
     }
-    private void popularTablaRequisicionesEntregadas(TableView<Producto> tabla, ObservableList<Producto> productos) {
+    private void popularTablaRequisicionesEntregadas(TableView<Producto> tabla, List<Producto> productos) {
         try {
             tabla.getItems().clear();
             if (productos == null)
@@ -780,5 +858,55 @@ public class MainPage implements Initializable {
         } else {
             Navigation.mostrarAlertError("Debe seleccionar una requisicion antes", event);
         }
+    }
+
+    private JRDataSource getDatosMensuales(){
+        LocalDate now = LocalDate.now();
+        List<RequisicionMock> requisicionesSeleccionadas = new ArrayList<>();
+        for(Requisicion req : RequisicionesEntregadas){
+            //si la requisicion es del mes actual
+            if(req.fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getMonthValue() == now.getMonthValue()){
+                requisicionesSeleccionadas.add(new RequisicionMock(req));
+            }
+        }
+        if(requisicionesSeleccionadas.isEmpty()){
+            return null;
+        }
+        JRDataSource dataSource = new JRBeanCollectionDataSource(requisicionesSeleccionadas);
+        return dataSource;
+    }
+
+    private JRDataSource getDatosReqEntregada(){
+        List<RequisicionMock> requisicionesSeleccionadas = new ArrayList<>();
+        requisicionesSeleccionadas.add(new RequisicionMock(tablaESelectedItem));
+        JRDataSource dataSource = new JRBeanCollectionDataSource(requisicionesSeleccionadas);
+        return dataSource;
+    }
+
+    private JRDataSource productosMasDespachados(){
+        List<ProductoMock> productos = new ArrayList();
+        List<Producto> prodsDespacho = new ArrayList();
+        Map<String, Integer> cantidadPorProd = new HashMap<>();
+        LocalDate now = LocalDate.now();
+        List<RequisicionMock> requisicionesSeleccionadas = new ArrayList<>();
+        for(Requisicion req : RequisicionesEntregadas){
+            //si la requisicion es del mes actual
+            if(req.fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getMonthValue() == now.getMonthValue()){
+                for(Producto prod : req.productos){
+                    cantidadPorProd.put(prod.nombre, cantidadPorProd.getOrDefault(prod.nombre, 0) + prod.cantEntregada);
+                }
+            }
+        }
+        if(cantidadPorProd.isEmpty()){
+            return null;
+        }
+        for(String nombre : cantidadPorProd.keySet()){
+            prodsDespacho.add(new Producto(nombre, cantidadPorProd.get(nombre)));
+        }
+
+
+        System.out.println(cantidadPorProd);
+        
+        return new JRBeanCollectionDataSource(prodsDespacho);
     }
 }

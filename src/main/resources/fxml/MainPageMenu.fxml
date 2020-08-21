@@ -45,7 +45,7 @@
                      </accelerator></MenuItem>
             </items>
           </Menu>
-          <Menu id="Utilidad" mnemonicParsing="false" text="Utilidad">
+          <Menu id="Utilidad" mnemonicParsing="false" text="Utilitarios">
             <items>
               <MenuItem id="Mant Usuarios" fx:id="menuBtnMantUsuarios" mnemonicParsing="false" onAction="#menuBtnMantUsuariosClick" text="Mantenimiento de Usuarios">
                      <accelerator>
@@ -61,6 +61,13 @@
                      </accelerator></MenuItem>
             </items>
           </Menu>
+            <Menu id="Reportes" mnemonicParsing="false" text="Reportes">
+              <items>
+                <MenuItem id="Reporte de Requisicion Entregada" fx:id="menuBtnReporteRqE" mnemonicParsing="false" onAction="#menuBtnReporteRqEClick" text="Reporte de Req. Entregada" />
+                  <MenuItem id="Reporte Mensual" fx:id="menuBtnReporteMensual" mnemonicParsing="false" onAction="#menuBtnReporteMensualClick" text="Reporte Mensual" />
+                  <MenuItem id="Productos más vendidos" fx:id="menuBtnReporteProdsMensual" mnemonicParsing="false" onAction="#menuBtnReporteProdsMensualClick" text="Productos más vendidos del mes" />
+              </items>
+            </Menu>
         </menus>
       </MenuBar>
       <AnchorPane layoutY="22.0" prefHeight="213.0" prefWidth="1162.0" AnchorPane.bottomAnchor="-9.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="6.2000000000000455" AnchorPane.topAnchor="22.0">

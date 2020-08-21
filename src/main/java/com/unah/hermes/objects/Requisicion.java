@@ -1,5 +1,6 @@
 package com.unah.hermes.objects;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +16,7 @@ public class Requisicion {
     public Boolean estaAutorizado;
     public String nombreDisplay;
     public String solicitante;
-    public ObservableList<Producto> productos = FXCollections.observableArrayList();
+    public List<Producto> productos = new ArrayList();
     public Date fecha;
     public String fechaString;
     public String hora;

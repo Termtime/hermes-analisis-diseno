@@ -1,5 +1,6 @@
 package com.unah.data.mock;
 
+import com.unah.hermes.objects.Producto;
 
 public class ProductoMock {
     public String productoID = null;
@@ -9,14 +10,6 @@ public class ProductoMock {
     public int cantPendiente = 0;
     public int cantPedida = 0;
     public String comentario = null;
-   
-    //constructor para el mantenimiento de productos
-    public ProductoMock(String productoID, String nombre, String unidad)
-    {
-        this.productoID = productoID;
-        this.nombre = nombre;
-        this.unidad = unidad;
-    }
 
     //constructor para las tablas de requisiciones
     public ProductoMock(String productoID, String nombre, String unidad, int cantEntregada, int cantPedida, int cantPendiente, String comentario)
@@ -28,48 +21,73 @@ public class ProductoMock {
         this.cantPedida = cantPedida;
         this.cantPendiente = cantPendiente;
         this.comentario = comentario;
+    }   
+
+    public ProductoMock(Producto prod){
+        this.productoID = prod.productoID != null && !prod.productoID.isEmpty()? prod.productoID : "";
+        this.nombre = prod.nombre != null && !prod.nombre.isEmpty()? prod.nombre : "";
+        this.unidad = prod.unidad != null && !prod.unidad.isEmpty()? prod.unidad : "";
+        this.cantEntregada = prod.cantEntregada;
+        this.cantPedida = prod.cantPedida;
+        this.cantPendiente = prod.cantPendiente;
+        this.comentario = prod.comentario != null && !prod.comentario.isEmpty()? prod.comentario : "";
+    }
+
+    public String getProductoID() {
+        return productoID;
+    }
+
+    public void setProductoID(String productoID) {
+        this.productoID = productoID;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getUnidad() {
+        return unidad;
+    }
+
+    public void setUnidad(String unidad) {
+        this.unidad = unidad;
+    }
+
+    public int getCantEntregada() {
+        return cantEntregada;
     }
 
     public void setCantEntregada(int cantEntregada) {
         this.cantEntregada = cantEntregada;
     }
-    public void setCantPedida(int cantPedida) {
-        this.cantPedida = cantPedida;
-    }
-    public void setCantPendiente(int cantPendiente) {
-        this.cantPendiente = cantPendiente;
-    }
-    public void setComentario(String comentario) {
-        this.comentario = comentario;
-    }
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-    public void setProductoID(String productoID) {
-        this.productoID = productoID;
-    }
-    public void setUnidad(String unidad) {
-        this.unidad = unidad;
-    }
-    public int getCantEntregada() {
-        return cantEntregada;
-    }
-    public int getCantPedida() {
-        return cantPedida;
-    }
+
     public int getCantPendiente() {
         return cantPendiente;
     }
+
+    public void setCantPendiente(int cantPendiente) {
+        this.cantPendiente = cantPendiente;
+    }
+
+    public int getCantPedida() {
+        return cantPedida;
+    }
+
+    public void setCantPedida(int cantPedida) {
+        this.cantPedida = cantPedida;
+    }
+
     public String getComentario() {
         return comentario;
     }
-    public String getNombre() {
-        return nombre;
+
+    public void setComentario(String comentario) {
+        this.comentario = comentario;
     }
-    public String getProductoID() {
-        return productoID;
-    }
-    public String getUnidad() {
-        return unidad;
-    }
+
+    
 }
