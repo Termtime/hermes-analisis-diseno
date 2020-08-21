@@ -114,7 +114,6 @@ public class EntregaReqPage implements Initializable {
         });
 
     }
-
     private void recalcularColumnWidth(){
         ObservableList<TableColumn<Producto,?>> columnas = tablaVistaPrevia.getColumns();
         ((TableColumn<Producto,?>)( columnas.get(0) )).setPrefWidth(tablaVistaPrevia.getWidth()*0.30);
