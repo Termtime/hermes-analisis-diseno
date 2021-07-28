@@ -6,24 +6,24 @@ Para correr el proyecto requiere el .json de un service account de firebase admi
 ## Imagenes
 * Login
 
-![Login](https://imgur.com/BYqt4s8)
+![Login](https://i.imgur.com/BYqt4s8.png)
 
 * Pantalla Principal de Requisiciones
 
-![PantallaPrincipal](https://imgur.com/LB73d0N)
+![PantallaPrincipal](https://i.imgur.com/LB73d0N.png)
 
 * Menú de Pantalla Principal
 
-![MenuPantallaPrincipal](https://imgur.com/TL0PioX)
+![MenuPantallaPrincipal](https://i.imgur.com/TL0PioX.png)
 
 * Mantenimiento de Usuarios
 
-![MantenimientoUsuarios](https://imgur.com/JeaUFXQ)
+![MantenimientoUsuarios](https://i.imgur.com/JeaUFXQ.png)
 
 * Agregar/Modificar Usuario
 
-![AgregarModificarUsuario](https://imgur.com/OHZRJMP)
+![AgregarModificarUsuario](https://i.imgur.com/OHZRJMP.png)
 
 * Agregar/Modificar Producto
 
-![AgregarModificarProducto](https://imgur.com/3dlGZ6P)
+![AgregarModificarProducto](https://i.imgur.com/3dlGZ6P.png)
