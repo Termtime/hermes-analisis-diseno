@@ -5,4 +5,4 @@ Para correr el proyecto requiere el .json de un service account de firebase admi
 
 # Imagenes
 * Login
-![Login]([img]https://i.imgur.com/BYqt4s8.png[/img])
+![Login](https://imgur.com/BYqt4s8)
