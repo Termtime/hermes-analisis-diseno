@@ -1,5 +1,8 @@
 # hermes-analisis-diseno
 Proyecto final de la clase de Analisis y Diseño de Sistemas, H.E.R.M.E.S (Herramienta para la Entrega de Requisas por Medios Electrónicos Sistematizados)
+### Prototipo realizado con el software Justinmind:
+https://hermes-prototype.web.app/
+
 ### NOTA
 Para correr el proyecto requiere el .json de un service account de firebase admin SDK, creada en la consola de firebase
 
